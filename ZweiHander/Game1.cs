@@ -6,6 +6,7 @@ namespace ZweiHander
 {
     public class Game1 : Game
     {
+    //Hey team!
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
