@@ -65,6 +65,18 @@ namespace ZweiHander
 
             // TODO: Add your drawing code here
             //TEST: Link sprites, logic to be decided
+            // maybe like a list containing all active sprites and looping through each?
+            
+            // casting should not be done here, just as an example
+            AnimatedSprite castedLink = (AnimatedSprite)_link;
+
+            // The Link class should declare the sprite as Animated or Idle,
+            // and it will be able to directly access Position and other properties.
+            castedLink.Position = new Vector2(
+                Window.ClientBounds.Width * 0.5f,
+                Window.ClientBounds.Height * 0.5f);
+            
+            
             _link.Draw();
             //END TEST
 
