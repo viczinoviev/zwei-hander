@@ -49,6 +49,9 @@
 /processorParam:TextureFormat=Color
 /build:SpriteSheets/Link.png
 
+#begin SpriteSheets/LinkDefinition.xml
+/copy:SpriteSheets/LinkDefinition.xml
+
 #begin SpriteSheets/Treasures.png
 /importer:TextureImporter
 /processor:TextureProcessor

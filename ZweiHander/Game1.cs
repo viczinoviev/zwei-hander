@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using ZweiHander.Graphics;
+using ZweiHander.Graphics.SpriteStorages;
 
 namespace ZweiHander
 {
@@ -9,6 +11,11 @@ namespace ZweiHander
     //Hey team!
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+
+        // TEST: Link Sprites, this should be contained in the Link Class.
+        private LinkSprites _linkSprites;
+        private ISprite _link;
+        // END TEST
 
         public Game1()
         {
@@ -27,6 +34,11 @@ namespace ZweiHander
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            
+            //TEST: Link Sprites, Should be part of link initialization
+            LinkSprites _linkSprites = new LinkSprites(Content, _spriteBatch);
+            _link = _linkSprites.LinkAttackSword();
+            //END TEST
 
             // TODO: use this.Content to load your game content here
         }
@@ -38,6 +50,10 @@ namespace ZweiHander
 
             // TODO: Add your update logic here
 
+            //TEST: Link sprites, should be contained in Link Update
+            _link.Update(gameTime);
+            //END TEST
+
             base.Update(gameTime);
         }
 
@@ -45,9 +61,16 @@ namespace ZweiHander
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
+            _spriteBatch.Begin();
+
             // TODO: Add your drawing code here
+            //TEST: Link sprites, logic to be decided
+            _link.Draw();
+            //END TEST
 
             base.Draw(gameTime);
+
+            _spriteBatch.End();
         }
     }
 }
