@@ -36,8 +36,13 @@ namespace ZweiHander
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             
             //TEST: Link Sprites, Should be part of link initialization
+            
+            // This line will load all of the sprites into the program through an xml file
             LinkSprites _linkSprites = new LinkSprites(Content, _spriteBatch);
+            
+            // This will return the AnimatedSprite of link doing a sword attack
             _link = _linkSprites.LinkAttackSword();
+            
             //END TEST
 
             // TODO: use this.Content to load your game content here
@@ -51,6 +56,7 @@ namespace ZweiHander
             // TODO: Add your update logic here
 
             //TEST: Link sprites, should be contained in Link Update
+            // This is needed to update the frames for the animation
             _link.Update(gameTime);
             //END TEST
 
@@ -63,21 +69,10 @@ namespace ZweiHander
 
             _spriteBatch.Begin();
 
-            // TODO: Add your drawing code here
-            //TEST: Link sprites, logic to be decided
-            // maybe like a list containing all active sprites and looping through each?
-            
-            // casting should not be done here, just as an example
-            AnimatedSprite castedLink = (AnimatedSprite)_link;
 
-            // The Link class should declare the sprite as Animated or Idle,
-            // and it will be able to directly access Position and other properties.
-            castedLink.Position = new Vector2(
-                Window.ClientBounds.Width * 0.5f,
-                Window.ClientBounds.Height * 0.5f);
-            
-            
-            _link.Draw();
+            //TEST: Link sprites, Should be called in the player class
+            // Draws the sprite at the passed in coordinates
+            _link.Draw(Vector2.Zero);
             //END TEST
 
             base.Draw(gameTime);

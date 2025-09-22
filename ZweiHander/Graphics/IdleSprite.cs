@@ -9,29 +9,32 @@ using System.Threading.Tasks;
 namespace ZweiHander.Graphics;
 public class IdleSprite : ISprite
 {
+    // The texture region containing the sprite
     private TextureRegion _region;
+    // The SpriteBatch to draw to
     private SpriteBatch _spriteBatch;
-    public Vector2 Position { get; set; } = Vector2.Zero;
-    public Color Color { get; set; } = Color.White;
-    public float Rotation { get; set; } = 0.0f;
-    public Vector2 Origin { get; set; } = Vector2.Zero;
-    public Vector2 Scale { get; set; } = Vector2.One;
-    public SpriteEffects Effects { get; set; } = SpriteEffects.None;
-    public float LayerDepth { get; set; } = 0.0f;
+
+    // Default parameters for draw
+    private Color Color = Color.White;
+    private float Rotation = 0.0f;
+    private Vector2 Origin = Vector2.Zero;
+    private Vector2 Scale = Vector2.One;
+    private SpriteEffects Effects = SpriteEffects.None;
+    private float LayerDepth = 0.0f;
 
     public IdleSprite(TextureRegion region, SpriteBatch spriteBatch)
     {
         _region = region;
-        Origin = new Vector2(_region.Width / 2, _region.Height / 2);
+        _spriteBatch = spriteBatch;
     }
     public void Update(GameTime gameTime)
     {
         // No update logic for idle sprite
     }
 
-    public void Draw()
+    public void Draw(Vector2 position)
     {
-        _region.Draw(_spriteBatch, Position, Color, Rotation, Origin, Scale, Effects, LayerDepth);
+        _region.Draw(_spriteBatch, position, Color, Rotation, Origin, Scale, Effects, LayerDepth);
     }
 
 }
