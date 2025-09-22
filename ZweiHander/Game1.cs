@@ -72,7 +72,11 @@ namespace ZweiHander
 
             //TEST: Link sprites, Should be called in the player class
             // Draws the sprite at the passed in coordinates
-            _link.Draw(Vector2.Zero);
+            _link.Draw(new Vector2(
+                GraphicsDevice.PresentationParameters.BackBufferWidth * 0.5f,
+                GraphicsDevice.PresentationParameters.BackBufferHeight * 0.5f
+                )
+            );
             //END TEST
 
             base.Draw(gameTime);

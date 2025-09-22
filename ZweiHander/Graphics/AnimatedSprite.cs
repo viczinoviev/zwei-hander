@@ -31,11 +31,19 @@ public class AnimatedSprite : ISprite
     /// Creates a new animated sprite with the specified frames and delay.
     /// </summary>
     /// <param name="animation">The animation for this animated sprite.</param>
-    public AnimatedSprite(SpriteBatch spriteBatch, Animation animation)
+    public AnimatedSprite(SpriteBatch spriteBatch, Animation animation, Boolean centered = true)
     {
         _animation = animation;
         _region = _animation.Frames[0];
         _spriteBatch = spriteBatch;
+
+        if (centered)
+        {
+            Origin = new Vector2(
+                _region.Width * 0.5f,
+                _region.Height * 0.5f
+                );
+        }
     }
 
     /// <summary>
