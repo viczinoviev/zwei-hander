@@ -10,13 +10,19 @@ using System.Xml.Linq;
 namespace ZweiHander.Graphics;
 public abstract class SpriteFactory
 {
-    // Stores source texture loaded
+    /// <summary>
+    /// Stores source texture loaded
+    /// </summary>
     private Texture2D _texture;
 
-    // Stores texture regions created
+    /// <summary>
+    /// Stores texture regions created
+    /// </summary>
     protected Dictionary<string, TextureRegion> _regions = new Dictionary<string, TextureRegion>();
 
-    // Stores animations created
+    /// <summary>
+    /// Stores animations created
+    /// </summary>
     protected Dictionary<string, Animation> _animations = new Dictionary<string, Animation>();
 
     /// <summary>
