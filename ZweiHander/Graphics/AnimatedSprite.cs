@@ -3,6 +3,10 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 
 namespace ZweiHander.Graphics;
+
+/// <summary>
+/// Immobile sprite with animation.
+/// </summary>
 public class AnimatedSprite : ISprite
 {
 
@@ -66,7 +70,7 @@ public class AnimatedSprite : ISprite
 
 
     /// <summary>
-    /// Creates a new animated sprite with the specified frames and delay.
+    /// Creates a new animated sprite with the specified animation.
     /// </summary>
     /// <param name="spriteBatch">The spritebatch instance used for batching draw calls.</param>
     /// <param name="animation">The animation for this animated sprite.</param>

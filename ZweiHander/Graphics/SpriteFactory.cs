@@ -8,6 +8,10 @@ using System.Xml;
 using System.Xml.Linq;
 
 namespace ZweiHander.Graphics;
+
+/// <summary>
+/// Tool to manage sprites and their animations.
+/// </summary>
 public abstract class SpriteFactory
 {
     /// <summary>

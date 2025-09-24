@@ -7,6 +7,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ZweiHander.Graphics;
+
+/// <summary>
+/// Completely immobile sprite.
+/// </summary>
 public class IdleSprite : ISprite
 {
     /// <summary>

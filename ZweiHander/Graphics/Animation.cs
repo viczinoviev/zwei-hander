@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace ZweiHander.Graphics;
 
+/// <summary>
+/// Animation for sprite.
+/// </summary>
 public class Animation
 {
     /// <summary>
