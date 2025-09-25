@@ -3,11 +3,11 @@ using Microsoft.Xna.Framework.Graphics;
 using ZweiHander.Graphics;
 
 namespace ZweiHander.Graphics.SpriteStorages;
-public class LinkSprites : SpriteFactory
+public class PlayerSprites : SpriteFactory
 {
     private const string _definitionFile = "SpriteSheets/LinkDefinition.xml";
     private SpriteBatch _spriteBatch;
-    public LinkSprites(ContentManager content, SpriteBatch spriteBatch)
+    public PlayerSprites(ContentManager content, SpriteBatch spriteBatch)
     {
         FromFile(content, _definitionFile);
         _spriteBatch = spriteBatch;

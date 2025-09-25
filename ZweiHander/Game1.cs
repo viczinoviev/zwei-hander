@@ -13,7 +13,7 @@ namespace ZweiHander
         private SpriteBatch _spriteBatch;
 
         // TEST: Link Sprites, this should be contained in the Link Class.
-        private LinkSprites _linkSprites;
+        private PlayerSprites _linkSprites;
         private ISprite _link;
         // END TEST
 
@@ -38,7 +38,7 @@ namespace ZweiHander
             //TEST: Link Sprites, Should be part of link initialization
             
             // This line will load all of the sprites into the program through an xml file
-            LinkSprites _linkSprites = new LinkSprites(Content, _spriteBatch);
+            PlayerSprites _linkSprites = new PlayerSprites(Content, _spriteBatch);
             
             // This will return the AnimatedSprite of link doing a sword attack
             _link = _linkSprites.LinkAttackSword();
