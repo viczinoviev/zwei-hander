@@ -2,17 +2,55 @@
 <TextureAtlas>
 	<Texture>SpriteSheets/Link</Texture>
 	<Regions>
-		<Region name="link-attack-sword-1" x="1" y="47" width="16" height="16" />
-		<Region name="link-attack-sword-2" x="18" y="47" width="16" height="27" />
-		<Region name="link-attack-sword-3" x="35" y="47" width="16" height="23" />
-		<Region name="link-attack-sword-4" x="52" y="47" width="16" height="19" />
+		<Region name="link-move-down-1" x="1" y="11" width="16" height="16" />
+		<Region name="link-move-down-2" x="18" y="11" width="16" height="16" />
+		<Region name="link-move-right-1" x="35" y="11" width="16" height="16" />
+		<Region name="link-move-right-2" x="52" y="11" width="16" height="16" />
+		<Region name="link-move-up-1" x="69" y="11" width="16" height="16" />
+		<Region name="link-move-up-2" x="86" y="11" width="16" height="16" />
+		<Region name="link-attack-sword-down-1" x="1" y="47" width="16" height="16" />
+		<Region name="link-attack-sword-down-2" x="18" y="47" width="16" height="27" />
+		<Region name="link-attack-sword-down-3" x="35" y="47" width="16" height="23" />
+		<Region name="link-attack-sword-down-4" x="52" y="47" width="16" height="19" />
+		<Region name="link-attack-sword-up-1" x="1" y="109" width="16" height="16" />
+		<Region name="link-attack-sword-up-2" x="18" y="97" width="16" height="28" />
+		<Region name="link-attack-sword-up-3" x="35" y="98" width="16" height="27" />
+		<Region name="link-attack-sword-up-4" x="52" y="106" width="16" height="19" />
+		<Region name="link-attack-sword-right-1" x="1" y="77" width="16" height="16" />
+		<Region name="link-attack-sword-right-2" x="18" y="77" width="27" height="17" />
+		<Region name="link-attack-sword-right-3" x="46" y="77" width="23" height="17" />
+		<Region name="link-attack-sword-right-4" x="70" y="77" width="19" height="17" />
 	</Regions>
 	<Animations>
-		<Animation name="link-attack-sword-animation" delay="200">
-			<Frame region="link-attack-sword-1" />
-			<Frame region="link-attack-sword-2" />
-			<Frame region="link-attack-sword-3" />
-			<Frame region="link-attack-sword-4" />
+		<Animation name="link-move-animation-down" delay="200">
+			<Frame region="link-move-down-1" />
+			<Frame region="link-move-down-2" />
 		</Animation>
+		<Animation name="link-move-animation-right" delay="200">
+			<Frame region="link-move-right-1" />
+			<Frame region="link-move-right-2" />
+		</Animation>
+		<Animation name="link-move-animation-up" delay="200">
+			<Frame region="link-move-up-1" />
+			<Frame region="link-move-up-2" />
+		</Animation>
+		<Animation name="link-attack-sword-animation-down" delay="200">
+			<Frame region="link-attack-sword-down-1" />
+			<Frame region="link-attack-sword-down-2" />
+			<Frame region="link-attack-sword-down-3" />
+			<Frame region="link-attack-sword-down-4" />
+		</Animation>
+		<Animation name="link-attack-sword-animation-up" delay="200">
+			<Frame region="link-attack-sword-up-1" />
+			<Frame region="link-attack-sword-up-2" />
+			<Frame region="link-attack-sword-up-3" />
+			<Frame region="link-attack-sword-up-4" />
+		</Animation>
+		<Animation name="link-attack-sword-animation-right" delay="200">
+			<Frame region="link-attack-sword-right-1" />
+			<Frame region="link-attack-sword-right-2" />
+			<Frame region="link-attack-sword-right-3" />
+			<Frame region="link-attack-sword-right-4" />
+		</Animation>		
 	</Animations>
 </TextureAtlas>

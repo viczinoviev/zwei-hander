@@ -39,9 +39,9 @@ namespace ZweiHander
             
             // This line will load all of the sprites into the program through an xml file
             PlayerSprites _linkSprites = new PlayerSprites(Content, _spriteBatch);
-            
+
             // This will return the AnimatedSprite of link doing a sword attack
-            _link = _linkSprites.LinkAttackSword();
+            _link = _linkSprites.LinkMoveUp();
             
             //END TEST
 

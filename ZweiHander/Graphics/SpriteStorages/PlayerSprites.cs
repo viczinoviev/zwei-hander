@@ -12,7 +12,12 @@ public class PlayerSprites : SpriteFactory
         FromFile(content, _definitionFile);
         _spriteBatch = spriteBatch;
     }
+    public ISprite LinkMoveDown() => new AnimatedSprite(_spriteBatch, _animations["link-move-animation-down"]);
+    public ISprite LinkMoveUp() => new AnimatedSprite(_spriteBatch, _animations["link-move-animation-up"]);
+    public ISprite LinkMoveRight() => new AnimatedSprite(_spriteBatch, _animations["link-move-animation-Right"]);
+    public ISprite LinkAttackSwordDown() => new AnimatedSprite(_spriteBatch, _animations["link-attack-sword-animation-down"]);
+    public ISprite LinkAttackSwordUp() => new AnimatedSprite(_spriteBatch, _animations["link-attack-sword-animation-up"]);
+    public ISprite LinkAttackSwordRight() => new AnimatedSprite(_spriteBatch, _animations["link-attack-sword-animation-right"]);
 
-    public ISprite LinkAttackSword() => new AnimatedSprite(_spriteBatch, _animations["link-attack-sword-animation"]);
 }
 
