@@ -1,8 +1,6 @@
 using System;
-using ZweiHander;
 using Microsoft.Xna.Framework;
-
-public interface IStateMachine
+public interface IPlayer
 {
 	void Update(GameTime gameTime);
 }
