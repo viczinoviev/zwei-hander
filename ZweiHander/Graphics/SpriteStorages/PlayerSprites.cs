@@ -26,6 +26,11 @@ public class PlayerSprites : SpriteFactory
     public ISprite PlayerAttackSwordDown() => new AnimatedSprite(_spriteBatch, _animations["link-attack-sword-animation-down"]);
     public ISprite PlayerAttackSwordUp() => new AnimatedSprite(_spriteBatch, _animations["link-attack-sword-animation-up"]);
     public ISprite PlayerAttackSwordRight() => new AnimatedSprite(_spriteBatch, _animations["link-attack-sword-animation-right"]);
-
+    public ISprite PlayerAttackSwordLeft()
+    {
+        AnimatedSprite s = new AnimatedSprite(_spriteBatch, _animations["link-attack-sword-animation-right"]);
+        s.Effects = SpriteEffects.FlipHorizontally;
+        return s;
+    }
 }
 
