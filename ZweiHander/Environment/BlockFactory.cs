@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
+using System.Collections.Generic;
 using ZweiHander.Graphics;
 
 namespace ZweiHander.Environment
@@ -8,36 +7,56 @@ namespace ZweiHander.Environment
     public class BlockFactory
     {
         private int _tileSize;
-        private ISprite _blockSprites;
+        private Dictionary<string, ISprite> _sprites; 
+        public List<Rectangle> BlockMap { get; private set; }
 
-        public BlockFactory(int tileSize, ISprite blockSprites)
+        public BlockFactory(int tileSize, Dictionary<string, ISprite> sprites)
         {
             _tileSize = tileSize;
-            _blockSprites = blockSprites;
+            _sprites = sprites;
+            BlockMap = new List<Rectangle>();
         }
 
-        public Block CreateBlock(string type, Point gridPosition)
+        public Block CreateBlock(string name, Point gridPosition)
         {
-            bool isSolid = true;
-            string spriteKey = type;
+            BlockType blockType;
+            ISprite sprite;
 
-            switch (type)
+            // Map type string to BlockType and sprite
+            switch (name)
             {
-                case "StoneBlock":
-                    isSolid = true;
-                    spriteKey = "StoneBlock";
+                case "SolidBlock":
+                    blockType = BlockType.Solid;
+                    sprite = _sprites["SolidBlock"];
                     break;
+
                 case "PushableBlock":
-                    isSolid = false; // pushable
-                    spriteKey = "PushableBlock";
+                    blockType = BlockType.Pushable;
+                    sprite = _sprites["PushableBlock"];
                     break;
+
+                case "BreakableBlock":
+                    blockType = BlockType.Breakable;
+                    sprite = _sprites["BreakableBlock"];
+                    break;
+
                 case "DecorativeBlock":
-                    isSolid = false;
-                    spriteKey = "DecorativeBlock";
+                    blockType = BlockType.Decorative;
+                    sprite = _sprites["DecorativeBlock"];
+                    break;
+
+                default:
+                    blockType = BlockType.Solid;
+                    sprite = _sprites["SolidBlock"];
                     break;
             }
 
-            return new Block(gridPosition, spriteKey, isSolid, _tileSize);
+            Block newBlock = new Block(blockType, gridPosition, _tileSize, sprite);
+
+            // Store the hitbox of the block 
+            BlockMap.Add(newBlock.getBlockHitbox());
+
+            return newBlock;
         }
     }
 }
