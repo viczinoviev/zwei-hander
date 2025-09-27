@@ -55,6 +55,9 @@
 #begin SpriteSheets/LinkDefinition.xml
 /copy:SpriteSheets/LinkDefinition.xml
 
+#begin SpriteSheets/TreasureDefinition.xml
+/copy:SpriteSheets/TreasureDefinition.xml
+
 #begin SpriteSheets/Treasures.png
 /importer:TextureImporter
 /processor:TextureProcessor

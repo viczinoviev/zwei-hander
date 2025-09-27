@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas>
+	<Texture>SpriteSheets/Treasures</Texture>
+	<Regions>
+		<Region name="heart" x="330" y="362" width="7" height="8" />
+		<Region name="heart-container" x="431" y="364" width="13" height="13" />
+		<Region name="fairy" x="330" y="426" width="8" height="16" />
+		<Region name="rupy" x="587" y="266" width="8" height="16" />
+	</Regions>
+	<Animations>
+	</Animations>
+</TextureAtlas>
