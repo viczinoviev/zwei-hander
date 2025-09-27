@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 using ZweiHander.Graphics;
+using System.Collections.Generic;
 
 namespace ZweiHander.Items;
 
@@ -17,23 +18,28 @@ public abstract class AbstractItem : IItem
     /// </summary>
     protected ISprite _sprite;
 
-    public Vector2 position { get; set; } = default;
+    public Vector2 Position { get; set; } = default;
 
-    public Vector2 velocity { get; set; } = default;
+    public Vector2 Velocity { get; set; } = default;
 
-    public Vector2 acceleration { get; set; } = default;
+    public Vector2 Acceleration { get; set; } = default;
+
+    /// <summary>
+    /// The properties this item has.
+    /// </summary>
+    public HashSet<ItemProperty> Properties = default;
 
 
     public virtual void Update(GameTime time)
     {
         float dt = (float) time.ElapsedGameTime.TotalSeconds;
-        velocity += dt * acceleration;
-        position += dt * velocity + (dt * dt / 2) * acceleration;
+        Velocity += dt * Acceleration;
+        Position += dt * Velocity + (dt * dt / 2) * Acceleration;
         _sprite.Update(time);
     }
 
     public void Draw()
     {
-        _sprite.Draw(position);
+        _sprite.Draw(Position);
     }
 }
