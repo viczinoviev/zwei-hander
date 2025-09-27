@@ -1,19 +1,20 @@
 ﻿using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using ZweiHander.Graphics;
+using ZweiHander.Graphics.SpriteStorages;
 
 namespace ZweiHander.Environment
 {
     public class BlockFactory
     {
         private int _tileSize;
-        private Dictionary<string, ISprite> _sprites; 
+        BlockSprites _blockSprites;
         public List<Rectangle> BlockMap { get; private set; }
 
-        public BlockFactory(int tileSize, Dictionary<string, ISprite> sprites)
+        public BlockFactory(int tileSize, BlockSprites blockSprites)
         {
             _tileSize = tileSize;
-            _sprites = sprites;
+            _blockSprites = blockSprites;
             BlockMap = new List<Rectangle>();
         }
 
@@ -27,27 +28,27 @@ namespace ZweiHander.Environment
             {
                 case "SolidBlock":
                     blockType = BlockType.Solid;
-                    sprite = _sprites["SolidBlock"];
+                    sprite = _blockSprites.SolidBlackTile();
                     break;
 
-                case "PushableBlock":
-                    blockType = BlockType.Pushable;
-                    sprite = _sprites["PushableBlock"];
-                    break;
+                //case "PushableBlock":
+                //    blockType = BlockType.Pushable;
+                //    sprite = _sprites["PushableBlock"];
+                //    break;
 
-                case "BreakableBlock":
-                    blockType = BlockType.Breakable;
-                    sprite = _sprites["BreakableBlock"];
-                    break;
+                //case "BreakableBlock":
+                //    blockType = BlockType.Breakable;
+                //    sprite = _sprites["BreakableBlock"];
+                //    break;
 
-                case "DecorativeBlock":
-                    blockType = BlockType.Decorative;
-                    sprite = _sprites["DecorativeBlock"];
-                    break;
+                //case "DecorativeBlock":
+                //    blockType = BlockType.Decorative;
+                //    sprite = _sprites["DecorativeBlock"];
+                //    break;
 
                 default:
                     blockType = BlockType.Solid;
-                    sprite = _sprites["SolidBlock"];
+                    sprite = _blockSprites.SolidBlackTile();
                     break;
             }
 
