@@ -14,6 +14,7 @@ namespace ZweiHander
 
         // TEST: Link Sprites, this should be contained in the Link Class.
         private ISprite _block;
+        private ISprite _treasure;
         // END TEST
 
         private Player _gamePlayer;
@@ -42,8 +43,10 @@ namespace ZweiHander
             // This line will load all of the sprites into the program through an xml file
             PlayerSprites _linkSprites = new PlayerSprites(Content, _spriteBatch);
             BlockSprites _blockSprites = new BlockSprites(Content, _spriteBatch);
+            TreasureSprites _treasureSprites = new TreasureSprites(Content, _spriteBatch);
 
             _block = _blockSprites.BlockTile();
+            _treasure = _treasureSprites.HeartContainer();
 
             //END TEST
 
@@ -82,6 +85,12 @@ namespace ZweiHander
 
             _block.Draw(new Vector2(
                 GraphicsDevice.PresentationParameters.BackBufferWidth * 0.75f,
+                GraphicsDevice.PresentationParameters.BackBufferHeight * 0.25f
+                )
+            );
+
+            _treasure.Draw(new Vector2(
+                GraphicsDevice.PresentationParameters.BackBufferWidth * 0.25f,
                 GraphicsDevice.PresentationParameters.BackBufferHeight * 0.25f
                 )
             );
