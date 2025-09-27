@@ -1,20 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 using ZweiHander.Items.ItemStorages;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace ZweiHander.Items;
-
-/// <summary>
-/// All items that exist are within this.
-/// </summary>
-public enum ItemType
-{
-    Compass,
-    Map,
-    Key,
-    Heart
-}
 
 /// <summary>
 /// Manages creations of items.
@@ -29,7 +19,7 @@ public class ItemFactory
     /// <param name="velocity">The item's starting velocity.</param>
     /// <param name="acceleration">The item's starting acceleration.</param>
     /// <returns>The desired item.</returns>
-    public IItem GetItem(ItemType itemType, Vector2 position = default, Vector2 velocity = default, Vector2 acceleration = default)
+    public IItem GetItem(ItemType itemType, ICollection<ItemProperty> properties, Vector2 position = default, Vector2 velocity = default, Vector2 acceleration = default)
     {
         IItem item = null;
         switch (itemType)
@@ -47,12 +37,16 @@ public class ItemFactory
                 item = new HeartItem();
                 break;
             default:
-                // Should never actually reach here- will error out if so
+                // Should never actually reach here - will error out if so
                 break;
         }
-        item.position = position;
-        item.velocity = velocity;
-        item.acceleration = acceleration;
+        item.Position = position;
+        item.Velocity = velocity;
+        item.Acceleration = acceleration;
+        foreach(ItemProperty property in properties)
+        {
+            item.AddProperty(property);
+        }
         return item;
     }
 
