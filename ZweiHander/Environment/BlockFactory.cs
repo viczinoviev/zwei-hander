@@ -11,8 +11,10 @@ namespace ZweiHander.Environment
         private BlockSprites _blockSprites; // Reference to sprite storage for blocks
         public List<Rectangle> BlockMap { get; private set; } // Stores all block hitboxes
 
-        // Maps block names to their logic type (Solid, Pushable, Breakable, Decorative)
-        private static readonly Dictionary<BlockName, BlockType> BlockKindToType = new()
+        /// <summary>
+        /// Maps block names to their logic type (Solid, Pushable, Breakable, Decorative)
+        /// </summary>
+        private static readonly Dictionary<BlockName, BlockType> BlockNameToType = new()
         {
             { BlockName.SolidCyanTile, BlockType.Solid },
             { BlockName.SolidBlackTile, BlockType.Solid },
@@ -24,8 +26,9 @@ namespace ZweiHander.Environment
             { BlockName.StairTile, BlockType.Decorative },
             { BlockName.WhitePatternTile, BlockType.Decorative },
         };
-
-        // Constructor initializes the factory with a tile size and block sprite storage
+        /// <summary>
+        /// Constructor initializes the factory with a tile size and block sprite storage
+        ///</summary>
         public BlockFactory(int tileSize, BlockSprites blockSprites)
         {
             _tileSize = tileSize; // Set tile size
@@ -33,11 +36,16 @@ namespace ZweiHander.Environment
             BlockMap = new List<Rectangle>(); // Initialize hitbox list
         }
 
-        // Creates a new block given its name and position on the grid
+        /// <summary>
+        /// Creates a new block given its name and position on the grid
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="gridPosition"></param>
+        /// <returns></returns>
         public Block CreateBlock(BlockName name, Point gridPosition)
         {
             // Lookup the BlockType from the dictionary
-            BlockType blockType = BlockKindToType[name];
+            BlockType blockType = BlockNameToType[name];
             ISprite sprite; // Will store the sprite for this block
 
             // Choose which sprite to use based on block name
