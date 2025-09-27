@@ -1,15 +1,16 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using ZweiHander.Graphics;
 
 namespace ZweiHander.Environment
 {
     public class BlockFactory
     {
         private int _tileSize;
-        private BlockSprites _blockSprites;
+        private ISprite _blockSprites;
 
-        public BlockFactory(int tileSize, BlockSprites blockSprites)
+        public BlockFactory(int tileSize, ISprite blockSprites)
         {
             _tileSize = tileSize;
             _blockSprites = blockSprites;

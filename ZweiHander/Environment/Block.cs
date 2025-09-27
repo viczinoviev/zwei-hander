@@ -34,7 +34,7 @@ namespace ZweiHander.Environment
 
 
 
-        public Rectangle getHitbox()
+        public Rectangle getBlockHitbox()
         {
             return new Rectangle(_gridPosition.X * _gridSize, _gridPosition.Y * _gridSize, _gridSize, _gridSize);
         }
