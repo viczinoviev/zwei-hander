@@ -13,8 +13,7 @@ namespace ZweiHander
         private SpriteBatch _spriteBatch;
 
         // TEST: Link Sprites, this should be contained in the Link Class.
-        private PlayerSprites _linkSprites;
-        private ISprite _link;
+        private ISprite _player;
         // END TEST
 
         public Game1()
@@ -41,7 +40,7 @@ namespace ZweiHander
             PlayerSprites _linkSprites = new PlayerSprites(Content, _spriteBatch);
 
             // This will return the AnimatedSprite of link doing a sword attack
-            _link = _linkSprites.LinkMoveUp();
+            _player = _linkSprites.PlayerMoveUp();
             
             //END TEST
 
@@ -57,7 +56,7 @@ namespace ZweiHander
 
             //TEST: Link sprites, should be contained in Link Update
             // This is needed to update the frames for the animation
-            _link.Update(gameTime);
+            _player.Update(gameTime);
             //END TEST
 
             base.Update(gameTime);
@@ -72,7 +71,7 @@ namespace ZweiHander
 
             //TEST: Link sprites, Should be called in the player class
             // Draws the sprite at the passed in coordinates
-            _link.Draw(new Vector2(
+            _player.Draw(new Vector2(
                 GraphicsDevice.PresentationParameters.BackBufferWidth * 0.5f,
                 GraphicsDevice.PresentationParameters.BackBufferHeight * 0.5f
                 )
