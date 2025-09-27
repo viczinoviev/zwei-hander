@@ -15,6 +15,7 @@ namespace ZweiHander
         // TEST: Link Sprites, this should be contained in the Link Class.
         private ISprite _block;
         private ISprite _treasure;
+        private ISprite _enemy;
         // END TEST
 
         private Player _gamePlayer;
@@ -44,9 +45,11 @@ namespace ZweiHander
             PlayerSprites _linkSprites = new PlayerSprites(Content, _spriteBatch);
             BlockSprites _blockSprites = new BlockSprites(Content, _spriteBatch);
             TreasureSprites _treasureSprites = new TreasureSprites(Content, _spriteBatch);
+            EnemySprites _enemySprites = new EnemySprites(Content, _spriteBatch);
 
             _block = _blockSprites.BlockTile();
             _treasure = _treasureSprites.HeartContainer();
+            _enemy = _enemySprites.DarknutMoveRight();
 
             //END TEST
 
@@ -94,6 +97,13 @@ namespace ZweiHander
                 GraphicsDevice.PresentationParameters.BackBufferHeight * 0.25f
                 )
             );
+
+            _enemy.Draw(new Vector2(
+                GraphicsDevice.PresentationParameters.BackBufferWidth * 0.75f,
+                GraphicsDevice.PresentationParameters.BackBufferHeight * 0.75f
+                )
+            );
+
             //END TEST
 
             _gamePlayer.Draw(_spriteBatch);

@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas>
+	<Texture>SpriteSheets/Dungeon-Enemies</Texture>
+	<Regions>
+		<Region name="darknut-move-down-1" x="1" y="90" width="16" height="16" />
+		<Region name="darknut-move-down-2" x="18" y="90" width="16" height="16" />
+		<Region name="darknut-move-up-1" x="34" y="90" width="16" height="16" />
+		<Region name="darknut-move-right-1" x="52" y="90" width="16" height="16" />
+		<Region name="darknut-move-right-2" x="69" y="90" width="16" height="16" />
+	</Regions>
+	<Animations>
+		<Animation name="darknut-move-animation-down" delay="200">
+			<Frame region="darknut-move-down-1" />
+			<Frame region="darknut-move-down-2" />
+		</Animation>
+		<Animation name="darknut-move-animation-right" delay="200">
+			<Frame region="darknut-move-right-1" />
+			<Frame region="darknut-move-right-2" />
+		</Animation>
+		<Animation name="darknut-move-animation-up" delay="200">
+			<Frame region="darknut-move-up-1" />
+		</Animation>
+	</Animations>
+</TextureAtlas>

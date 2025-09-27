@@ -40,6 +40,9 @@
 /processorParam:TextureFormat=Color
 /build:SpriteSheets/Dungeon-Tileset.png
 
+#begin SpriteSheets/EnemyDefinition.xml
+/copy:SpriteSheets/EnemyDefinition.xml
+
 #begin SpriteSheets/Link.png
 /importer:TextureImporter
 /processor:TextureProcessor
