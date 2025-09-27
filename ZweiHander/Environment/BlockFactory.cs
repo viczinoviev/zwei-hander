@@ -1,62 +1,96 @@
 ﻿using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using ZweiHander.Graphics;
+using ZweiHander.Graphics.SpriteStorages;
 
 namespace ZweiHander.Environment
 {
     public class BlockFactory
     {
-        private int _tileSize;
-        private Dictionary<string, ISprite> _sprites; 
-        public List<Rectangle> BlockMap { get; private set; }
+        private int _tileSize; // Size of each block in pixels
+        private BlockSprites _blockSprites; // Reference to sprite storage for blocks
+        public List<Rectangle> BlockMap { get; private set; } // Stores all block hitboxes
 
-        public BlockFactory(int tileSize, Dictionary<string, ISprite> sprites)
+        // Maps block names to their logic type (Solid, Pushable, Breakable, Decorative)
+        private static readonly Dictionary<BlockName, BlockType> BlockKindToType = new()
         {
-            _tileSize = tileSize;
-            _sprites = sprites;
-            BlockMap = new List<Rectangle>();
+            { BlockName.SolidCyanTile, BlockType.Solid },
+            { BlockName.SolidBlackTile, BlockType.Solid },
+            { BlockName.BlockTile, BlockType.Pushable },
+            { BlockName.BrickTile, BlockType.Breakable },
+            { BlockName.StatueTile1, BlockType.Decorative },
+            { BlockName.StatueTile2, BlockType.Decorative },
+            { BlockName.TexturedTile, BlockType.Decorative },
+            { BlockName.StairTile, BlockType.Decorative },
+            { BlockName.WhitePatternTile, BlockType.Decorative },
+        };
+
+        // Constructor initializes the factory with a tile size and block sprite storage
+        public BlockFactory(int tileSize, BlockSprites blockSprites)
+        {
+            _tileSize = tileSize; // Set tile size
+            _blockSprites = blockSprites; // Store sprite storage
+            BlockMap = new List<Rectangle>(); // Initialize hitbox list
         }
 
-        public Block CreateBlock(string name, Point gridPosition)
+        // Creates a new block given its name and position on the grid
+        public Block CreateBlock(BlockName name, Point gridPosition)
         {
-            BlockType blockType;
-            ISprite sprite;
+            // Lookup the BlockType from the dictionary
+            BlockType blockType = BlockKindToType[name];
+            ISprite sprite; // Will store the sprite for this block
 
-            // Map type string to BlockType and sprite
+            // Choose which sprite to use based on block name
             switch (name)
             {
-                case "SolidBlock":
-                    blockType = BlockType.Solid;
-                    sprite = _sprites["SolidBlock"];
+                case BlockName.SolidCyanTile:
+                    sprite = _blockSprites.SolidCyanTile();
                     break;
 
-                case "PushableBlock":
-                    blockType = BlockType.Pushable;
-                    sprite = _sprites["PushableBlock"];
+                case BlockName.BlockTile:
+                    sprite = _blockSprites.BlockTile();
                     break;
 
-                case "BreakableBlock":
-                    blockType = BlockType.Breakable;
-                    sprite = _sprites["BreakableBlock"];
+                case BlockName.StatueTile1:
+                    sprite = _blockSprites.StatueTile1();
                     break;
 
-                case "DecorativeBlock":
-                    blockType = BlockType.Decorative;
-                    sprite = _sprites["DecorativeBlock"];
+                case BlockName.StatueTile2:
+                    sprite = _blockSprites.StatueTile2();
                     break;
 
-                default:
-                    blockType = BlockType.Solid;
-                    sprite = _sprites["SolidBlock"];
+                case BlockName.SolidBlackTile:
+                    sprite = _blockSprites.SolidBlackTile();
+                    break;
+
+                case BlockName.TexturedTile:
+                    sprite = _blockSprites.TexturedTile();
+                    break;
+
+                case BlockName.StairTile:
+                    sprite = _blockSprites.StairTile();
+                    break;
+
+                case BlockName.BrickTile:
+                    sprite = _blockSprites.BrickTile();
+                    break;
+
+                case BlockName.WhitePatternTile:
+                    sprite = _blockSprites.WhitePatternTile();
+                    break;
+
+                default: 
+                    sprite = _blockSprites.SolidCyanTile();
                     break;
             }
 
+            // Create the block with its type, position, size, and sprite
             Block newBlock = new Block(blockType, gridPosition, _tileSize, sprite);
 
-            // Store the hitbox of the block 
+            // Store block hitbox for collision or mapping purposes
             BlockMap.Add(newBlock.getBlockHitbox());
 
-            return newBlock;
+            return newBlock; // Return the created block
         }
     }
 }

@@ -14,6 +14,21 @@ namespace ZweiHander.Environment
         Decorative  // Non-collidable decorative blocks
     }
 
+    public enum BlockName
+    {
+        SolidCyanTile,
+        BlockTile,
+        StatueTile1,
+        StatueTile2,
+        SolidBlackTile,
+        TexturedTile,
+        StairTile,
+        BrickTile,
+        WhitePatternTile
+    }
+
+
+
     public class Block
     {
         private BlockType _blockType;   // Type of the block
