@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas>
+	<Texture>SpriteSheets/Dungeon-Tileset</Texture>
+	<Regions>
+		<Region name="solid-cyan" x="984" y="11" width="16" height="16" />
+		<Region name="block-tile" x="1001" y="11" width="16" height="16" />
+		<Region name="statue-tile-1" x="1018" y="11" width="16" height="16" />
+		<Region name="statue-tile-2" x="1035" y="11" width="16" height="16" />
+		<Region name="solid-black" x="984" y="28" width="16" height="16" />
+		<Region name="textured-tile" x="1001" y="28" width="16" height="16" />
+		<Region name="stair-tile" x="1035" y="28" width="16" height="16" />
+		<Region name="brick-tile" x="984" y="45" width="16" height="16" />
+		<Region name="white-pattern-tile" x="1001" y="45" width="16" height="16" />
+	</Regions>
+	<Animations>
+	</Animations>
+</TextureAtlas>
