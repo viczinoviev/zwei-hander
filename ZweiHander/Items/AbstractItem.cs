@@ -42,4 +42,14 @@ public abstract class AbstractItem : IItem
     {
         _sprite.Draw(Position);
     }
+
+    public void RemoveProperty(ItemProperty property)
+    {
+        Properties.Remove(property);
+    }
+
+    public void AddProperty(ItemProperty property)
+    {
+        Properties.Add(property);
+    }
 }
