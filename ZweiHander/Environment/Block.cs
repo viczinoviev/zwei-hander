@@ -27,8 +27,6 @@ namespace ZweiHander.Environment
         WhitePatternTile
     }
 
-
-
     public class Block
     {
         private BlockType _blockType;   // Type of the block
