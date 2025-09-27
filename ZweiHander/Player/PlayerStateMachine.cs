@@ -17,7 +17,7 @@ public class PlayerStateMachine : IStateMachine
         _playerSprites = playerSprites;
         _player = player;
         _currentState = PlayerState.Idle;
-        _currentSprite = _playerSprites.PlayerMoveDown();
+        _currentSprite = _playerSprites.PlayerIdle();
     }
 
     public void SetState(PlayerState newState)
@@ -43,7 +43,7 @@ public class PlayerStateMachine : IStateMachine
                 _currentSprite = _playerSprites.PlayerMoveRight();
                 break;
             case PlayerState.MovingLeft:
-                _currentSprite = _playerSprites.PlayerMoveLeft();
+                _currentSprite = _playerSprites.PlayerMoveRight();
                 break;
             case PlayerState.Attacking:
                 _currentSprite = _playerSprites.PlayerAttackSwordDown();
