@@ -13,6 +13,9 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin SpriteSheets/BlockDefinition.xml
+/copy:SpriteSheets/BlockDefinition.xml
+
 #begin SpriteSheets/Dungeon-Enemies.png
 /importer:TextureImporter
 /processor:TextureProcessor
