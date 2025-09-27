@@ -13,9 +13,12 @@ namespace ZweiHander
         private SpriteBatch _spriteBatch;
 
         // TEST: Link Sprites, this should be contained in the Link Class.
-        private ISprite _player;
         private ISprite _block;
+        private ISprite _treasure;
         // END TEST
+
+        private Player _gamePlayer;
+        private KeyboardController _keyboardController;
 
         public Game1()
         {
@@ -40,12 +43,16 @@ namespace ZweiHander
             // This line will load all of the sprites into the program through an xml file
             PlayerSprites _linkSprites = new PlayerSprites(Content, _spriteBatch);
             BlockSprites _blockSprites = new BlockSprites(Content, _spriteBatch);
+            TreasureSprites _treasureSprites = new TreasureSprites(Content, _spriteBatch);
 
-            // This will return the AnimatedSprite of link doing a sword attack
-            _player = _linkSprites.PlayerMoveUp();
             _block = _blockSprites.BlockTile();
-            
+            _treasure = _treasureSprites.HeartContainer();
+
             //END TEST
+
+            _gamePlayer = new Player(_linkSprites);
+            _keyboardController = new KeyboardController(_gamePlayer);
+            _gamePlayer.Position = new Vector2(400, 300);
 
             // TODO: use this.Content to load your game content here
         }
@@ -57,11 +64,12 @@ namespace ZweiHander
 
             // TODO: Add your update logic here
 
-            //TEST: Link sprites, should be contained in Link Update
             // This is needed to update the frames for the animation
-            _player.Update(gameTime);
             _block.Update(gameTime);
             //END TEST
+
+            _keyboardController.Update();
+            _gamePlayer.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -73,20 +81,22 @@ namespace ZweiHander
             _spriteBatch.Begin();
 
 
-            //TEST: Link sprites, Should be called in the player class
             // Draws the sprite at the passed in coordinates
-            _player.Draw(new Vector2(
-                GraphicsDevice.PresentationParameters.BackBufferWidth * 0.25f,
-                GraphicsDevice.PresentationParameters.BackBufferHeight * 0.75f
-                )
-            );
 
             _block.Draw(new Vector2(
                 GraphicsDevice.PresentationParameters.BackBufferWidth * 0.75f,
                 GraphicsDevice.PresentationParameters.BackBufferHeight * 0.25f
                 )
             );
+
+            _treasure.Draw(new Vector2(
+                GraphicsDevice.PresentationParameters.BackBufferWidth * 0.25f,
+                GraphicsDevice.PresentationParameters.BackBufferHeight * 0.25f
+                )
+            );
             //END TEST
+
+            _gamePlayer.Draw(_spriteBatch);
 
             base.Draw(gameTime);
 

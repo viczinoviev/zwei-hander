@@ -1,8 +1,9 @@
 using System;
-using ZweiHander;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 public interface IStateMachine
 {
-	void Update(GameTime gameTime);
+    void Update(GameTime gameTime);
+    void Draw(SpriteBatch spriteBatch);
 }
