@@ -58,4 +58,9 @@ public abstract class AbstractSprite : ISprite
     {
         _region.Draw(_spriteBatch, position, Color, Rotation, Origin, Scale, Effects, LayerDepth);
     }
+
+    public void SetScale(Vector2 scale)
+    {
+        Scale = scale;
+    }
 }
