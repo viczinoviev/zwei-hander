@@ -12,16 +12,12 @@ public class PlayerStateMachine : IStateMachine
     private PlayerSprites _playerSprites;
     private float _moveSpeed = 100f;
 
-    public PlayerStateMachine(PlayerSprites playerSprites)
+    public PlayerStateMachine(PlayerSprites playerSprites, Player player)
     {
         _playerSprites = playerSprites;
+        _player = player;
         _currentState = PlayerState.Idle;
         _currentSprite = _playerSprites.PlayerMoveDown();
-    }
-
-    public void SetPlayer(Player player)
-    {
-        _player = player;
     }
 
     public void SetState(PlayerState newState)

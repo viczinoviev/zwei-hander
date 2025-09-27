@@ -5,13 +5,13 @@ using ZweiHander.Graphics.SpriteStorages;
 
 public class Player : IPlayer
 {
-    private PlayerStateMachine _stateMachine;
+    public PlayerStateMachine _stateMachine;
     public Vector2 Position { get; set; }
     public float Speed { get; set; } = 100f;
 
     public Player(PlayerSprites playerSprites)
     {
-        _stateMachine = new PlayerStateMachine(playerSprites);
+        _stateMachine = new PlayerStateMachine(playerSprites, this);
         Position = Vector2.Zero;
     }
 
