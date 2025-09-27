@@ -49,7 +49,7 @@ namespace ZweiHander
 
             _block = _blockSprites.BlockTile();
             _treasure = _treasureSprites.HeartContainer();
-            _enemy = _enemySprites.DarknutMoveDown();
+            _enemy = _enemySprites.DarknutMoveRight();
 
             //END TEST
 
@@ -101,7 +101,9 @@ namespace ZweiHander
             _enemy.Draw(new Vector2(
                 GraphicsDevice.PresentationParameters.BackBufferWidth * 0.75f,
                 GraphicsDevice.PresentationParameters.BackBufferHeight * 0.75f
-                ));
+                )
+            );
+
             //END TEST
 
             _gamePlayer.Draw(_spriteBatch);

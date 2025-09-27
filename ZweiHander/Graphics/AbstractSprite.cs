@@ -27,7 +27,7 @@ public abstract class AbstractSprite : ISprite
     /// <summary>
     /// The amount of rotation, in radians, to apply when drawing this sprite on screen
     /// </summary>
-    protected float Rotation = 0.0f;
+    public float Rotation = 0.0f;
 
     /// <summary>
     /// The center of rotation, scaling, and position when drawing this sprite on screen
@@ -37,7 +37,7 @@ public abstract class AbstractSprite : ISprite
     /// <summary>
     /// The amount of scaling to apply to the x- and y-axes when drawing this sprite on screen
     /// </summary>
-    protected Vector2 Scale = Vector2.One;
+    public Vector2 Scale = Vector2.One;
 
     /// <summary>
     /// Specifies if this sprite should be flipped horizontally, vertically, or both when drawing on screen
