@@ -1,28 +1,34 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ZweiHander.Enemy.EnemyStorage;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
+using ZweiHander.Graphics.SpriteStorages;
 
 namespace ZweiHander.Enemy;
 
 /// <summary>
 /// All Enemies that exist are within this.
 /// </summary>
-public enum EnemyName
+/*public enum EnemyName
 {
     Darknut,
     Gel,
     Goriya,
     Keese,
     Stalfos
-}
+} */
+
 
 /// <summary>
 /// Manages creations of Enemies.
 /// </summary>
 public class EnemyFactory
 {
+    EnemySprites _enemySprites;
+    public EnemyFactory(EnemySprites enemysprites)
+    {
+        _enemySprites = enemysprites;
+    }
     /// <summary>
     /// Creates a new Enemy.
     /// </summary>
@@ -31,25 +37,25 @@ public class EnemyFactory
     /// <param name="face">The enemies intial facing direction</param>
     /// <param name="throw">Whether or not the enemy shoots projectiles/is shooting</param> 
     /// <returns>The desired item.</returns>
-    public IEnemy GetEnemy(EnemyName enemyName, Vector2 position = default, int face = default, int thrower = default)
+    public IEnemy GetEnemy(String enemyName, Vector2 position = default, int face = default, int thrower = default)
     {
         IEnemy enemy = null;
         switch (enemyName)
         {
-            case EnemyName.Darknut:
-                enemy = new Darknut();
+            case "Darknut":
+                enemy = new Darknut(_enemySprites);
                 break;
-            case EnemyName.Gel:
-                enemy = new Gel();
+            case "Gel":
+                enemy = new Gel(_enemySprites);
                 break;
-            case EnemyName.Goriya:
-                enemy = new Goriya();
+            case "Goriya":
+                enemy = new Goriya(_enemySprites);
                 break;
-            case EnemyName.Keese:
-                enemy = new Keese();
+            case "Keese":
+                enemy = new Keese(_enemySprites);
                 break;
-            case EnemyName.Stalfos:
-                enemy = new Stalfos();
+            case "Stalfos":
+                enemy = new Stalfos(_enemySprites);
                 break;
             default:
                 // Should never actually reach here- will error out if so
