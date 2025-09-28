@@ -17,5 +17,5 @@ public interface ISprite
     /// <param name="gameTime">A snapshot of the game timing values provided by the framework.</param>
     public void Update(GameTime gameTime);
 
-    public void Scale(Vector2 scale);
+    public void SetScale(Vector2 scale);
 }
