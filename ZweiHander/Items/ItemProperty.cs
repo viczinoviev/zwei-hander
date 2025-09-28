@@ -7,5 +7,6 @@ public enum ItemProperty
     CanBePickedUp,
     DeleteOnCollision,
     CanDamagePlayer,
-    CanDamageEnemy
+    CanDamageEnemy,
+    Stationary
 }

@@ -18,16 +18,18 @@ public abstract class AbstractItem : IItem
     /// </summary>
     protected ISprite _sprite;
 
-    public Vector2 Position { get; set; } = default;
+    public Vector2 Position { protected get;  set; } = default;
 
-    public Vector2 Velocity { get; set; } = default;
+    public Vector2 Velocity { protected get; set; } = default;
 
-    public Vector2 Acceleration { get; set; } = default;
+    public Vector2 Acceleration { protected get; set; } = default;
+
+    public double Life { protected get; set; } = -1f;
 
     /// <summary>
     /// The properties this item has.
     /// </summary>
-    public HashSet<ItemProperty> Properties = default;
+    protected HashSet<ItemProperty> Properties = default;
 
 
     public virtual void Update(GameTime time)

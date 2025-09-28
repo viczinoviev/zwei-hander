@@ -15,26 +15,52 @@ public class ItemFactory
     /// Creates a new item.
     /// </summary>
     /// <param name="itemType">What type of item to get.</param>
+    /// <param name="life">Lifetime (in seconds) for item; 0 will use default for type; -1 is infinite.</param>
     /// <param name="position">The item's starting position.</param>
     /// <param name="velocity">The item's starting velocity.</param>
     /// <param name="acceleration">The item's starting acceleration.</param>
+    /// <param name="properties">Properties attached to this instance; will use default properties for type if not given.</param>
     /// <returns>The desired item.</returns>
-    public IItem GetItem(ItemType itemType, ICollection<ItemProperty> properties, Vector2 position = default, Vector2 velocity = default, Vector2 acceleration = default)
+    public IItem GetItem(ItemType itemType, double life = 0f, ICollection<ItemProperty> properties = null, Vector2 position = default, Vector2 velocity = default, Vector2 acceleration = default)
     {
         IItem item = null;
         switch (itemType)
         {
             case ItemType.Compass:
                 item = new CompassItem();
+                if (properties == null)
+                {
+                    item.AddProperty(ItemProperty.Stationary); //Put this as defaults into constructor
+                    item.AddProperty(ItemProperty.DeleteOnCollision);
+                    item.AddProperty(ItemProperty.CanBePickedUp);
+                }
                 break;
             case ItemType.Map:
                 item = new MapItem();
+                if (properties == null)
+                {
+                    item.AddProperty(ItemProperty.Stationary);
+                    item.AddProperty(ItemProperty.DeleteOnCollision);
+                    item.AddProperty(ItemProperty.CanBePickedUp);
+                }
                 break;
             case ItemType.Key:
                 item = new KeyItem();
+                if (properties == null)
+                {
+                    item.AddProperty(ItemProperty.Stationary);
+                    item.AddProperty(ItemProperty.DeleteOnCollision);
+                    item.AddProperty(ItemProperty.CanBePickedUp);
+                }
                 break;
             case ItemType.Heart:
                 item = new HeartItem();
+                if (properties == null)
+                {
+                    item.AddProperty(ItemProperty.Stationary);
+                    item.AddProperty(ItemProperty.DeleteOnCollision);
+                    item.AddProperty(ItemProperty.CanBePickedUp);
+                }
                 break;
             default:
                 // Should never actually reach here - will error out if so
@@ -43,9 +69,13 @@ public class ItemFactory
         item.Position = position;
         item.Velocity = velocity;
         item.Acceleration = acceleration;
-        foreach(ItemProperty property in properties)
+        if (properties != null)
         {
-            item.AddProperty(property);
+            foreach (ItemProperty property in properties)
+            {
+                item.AddProperty(property);
+            }
+
         }
         return item;
     }
