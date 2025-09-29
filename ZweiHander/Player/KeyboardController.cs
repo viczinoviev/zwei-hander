@@ -63,7 +63,7 @@ public class KeyboardController : IController
         {
             foreach (var commandBinding in _commandBindings)
             {
-                if (currentKeyboardState.IsKeyDown(commandBinding.Key))
+                if (currentKeyboardState.IsKeyDown(commandBinding.Key) && !_previousKeyboardState.IsKeyDown(commandBinding.Key))
                 {
                     commandBinding.Value.Execute();
                     anyKeyPressed = true;
