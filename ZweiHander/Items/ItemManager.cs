@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
+using ZweiHander.Graphics.SpriteStorages;
 using ZweiHander.Items.ItemStorages;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 
@@ -15,6 +16,11 @@ public class ItemManager
     /// Holds all the items made by this factory.
     /// </summary>
     private readonly HashSet<IItem> _items = [];
+
+    /// <summary>
+    /// Holds all the sprites
+    /// </summary>
+    private readonly ItemSprites _sprites;
 
     /// <summary>
     /// Creates a new item.
@@ -40,20 +46,28 @@ public class ItemManager
         switch (itemType)
         {
             case ItemType.Compass:
-                item = new CompassItem(UseDefaultProperties);
+                item = new CompassItem(null, UseDefaultProperties);
                 item.Life = life == 0 ? -1 : life; 
                 break;
             case ItemType.Map:
-                item = new MapItem(UseDefaultProperties);
+                item = new MapItem(null, UseDefaultProperties);
                 item.Life = life == 0 ? -1 : life;
                 break;
             case ItemType.Key:
-                item = new KeyItem(UseDefaultProperties);
+                item = new KeyItem(null, UseDefaultProperties);
                 item.Life = life == 0 ? -1 : life;
                 break;
             case ItemType.Heart:
-                item = new HeartItem(UseDefaultProperties);
+                item = new HeartItem(null, UseDefaultProperties);
                 item.Life = life == 0 ? -1 : life;
+                break;
+            case ItemType.Boomerang:
+                item = new BoomerangItem(_sprites.Boomerang(), UseDefaultProperties);
+                item.Life = life == 0 ? 3 : life;
+                break;
+            case ItemType.Arrow:
+                item = new ArrowItem(_sprites.ArrowRight(), UseDefaultProperties);
+                item.Life = life == 0 ? 2 : life;
                 break;
             default:
                 // Should never actually reach here - will error out if so

@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZweiHander.Graphics;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace ZweiHander.Items.ItemStorages;
 public class CompassItem : AbstractItem
 {
-    public CompassItem(bool defaultProperties)
+    public CompassItem(ISprite sprite, bool defaultProperties)
+        : base(sprite)
     {
         if (defaultProperties)
         {

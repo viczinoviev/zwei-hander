@@ -7,10 +7,15 @@ using ZweiHander.Graphics;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace ZweiHander.Items.ItemStorages;
-public class BoomerangItem : AbstractItem
+public class ArrowItem : AbstractItem
 {
-    public BoomerangItem(ISprite sprite, bool defaultProperties)
+    public ArrowItem(ISprite sprite, bool defaultProperties)
         : base(sprite)
     {
+    }
+
+    public override void OnDeath()
+    {
+        // Make the little sprite thing.
     }
 }

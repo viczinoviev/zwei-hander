@@ -20,7 +20,7 @@ public interface IItem
     public Vector2 Velocity { set; }
 
     /// <summary>
-    /// Current velocity using xy coordinate system; default is (0,0).
+    /// Current acceleration using xy coordinate system; default is (0,0).
     /// </summary>
     public Vector2 Acceleration { set; }
 

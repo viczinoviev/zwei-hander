@@ -21,7 +21,11 @@ public enum ItemType
     /// </summary>
     Heart,
     /// <summary>
-    /// Only default animation, use ItemHelper.BoomerangTrajectory
+    /// 3s life, animation; use ItemHelper.BoomerangTrajectory
     /// </summary>
-    Boomerang
+    Boomerang,
+    /// <summary>
+    /// 2s life, death sprite
+    /// </summary>
+    Arrow
 }
