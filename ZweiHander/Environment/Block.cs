@@ -5,28 +5,6 @@ using ZweiHander.Graphics;
 
 namespace ZweiHander.Environment
 {
-    // Enum to define different types of blocks
-    public enum BlockType
-    {
-        Solid,      // Blocks that are solid and cannot be moved
-        Pushable,   // Blocks that can be pushed by the player
-        Breakable,  // Blocks that can be broken/destroyed
-        Decorative  // Non-collidable decorative blocks
-    }
-
-    public enum BlockName
-    {
-        SolidCyanTile,
-        BlockTile,
-        StatueTile1,
-        StatueTile2,
-        SolidBlackTile,
-        TexturedTile,
-        StairTile,
-        BrickTile,
-        WhitePatternTile
-    }
-
     public class Block
     {
         private BlockType _blockType;   // Type of the block
@@ -58,6 +36,12 @@ namespace ZweiHander.Environment
         {
             _blockType = newType;
             _sprite = newSprite;
+            
+        }
+
+        public void Draw()
+        {
+            _sprite.Draw(this.getVectorPosition());
         }
 
         // Returns the hitbox rectangle for collision detection
