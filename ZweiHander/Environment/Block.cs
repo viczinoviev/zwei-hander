@@ -44,6 +44,10 @@ namespace ZweiHander.Environment
             _sprite.Draw(this.getVectorPosition());
         }
 
+        public void Update(GameTime gameTime)
+        {
+            _sprite.Update(gameTime);
+        }
         // Returns the hitbox rectangle for collision detection
         public Rectangle getBlockHitbox()
         {

@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using ZweiHander.Graphics;
 using ZweiHander.Graphics.SpriteStorages;
 using ZweiHander.Enemy;
+using ZweiHander.Environment;
 
 namespace ZweiHander
 {
@@ -14,7 +15,7 @@ namespace ZweiHander
         private SpriteBatch _spriteBatch;
 
         // TEST: Link Sprites, this should be contained in the Link Class.
-        private ISprite _block;
+        private Block _block;
         private ISprite _treasure;
         private IEnemy _enemy;
         private ISprite _item;
@@ -23,6 +24,19 @@ namespace ZweiHander
         private Player _gamePlayer;
         private KeyboardController _keyboardController;
 
+        //Sprites and factories
+        private PlayerSprites _linkSprites;
+        private BlockSprites _blockSprites;
+        private TreasureSprites _treasureSprites;
+        private EnemySprites _enemySprites;
+        private EnemyFactory _enemyFactory;
+        private ItemSprites _itemSprites;
+        private BlockFactory _blockFactory;
+
+        //dummy position for treasure and item
+        Vector2 treasurePosition;
+        Vector2 itemPosition;
+        Point blockPosition;
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -40,21 +54,40 @@ namespace ZweiHander
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            
             //TEST: Link Sprites, Should be part of link initialization
-            
+
             // This line will load all of the sprites into the program through an xml file
-            PlayerSprites _linkSprites = new PlayerSprites(Content, _spriteBatch);
-            BlockSprites _blockSprites = new BlockSprites(Content, _spriteBatch);
-            TreasureSprites _treasureSprites = new TreasureSprites(Content, _spriteBatch);
-            EnemySprites _enemySprites = new EnemySprites(Content, _spriteBatch);
-            EnemyFactory _enemyFactory = new EnemyFactory(_enemySprites);
-            ItemSprites _itemSprites = new ItemSprites(Content, _spriteBatch);
+            _linkSprites = new PlayerSprites(Content, _spriteBatch);
+            _blockSprites = new BlockSprites(Content, _spriteBatch);
+            _treasureSprites = new TreasureSprites(Content, _spriteBatch);
+            _enemySprites = new EnemySprites(Content, _spriteBatch);
+            _enemyFactory = new EnemyFactory(_enemySprites);
+            _itemSprites = new ItemSprites(Content, _spriteBatch);
+            _blockFactory = new BlockFactory(32, _blockSprites);
 
+            GameSetUp();
+            
+            
+        }
 
-            _block = _blockSprites.BlockTile();
+        /// <summary>
+        /// Sets up the initial game state
+        /// </summary>
+        private void GameSetUp()
+        {
+            treasurePosition = new Vector2(
+                GraphicsDevice.PresentationParameters.BackBufferWidth * 0.25f,
+                GraphicsDevice.PresentationParameters.BackBufferHeight * 0.25f
+                );
+            itemPosition = new Vector2(
+                GraphicsDevice.PresentationParameters.BackBufferWidth * 0.5f,
+                GraphicsDevice.PresentationParameters.BackBufferHeight * 0.75f
+                );
+            blockPosition = new Point(10, 6);
+
+            _block = _blockFactory.CreateBlock(BlockName.SolidCyanTile, blockPosition);
             _treasure = _treasureSprites.HeartContainer();
-            _enemy = _enemyFactory.GetEnemy("Darknut",new Vector2(300,300));
+            _enemy = _enemyFactory.GetEnemy("Darknut", new Vector2(300, 300));
             _item = _itemSprites.Boomerang();
 
             //END TEST
@@ -62,8 +95,6 @@ namespace ZweiHander
             _gamePlayer = new Player(_linkSprites);
             _keyboardController = new KeyboardController(_gamePlayer);
             _gamePlayer.Position = new Vector2(400, 300);
-
-            // TODO: use this.Content to load your game content here
         }
 
         protected override void Update(GameTime gameTime)
@@ -94,25 +125,15 @@ namespace ZweiHander
 
             // Draws the sprite at the passed in coordinates
 
-            _block.Draw(new Vector2(
-                GraphicsDevice.PresentationParameters.BackBufferWidth * 0.75f,
-                GraphicsDevice.PresentationParameters.BackBufferHeight * 0.25f
-                )
-            );
+            _block.Draw();
 
-            _treasure.Draw(new Vector2(
-                GraphicsDevice.PresentationParameters.BackBufferWidth * 0.25f,
-                GraphicsDevice.PresentationParameters.BackBufferHeight * 0.25f
-                )
-            );
+            
+            _treasure.Draw(treasurePosition);
 
             _enemy.Draw();
 
-            _item.Draw(new Vector2(
-                GraphicsDevice.PresentationParameters.BackBufferWidth * 0.5f,
-                GraphicsDevice.PresentationParameters.BackBufferHeight * 0.75f
-                )
-            );
+            
+            _item.Draw(itemPosition);
 
             //END TEST
 
