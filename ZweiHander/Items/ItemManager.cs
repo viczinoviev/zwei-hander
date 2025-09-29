@@ -7,7 +7,7 @@ using Vector2 = Microsoft.Xna.Framework.Vector2;
 namespace ZweiHander.Items;
 
 /// <summary>
-/// Manages items.
+/// Creates items, stores them, and updates stored items.
 /// </summary>
 public class ItemManager
 {
