@@ -2,12 +2,15 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System;
+using ZweiHander.Commands;
 
 public class KeyboardController : IController
 {
     private Player _player;
     private KeyboardState _previousKeyboardState;
     private Dictionary<Keys, Action> _keyBindings;
+    private Dictionary<Keys, ICommand> _commandBindings;
+
 
     public KeyboardController(Player player)
     {
@@ -28,8 +31,18 @@ public class KeyboardController : IController
             { Keys.D, () => _player.MoveRight() },
             { Keys.Right, () => _player.MoveRight() },
             { Keys.Space, () => _player.Attack() }
+            
         };
     }
+
+    public void BindKey(Keys key, ICommand command)
+    {
+        if (_commandBindings == null)
+            _commandBindings = new Dictionary<Keys, ICommand>();
+
+        _commandBindings[key] = command;
+    }
+
 
     public void Update()
     {
@@ -43,6 +56,19 @@ public class KeyboardController : IController
                 keyBinding.Value();
                 anyKeyPressed = true;
                 break;
+            }
+        }
+
+        if (!anyKeyPressed && _commandBindings != null)
+        {
+            foreach (var commandBinding in _commandBindings)
+            {
+                if (currentKeyboardState.IsKeyDown(commandBinding.Key))
+                {
+                    commandBinding.Value.Execute();
+                    anyKeyPressed = true;
+                    break;
+                }
             }
         }
 

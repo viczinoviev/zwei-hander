@@ -1,10 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using ZweiHander.Graphics;
-using ZweiHander.Graphics.SpriteStorages;
+using ZweiHander.Commands;
 using ZweiHander.Enemy;
 using ZweiHander.Environment;
+using ZweiHander.Graphics;
+using ZweiHander.Graphics.SpriteStorages;
 
 namespace ZweiHander
 {
@@ -66,14 +67,12 @@ namespace ZweiHander
             _blockFactory = new BlockFactory(32, _blockSprites);
 
             GameSetUp();
-            
-            
         }
 
         /// <summary>
         /// Sets up the initial game state
         /// </summary>
-        private void GameSetUp()
+        public void GameSetUp()
         {
             treasurePosition = new Vector2(
                 GraphicsDevice.PresentationParameters.BackBufferWidth * 0.25f,
@@ -93,8 +92,13 @@ namespace ZweiHander
             //END TEST
 
             _gamePlayer = new Player(_linkSprites);
-            _keyboardController = new KeyboardController(_gamePlayer);
+            
             _gamePlayer.Position = new Vector2(400, 300);
+
+            //Set up KeyboardController
+            _keyboardController = new KeyboardController(_gamePlayer);
+            _keyboardController.BindKey(Keys.R, new ResetCommand(this));
+            _keyboardController.BindKey(Keys.Q, new QuitCommand(this));
         }
 
         protected override void Update(GameTime gameTime)
