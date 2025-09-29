@@ -39,7 +39,7 @@ public class Darknut : IEnemy
     {
         if (delay == 10)
         {
-            face = rnd.Next(4);
+            face = rnd.Next(6);
             switch (face)
             {
                 case 0:
@@ -87,7 +87,7 @@ public class Darknut : IEnemy
                     }
                     break;
                 default:
-                    //not possible
+                    //No movement
                     break;
             }
 
