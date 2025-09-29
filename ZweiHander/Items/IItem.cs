@@ -27,7 +27,7 @@ public interface IItem
     /// <summary>
     /// The lifetime (in seconds) left for item; negative means infinite.
     /// </summary>
-    public double Life { set; }
+    public double Life { get; set; }
 
     /// <summary>
     /// Draws this item on screen.
@@ -51,4 +51,9 @@ public interface IItem
     /// </summary>
     /// <param name="property">Property to be added.</param>
     public void AddProperty(ItemProperty property);
+
+    /// <summary>
+    /// What to do when Life reaches 0.
+    /// </summary>
+    public void OnDeath();
 }

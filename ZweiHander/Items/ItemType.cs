@@ -19,5 +19,9 @@ public enum ItemType
     /// <summary>
     /// Infinite, Can be picked up, stationary, delete on collision
     /// </summary>
-    Heart
+    Heart,
+    /// <summary>
+    /// Only default animation, use ItemHelper.BoomerangTrajectory
+    /// </summary>
+    Boomerang
 }

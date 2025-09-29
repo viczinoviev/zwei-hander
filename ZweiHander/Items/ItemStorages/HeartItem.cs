@@ -8,7 +8,15 @@ using Vector2 = Microsoft.Xna.Framework.Vector2;
 namespace ZweiHander.Items.ItemStorages;
 public class HeartItem : AbstractItem
 {
-    public HeartItem()
+    public HeartItem(bool defaultProperties)
     {
+        if (defaultProperties)
+        {
+            Properties = [
+                ItemProperty.CanBePickedUp,
+                ItemProperty.DeleteOnCollision,
+                ItemProperty.Stationary
+            ];
+        }
     }
 }

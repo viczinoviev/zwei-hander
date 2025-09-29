@@ -7,10 +7,15 @@ using Vector2 = Microsoft.Xna.Framework.Vector2;
 namespace ZweiHander.Items;
 
 /// <summary>
-/// Manages creations of items.
+/// Manages items.
 /// </summary>
-public class ItemFactory
+public class ItemManager
 {
+    /// <summary>
+    /// Holds all the items made by this factory.
+    /// </summary>
+    private readonly HashSet<IItem> _items = [];
+
     /// <summary>
     /// Creates a new item.
     /// </summary>
@@ -21,46 +26,34 @@ public class ItemFactory
     /// <param name="acceleration">The item's starting acceleration.</param>
     /// <param name="properties">Properties attached to this instance; will use default properties for type if not given.</param>
     /// <returns>The desired item.</returns>
-    public IItem GetItem(ItemType itemType, double life = 0f, ICollection<ItemProperty> properties = null, Vector2 position = default, Vector2 velocity = default, Vector2 acceleration = default)
+    public IItem GetItem(
+        ItemType itemType, 
+        double life = 0f, 
+        ICollection<ItemProperty> properties = null, 
+        Vector2 position = default, 
+        Vector2 velocity = default, 
+        Vector2 acceleration = default
+    )
     {
+        bool UseDefaultProperties = properties == null;
         IItem item = null;
         switch (itemType)
         {
             case ItemType.Compass:
-                item = new CompassItem();
-                if (properties == null)
-                {
-                    item.AddProperty(ItemProperty.Stationary); //Put this as defaults into constructor
-                    item.AddProperty(ItemProperty.DeleteOnCollision);
-                    item.AddProperty(ItemProperty.CanBePickedUp);
-                }
+                item = new CompassItem(UseDefaultProperties);
+                item.Life = life == 0 ? -1 : life; 
                 break;
             case ItemType.Map:
-                item = new MapItem();
-                if (properties == null)
-                {
-                    item.AddProperty(ItemProperty.Stationary);
-                    item.AddProperty(ItemProperty.DeleteOnCollision);
-                    item.AddProperty(ItemProperty.CanBePickedUp);
-                }
+                item = new MapItem(UseDefaultProperties);
+                item.Life = life == 0 ? -1 : life;
                 break;
             case ItemType.Key:
-                item = new KeyItem();
-                if (properties == null)
-                {
-                    item.AddProperty(ItemProperty.Stationary);
-                    item.AddProperty(ItemProperty.DeleteOnCollision);
-                    item.AddProperty(ItemProperty.CanBePickedUp);
-                }
+                item = new KeyItem(UseDefaultProperties);
+                item.Life = life == 0 ? -1 : life;
                 break;
             case ItemType.Heart:
-                item = new HeartItem();
-                if (properties == null)
-                {
-                    item.AddProperty(ItemProperty.Stationary);
-                    item.AddProperty(ItemProperty.DeleteOnCollision);
-                    item.AddProperty(ItemProperty.CanBePickedUp);
-                }
+                item = new HeartItem(UseDefaultProperties);
+                item.Life = life == 0 ? -1 : life;
                 break;
             default:
                 // Should never actually reach here - will error out if so
@@ -69,7 +62,7 @@ public class ItemFactory
         item.Position = position;
         item.Velocity = velocity;
         item.Acceleration = acceleration;
-        if (properties != null)
+        if (!UseDefaultProperties)
         {
             foreach (ItemProperty property in properties)
             {
@@ -77,7 +70,24 @@ public class ItemFactory
             }
 
         }
+        _items.Add(item);
         return item;
     }
 
+    /// <summary>
+    /// Updates all items this manager contains.
+    /// </summary>
+    /// <param name="gameTime">A snapshot of the game timing values provided by the framework.</param>
+    public void Update(GameTime gameTime)
+    {
+        foreach(IItem item in _items)
+        {
+            item.Update(gameTime); // Do each item's update
+            if(item.Life == 0)
+            {
+                item.OnDeath(); // Do item's death behavior if died
+            }
+        }
+        _items.RemoveWhere(item => item.Life == 0); // Remove any dead items
+    }
 }
