@@ -2,6 +2,7 @@
 <TextureAtlas>
 	<Texture>SpriteSheets/Link</Texture>
 	<Regions>
+		<!-- Link Sprites -->
 		<Region name="link-move-down-1" x="1" y="11" width="16" height="16" />
 		<Region name="link-move-down-2" x="18" y="11" width="16" height="16" />
 		<Region name="link-move-right-1" x="35" y="11" width="16" height="16" />
@@ -20,8 +21,16 @@
 		<Region name="link-attack-sword-right-2" x="18" y="77" width="27" height="17" />
 		<Region name="link-attack-sword-right-3" x="46" y="77" width="23" height="17" />
 		<Region name="link-attack-sword-right-4" x="70" y="77" width="19" height="17" />
+		<!-- Item Sprites -->
+		<Region name="arrow-up" x="1" y="185" width="8" height="16" />
+		<Region name="arrow-right" x="10" y="185" width="16" height="16" />
+		<Region name="boomerang-1" x="64" y="185" width="8" height="16" />
+		<Region name="boomerang-2" x="73" y="185" width="8" height="16" />
+		<Region name="boomerang-3" x="82" y="185" width="8" height="16" />
+		<Region name="projectile-hit" x="53" y="185" width="8" height="16" />
 	</Regions>
 	<Animations>
+		<!-- Link Animations -->
 		<Animation name="link-move-animation-down" delay="200">
 			<Frame region="link-move-down-1" />
 			<Frame region="link-move-down-2" />
@@ -51,6 +60,12 @@
 			<Frame region="link-attack-sword-right-2" />
 			<Frame region="link-attack-sword-right-3" />
 			<Frame region="link-attack-sword-right-4" />
-		</Animation>		
+		</Animation>
+		<!-- Item Animations -->
+		<Animation name="boomerang-animation" delay="200">
+			<Frame region="boomerang-1" />
+			<Frame region="boomerang-2" />
+			<Frame region="boomerang-3" />
+		</Animation>
 	</Animations>
 </TextureAtlas>

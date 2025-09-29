@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using ZweiHander.Graphics;
 using ZweiHander.Graphics.SpriteStorages;
+using ZweiHander.Enemy;
 
 namespace ZweiHander
 {
@@ -15,7 +16,8 @@ namespace ZweiHander
         // TEST: Link Sprites, this should be contained in the Link Class.
         private ISprite _block;
         private ISprite _treasure;
-        private ISprite _enemy;
+        private IEnemy _enemy;
+        private ISprite _item;
         // END TEST
 
         private Player _gamePlayer;
@@ -46,10 +48,14 @@ namespace ZweiHander
             BlockSprites _blockSprites = new BlockSprites(Content, _spriteBatch);
             TreasureSprites _treasureSprites = new TreasureSprites(Content, _spriteBatch);
             EnemySprites _enemySprites = new EnemySprites(Content, _spriteBatch);
+            EnemyFactory _enemyFactory = new EnemyFactory(_enemySprites);
+            ItemSprites _itemSprites = new ItemSprites(Content, _spriteBatch);
+
 
             _block = _blockSprites.BlockTile();
             _treasure = _treasureSprites.HeartContainer();
-            _enemy = _enemySprites.DarknutMoveRight();
+            _enemy = _enemyFactory.GetEnemy("Darknut",new Vector2(300,300));
+            _item = _itemSprites.Boomerang();
 
             //END TEST
 
@@ -69,6 +75,8 @@ namespace ZweiHander
 
             // This is needed to update the frames for the animation
             _block.Update(gameTime);
+            _item.Update(gameTime);
+            _enemy.Update(gameTime);
             //END TEST
 
             _keyboardController.Update();
@@ -81,7 +89,7 @@ namespace ZweiHander
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            _spriteBatch.Begin();
+            _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
 
 
             // Draws the sprite at the passed in coordinates
@@ -98,8 +106,10 @@ namespace ZweiHander
                 )
             );
 
-            _enemy.Draw(new Vector2(
-                GraphicsDevice.PresentationParameters.BackBufferWidth * 0.75f,
+            _enemy.Draw();
+
+            _item.Draw(new Vector2(
+                GraphicsDevice.PresentationParameters.BackBufferWidth * 0.5f,
                 GraphicsDevice.PresentationParameters.BackBufferHeight * 0.75f
                 )
             );

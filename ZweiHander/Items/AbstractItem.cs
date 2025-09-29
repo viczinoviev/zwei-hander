@@ -18,23 +18,41 @@ public abstract class AbstractItem : IItem
     /// </summary>
     protected ISprite _sprite;
 
-    public Vector2 Position { get; set; } = default;
+    public Vector2 Position { protected get;  set; } = default;
 
-    public Vector2 Velocity { get; set; } = default;
+    public Vector2 Velocity { protected get; set; } = default;
 
-    public Vector2 Acceleration { get; set; } = default;
+    public Vector2 Acceleration { protected get; set; } = default;
+
+    public double Life { get; set; } = -1f;
 
     /// <summary>
     /// The properties this item has.
     /// </summary>
-    public HashSet<ItemProperty> Properties = default;
+    protected HashSet<ItemProperty> Properties = default;
 
 
     public virtual void Update(GameTime time)
     {
-        float dt = (float) time.ElapsedGameTime.TotalSeconds;
-        Velocity += dt * Acceleration;
-        Position += dt * Velocity + (dt * dt / 2) * Acceleration;
+        float dt = (float)time.ElapsedGameTime.TotalSeconds;
+
+        // Movement
+        if (!Properties.Contains(ItemProperty.Stationary))
+        {
+            Velocity += dt * Acceleration;
+            Position += dt * Velocity + (dt * dt / 2) * Acceleration;
+        }
+
+        // Life progression
+        if (Life > 0)
+        {
+            Life -= dt;
+            if (Life < 0)
+            {
+                Life = 0;
+            }
+        }
+
         _sprite.Update(time);
     }
 
@@ -51,5 +69,10 @@ public abstract class AbstractItem : IItem
     public void AddProperty(ItemProperty property)
     {
         Properties.Add(property);
+    }
+
+    public virtual void OnDeath()
+    {
+        // No default
     }
 }

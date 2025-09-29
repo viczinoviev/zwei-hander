@@ -27,7 +27,7 @@ public abstract class AbstractSprite : ISprite
     /// <summary>
     /// The amount of rotation, in radians, to apply when drawing this sprite on screen
     /// </summary>
-    public float Rotation = 0.0f;
+    protected float Rotation = 0.0f;
 
     /// <summary>
     /// The center of rotation, scaling, and position when drawing this sprite on screen
@@ -37,12 +37,12 @@ public abstract class AbstractSprite : ISprite
     /// <summary>
     /// The amount of scaling to apply to the x- and y-axes when drawing this sprite on screen
     /// </summary>
-    public Vector2 Scale = Vector2.One;
+    public Vector2 Scale = new Vector2(2, 2);
 
     /// <summary>
     /// Specifies if this sprite should be flipped horizontally, vertically, or both when drawing on screen
     /// </summary>
-    protected SpriteEffects Effects = SpriteEffects.None;
+    public SpriteEffects Effects = SpriteEffects.None;
 
     /// <summary>
     /// The depth of the layer to use when drawing this sprite on screen
@@ -57,5 +57,10 @@ public abstract class AbstractSprite : ISprite
     public void Draw(Vector2 position)
     {
         _region.Draw(_spriteBatch, position, Color, Rotation, Origin, Scale, Effects, LayerDepth);
+    }
+
+    public void SetScale(Vector2 scale)
+    {
+        Scale = scale;
     }
 }
