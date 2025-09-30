@@ -30,8 +30,8 @@ public class KeyboardController : IController
             { Keys.Left, () => _player.MoveLeft() },
             { Keys.D, () => _player.MoveRight() },
             { Keys.Right, () => _player.MoveRight() },
-            { Keys.Space, () => _player.Attack() }
-            
+            { Keys.Z, () => _player.Attack() },
+            { Keys.N, () => _player.Attack() }
         };
     }
 
@@ -55,7 +55,6 @@ public class KeyboardController : IController
             {
                 keyBinding.Value();
                 anyKeyPressed = true;
-                break;
             }
         }
 
