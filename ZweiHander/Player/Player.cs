@@ -5,60 +5,83 @@ using ZweiHander.Graphics.SpriteStorages;
 
 public class Player : IPlayer
 {
-    public PlayerStateMachine _stateMachine;
+    private PlayerStateMachine _stateMachine;
+    private PlayerHandler _handler;
     public Vector2 Position { get; set; }
     public float Speed { get; set; } = 100f;
+    public PlayerInput CurrentInput { get; set; } = PlayerInput.None;
+    public PlayerState CurrentState => _stateMachine.CurrentState;
 
     public Player(PlayerSprites playerSprites)
     {
-        _stateMachine = new PlayerStateMachine(playerSprites, this);
+        _stateMachine = new PlayerStateMachine(this);
+        _handler = new PlayerHandler(playerSprites, this, _stateMachine);
         Position = Vector2.Zero;
     }
 
     public void Update(GameTime gameTime)
     {
         _stateMachine.Update(gameTime);
+        _handler.Update(gameTime);
     }
 
     public void MoveUp()
     {
-        _stateMachine.SetState(PlayerState.MovingUp);
+        CurrentInput = PlayerInput.MovingUp;
     }
 
     public void MoveDown()
     {
-        _stateMachine.SetState(PlayerState.MovingDown);
+        CurrentInput = PlayerInput.MovingDown;
     }
 
     public void MoveLeft()
     {
-        _stateMachine.SetState(PlayerState.MovingLeft);
+        CurrentInput = PlayerInput.MovingLeft;
     }
 
     public void MoveRight()
     {
-        _stateMachine.SetState(PlayerState.MovingRight);
+        CurrentInput = PlayerInput.MovingRight;
     }
 
     public void Attack()
     {
-        _stateMachine.SetState(PlayerState.Attacking);
+        CurrentInput = PlayerInput.Attacking;
     }
 
     public void Idle()
     {
-        _stateMachine.SetState(PlayerState.Idle);
+        CurrentInput = PlayerInput.None;
     }
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        _stateMachine.Draw(spriteBatch);
+        _handler.Draw(spriteBatch);
     }
 }
 
 public enum PlayerState
 {
     Idle,
+    MovingUp,
+    MovingDown,
+    MovingLeft,
+    MovingRight,
+    Attacking
+}
+
+public enum Direction
+{
+    Up,
+    Down,
+    Left,
+    Right
+}
+
+public enum PlayerInput
+{
+    None,
     MovingUp,
     MovingDown,
     MovingLeft,

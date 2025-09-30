@@ -1,97 +1,85 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ZweiHander.Graphics;
-using ZweiHander.Graphics.SpriteStorages;
 
 public class PlayerStateMachine : IStateMachine
 {
     private Player _player;
     private PlayerState _currentState;
-    private ISprite _currentSprite;
-    private PlayerSprites _playerSprites;
-    private float _moveSpeed = 100f;
+    private Direction _lastDirection = Direction.Down;
+    private float _attackTimer = 0f;
+    private float _attackDuration = 800f;
+    
+    public PlayerState CurrentState => _currentState;
+    public Direction LastDirection => _lastDirection;
 
-    public PlayerStateMachine(PlayerSprites playerSprites, Player player)
+    public PlayerStateMachine(Player player)
     {
-        _playerSprites = playerSprites;
         _player = player;
         _currentState = PlayerState.Idle;
-        _currentSprite = _playerSprites.PlayerIdle();
-    }
-
-    public void SetState(PlayerState newState)
-    {
-        if (_currentState != newState)
-        {
-            _currentState = newState;
-            UpdateSprite();
-        }
-    }
-
-    private void UpdateSprite()
-    {
-        switch (_currentState)
-        {
-            case PlayerState.MovingUp:
-                _currentSprite = _playerSprites.PlayerMoveUp();
-                break;
-            case PlayerState.MovingDown:
-                _currentSprite = _playerSprites.PlayerMoveDown();
-                break;
-            case PlayerState.MovingRight:
-                _currentSprite = _playerSprites.PlayerMoveRight();
-                break;
-            case PlayerState.MovingLeft:
-                _currentSprite = _playerSprites.PlayerMoveRight();
-                break;
-            case PlayerState.Attacking:
-                _currentSprite = _playerSprites.PlayerAttackSwordDown();
-                break;
-            default:
-                _currentSprite = _playerSprites.PlayerMoveDown();
-                break;
-        }
     }
 
     public void Update(GameTime gameTime)
     {
-        if (_player != null)
+        float deltaTime = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+        
+        // Handle attack timer
+        if (_attackTimer > 0f)
         {
-            UpdatePosition(gameTime);
+            _attackTimer -= deltaTime;
+            if (_attackTimer <= 0f)
+            {
+                _attackTimer = 0f;
+                ChangeState(PlayerState.Idle);
+            }
+            // Attack locks out other actions
+            return; 
         }
-        _currentSprite?.Update(gameTime);
+
+        // Process input and change state
+        PlayerState newState = GetStateFromInput(_player.CurrentInput);
+        if (newState != _currentState)
+        {
+            ChangeState(newState);
+        }
     }
 
-    private void UpdatePosition(GameTime gameTime)
+    private PlayerState GetStateFromInput(PlayerInput input)
     {
-        Vector2 movement = Vector2.Zero;
-        float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-        switch (_currentState)
+        // More logic will be added later to handle more complex state changes
+        switch (input)
         {
-            case PlayerState.MovingUp:
-                movement.Y = -_moveSpeed * deltaTime;
-                break;
-            case PlayerState.MovingDown:
-                movement.Y = _moveSpeed * deltaTime;
-                break;
-            case PlayerState.MovingLeft:
-                movement.X = -_moveSpeed * deltaTime;
-                break;
-            case PlayerState.MovingRight:
-                movement.X = _moveSpeed * deltaTime;
-                break;
+            case PlayerInput.Attacking:
+                return PlayerState.Attacking;
+            case PlayerInput.MovingUp:
+                return PlayerState.MovingUp;
+            case PlayerInput.MovingDown:
+                return PlayerState.MovingDown;
+            case PlayerInput.MovingLeft:
+                return PlayerState.MovingLeft;
+            case PlayerInput.MovingRight:
+                return PlayerState.MovingRight;
+            default:
+                return PlayerState.Idle;
         }
-
-        _player.Position += movement;
     }
 
-    public void Draw(SpriteBatch spriteBatch)
+    private void ChangeState(PlayerState newState)
     {
-        if (_player != null)
+        _currentState = newState;
+
+        // Update direction for movement and attacking
+        if (newState == PlayerState.MovingUp) _lastDirection = Direction.Up;
+        else if (newState == PlayerState.MovingDown) _lastDirection = Direction.Down;
+        else if (newState == PlayerState.MovingLeft) _lastDirection = Direction.Left;
+        else if (newState == PlayerState.MovingRight) _lastDirection = Direction.Right;
+
+        // Start attack timer
+        if (newState == PlayerState.Attacking)
         {
-            _currentSprite?.Draw(_player.Position);
+            _attackTimer = _attackDuration;
         }
     }
+
+
 }
