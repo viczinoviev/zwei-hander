@@ -29,7 +29,7 @@ public abstract class AbstractItem : IItem
     /// <summary>
     /// The properties this item has.
     /// </summary>
-    protected HashSet<ItemProperty> Properties = default;
+    protected HashSet<ItemProperty> Properties = [];
 
 
     protected AbstractItem(ISprite sprite)

@@ -7,6 +7,7 @@ using ZweiHander.Enemy;
 using ZweiHander.Environment;
 using ZweiHander.Graphics;
 using ZweiHander.Graphics.SpriteStorages;
+using ZweiHander.Items;
 
 namespace ZweiHander
 {
@@ -20,7 +21,7 @@ namespace ZweiHander
         private Block _block;
         private ISprite _treasure;
         private IEnemy _enemy;
-        private ISprite _item;
+        private IItem _item;
         // END TEST
 
         private Player _gamePlayer;
@@ -34,6 +35,7 @@ namespace ZweiHander
         private EnemyFactory _enemyFactory;
         private ItemSprites _itemSprites;
         private BlockFactory _blockFactory;
+        private ItemManager _itemManager;
 
         //Stores all the blocks created
         private List<Block> _blockList;
@@ -48,6 +50,18 @@ namespace ZweiHander
         public List<Block> BlockList => _blockList;
         public Block Block { get => _block; set => _block = value; }
         public int BlockIndex { get => _blockIndex; set => _blockIndex = value; }
+
+        private List<IItem> _items;
+        private int _itemIndex = 0;
+        /// <summary>
+        /// Index for current item.
+        /// </summary>
+        public int ItemIndex { get => _itemIndex; set { _itemIndex = value; _item = _items[value];  } }
+
+        /// <summary>
+        /// Number of items available.
+        /// </summary>
+        public int ItemCount { get => _itemManager.ItemCount; }
 
         public Game1()
         {
@@ -76,6 +90,7 @@ namespace ZweiHander
             _enemyFactory = new EnemyFactory(_enemySprites);
             _itemSprites = new ItemSprites(Content, _spriteBatch);
             _blockFactory = new BlockFactory(32, _blockSprites);
+            _itemManager = new ItemManager(_itemSprites, _treasureSprites);
 
             GameSetUp();
         }
@@ -105,11 +120,17 @@ namespace ZweiHander
             _blockList.Add(_block = _blockFactory.CreateBlock(BlockName.BlockTile, blockPosition));
             _blockList.Add(_block = _blockFactory.CreateBlock(BlockName.StairTile, blockPosition));
 
+            _items = [
+                _itemManager.GetItem(ItemType.Heart, -1, position: itemPosition),
+                _itemManager.GetItem(ItemType.Boomerang, -1, position: itemPosition),
+                _itemManager.GetItem(ItemType.Arrow, -1, position: itemPosition)
+            ];
+
             _block = _blockList[0];
 
             _treasure = _treasureSprites.HeartContainer();
             _enemy = _enemyFactory.GetEnemy("Darknut", new Vector2(300, 300));
-            _item = _itemSprites.Boomerang();
+            _item = _items[_itemIndex];
 
             //END TEST
 
@@ -122,6 +143,8 @@ namespace ZweiHander
             _keyboardController.BindKey(Keys.Q, new QuitCommand(this));
             _keyboardController.BindKey(Keys.T, new ChangeBlockCommand(this, -1));
             _keyboardController.BindKey(Keys.Y, new ChangeBlockCommand(this, +1));
+            _keyboardController.BindKey(Keys.U, new ChangeItemCommand(this, -1));
+            _keyboardController.BindKey(Keys.I, new ChangeItemCommand(this, +1));
         }
 
         protected override void Update(GameTime gameTime)
@@ -160,7 +183,7 @@ namespace ZweiHander
             _enemy.Draw();
 
             
-            _item.Draw(itemPosition);
+            _item.Draw();
 
             //END TEST
 

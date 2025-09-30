@@ -18,9 +18,25 @@ public class ItemManager
     private readonly HashSet<IItem> _items = [];
 
     /// <summary>
-    /// Holds all the sprites
+    /// Holds all the sprites for items.
     /// </summary>
-    private readonly ItemSprites _sprites;
+    private readonly ItemSprites _itemSprites;
+
+    /// <summary>
+    /// Holds all the sprites for treasures.
+    /// </summary>
+    private readonly TreasureSprites _treasureSprites;
+
+    /// <summary>
+    /// Number of items stored in this manager.
+    /// </summary>
+    public int ItemCount { get =>  _items.Count; }
+
+    public ItemManager(ItemSprites itemSprites, TreasureSprites treasureSprites)
+    {
+        _itemSprites = itemSprites;
+        _treasureSprites = treasureSprites;
+    }
 
     /// <summary>
     /// Creates a new item.
@@ -58,15 +74,15 @@ public class ItemManager
                 item.Life = life == 0 ? -1 : life;
                 break;
             case ItemType.Heart:
-                item = new HeartItem(null, UseDefaultProperties);
+                item = new HeartItem(_treasureSprites.Heart(), UseDefaultProperties);
                 item.Life = life == 0 ? -1 : life;
                 break;
             case ItemType.Boomerang:
-                item = new BoomerangItem(_sprites.Boomerang(), UseDefaultProperties);
+                item = new BoomerangItem(_itemSprites.Boomerang(), UseDefaultProperties);
                 item.Life = life == 0 ? 3 : life;
                 break;
             case ItemType.Arrow:
-                item = new ArrowItem(_sprites.ArrowRight(), UseDefaultProperties);
+                item = new ArrowItem(_itemSprites.ArrowRight(), UseDefaultProperties);
                 item.Life = life == 0 ? 2 : life;
                 break;
             default:
