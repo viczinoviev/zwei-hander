@@ -12,6 +12,8 @@ public abstract class AbstractSprite : ISprite
     /// </summary>
     protected TextureRegion _region;
 
+    public int Height { get => _region.Height; }
+    public int Width { get => _region.Width; }
     /// <summary>
     /// The SpriteBatch to draw to
     /// </summary>
@@ -32,17 +34,17 @@ public abstract class AbstractSprite : ISprite
     /// <summary>
     /// The center of rotation, scaling, and position when drawing this sprite on screen
     /// </summary>
-    protected Vector2 Origin = Vector2.Zero;
+    public Vector2 Origin { get; set; } = Vector2.Zero;
 
     /// <summary>
     /// The amount of scaling to apply to the x- and y-axes when drawing this sprite on screen
     /// </summary>
-    public Vector2 Scale = new Vector2(2, 2);
+    public Vector2 Scale { get; set; } = new Vector2(2, 2);
 
     /// <summary>
     /// Specifies if this sprite should be flipped horizontally, vertically, or both when drawing on screen
     /// </summary>
-    public SpriteEffects Effects = SpriteEffects.None;
+    public SpriteEffects Effects { get; set; } = SpriteEffects.None;
 
     /// <summary>
     /// The depth of the layer to use when drawing this sprite on screen
@@ -57,10 +59,5 @@ public abstract class AbstractSprite : ISprite
     public void Draw(Vector2 position)
     {
         _region.Draw(_spriteBatch, position, Color, Rotation, Origin, Scale, Effects, LayerDepth);
-    }
-
-    public void SetScale(Vector2 scale)
-    {
-        Scale = scale;
     }
 }

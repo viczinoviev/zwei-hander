@@ -25,6 +25,9 @@ public class AnimatedSprite : AbstractSprite
     /// </summary>
     private Animation _animation;
 
+    private Boolean _anchor = false;
+    private Vector2 _offset = Vector2.Zero;
+
 
     /// <summary>
     /// Creates a new animated sprite with the specified animation.
@@ -63,7 +66,20 @@ public class AnimatedSprite : AbstractSprite
             }
 
             _region = _animation.Frames[_currentFrame];
+
+            if (_anchor)
+            {
+                AnchorBottomRight(_offset);
+            }
+
         }
+    }
+
+    public void AnchorBottomRight(Vector2 offset)
+    {
+        Origin = new Vector2(Width - offset.X, Height - offset.Y);
+        _offset = offset;
+        _anchor = true;
     }
 
 }

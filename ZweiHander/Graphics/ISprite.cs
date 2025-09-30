@@ -5,6 +5,12 @@ namespace ZweiHander.Graphics;
 
 public interface ISprite
 {
+    public Vector2 Origin { get; set; }
+    public Vector2 Scale { get; set; }
+    public SpriteEffects Effects { get; set; }
+    public int Height { get; }
+    public int Width { get; }
+
     /// <summary>
     /// Draws this sprite on screen.
     /// </summary>
@@ -17,5 +23,4 @@ public interface ISprite
     /// <param name="gameTime">A snapshot of the game timing values provided by the framework.</param>
     public void Update(GameTime gameTime);
 
-    public void SetScale(Vector2 scale);
 }
