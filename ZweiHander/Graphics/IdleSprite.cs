@@ -18,9 +18,16 @@ public class IdleSprite : AbstractSprite
     /// </summary>
     /// <param name="region">The texture region containing the sprite.</param>
     /// <param name="spriteBatch">The spritebatch instance used for batching draw calls.</param>
-    public IdleSprite(TextureRegion region, SpriteBatch spriteBatch)
-    {
+    public IdleSprite(TextureRegion region, SpriteBatch spriteBatch, Boolean centered = true)    {
         _region = region;
         _spriteBatch = spriteBatch;
+
+        if (centered)
+        {
+            Origin = new Vector2(
+                _region.Width * 0.5f,
+                _region.Height * 0.5f
+                );
+        }
     }
 }
