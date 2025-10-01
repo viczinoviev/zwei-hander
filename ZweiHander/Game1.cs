@@ -19,7 +19,6 @@ namespace ZweiHander
 
         // TEST: Link Sprites, this should be contained in the Link Class.
         private Block _block;
-        private ISprite _treasure;
         private IEnemy _enemy;
         private IItem _item;
         // END TEST
@@ -125,12 +124,13 @@ namespace ZweiHander
             _items = [
                 _itemManager.GetItem(ItemType.Heart, -1, position: itemPosition),
                 _itemManager.GetItem(ItemType.Boomerang, -1, position: itemPosition),
-                _itemManager.GetItem(ItemType.Arrow, -1, position: itemPosition)
+                _itemManager.GetItem(ItemType.Arrow, -1, position: itemPosition),
+                _itemManager.GetItem(ItemType.HeartContainer, -1, position: itemPosition),
+                _itemManager.GetItem(ItemType.Rupy, -1, position: itemPosition),
+                _itemManager.GetItem(ItemType.Fairy, -1, position: itemPosition)
             ];
 
             _block = _blockList[0];
-
-            _treasure = _treasureSprites.HeartContainer();
             _enemy = _enemyFactory.GetEnemy("Darknut", new Vector2(300, 300));
             _item = _items[_itemIndex];
 
@@ -179,9 +179,6 @@ namespace ZweiHander
             // Draws the sprite at the passed in coordinates
 
             _block.Draw();
-
-            
-            _treasure.Draw(treasurePosition);
 
             _enemy.Draw();
 

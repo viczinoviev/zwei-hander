@@ -85,6 +85,18 @@ public class ItemManager
                 item = new ArrowItem(_itemSprites.ArrowLeft(), UseDefaultProperties);
                 item.Life = life == 0 ? 2 : life;
                 break;
+            case ItemType.HeartContainer:
+                item = new HeartItem(_treasureSprites.HeartContainer(), UseDefaultProperties);
+                item.Life = life == 0 ? -1 : life;
+                break;
+            case ItemType.Rupy:
+                item = new HeartItem(_treasureSprites.Rupy(), UseDefaultProperties);
+                item.Life = life == 0 ? -1 : life;
+                break;
+            case ItemType.Fairy:
+                item = new HeartItem(_treasureSprites.Fairy(), UseDefaultProperties);
+                item.Life = life == 0 ? -1 : life;
+                break;
             default:
                 // Should never actually reach here - will error out if so
                 break;
