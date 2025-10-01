@@ -35,7 +35,8 @@ namespace ZweiHander
         private EnemyFactory _enemyFactory;
         private ItemSprites _itemSprites;
         private BlockFactory _blockFactory;
-        private ItemManager _itemManager;
+        private ItemManager _itemManager; //The item that is rotated through
+        private ItemManager _projectileManager; //Any projectiles from enemies or player
 
         //Stores all the blocks created
         private List<Block> _blockList;
@@ -91,6 +92,7 @@ namespace ZweiHander
             _itemSprites = new ItemSprites(Content, _spriteBatch);
             _blockFactory = new BlockFactory(32, _blockSprites);
             _itemManager = new ItemManager(_itemSprites, _treasureSprites);
+            _projectileManager = new ItemManager(_itemSprites, _treasureSprites);
 
             GameSetUp();
         }
@@ -158,6 +160,7 @@ namespace ZweiHander
             _block.Update(gameTime);
             _item.Update(gameTime);
             _enemy.Update(gameTime);
+            _projectileManager.Update(gameTime);
             //END TEST
 
             _keyboardController.Update();
@@ -184,6 +187,8 @@ namespace ZweiHander
 
             
             _item.Draw();
+
+            _projectileManager.Draw();
 
             //END TEST
 

@@ -82,7 +82,7 @@ public class ItemManager
                 item.Life = life == 0 ? 3 : life;
                 break;
             case ItemType.Arrow:
-                item = new ArrowItem(_itemSprites.ArrowRight(), UseDefaultProperties);
+                item = new ArrowItem(_itemSprites.ArrowLeft(), UseDefaultProperties);
                 item.Life = life == 0 ? 2 : life;
                 break;
             default:
@@ -119,5 +119,16 @@ public class ItemManager
             }
         }
         _items.RemoveWhere(item => item.Life == 0); // Remove any dead items
+    }
+    
+    /// <summary>
+    /// Draws all items on this manager on screen.
+    /// </summary>
+    public void Draw()
+    {
+        foreach (IItem item in _items)
+        {
+            item.Draw();
+        }
     }
 }
