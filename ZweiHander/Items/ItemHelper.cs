@@ -13,6 +13,6 @@ class ItemHelper
     /// <returns>Necessary velocity and acceleration magnitudes.</returns>
     public static (float Velocity, float Acceleration) BoomerangTrajectory(float distance, float time)
     {
-        return (4f * distance / time, 8f * distance / (time * time));
+        return (4f * distance / time, -8f * distance / (time * time));
     }
 }
