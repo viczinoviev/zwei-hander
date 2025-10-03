@@ -2,13 +2,28 @@
 <TextureAtlas>
 	<Texture>SpriteSheets/Dungeon-Enemies</Texture>
 	<Regions>
+		<!-- Darknut-->
 		<Region name="darknut-move-down-1" x="1" y="90" width="16" height="16" />
 		<Region name="darknut-move-down-2" x="18" y="90" width="16" height="16" />
 		<Region name="darknut-move-up-1" x="34" y="90" width="16" height="16" />
 		<Region name="darknut-move-right-1" x="52" y="90" width="16" height="16" />
 		<Region name="darknut-move-right-2" x="69" y="90" width="16" height="16" />
+		<!-- Gel -->
+		<Region name="gel-1" x="1" y="11" width="8" height="16" />
+		<Region name="gel-2" x="10" y="11" width="8" height="16" />
+		<!-- Goriya -->
+		<Region name="goriya-down" x="222" y="11" width="16" height="16" />
+		<Region name="goriya-up" x="239" y="11" width="16" height="16" />
+		<Region name="goriya-right" x="256" y="11" width="16" height="16" />
+		<Region name="goriya-use" x="273" y="11" width="16" height="16" />
+		<!-- Keese -->
+		<Region name="keese-1" x="183" y="11" width="16" height="16" />
+		<Region name="keese-2" x="200" y="11" width="16" height="16" />
+		<!-- Stalfos -->
+		<Region name="stalfos" x="1" y="59" width="16" height="16" />
 	</Regions>
 	<Animations>
+		<!-- Darknut Animations -->
 		<Animation name="darknut-move-animation-down" delay="200">
 			<Frame region="darknut-move-down-1" />
 			<Frame region="darknut-move-down-2" />
@@ -19,6 +34,16 @@
 		</Animation>
 		<Animation name="darknut-move-animation-up" delay="200">
 			<Frame region="darknut-move-up-1" />
+		</Animation>
+		<!-- Gel Animation -->
+		<Animation name="gel-move-animation" delay="200">
+			<Frame region="gel-1" />
+			<Frame region="gel-2" />
+		</Animation>
+		<!-- Keese Animations -->
+		<Animation name="keese-move-animation" delay="200">
+			<Frame region="keese-1" />
+			<Frame region="keese-2" />
 		</Animation>
 	</Animations>
 </TextureAtlas>
