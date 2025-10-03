@@ -1,11 +1,10 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
-
+using ZweiHander.Items;
 using ZweiHander.Graphics;
 using System;
 using ZweiHander.Graphics.SpriteStorages;
-using System.Security.Principal;
+using System.Runtime.CompilerServices;
 
 namespace ZweiHander.Enemy;
 
@@ -19,103 +18,125 @@ public class Darknut : IEnemy
     /// </summary>
     protected ISprite _sprite;
 
+    IItem _currentProjectile;
+
     private EnemySprites _enemySprites;
+
+    private ItemManager _projectileManager;
     public Vector2 position { get; set; } = default;
 
     public int face { get; set; } = default;
 
-    public int thrower { get; set; } = default;
+    public int thrower { get; set; } = 1;
 
-    private int delay;
     Random rnd = new Random();
 
-    public Darknut(EnemySprites enemySprites)
+
+    public Darknut(EnemySprites enemySprites, ItemManager projectileManager)
     {
+        _projectileManager = projectileManager;
         _enemySprites = enemySprites;
         _sprite = _enemySprites.DarknutMoveUp();
-        delay = 0;
     }
     public virtual void Update(GameTime time)
     {
-        if (delay == 10)
+        if (thrower != 2 && thrower != 3)
         {
-            face = rnd.Next(6);
-            switch (face)
+            int mov = rnd.Next(200);
+            if (mov > 5)
             {
-                case 0:
-                    if (position.Y < 500)
-                    {
-                        position = new Vector2(position.X, position.Y - 3);
-                        _sprite = _enemySprites.DarknutMoveUp();
-                    }
-                    else
-                    {
-                        goto case 1;
-                    }
-                    break;
-                case 1:
-                    if (position.X > 20)
-                    {
-                        position = new Vector2(position.X + 3, position.Y);
-                        _sprite = _enemySprites.DarknutMoveRight();
-                    }
-                    else
-                    {
-                        goto case 2;
-                    }
-                    break;
-                case 2:
-                    if (position.Y > 20)
-                    {
-                        position = new Vector2(position.X, position.Y + 3);
-                        _sprite = _enemySprites.DarknutMoveDown();
-                    }
-                    else
-                    {
-                        goto case 3;
-                    }
-                    break;
-                case 3:
-                    if (position.X < 500)
-                    {
-                        position = new Vector2(position.X - 3, position.Y);
-                        _sprite = _enemySprites.DarknutMoveRight();
-                    }
-                    else
-                    {
-                        goto case 0;
-                    }
-                    break;
-                default:
-                    //No movement
-                    break;
+                position = new Vector2(position.X + ((-1 + 2 * Convert.ToInt32(!(face == 3 && position.X > 40))) * Convert.ToInt32((face == 3 && position.X > 40) || (face == 1 && position.X < 800))), position.Y + ((-1 + 2 * Convert.ToInt32(!(face == 0 && position.Y > 40))) * Convert.ToInt32((face == 0 && position.Y > 40) || (face == 2 && position.Y < 400))));
             }
-
-            if (thrower != 0)
+            else
             {
-                int attack = rnd.Next(4);
-                if (attack == 4)
+                switch (mov)
                 {
-                    thrower = 2;
+                    case 0:
+                        if (position.Y > 40)
+                        {
+                            position = new Vector2(position.X, position.Y - 1);
+                            _sprite = _enemySprites.DarknutMoveUp();
+                            face = 0;
+                        }
+                        else
+                        {
+                            goto case 2;
+                        }
+                        break;
+                    case 1:
+                        if (position.X < 800)
+                        {
+                            position = new Vector2(position.X + 1, position.Y);
+                            _sprite = _enemySprites.DarknutMoveRight();
+                            face = 1;
+                        }
+                        else
+                        {
+                            goto case 3;
+                        }
+                        break;
+                    case 2:
+                        if (position.Y < 400)
+                        {
+                            position = new Vector2(position.X, position.Y + 1);
+                            _sprite = _enemySprites.DarknutMoveDown();
+                            face = 2;
+                        }
+                        else
+                        {
+                            goto case 0;
+                        }
+                        break;
+                    case 3:
+                        if (position.X > 40)
+                        {
+                            position = new Vector2(position.X - 1, position.Y);
+                            _sprite = _enemySprites.DarknutMoveLeft();
+                            face = 3;
+                        }
+                        else
+                        {
+                            goto case 1;
+                        }
+                        break;
+                    default:
+                        //no movement  
+                        break;
                 }
-                else
+            }
+        }
+
+        int attack = rnd.Next(500);
+        if (attack == 5 && thrower != 2)
+        {
+            _currentProjectile = _projectileManager.GetItem(ItemType.Boomerang, -1, position: position);
+            _currentProjectile.Life = 3;
+            thrower = 2;
+            (float v, float a) = ItemHelper.BoomerangTrajectory(50, 3);
+            _currentProjectile.Velocity = new Vector2((-1 + 2 * Convert.ToInt32(!(face == 3))) * (v * Convert.ToInt32((face == 3) || (face == 1))), (-1 + 2 * Convert.ToInt32(!(face == 0))) * (v * Convert.ToInt32((face == 0) || (face == 2))));
+            _currentProjectile.Acceleration = new Vector2((-1 + 2 * Convert.ToInt32(!(face == 3))) * (a * Convert.ToInt32((face == 3) || (face == 1))), (-1 + 2 * Convert.ToInt32(!(face == 0))) * (a * Convert.ToInt32((face == 0) || (face == 2))));
+        }
+        else
+        {
+            if (thrower == 2)
+            {
+
+                if (_currentProjectile.Life <= 0)
                 {
                     thrower = 1;
                 }
             }
+        }
+        _sprite.Update(time);
+        _projectileManager.Update(time);
+        }
 
-            _sprite.Update(time);
-            delay = 0;
-        }
-        else
-        {
-            delay++;
-        }
-    }
+    
 
     public void Draw()
     {
         _sprite.Draw(position);
+        _projectileManager.Draw();
     }
 }
 

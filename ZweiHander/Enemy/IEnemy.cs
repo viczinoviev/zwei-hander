@@ -15,7 +15,7 @@ public interface IEnemy
     public Vector2 position { get; set; }
 
     /// <summary>
-    /// Current direction, equating to what sprite to draw (0 = up, 1 = left, 2 = down, 3 = right)
+    /// Current direction, equating to what sprite to draw (0 = up, 1 = right, 2 = down, 3 = left)
     /// </summary>
     public int face { get; set; }
 

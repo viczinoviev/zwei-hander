@@ -1,8 +1,8 @@
 using System;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 using ZweiHander.Graphics.SpriteStorages;
+using System.Collections.Generic;
+using ZweiHander.Items;
 
 namespace ZweiHander.Enemy;
 
@@ -25,9 +25,14 @@ namespace ZweiHander.Enemy;
 public class EnemyFactory
 {
     EnemySprites _enemySprites;
-    public EnemyFactory(EnemySprites enemysprites)
+
+    ItemManager _projectileManager;
+    List<IEnemy> currentEnemies;
+    public EnemyFactory(EnemySprites enemysprites, ItemManager projectileManager)
     {
         _enemySprites = enemysprites;
+        _projectileManager = projectileManager;
+        currentEnemies = new List<IEnemy>();
     }
     /// <summary>
     /// Creates a new Enemy.
@@ -43,7 +48,7 @@ public class EnemyFactory
         switch (enemyName)
         {
             case "Darknut":
-                enemy = new Darknut(_enemySprites);
+                enemy = new Darknut(_enemySprites,_projectileManager);
                 break;
             case "Gel":
                 enemy = new Gel(_enemySprites);
@@ -64,6 +69,7 @@ public class EnemyFactory
         enemy.position = position;
         enemy.face = face;
         enemy.thrower = thrower;
+        currentEnemies.Add(enemy);
         return enemy;
     }
 

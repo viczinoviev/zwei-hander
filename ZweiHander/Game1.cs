@@ -41,15 +41,24 @@ namespace ZweiHander
         private List<Block> _blockList;
         private int _blockIndex = 0;
 
-        //dummy position for treasure and item
+        //Stores all the enemies created
+        private List<IEnemy> _enemyList;
+        private int _enemyIndex = 0;
+
+        //dummy position for treasure, item, block, and enemy
         Vector2 treasurePosition;
         Vector2 itemPosition;
         Point blockPosition;
+        Vector2 enemyPosition;
 
         //Expose 
         public List<Block> BlockList => _blockList;
         public Block Block { get => _block; set => _block = value; }
         public int BlockIndex { get => _blockIndex; set => _blockIndex = value; }
+
+        public List<IEnemy> EnemyList => _enemyList;
+        public IEnemy Enemy { get => _enemy; set => _enemy = value; }
+        public int EnemyIndex { get => _enemyIndex; set => _enemyIndex = value; }
 
         private List<IItem> _items;
         private int _itemIndex = 0;
@@ -86,12 +95,12 @@ namespace ZweiHander
             _linkSprites = new PlayerSprites(Content, _spriteBatch);
             _blockSprites = new BlockSprites(Content, _spriteBatch);
             _treasureSprites = new TreasureSprites(Content, _spriteBatch);
-            _enemySprites = new EnemySprites(Content, _spriteBatch);
-            _enemyFactory = new EnemyFactory(_enemySprites);
             _itemSprites = new ItemSprites(Content, _spriteBatch);
             _blockFactory = new BlockFactory(32, _blockSprites);
             _itemManager = new ItemManager(_itemSprites, _treasureSprites);
             _projectileManager = new ItemManager(_itemSprites, _treasureSprites);
+            _enemySprites = new EnemySprites(Content, _spriteBatch);
+            _enemyFactory = new EnemyFactory(_enemySprites,_projectileManager);
 
             GameSetUp();
         }
@@ -110,6 +119,10 @@ namespace ZweiHander
                 GraphicsDevice.PresentationParameters.BackBufferHeight * 0.75f
                 );
             blockPosition = new Point(10, 6);
+            enemyPosition = new Vector2(
+                GraphicsDevice.PresentationParameters.BackBufferWidth * 0.75f,
+                GraphicsDevice.PresentationParameters.BackBufferHeight * 0.25f
+                );
 
             //Create and load the Block List
             _blockList = new List<Block>();
@@ -130,8 +143,12 @@ namespace ZweiHander
                 _itemManager.GetItem(ItemType.Fairy, -1, position: itemPosition)
             ];
 
+            _enemyList = new List<IEnemy>();
+            _enemyList.Add(_enemy = _enemyFactory.GetEnemy("Darknut", enemyPosition));
+            _enemyList.Add(_enemy = _enemyFactory.GetEnemy("Darknut", enemyPosition));
+
             _block = _blockList[0];
-            _enemy = _enemyFactory.GetEnemy("Darknut", new Vector2(300, 300));
+            _enemy = _enemyList[0];
             _item = _items[_itemIndex];
 
             //END TEST
@@ -147,6 +164,8 @@ namespace ZweiHander
             _keyboardController.BindKey(Keys.Y, new ChangeBlockCommand(this, +1));
             _keyboardController.BindKey(Keys.U, new ChangeItemCommand(this, -1));
             _keyboardController.BindKey(Keys.I, new ChangeItemCommand(this, +1));
+            _keyboardController.BindKey(Keys.O, new ChangeEnemyCommand(this, -1));
+            _keyboardController.BindKey(Keys.P, new ChangeEnemyCommand(this, +1));
         }
 
         protected override void Update(GameTime gameTime)
@@ -182,7 +201,7 @@ namespace ZweiHander
 
             _enemy.Draw();
 
-            
+
             _item.Draw();
 
             _projectileManager.Draw();
