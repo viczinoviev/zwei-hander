@@ -35,7 +35,8 @@ public interface IItem
     public void Draw();
 
     /// <summary>
-    /// Updates this item.
+    /// Updates this item, including life, sprite, and movement.
+    /// <para>WARNING: Update does not kill the item; the itemManager's update does that.</para>
     /// </summary>
     /// <param name="gameTime">A snapshot of the game timing values provided by the framework.</param>
     public void Update(GameTime gameTime);
