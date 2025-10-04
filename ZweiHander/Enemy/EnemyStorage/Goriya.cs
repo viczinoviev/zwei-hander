@@ -1,18 +1,15 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-
 using Vector2 = Microsoft.Xna.Framework.Vector2;
-
+using ZweiHander.Items;
 using ZweiHander.Graphics;
 using System;
-using System.Collections;
-using System.Transactions;
 using ZweiHander.Graphics.SpriteStorages;
+using System.Runtime.CompilerServices;
 
 namespace ZweiHander.Enemy;
 
 /// <summary>
-/// Goriya enemy
+/// Darknut enemy
 /// </summary>
 public class Goriya : IEnemy
 {
@@ -21,64 +18,125 @@ public class Goriya : IEnemy
     /// </summary>
     protected ISprite _sprite;
 
+    IItem _currentProjectile;
+
     private EnemySprites _enemySprites;
+
+    private ItemManager _projectileManager;
     public Vector2 position { get; set; } = default;
 
     public int face { get; set; } = default;
 
-    public int thrower { get; set; } = default;
+    public int thrower { get; set; } = 1;
 
     Random rnd = new Random();
-    
-    public Goriya(EnemySprites enemySprites)
+
+
+    public Goriya(EnemySprites enemySprites, ItemManager projectileManager)
     {
+        _projectileManager = projectileManager;
         _enemySprites = enemySprites;
+        _sprite = _enemySprites.GoriyaUp();
     }
     public virtual void Update(GameTime time)
     {
-        face = rnd.Next(3);
-        switch (face)
+        if (thrower != 2 && thrower != 3)
         {
-            case 0:
-                position = new Vector2(position.X, position.Y - 3);
-                _sprite = _enemySprites.DarknutMoveUp();
-                break;
-            case 1:
-                position = new Vector2(position.X + 3, position.Y);
-                _sprite = _enemySprites.DarknutMoveRight();
-                break;
-            case 2:
-                position = new Vector2(position.X, position.Y + 3);
-                _sprite = _enemySprites.DarknutMoveDown();
-                break;
-            case 3:
-                position = new Vector2(position.X - 3, position.Y);
-                _sprite = _enemySprites.DarknutMoveRight();
-                break;
-            default:
-                //not possible
-                break;
-        }
-
-        if (thrower != 0)
-        {
-            int attack = rnd.Next(4);
-            if (attack == 4)
+            int mov = rnd.Next(200);
+            if (mov > 5)
             {
-                thrower = 2;
+                position = new Vector2(position.X + ((-1 + 2 * Convert.ToInt32(!(face == 3 && position.X > 40))) * Convert.ToInt32((face == 3 && position.X > 40) || (face == 1 && position.X < 750))), position.Y + ((-1 + 2 * Convert.ToInt32(!(face == 0 && position.Y > 40))) * Convert.ToInt32((face == 0 && position.Y > 40) || (face == 2 && position.Y < 400))));
             }
             else
             {
-                thrower = 1;
+                switch (mov)
+                {
+                    case 0:
+                        if (position.Y > 40)
+                        {
+                            position = new Vector2(position.X, position.Y - 1);
+                            _sprite = _enemySprites.GoriyaUp();
+                            face = 0;
+                        }
+                        else
+                        {
+                            goto case 2;
+                        }
+                        break;
+                    case 1:
+                        if (position.X < 750)
+                        {
+                            position = new Vector2(position.X + 1, position.Y);
+                            _sprite = _enemySprites.GoriyaRight();
+                            face = 1;
+                        }
+                        else
+                        {
+                            goto case 3;
+                        }
+                        break;
+                    case 2:
+                        if (position.Y < 400)
+                        {
+                            position = new Vector2(position.X, position.Y + 1);
+                            _sprite = _enemySprites.GoriyaDown();
+                            face = 2;
+                        }
+                        else
+                        {
+                            goto case 0;
+                        }
+                        break;
+                    case 3:
+                        if (position.X > 40)
+                        {
+                            position = new Vector2(position.X - 1, position.Y);
+                            _sprite = _enemySprites.GoriyaLeft();
+                            face = 3;
+                        }
+                        else
+                        {
+                            goto case 1;
+                        }
+                        break;
+                    default:
+                        //no movement  
+                        break;
+                }
             }
         }
 
+        int attack = rnd.Next(300);
+        if (attack == 5 && thrower != 2)
+        {
+            _currentProjectile = _projectileManager.GetItem(ItemType.Boomerang, -1, position: position);
+            _currentProjectile.Life = 3;
+            thrower = 2;
+            (float v, float a) = ItemHelper.BoomerangTrajectory(50, 3);
+            _currentProjectile.Velocity = new Vector2((-1 + 2 * Convert.ToInt32(!(face == 3))) * (v * Convert.ToInt32((face == 3) || (face == 1))), (-1 + 2 * Convert.ToInt32(!(face == 0))) * (v * Convert.ToInt32((face == 0) || (face == 2))));
+            _currentProjectile.Acceleration = new Vector2((-1 + 2 * Convert.ToInt32(!(face == 3))) * (a * Convert.ToInt32((face == 3) || (face == 1))), (-1 + 2 * Convert.ToInt32(!(face == 0))) * (a * Convert.ToInt32((face == 0) || (face == 2))));
+        }
+        else
+        {
+            if (thrower == 2)
+            {
+
+                if (_currentProjectile.Life <= 0)
+                {
+                    thrower = 1;
+                }
+            }
+        }
         _sprite.Update(time);
-    }
+        _projectileManager.Update(time);
+        }
+
+    
 
     public void Draw()
     {
         _sprite.Draw(position);
+        _projectileManager.Draw();
     }
 }
 

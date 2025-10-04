@@ -1,13 +1,10 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-
 using Vector2 = Microsoft.Xna.Framework.Vector2;
-
+using ZweiHander.Items;
 using ZweiHander.Graphics;
 using System;
-using System.Collections;
-using System.Transactions;
 using ZweiHander.Graphics.SpriteStorages;
+using System.Runtime.CompilerServices;
 
 namespace ZweiHander.Enemy;
 
@@ -21,60 +18,88 @@ public class Keese : IEnemy
     /// </summary>
     protected ISprite _sprite;
 
+
     private EnemySprites _enemySprites;
+
     public Vector2 position { get; set; } = default;
 
     public int face { get; set; } = default;
 
-    public int thrower { get; set; } = default;
+    public int thrower { get; set; } = 1;
 
     Random rnd = new Random();
-    
+
+
     public Keese(EnemySprites enemySprites)
     {
         _enemySprites = enemySprites;
+        _sprite = _enemySprites.Keese();
     }
     public virtual void Update(GameTime time)
     {
-        face = rnd.Next(3);
-        switch (face)
+        int mov = rnd.Next(200);
+        if (mov > 5)
         {
-            case 0:
-                position = new Vector2(position.X, position.Y - 3);
-                _sprite = _enemySprites.DarknutMoveUp();
-                break;
-            case 1:
-                position = new Vector2(position.X + 3, position.Y);
-                _sprite = _enemySprites.DarknutMoveRight();
-                break;
-            case 2:
-                position = new Vector2(position.X, position.Y + 3);
-                _sprite = _enemySprites.DarknutMoveDown();
-                break;
-            case 3:
-                position = new Vector2(position.X - 3, position.Y);
-                _sprite = _enemySprites.DarknutMoveRight();
-                break;
-            default:
-                //not possible
-                break;
+            position = new Vector2(position.X + ((-1 + 2 * Convert.ToInt32(!(face == 3 && position.X > 40))) * Convert.ToInt32((face == 3 && position.X > 40) || (face == 1 && position.X < 750))), position.Y + ((-1 + 2 * Convert.ToInt32(!(face == 0 && position.Y > 40))) * Convert.ToInt32((face == 0 && position.Y > 40) || (face == 2 && position.Y < 400))));
         }
-
-        if (thrower != 0)
+        else
         {
-            int attack = rnd.Next(4);
-            if (attack == 4)
+            switch (mov)
             {
-                thrower = 2;
-            }
-            else
-            {
-                thrower = 1;
+                case 0:
+                    if (position.Y > 40)
+                    {
+                        position = new Vector2(position.X, position.Y - 1);
+                        face = 0;
+                    }
+                    else
+                    {
+                        goto case 2;
+                    }
+                    break;
+                case 1:
+                    if (position.X < 750)
+                    {
+                        position = new Vector2(position.X + 1, position.Y);
+                        face = 1;
+                    }
+                    else
+                    {
+                        goto case 3;
+                    }
+                    break;
+                case 2:
+                    if (position.Y < 400)
+                    {
+                        position = new Vector2(position.X, position.Y + 1);
+                        face = 2;
+                    }
+                    else
+                    {
+                        goto case 0;
+                    }
+                    break;
+                case 3:
+                    if (position.X > 40)
+                    {
+                        position = new Vector2(position.X - 1, position.Y);
+                        face = 3;
+                    }
+                    else
+                    {
+                        goto case 1;
+                    }
+                    break;
+                default:
+                    //no movement  
+                    break;
             }
         }
-
         _sprite.Update(time);
-    }
+        }
+
+
+    
 
     public void Draw()
     {

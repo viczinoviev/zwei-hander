@@ -142,10 +142,13 @@ namespace ZweiHander
                 _itemManager.GetItem(ItemType.Rupy, -1, position: itemPosition),
                 _itemManager.GetItem(ItemType.Fairy, -1, position: itemPosition)
             ];
-
+            //Create enemy list
             _enemyList = new List<IEnemy>();
             _enemyList.Add(_enemy = _enemyFactory.GetEnemy("Darknut", enemyPosition));
-            _enemyList.Add(_enemy = _enemyFactory.GetEnemy("Darknut", enemyPosition));
+            _enemyList.Add(_enemy = _enemyFactory.GetEnemy("Gel", enemyPosition));
+            _enemyList.Add(_enemy = _enemyFactory.GetEnemy("Goriya", enemyPosition));
+            _enemyList.Add(_enemy = _enemyFactory.GetEnemy("Keese", enemyPosition));
+            _enemyList.Add(_enemy = _enemyFactory.GetEnemy("Stalfos", enemyPosition));
 
             _block = _blockList[0];
             _enemy = _enemyList[0];
