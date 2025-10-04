@@ -1,0 +1,28 @@
+Author of the code review: Victor Zinoviev
+Date of the code review: 2025-10-4
+Sprint number: 2
+Name of the .cs file being reviewed: ItemManager.cs
+Author of the .cs file being reviewed: Jacob
+Number of minutes taken to complete the review: 20
+Specific comments on what is readable and what is not:
+	It is not very clear what the properties field is used for, adding a short comment in this file would be helpful.
+	Although writing something like "item.Life = life == 0 ? -1 : life; " makes the code shorter, it is not very readable.
+	Update and Draw methods are straight foward and easy to understand.
+	Detailed comments are provided for properties and methods.
+
+Author of the code review: Victor Zinoviev
+Date of the code review: 2025-10-4
+Sprint number: 2
+Name of the .cs file being reviewed: PlayerHandler.cs
+Author of the .cs file being reviewed: Stash
+Specific comments on code quality:
+	The class has high cohesion, as it focuses on managing the current player sprites.
+	However, I think that the logic of checking player input should be handled elsewhere.
+	There can be a separate class that handles player input and then calls methods in PlayerHandler to update the player state.
+	This would make it so that the PlayerHandler do not need a reference to the Player class.
+	There are a lot of switch cases, but this can be easily be refactored through modifications in the PlayerSprite class taking in direction as a parameter.
+	We have if branching for UpdatePosition based on the current state. This is fine for now since we only have a attacking and moving state.
+	However, it might be good to separate the logic when we start adding more states like using items, opening doors, etc.
+A hypothetical change to make to the game related to file being reviewed and how the current implementation could or could not easily support that change:
+	If we add an animation for when the player is picking up an item, we would need to add more cases to the switch statements.
+	This may clutter the code further, so it would be easier to refactor if logic specific to each state was separated.
