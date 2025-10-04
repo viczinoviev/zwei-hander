@@ -2,11 +2,48 @@
 <TextureAtlas>
 	<Texture>SpriteSheets/Treasures</Texture>
 	<Regions>
-		<Region name="heart" x="330" y="362" width="7" height="8" />
-		<Region name="heart-container" x="431" y="364" width="13" height="13" />
-		<Region name="fairy" x="330" y="426" width="8" height="16" />
-		<Region name="rupy" x="587" y="266" width="8" height="16" />
+		<Region name="heart" x="1" y="704" width="8" height="8" />
+		<Region name="blue-heart" x="10" y="704" width="8" height="8" />
+		<Region name="heart-container" x="21" y="704" width="15" height="16" />
+		<Region name="fairy-1" x="39" y="704" width="8" height="16" />
+		<Region name="fairy-2" x="48" y="704" width="8" height="16" />
+		<Region name="clock" x="59" y="704" width="15" height="16" />
+		<Region name="rupy" x="77" y="704" width="8" height="16" />
+		<Region name="rupy-five" x="86" y="704" width="8" height="16" />
+		<Region name="potion-life" x="97" y="704" width="8" height="16" />
+		<Region name="potion-2nd" x="106" y="704" width="8" height="16" />
+		<Region name="letter" x="117" y="704" width="8" height="16" />
+		<Region name="food" x="128" y="704" width="8" height="16" />
+		<Region name="sword" x="139" y="704" width="8" height="16" />
+		<Region name="sword-white" x="148" y="704" width="8" height="16" />
+		<Region name="sword-magical" x="157" y="704" width="8" height="16" />
+		<Region name="shield" x="168" y="704" width="8" height="16" />
+		<Region name="boomerang" x="179" y="704" width="8" height="16" />
+		<Region name="boomerang-magical" x="188" y="704" width="8" height="16" />
+		<Region name="bomb" x="199" y="704" width="8" height="16" />
+		<Region name="bow" x="210" y="704" width="8" height="16" />
+		<Region name="arrow" x="221" y="704" width="8" height="16" />
+		<Region name="arrow-silver" x="230" y="704" width="8" height="16" />
+		<Region name="candle-blue" x="241" y="704" width="8" height="16" />
+		<Region name="candle-red" x="250" y="704" width="8" height="16" />
+		<Region name="ring-blue" x="261" y="704" width="8" height="16" />
+		<Region name="ring-red" x="270" y="704" width="8" height="16" />
+		<Region name="bracelet-power" x="281" y="704" width="8" height="16" />
+		<Region name="recorder" x="292" y="704" width="8" height="16" />
+		<Region name="raft" x="303" y="704" width="16" height="16" />
+		<Region name="ladder" x="322" y="704" width="16" height="16" />
+		<Region name="rod-magical" x="341" y="704" width="8" height="16" />
+		<Region name="book-magic" x="352" y="704" width="8" height="16" />
+		<Region name="key" x="363" y="704" width="8" height="16" />
+		<Region name="key-magical" x="374" y="704" width="8" height="16" />
+		<Region name="map" x="385" y="704" width="8" height="16" />
+		<Region name="compass" x="396" y="704" width="15" height="16" />
+		<Region name="triforce" x="414" y="704" width="16" height="16" />
 	</Regions>
 	<Animations>
+		<Animation name="fairy" delay="200">
+			<Frame region="fairy-1" />
+			<Frame region="fairy-2" />
+		</Animation>
 	</Animations>
 </TextureAtlas>
