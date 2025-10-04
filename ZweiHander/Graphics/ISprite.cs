@@ -8,6 +8,7 @@ public interface ISprite
     public Vector2 Origin { get; set; }
     public Vector2 Scale { get; set; }
     public SpriteEffects Effects { get; set; }
+    public Color Color { get; set; }
     public int Height { get; }
     public int Width { get; }
 
