@@ -24,7 +24,7 @@ public abstract class AbstractSprite : ISprite
     /// <summary>
     /// The color mask to apply when drawing this sprite on screen
     /// </summary>
-    protected Color Color = Color.White;
+    public Color Color { get; set; } = Color.White;
 
     /// <summary>
     /// The amount of rotation, in radians, to apply when drawing this sprite on screen

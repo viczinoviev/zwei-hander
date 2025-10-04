@@ -42,5 +42,15 @@ public class PlayerSprites : SpriteFactory
         s.AnchorBottomRight(_defaultOrigin);
         return s;
     }
+
+    public ISprite PlayerUseItemDown() => new IdleSprite(_regions["link-use-item-down"], _spriteBatch, true);
+    public ISprite PlayerUseItemUp() => new IdleSprite(_regions["link-use-item-up"], _spriteBatch, true);
+    public ISprite PlayerUseItemRight() => new IdleSprite(_regions["link-use-item-right"], _spriteBatch, true);
+    public ISprite PlayerUseItemLeft()
+    {
+        IdleSprite s = new IdleSprite(_regions["link-use-item-right"], _spriteBatch, true);
+        s.Effects = SpriteEffects.FlipHorizontally;
+        return s;
+    }
 }
 
