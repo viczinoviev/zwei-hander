@@ -48,13 +48,13 @@ public class EnemyFactory
         switch (enemyName)
         {
             case "Darknut":
-                enemy = new Darknut(_enemySprites,_projectileManager);
+                enemy = new Darknut(_enemySprites);
                 break;
             case "Gel":
                 enemy = new Gel(_enemySprites);
                 break;
             case "Goriya":
-                enemy = new Goriya(_enemySprites);
+                enemy = new Goriya(_enemySprites,_projectileManager);
                 break;
             case "Keese":
                 enemy = new Keese(_enemySprites);
