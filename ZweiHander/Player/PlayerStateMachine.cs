@@ -6,16 +6,30 @@ using Microsoft.Xna.Framework.Graphics;
 public class PlayerStateMachine : IStateMachine
 {
     private Player _player;
+    private PlayerHandler _playerHandler;
     private PlayerState _currentState;
     private Vector2 _lastDirection = Vector2.UnitY; // Default facing down
     private Vector2 _currentMovementVector = Vector2.Zero;
-    private float _attackTimer = 0f;
+    private float _actionTimer = 0f;
     private float _attackDuration = 800f;
+    private float _itemUseDuration = 600f;
+    private bool _itemUsedLastFrame = false;
     
     public PlayerState CurrentState => _currentState;
     public Vector2 LastDirection => _lastDirection;
     public Vector2 CurrentMovementVector => _currentMovementVector;
     public bool IsAttacking => _player.InputBuffer.Contains(PlayerInput.Attacking);
+    public bool IsUsingItem => _currentState == PlayerState.UsingItem && _actionTimer > 0f;
+    
+    public bool CanUseAction()
+    {
+        return _actionTimer <= 0f;
+    }
+    
+    public void SetPlayerHandler(PlayerHandler playerHandler)
+    {
+        _playerHandler = playerHandler;
+    }
 
     public PlayerStateMachine(Player player)
     {
@@ -33,16 +47,16 @@ public class PlayerStateMachine : IStateMachine
         // Always update direction when we have movement input
         UpdateDirection();
         
-        // Handle attack timer
-        if (_attackTimer > 0f)
+        // Handle unified action timer
+        if (_actionTimer > 0f)
         {
-            _attackTimer -= deltaTime;
-            if (_attackTimer <= 0f)
+            _actionTimer -= deltaTime;
+            if (_actionTimer <= 0f)
             {
-                _attackTimer = 0f;
+                _actionTimer = 0f;
                 ChangeState(PlayerState.Idle);
             }
-            // Attack locks out other actions
+            // Action in progress locks out other actions
             return; 
         }
 
@@ -52,16 +66,23 @@ public class PlayerStateMachine : IStateMachine
         {
             ChangeState(newState);
         }
+        
+        // Reset item usage flag at end of frame
+        _itemUsedLastFrame = false;
     }
 
     private PlayerState ProcessInputBuffer()
     {
         var inputBuffer = _player.InputBuffer;
         
-        // Priority-based if-else chain: Attack > Movement > Idle
+        // Priority: Attack > Item Use > Movement > Idle
         if (inputBuffer.Contains(PlayerInput.Attacking))
         {
             return PlayerState.Attacking;
+        }
+        else if (inputBuffer.Contains(PlayerInput.UsingItem1) || inputBuffer.Contains(PlayerInput.UsingItem2))
+        {
+            return PlayerState.UsingItem;
         }
         else if (inputBuffer.Contains(PlayerInput.MovingUp) || 
                  inputBuffer.Contains(PlayerInput.MovingDown) || 
@@ -97,12 +118,29 @@ public class PlayerStateMachine : IStateMachine
     {
         _currentState = newState;
 
-        // Start attack timer
+        // Start action timer based on state
         if (newState == PlayerState.Attacking)
         {
-            _attackTimer = _attackDuration;
+            _actionTimer = _attackDuration;
+        }
+        else if (newState == PlayerState.UsingItem && !_itemUsedLastFrame)
+        {
+            _actionTimer = _itemUseDuration;
+            _itemUsedLastFrame = true;
+            
+            // Pass the specific input to PlayerHandler
+            if (_player.InputBuffer.Contains(PlayerInput.UsingItem1))
+            {
+                _playerHandler.HandleItemUse(PlayerInput.UsingItem1);
+            }
+            else if (_player.InputBuffer.Contains(PlayerInput.UsingItem2))
+            {
+                _playerHandler.HandleItemUse(PlayerInput.UsingItem2);
+            }
         }
     }
+    
+
     
     private void UpdateDirection()
     {

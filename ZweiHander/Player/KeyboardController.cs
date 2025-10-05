@@ -32,8 +32,8 @@ public class KeyboardController : IController
             { Keys.Right, () => _player.MoveRight() },
             { Keys.Z, () => _player.Attack() },
             { Keys.N, () => _player.Attack() },
-            { Keys.D1, () => _player.SetUsableItem(UsableItem.Arrow) },
-            { Keys.D2, () => _player.SetUsableItem(UsableItem.Boomerang) }
+            { Keys.D1, () => _player.UseItem1() },
+            { Keys.D2, () => _player.UseItem2() }
         };
     }
 

@@ -4,20 +4,25 @@ using System.Collections.Generic;
 using System.Linq;
 using ZweiHander.Graphics;
 using ZweiHander.Graphics.SpriteStorages;
+using ZweiHander.Items;
 
 public class Player : IPlayer
 {
     private PlayerStateMachine _stateMachine;
     private PlayerHandler _handler;
+    private ItemManager _itemManager;
     public Vector2 Position { get; set; }
     public float Speed { get; set; } = 100f;
     public HashSet<PlayerInput> InputBuffer { get; private set; } = new HashSet<PlayerInput>();
     public PlayerState CurrentState => _stateMachine.CurrentState;
+    public ItemManager ItemManager => _itemManager;
 
-    public Player(PlayerSprites playerSprites)
+    public Player(PlayerSprites playerSprites, ItemSprites itemSprites, TreasureSprites treasureSprites)
     {
+        _itemManager = new ItemManager(itemSprites, treasureSprites);
         _stateMachine = new PlayerStateMachine(this);
         _handler = new PlayerHandler(playerSprites, this, _stateMachine);
+        _stateMachine.SetPlayerHandler(_handler);
         Position = Vector2.Zero;
     }
 
@@ -25,6 +30,7 @@ public class Player : IPlayer
     {
         _stateMachine.Update(gameTime);
         _handler.Update(gameTime);
+        _itemManager.Update(gameTime);
     }
 
     public void AddInput(PlayerInput input)
@@ -62,33 +68,34 @@ public class Player : IPlayer
         AddInput(PlayerInput.Attacking);
     }
 
+    public void UseItem1()
+    {
+        AddInput(PlayerInput.UsingItem1);
+    }
+
+    public void UseItem2()
+    {
+        AddInput(PlayerInput.UsingItem2);
+    }
+
     public void Idle()
     {
         
     }
 
-    public void SetUsableItem(UsableItem item)
-    {
-        // Logic to set the current usable item
-    }
-
     public void Draw(SpriteBatch spriteBatch)
     {
         _handler.Draw(spriteBatch);
+        _itemManager.Draw();
     }
-}
-
-public enum UsableItem
-{
-    Arrow,
-    Boomerang
 }
 
 public enum PlayerState
 {
     Idle,
     Moving,
-    Attacking
+    Attacking,
+    UsingItem
 }
 
 public enum PlayerInput
@@ -98,5 +105,7 @@ public enum PlayerInput
     MovingDown,
     MovingLeft,
     MovingRight,
-    Attacking
+    Attacking,
+    UsingItem1,
+    UsingItem2
 }

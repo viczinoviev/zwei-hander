@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ZweiHander.Graphics;
 using ZweiHander.Graphics.SpriteStorages;
+using ZweiHander.Items;
 
 public class PlayerHandler
 {
@@ -47,6 +48,25 @@ public class PlayerHandler
                         _currentSprite = _playerSprites.PlayerAttackSwordUp();
                     else
                         _currentSprite = _playerSprites.PlayerAttackSwordDown();
+                }
+                break;
+            case PlayerState.UsingItem:
+                // Use item sprite based on direction
+                if (Math.Abs(directionVector.X) > Math.Abs(directionVector.Y))
+                {
+                    // Horizontal direction is dominant
+                    if (directionVector.X < 0)
+                        _currentSprite = _playerSprites.PlayerUseItemLeft();
+                    else
+                        _currentSprite = _playerSprites.PlayerUseItemRight();
+                }
+                else
+                {
+                    // Vertical direction is dominant
+                    if (directionVector.Y < 0)
+                        _currentSprite = _playerSprites.PlayerUseItemUp();
+                    else
+                        _currentSprite = _playerSprites.PlayerUseItemDown();
                 }
                 break;
             case PlayerState.Moving:
@@ -98,6 +118,10 @@ public class PlayerHandler
     {
         float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
         
+        // Don't move when using items
+        if (_stateMachine.CurrentState == PlayerState.UsingItem)
+            return;
+        
         // Use different speed based on whether player is attacking
         float currentSpeed = _stateMachine.CurrentState == PlayerState.Attacking ? _attackMoveSpeed : _moveSpeed;
 
@@ -111,5 +135,33 @@ public class PlayerHandler
     public void Draw(SpriteBatch spriteBatch)
     {
         _currentSprite.Draw(_player.Position);
+    }
+    
+    public void HandleItemUse(PlayerInput itemInput)
+    {
+        Vector2 itemPosition = _player.Position;
+        Vector2 itemVelocity = _stateMachine.LastDirection * 300f; // Item moves in facing direction
+        
+        // Determine which item to spawn based on the input parameter
+        ItemType itemType;
+        if (itemInput == PlayerInput.UsingItem1)
+        {
+            itemType = ItemType.Arrow;
+        }
+        else if (itemInput == PlayerInput.UsingItem2)
+        {
+            itemType = ItemType.Boomerang;
+        }
+        else
+        {
+            return;
+        }
+        
+        _player.ItemManager.GetItem(
+            itemType,
+            life: itemType == ItemType.Arrow ? 2.0 : 3.0,
+            position: itemPosition,
+            velocity: itemVelocity
+        );
     }
 }
