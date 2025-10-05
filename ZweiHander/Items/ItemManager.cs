@@ -62,39 +62,39 @@ public class ItemManager
         switch (itemType)
         {
             case ItemType.Compass:
-                item = new CompassItem(_treasureSprites.Compass(), UseDefaultProperties);
+                item = new CompassItem([_treasureSprites.Compass()], UseDefaultProperties);
                 item.Life = life == 0 ? -1 : life; 
                 break;
             case ItemType.Map:
-                item = new MapItem(_treasureSprites.Map(), UseDefaultProperties);
+                item = new MapItem([_treasureSprites.Map()], UseDefaultProperties);
                 item.Life = life == 0 ? -1 : life;
                 break;
             case ItemType.Key:
-                item = new KeyItem(_treasureSprites.Key(), UseDefaultProperties);
+                item = new KeyItem([_treasureSprites.Key()], UseDefaultProperties);
                 item.Life = life == 0 ? -1 : life;
                 break;
             case ItemType.Heart:
-                item = new HeartItem(_treasureSprites.Heart(), UseDefaultProperties);
+                item = new HeartItem([_treasureSprites.Heart()], UseDefaultProperties);
                 item.Life = life == 0 ? -1 : life;
                 break;
             case ItemType.Boomerang:
-                item = new BoomerangItem(_itemSprites.Boomerang(), UseDefaultProperties);
+                item = new BoomerangItem([_itemSprites.Boomerang()], UseDefaultProperties);
                 item.Life = life == 0 ? 3 : life;
                 break;
             case ItemType.Arrow:
-                item = new ArrowItem(_itemSprites.ArrowLeft(), UseDefaultProperties);
+                item = new ArrowItem([_itemSprites.ArrowLeft(), _itemSprites.ProjectileOnHit()], UseDefaultProperties);
                 item.Life = life == 0 ? 2 : life;
                 break;
             case ItemType.HeartContainer:
-                item = new HeartItem(_treasureSprites.HeartContainer(), UseDefaultProperties);
+                item = new HeartItem([_treasureSprites.HeartContainer()], UseDefaultProperties);
                 item.Life = life == 0 ? -1 : life;
                 break;
             case ItemType.Rupy:
-                item = new HeartItem(_treasureSprites.Rupy(), UseDefaultProperties);
+                item = new HeartItem([_treasureSprites.Rupy()], UseDefaultProperties);
                 item.Life = life == 0 ? -1 : life;
                 break;
             case ItemType.Fairy:
-                item = new HeartItem(_treasureSprites.Fairy(), UseDefaultProperties);
+                item = new HeartItem([_treasureSprites.Fairy()], UseDefaultProperties);
                 item.Life = life == 0 ? -1 : life;
                 break;
             default:
@@ -124,13 +124,16 @@ public class ItemManager
     {
         foreach(IItem item in _items)
         {
-            item.Update(gameTime); // Do each item's update
-            if(item.Life == 0)
+            if (item.Life == 0)
             {
-                item.OnDeath(); // Do item's death behavior if died
+                item.OnDeath(gameTime); // Do item's death behavior if died
+            }
+            else
+            {
+                item.Update(gameTime); // Do each item's update
             }
         }
-        _items.RemoveWhere(item => item.Life == 0); // Remove any dead items
+        _items.RemoveWhere(item => item.DeathTime <= 0); // Remove any dead items
     }
     
     /// <summary>

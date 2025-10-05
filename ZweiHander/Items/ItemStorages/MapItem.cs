@@ -9,8 +9,8 @@ using Vector2 = Microsoft.Xna.Framework.Vector2;
 namespace ZweiHander.Items.ItemStorages;
 public class MapItem : AbstractItem
 {
-    public MapItem(ISprite sprite, bool defaultProperties)
-        : base(sprite)
+    public MapItem(List<ISprite> sprites, bool defaultProperties)
+        : base(sprites)
     {
         if (defaultProperties)
         {

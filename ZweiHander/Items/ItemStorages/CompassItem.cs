@@ -9,8 +9,8 @@ using Vector2 = Microsoft.Xna.Framework.Vector2;
 namespace ZweiHander.Items.ItemStorages;
 public class CompassItem : AbstractItem
 {
-    public CompassItem(ISprite sprite, bool defaultProperties)
-        : base(sprite)
+    public CompassItem(List<ISprite> sprites, bool defaultProperties)
+        : base(sprites)
     {
         if (defaultProperties)
         {

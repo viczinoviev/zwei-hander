@@ -15,9 +15,24 @@ namespace ZweiHander.Items;
 public abstract class AbstractItem : IItem
 {
     /// <summary>
-    /// The sprite associated with this item.
+    /// The sprites associated with this item.
     /// </summary>
-    protected ISprite _sprite;
+    protected List<ISprite> _sprites;
+
+    /// <summary>
+    /// Current sprite index.
+    /// </summary>
+    protected int _spriteIndex = 0;
+
+    /// <summary>
+    /// Number of sprites this item has.
+    /// </summary>
+    protected int SpriteCount { get => _sprites.Count; }
+
+    /// <summary>
+    /// The current sprite.
+    /// </summary>
+    protected ISprite Sprite { get => _sprites[_spriteIndex]; }
 
     public Vector2 Position { get; set; } = default;
 
@@ -27,15 +42,17 @@ public abstract class AbstractItem : IItem
 
     public double Life { get; set; }
 
+    public double DeathTime { get; protected set; } = 0.00001;
+
     /// <summary>
     /// The properties this item has.
     /// </summary>
     protected HashSet<ItemProperty> Properties = [];
 
 
-    protected AbstractItem(ISprite sprite)
+    protected AbstractItem(List<ISprite> sprites)
     {
-        _sprite = sprite;
+        _sprites = sprites;
     }
 
 
@@ -70,12 +87,12 @@ public abstract class AbstractItem : IItem
             }
         }
 
-        _sprite.Update(time);
+        Sprite.Update(time);
     }
 
     public void Draw()
     {
-        _sprite.Draw(Position);
+        Sprite.Draw(Position);
     }
 
     public void RemoveProperty(ItemProperty property)
@@ -88,8 +105,8 @@ public abstract class AbstractItem : IItem
         Properties.Add(property);
     }
 
-    public virtual void OnDeath()
+    public virtual void OnDeath(GameTime gameTime)
     {
-        // No default
+        DeathTime -= gameTime.ElapsedGameTime.TotalSeconds;
     }
 }

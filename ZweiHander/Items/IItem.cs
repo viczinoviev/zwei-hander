@@ -30,6 +30,11 @@ public interface IItem
     public double Life { get; set; }
 
     /// <summary>
+    /// The time (in seconds) to spend dying.
+    /// </summary>
+    public double DeathTime { get; }
+
+    /// <summary>
     /// Draws this item on screen.
     /// </summary>
     public void Draw();
@@ -54,7 +59,8 @@ public interface IItem
     public void AddProperty(ItemProperty property);
 
     /// <summary>
-    /// What to do when Life reaches 0.
+    /// What to do when life reaches 0.
     /// </summary>
-    public void OnDeath();
+    /// <param name="gameTime">A snapshot of the game timing values provided by the framework.</param>
+    public void OnDeath(GameTime gameTime);
 }

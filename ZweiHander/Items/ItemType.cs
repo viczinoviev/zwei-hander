@@ -25,7 +25,7 @@ public enum ItemType
     /// </summary>
     Boomerang,
     /// <summary>
-    /// 2s life, death sprite
+    /// 2s life, death sprite, facing velocity
     /// </summary>
     Arrow,
     /// <summary>
