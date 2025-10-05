@@ -31,5 +31,9 @@ public enum ItemProperty
     /// <summary>
     /// On collision with enemy, this is deleted
     /// </summary>
-    DeleteOnEnemy
+    DeleteOnEnemy,
+    /// <summary>
+    /// Rotated in same direction as velocity
+    /// </summary>
+    FacingVelocity
 }

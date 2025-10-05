@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 
@@ -47,6 +48,16 @@ public abstract class AbstractItem : IItem
         {
             Velocity += dt * Acceleration;
             Position += dt * Velocity + (dt * dt / 2) * Acceleration;
+        }
+
+        // Face correct direction
+        if (Properties.Contains(ItemProperty.FacingVelocity))
+        {
+            // NOT USED RIGHT NOW
+            // I am not sure exactly what it would be because of the grid orientation
+            // But I think one of these two:
+            // Standard coordinate grid, standard unit circle: Math.Atan2(Velocity.Y, Velocity.X)
+            // Pixel coordinate grid, standard unit rcircle: Math.Atan2(-Velocity.Y, Velocity.X)?
         }
 
         // Life progression
