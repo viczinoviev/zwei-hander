@@ -86,16 +86,23 @@ public class ItemManager
                 item.Life = life == 0 ? 2 : life;
                 break;
             case ItemType.HeartContainer:
+                // TODO: give this its own class
                 item = new HeartItem([_treasureSprites.HeartContainer()], UseDefaultProperties);
                 item.Life = life == 0 ? -1 : life;
                 break;
             case ItemType.Rupy:
+                // TODO: give this its own class
                 item = new HeartItem([_treasureSprites.Rupy()], UseDefaultProperties);
                 item.Life = life == 0 ? -1 : life;
                 break;
             case ItemType.Fairy:
+                // TODO: give this its own class
                 item = new HeartItem([_treasureSprites.Fairy()], UseDefaultProperties);
                 item.Life = life == 0 ? -1 : life;
+                break;
+            case ItemType.Bomb:
+                item = new BombItem([_itemSprites.Bomb(), _itemSprites.Explosion()], UseDefaultProperties);
+                item.Life = life == 0 ? 2 : life;
                 break;
             default:
                 // Should never actually reach here - will error out if so

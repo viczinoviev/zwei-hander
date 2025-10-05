@@ -39,5 +39,9 @@ public enum ItemType
     /// <summary>
     /// Infinite, can be picked up, stationary, delete on collision
     /// </summary>
-    Fairy
+    Fairy,
+    /// <summary>
+    /// 2s life, death animation
+    /// </summary>
+    Bomb
 }
