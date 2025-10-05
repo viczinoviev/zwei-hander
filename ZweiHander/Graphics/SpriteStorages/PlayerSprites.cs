@@ -52,5 +52,6 @@ public class PlayerSprites : SpriteFactory
         s.Effects = SpriteEffects.FlipHorizontally;
         return s;
     }
+
 }
 
