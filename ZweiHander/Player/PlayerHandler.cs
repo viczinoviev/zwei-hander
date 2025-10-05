@@ -13,7 +13,8 @@ public class PlayerHandler
     
     private float _moveSpeed = 200f;
     private float _attackMoveSpeed = 50f;
-    private PlayerState _lastObservedState = PlayerState.Idle;
+    private PlayerState _lastState = PlayerState.Idle;
+    private Vector2 _lastDirectionVector = Vector2.UnitY; // Default facing down
 
     public PlayerHandler(PlayerSprites playerSprites, Player player, PlayerStateMachine stateMachine)
     {
@@ -21,40 +22,49 @@ public class PlayerHandler
         _player = player;
         _stateMachine = stateMachine;
         _currentSprite = _playerSprites.PlayerIdle();
+        _lastState = _stateMachine.CurrentState;
+        _lastDirectionVector = _stateMachine.LastDirection;
     }
 
-    private void UpdateSprite(PlayerState state, Direction lastDirection)
+    private void UpdateSprite(PlayerState state, Vector2 directionVector)
     {
         switch (state)
         {
             case PlayerState.Attacking:
-                switch (lastDirection)
+                // Determine attack sprite based on primary direction (prioritize horizontal)
+                if (Math.Abs(directionVector.X) > Math.Abs(directionVector.Y))
                 {
-                    case Direction.Up:
-                        _currentSprite = _playerSprites.PlayerAttackSwordUp();
-                        break;
-                    case Direction.Down:
-                        _currentSprite = _playerSprites.PlayerAttackSwordDown();
-                        break;
-                    case Direction.Left:
+                    // Horizontal movement is dominant
+                    if (directionVector.X < 0)
                         _currentSprite = _playerSprites.PlayerAttackSwordLeft();
-                        break;
-                    case Direction.Right:
+                    else
                         _currentSprite = _playerSprites.PlayerAttackSwordRight();
-                        break;
+                }
+                else
+                {
+                    // Vertical movement is dominant
+                    if (directionVector.Y < 0)
+                        _currentSprite = _playerSprites.PlayerAttackSwordUp();
+                    else
+                        _currentSprite = _playerSprites.PlayerAttackSwordDown();
                 }
                 break;
-            case PlayerState.MovingUp:
-                _currentSprite = _playerSprites.PlayerMoveUp();
-                break;
-            case PlayerState.MovingDown:
-                _currentSprite = _playerSprites.PlayerMoveDown();
-                break;
-            case PlayerState.MovingRight:
-                _currentSprite = _playerSprites.PlayerMoveRight();
-                break;
-            case PlayerState.MovingLeft:
-                _currentSprite = _playerSprites.PlayerMoveLeft();
+            case PlayerState.Moving:
+
+                if (directionVector.Length() < 0.1f)
+                {
+                    _currentSprite = _playerSprites.PlayerIdle();
+                    break;
+                }
+
+                if (directionVector.X < 0)
+                    _currentSprite = _playerSprites.PlayerMoveLeft();
+                else if (directionVector.X > 0)
+                    _currentSprite = _playerSprites.PlayerMoveRight();
+                else if (directionVector.Y < 0)
+                    _currentSprite = _playerSprites.PlayerMoveUp();
+                else
+                    _currentSprite = _playerSprites.PlayerMoveDown();
                 break;
             case PlayerState.Idle:
                 _currentSprite = _playerSprites.PlayerIdle();
@@ -67,48 +77,33 @@ public class PlayerHandler
 
     public void Update(GameTime gameTime)
     {
-        // Check for state changes and update sprite if needed
-        if (_stateMachine.CurrentState != _lastObservedState)
+        // Check if state or direction vector has changed
+        PlayerState currentState = _stateMachine.CurrentState;
+        Vector2 currentDirectionVector = _stateMachine.LastDirection;
+        
+        // Only update sprite when state or direction actually changes
+        if (currentState != _lastState || currentDirectionVector != _lastDirectionVector)
         {
-            _lastObservedState = _stateMachine.CurrentState;
-            UpdateSprite(_stateMachine.CurrentState, _stateMachine.LastDirection);
+            _lastState = currentState;
+            _lastDirectionVector = currentDirectionVector;
+            UpdateSprite(currentState, currentDirectionVector);
         }
         
         UpdatePosition(gameTime);
+        // Let the sprite animate automatically (AnimatedSprite handles this)
         _currentSprite.Update(gameTime);
     }
 
     private void UpdatePosition(GameTime gameTime)
     {
-        Vector2 movement = Vector2.Zero;
         float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
         
         // Use different speed based on whether player is attacking
-		float currentSpeed;
-		if (_stateMachine.CurrentState == PlayerState.Attacking)
-		{
-			currentSpeed = _attackMoveSpeed;
-		}
-		else
-		{
-			currentSpeed = _moveSpeed;
-		}
+        float currentSpeed = _stateMachine.CurrentState == PlayerState.Attacking ? _attackMoveSpeed : _moveSpeed;
 
-        switch (_player.CurrentInput)
-        {
-            case PlayerInput.MovingUp:
-                movement.Y = -currentSpeed * deltaTime;
-                break;
-            case PlayerInput.MovingDown:
-                movement.Y = currentSpeed * deltaTime;
-                break;
-            case PlayerInput.MovingLeft:
-                movement.X = -currentSpeed * deltaTime;
-                break;
-            case PlayerInput.MovingRight:
-                movement.X = currentSpeed * deltaTime;
-                break;
-        }
+        // Get normalized movement vector from state machine
+        Vector2 movementVector = _stateMachine.CurrentMovementVector;
+        Vector2 movement = movementVector * currentSpeed * deltaTime;
 
         _player.Position += movement;
     }

@@ -31,7 +31,9 @@ public class KeyboardController : IController
             { Keys.D, () => _player.MoveRight() },
             { Keys.Right, () => _player.MoveRight() },
             { Keys.Z, () => _player.Attack() },
-            { Keys.N, () => _player.Attack() }
+            { Keys.N, () => _player.Attack() },
+            { Keys.D1, () => _player.SetUsableItem(UsableItem.Arrow) },
+            { Keys.D2, () => _player.SetUsableItem(UsableItem.Boomerang) }
         };
     }
 
@@ -47,33 +49,29 @@ public class KeyboardController : IController
     public void Update()
     {
         KeyboardState currentKeyboardState = Keyboard.GetState();
-        bool anyKeyPressed = false;
-
+        
+        // Clear input buffer each frame
+        _player.ClearInputBuffer();
+        
+        // Read all current inputs and add to buffer
         foreach (var keyBinding in _keyBindings)
         {
             if (currentKeyboardState.IsKeyDown(keyBinding.Key))
             {
                 keyBinding.Value();
-                anyKeyPressed = true;
             }
         }
 
-        if (!anyKeyPressed && _commandBindings != null)
+        // Handle command bindings
+        if (_commandBindings != null)
         {
             foreach (var commandBinding in _commandBindings)
             {
                 if (currentKeyboardState.IsKeyDown(commandBinding.Key) && !_previousKeyboardState.IsKeyDown(commandBinding.Key))
                 {
                     commandBinding.Value.Execute();
-                    anyKeyPressed = true;
-                    break;
                 }
             }
-        }
-
-        if (!anyKeyPressed)
-        {
-            _player.Idle();
         }
 
         _previousKeyboardState = currentKeyboardState;

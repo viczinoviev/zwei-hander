@@ -1,5 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
+using System.Linq;
 using ZweiHander.Graphics;
 using ZweiHander.Graphics.SpriteStorages;
 
@@ -9,7 +11,7 @@ public class Player : IPlayer
     private PlayerHandler _handler;
     public Vector2 Position { get; set; }
     public float Speed { get; set; } = 100f;
-    public PlayerInput CurrentInput { get; set; } = PlayerInput.None;
+    public HashSet<PlayerInput> InputBuffer { get; private set; } = new HashSet<PlayerInput>();
     public PlayerState CurrentState => _stateMachine.CurrentState;
 
     public Player(PlayerSprites playerSprites)
@@ -25,34 +27,49 @@ public class Player : IPlayer
         _handler.Update(gameTime);
     }
 
+    public void AddInput(PlayerInput input)
+    {
+        InputBuffer.Add(input);
+    }
+
+    public void ClearInputBuffer()
+    {
+        InputBuffer.Clear();
+    }
+
     public void MoveUp()
     {
-        CurrentInput = PlayerInput.MovingUp;
+        AddInput(PlayerInput.MovingUp);
     }
 
     public void MoveDown()
     {
-        CurrentInput = PlayerInput.MovingDown;
+        AddInput(PlayerInput.MovingDown);
     }
 
     public void MoveLeft()
     {
-        CurrentInput = PlayerInput.MovingLeft;
+        AddInput(PlayerInput.MovingLeft);
     }
 
     public void MoveRight()
     {
-        CurrentInput = PlayerInput.MovingRight;
+        AddInput(PlayerInput.MovingRight);
     }
 
     public void Attack()
     {
-        CurrentInput = PlayerInput.Attacking;
+        AddInput(PlayerInput.Attacking);
     }
 
     public void Idle()
     {
-        CurrentInput = PlayerInput.None;
+        
+    }
+
+    public void SetUsableItem(UsableItem item)
+    {
+        // Logic to set the current usable item
     }
 
     public void Draw(SpriteBatch spriteBatch)
@@ -61,22 +78,17 @@ public class Player : IPlayer
     }
 }
 
+public enum UsableItem
+{
+    Arrow,
+    Boomerang
+}
+
 public enum PlayerState
 {
     Idle,
-    MovingUp,
-    MovingDown,
-    MovingLeft,
-    MovingRight,
+    Moving,
     Attacking
-}
-
-public enum Direction
-{
-    Up,
-    Down,
-    Left,
-    Right
 }
 
 public enum PlayerInput
