@@ -12,7 +12,7 @@ public class PlayerStateMachine : IStateMachine
     private Vector2 _currentMovementVector = Vector2.Zero;
     private float _actionTimer = 0f;
     private float _attackDuration = 800f;
-    private float _itemUseDuration = 600f;
+    private float _itemUseDuration = 250f;
     private bool _itemUsedLastFrame = false;
     
     public PlayerState CurrentState => _currentState;

@@ -21,9 +21,9 @@
 		<Region name="link-attack-sword-right-2" x="18" y="77" width="27" height="17" />
 		<Region name="link-attack-sword-right-3" x="46" y="77" width="23" height="17" />
 		<Region name="link-attack-sword-right-4" x="70" y="77" width="19" height="17" />
-		<Region name="link-use-down" x="107" y="11" width="16" height="16" />
-		<Region name="link-use-right" x="124" y="11" width="16" height="16" />
-		<Region name="link-use-up" x="141" y="11" width="16" height="16" />
+		<Region name="link-use-item-down" x="107" y="11" width="16" height="16" />
+		<Region name="link-use-item-right" x="124" y="11" width="16" height="16" />
+		<Region name="link-use-item-up" x="141" y="11" width="16" height="16" />
 		<!-- Item Sprites -->
 		<Region name="arrow-up" x="1" y="185" width="8" height="16" />
 		<Region name="arrow-right" x="10" y="185" width="16" height="16" />

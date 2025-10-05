@@ -140,28 +140,34 @@ public class PlayerHandler
     public void HandleItemUse(PlayerInput itemInput)
     {
         Vector2 itemPosition = _player.Position;
-        Vector2 itemVelocity = _stateMachine.LastDirection * 300f; // Item moves in facing direction
+        Vector2 itemVelocity = _stateMachine.LastDirection * 300f;
         
-        // Determine which item to spawn based on the input parameter
         ItemType itemType;
         if (itemInput == PlayerInput.UsingItem1)
         {
             itemType = ItemType.Arrow;
+            _player.ItemManager.GetItem(
+                itemType,
+                life: 2.0,
+                position: itemPosition,
+                velocity: itemVelocity
+            );
         }
         else if (itemInput == PlayerInput.UsingItem2)
         {
             itemType = ItemType.Boomerang;
+            _player.ItemManager.GetItem(
+                itemType,
+                life: 2.15f,
+                position: itemPosition,
+                velocity: itemVelocity,
+                acceleration: -itemVelocity*0.9f
+            );
         }
         else
         {
             return;
         }
         
-        _player.ItemManager.GetItem(
-            itemType,
-            life: itemType == ItemType.Arrow ? 2.0 : 3.0,
-            position: itemPosition,
-            velocity: itemVelocity
-        );
     }
 }
