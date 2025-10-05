@@ -11,7 +11,7 @@ namespace ZweiHander.Commands
     {
         private Game1 _game;
         private float _flashDuration = 1f;
-        private float _flashInterval = 0.05f;
+        private float _flashInterval = 0.075f;
         private float _timeElapsed = 0f;
         private float _intervalElapsed = 0f;
         private bool _isFlashing = false;
@@ -40,7 +40,7 @@ namespace ZweiHander.Commands
             {
                 if (_intervalElapsed >= _flashInterval)
                 {
-                    _game.GamePlayer.Color = _game.GamePlayer.Color == Color.White ? Color.Red : Color.White;
+                    _game.GamePlayer.Color = _game.GamePlayer.Color == Color.White ? new Color(0f, 0f, 0f, 0f) : Color.White;
                     _intervalElapsed = 0f;
                 }
                 

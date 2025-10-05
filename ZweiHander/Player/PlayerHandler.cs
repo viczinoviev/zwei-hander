@@ -37,7 +37,6 @@ public class PlayerHandler
                 // Determine attack sprite based on primary direction (prioritize horizontal)
                 if (Math.Abs(directionVector.X) > Math.Abs(directionVector.Y))
                 {
-                    // Horizontal movement is dominant
                     if (directionVector.X < 0)
                         _currentSprite = _playerSprites.PlayerAttackSwordLeft();
                     else
@@ -45,7 +44,6 @@ public class PlayerHandler
                 }
                 else
                 {
-                    // Vertical movement is dominant
                     if (directionVector.Y < 0)
                         _currentSprite = _playerSprites.PlayerAttackSwordUp();
                     else
@@ -56,7 +54,6 @@ public class PlayerHandler
                 // Use item sprite based on direction
                 if (Math.Abs(directionVector.X) > Math.Abs(directionVector.Y))
                 {
-                    // Horizontal direction is dominant
                     if (directionVector.X < 0)
                         _currentSprite = _playerSprites.PlayerUseItemLeft();
                     else
@@ -64,7 +61,6 @@ public class PlayerHandler
                 }
                 else
                 {
-                    // Vertical direction is dominant
                     if (directionVector.Y < 0)
                         _currentSprite = _playerSprites.PlayerUseItemUp();
                     else
