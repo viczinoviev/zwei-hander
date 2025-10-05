@@ -25,6 +25,9 @@ namespace ZweiHander
         private Player _gamePlayer;
         private KeyboardController _keyboardController;
 
+        private HurtPlayerCommand _hurtPlayerCommand;
+
+
         //Sprites and factories
         private PlayerSprites _linkSprites;
         private BlockSprites _blockSprites;
@@ -70,6 +73,8 @@ namespace ZweiHander
         /// Number of items available.
         /// </summary>
         public int ItemCount { get => _itemManager.ItemCount; }
+
+        public Player GamePlayer => _gamePlayer;
 
         public Game1()
         {
@@ -162,6 +167,7 @@ namespace ZweiHander
 
             //Set up KeyboardController
             _keyboardController = new KeyboardController(_gamePlayer);
+            _hurtPlayerCommand = new HurtPlayerCommand(this);
             _keyboardController.BindKey(Keys.R, new ResetCommand(this));
             _keyboardController.BindKey(Keys.Q, new QuitCommand(this));
             _keyboardController.BindKey(Keys.T, new ChangeBlockCommand(this, -1));
@@ -170,6 +176,7 @@ namespace ZweiHander
             _keyboardController.BindKey(Keys.I, new ChangeItemCommand(this, +1));
             _keyboardController.BindKey(Keys.O, new ChangeEnemyCommand(this, -1));
             _keyboardController.BindKey(Keys.P, new ChangeEnemyCommand(this, +1));
+            _keyboardController.BindKey(Keys.E, _hurtPlayerCommand);
         }
 
         protected override void Update(GameTime gameTime)
@@ -188,6 +195,7 @@ namespace ZweiHander
 
             _keyboardController.Update();
             _gamePlayer.Update(gameTime);
+            _hurtPlayerCommand.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -209,9 +217,10 @@ namespace ZweiHander
 
             _projectileManager.Draw();
 
-
+            
 
             _gamePlayer.Draw(_spriteBatch);
+
 
             base.Draw(gameTime);
 

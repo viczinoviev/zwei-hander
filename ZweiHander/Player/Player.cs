@@ -17,6 +17,11 @@ public class Player : IPlayer
     public PlayerState CurrentState => _stateMachine.CurrentState;
     public ItemManager ItemManager => _itemManager;
 
+    public Color Color
+    {
+        get => _handler.Color;
+        set => _handler.Color = value;
+    }
     public Player(PlayerSprites playerSprites, ItemSprites itemSprites, TreasureSprites treasureSprites)
     {
         _itemManager = new ItemManager(itemSprites, treasureSprites);

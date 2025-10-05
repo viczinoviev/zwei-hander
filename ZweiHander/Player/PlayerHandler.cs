@@ -17,6 +17,8 @@ public class PlayerHandler
     private PlayerState _lastState = PlayerState.Idle;
     private Vector2 _lastDirectionVector = Vector2.UnitY; // Default facing down
 
+    public Color Color { get; set; } = Color.White;
+
     public PlayerHandler(PlayerSprites playerSprites, Player player, PlayerStateMachine stateMachine)
     {
         _playerSprites = playerSprites;
@@ -93,6 +95,7 @@ public class PlayerHandler
                 _currentSprite = _playerSprites.PlayerIdle();
                 break;
         }
+        _currentSprite.Color = this.Color;
     }
 
     public void Update(GameTime gameTime)
@@ -134,6 +137,9 @@ public class PlayerHandler
 
     public void Draw(SpriteBatch spriteBatch)
     {
+        //always refresh color no matter if a different state has been triggered
+        _currentSprite.Color = this.Color;
+
         _currentSprite.Draw(_player.Position);
     }
     
