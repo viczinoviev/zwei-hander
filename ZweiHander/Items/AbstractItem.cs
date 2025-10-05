@@ -18,11 +18,11 @@ public abstract class AbstractItem : IItem
     /// </summary>
     protected ISprite _sprite;
 
-    public Vector2 Position { protected get; set; } = default;
+    public Vector2 Position { get; set; } = default;
 
-    public Vector2 Velocity { protected get; set; } = default;
+    public Vector2 Velocity { get; set; } = default;
 
-    public Vector2 Acceleration { protected get; set; } = default;
+    public Vector2 Acceleration { get; set; } = default;
 
     public double Life { get; set; }
 

@@ -62,15 +62,15 @@ public class ItemManager
         switch (itemType)
         {
             case ItemType.Compass:
-                item = new CompassItem(null, UseDefaultProperties);
+                item = new CompassItem(_treasureSprites.Compass(), UseDefaultProperties);
                 item.Life = life == 0 ? -1 : life; 
                 break;
             case ItemType.Map:
-                item = new MapItem(null, UseDefaultProperties);
+                item = new MapItem(_treasureSprites.Map(), UseDefaultProperties);
                 item.Life = life == 0 ? -1 : life;
                 break;
             case ItemType.Key:
-                item = new KeyItem(null, UseDefaultProperties);
+                item = new KeyItem(_treasureSprites.Key(), UseDefaultProperties);
                 item.Life = life == 0 ? -1 : life;
                 break;
             case ItemType.Heart:

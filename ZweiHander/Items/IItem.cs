@@ -12,17 +12,17 @@ public interface IItem
     /// <summary>
     /// Current position using xy coordinate system; default is (0,0).
     /// </summary>
-    public Vector2 Position { set; }
+    public Vector2 Position { get; set; }
 
     /// <summary>
     /// Current velocity using xy coordinate system; default is (0,0).
     /// </summary>
-    public Vector2 Velocity { set; }
+    public Vector2 Velocity { get; set; }
 
     /// <summary>
     /// Current acceleration using xy coordinate system; default is (0,0).
     /// </summary>
-    public Vector2 Acceleration { set; }
+    public Vector2 Acceleration { get; set; }
 
     /// <summary>
     /// The lifetime (in seconds) left for item; negative means infinite.
