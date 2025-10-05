@@ -17,11 +17,10 @@ namespace ZweiHander
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        // TEST: Link Sprites, this should be contained in the Link Class.
         private Block _block;
         private IEnemy _enemy;
         private IItem _item;
-        // END TEST
+
 
         private Player _gamePlayer;
         private KeyboardController _keyboardController;
@@ -178,14 +177,14 @@ namespace ZweiHander
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
 
-            // This is needed to update the frames for the animation
+
+
             _block.Update(gameTime);
             _item.Update(gameTime);
             _enemy.Update(gameTime);
             _projectileManager.Update(gameTime);
-            //END TEST
+
 
             _keyboardController.Update();
             _gamePlayer.Update(gameTime);
@@ -200,7 +199,6 @@ namespace ZweiHander
             _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
 
 
-            // Draws the sprite at the passed in coordinates
 
             _block.Draw();
 
@@ -211,7 +209,7 @@ namespace ZweiHander
 
             _projectileManager.Draw();
 
-            //END TEST
+
 
             _gamePlayer.Draw(_spriteBatch);
 
