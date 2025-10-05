@@ -26,7 +26,10 @@ public class ItemSprites : SpriteFactory
         s.Effects = SpriteEffects.FlipHorizontally;
         return s;
     }
+    public ISprite ProjectileOnHit() => new IdleSprite(_regions["projectile-hit"], _spriteBatch);
     public ISprite Boomerang() => new AnimatedSprite(_spriteBatch, _animations["boomerang-animation"]);
+    public ISprite Bomb() => new IdleSprite(_regions["bomb"], _spriteBatch);
+    public ISprite Explosion() => new AnimatedSprite(_spriteBatch, _animations["explosion-animation"]);
 
 }
 
