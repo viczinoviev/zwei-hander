@@ -153,4 +153,12 @@ public class ItemManager
             item.Draw();
         }
     }
+
+    /// <summary>
+    /// Removes all items from this manager.
+    /// </summary>
+    public void Clear()
+    {
+        _items.Clear();
+    }
 }

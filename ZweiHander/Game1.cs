@@ -138,6 +138,7 @@ namespace ZweiHander
             _blockList.Add(_block = _blockFactory.CreateBlock(BlockName.BlockTile, blockPosition));
             _blockList.Add(_block = _blockFactory.CreateBlock(BlockName.StairTile, blockPosition));
 
+            _itemManager.Clear();
             _items = [
                 _itemManager.GetItem(ItemType.Heart, -1, position: itemPosition),
                 _itemManager.GetItem(ItemType.Boomerang, -1, position: itemPosition),
@@ -158,7 +159,7 @@ namespace ZweiHander
 
             _block = _blockList[0];
             _enemy = _enemyList[0];
-            _item = _items[_itemIndex];
+            ItemIndex = 0;
 
             //END TEST
 
