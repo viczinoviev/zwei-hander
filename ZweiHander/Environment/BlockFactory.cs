@@ -9,6 +9,8 @@ namespace ZweiHander.Environment
     {
         private int _tileSize; // Size of each block in pixels
         private BlockSprites _blockSprites; // Reference to sprite storage for blocks
+        //temp
+        private PlayerSprites _playerSprites;
         public List<Rectangle> BlockMap { get; private set; } // Stores all block hitboxes
 
         /// <summary>
@@ -25,14 +27,17 @@ namespace ZweiHander.Environment
             { BlockName.TexturedTile, BlockType.Decorative },
             { BlockName.StairTile, BlockType.Decorative },
             { BlockName.WhitePatternTile, BlockType.Decorative },
+            { BlockName.FireTile, BlockType.Decorative },
+            { BlockName.LadderTile, BlockType.Decorative },
         };
         /// <summary>
         /// Constructor initializes the factory with a tile size and block sprite storage
         ///</summary>
-        public BlockFactory(int tileSize, BlockSprites blockSprites)
+        public BlockFactory(int tileSize, BlockSprites blockSprites, PlayerSprites playerSprites)
         {
             _tileSize = tileSize; // Set tile size
             _blockSprites = blockSprites; // Store sprite storage
+            _playerSprites = playerSprites;
             BlockMap = new List<Rectangle>(); // Initialize hitbox list
         }
 
@@ -85,6 +90,14 @@ namespace ZweiHander.Environment
 
                 case BlockName.WhitePatternTile:
                     sprite = _blockSprites.WhitePatternTile();
+                    break;
+
+                case BlockName.FireTile:
+                    sprite = _playerSprites.Fire();
+                    break;
+
+                case BlockName.LadderTile:
+                    sprite = _playerSprites.Ladder();
                     break;
 
                 default: 

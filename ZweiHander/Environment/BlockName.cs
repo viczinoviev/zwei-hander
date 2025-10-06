@@ -12,5 +12,7 @@ public enum BlockName
     TexturedTile,
     StairTile,
     BrickTile,
-    WhitePatternTile
+    WhitePatternTile,
+    FireTile,
+    LadderTile
 }
