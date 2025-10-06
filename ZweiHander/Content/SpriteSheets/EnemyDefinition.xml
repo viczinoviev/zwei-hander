@@ -47,12 +47,12 @@
 			<Frame region="darknut-move-up-1" />
 		</Animation>
 		<!-- Gel Animation -->
-		<Animation name="gel-move-animation" delay="200">
+		<Animation name="gel-move-animation" delay="40">
 			<Frame region="gel-1" />
 			<Frame region="gel-2" />
 		</Animation>
 		<!-- Keese Animations -->
-		<Animation name="keese-move-animation" delay="200">
+		<Animation name="keese-move-animation" delay="40">
 			<Frame region="keese-1" />
 			<Frame region="keese-2" />
 		</Animation>

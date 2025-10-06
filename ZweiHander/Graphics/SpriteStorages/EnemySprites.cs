@@ -38,9 +38,23 @@ public class EnemySprites : SpriteFactory
 
     public ISprite Stalfos() => new IdleSprite(_regions["stalfos"], _spriteBatch);
 
-    public ISprite Rope() => new AnimatedSprite(_spriteBatch, _animations["rope-move-animation"]);
+    public ISprite RopeRight() => new AnimatedSprite(_spriteBatch, _animations["rope-move-animation"]);
+
+    public ISprite RopeLeft()
+    {
+        AnimatedSprite s = new AnimatedSprite( _spriteBatch, _animations["rope-move-animation"]);
+        s.Effects = SpriteEffects.FlipHorizontally;
+        return s;
+    }
     public ISprite Zol() => new AnimatedSprite(_spriteBatch, _animations["zol1-move-animation"]);
-    public ISprite Wallmaster() => new AnimatedSprite(_spriteBatch, _animations["wallmaster-move-animation"]);
+    public ISprite WallmasterUp() => new AnimatedSprite(_spriteBatch, _animations["wallmaster-move-animation"]);
+
+    public ISprite WallmasterDown()
+    {
+        AnimatedSprite s = new AnimatedSprite( _spriteBatch, _animations["wallmaster-move-animation"]);
+        s.Effects = SpriteEffects.FlipVertically;
+        return s;
+    }
     public ISprite Trap() => new IdleSprite(_regions["trap"], _spriteBatch);
 
 }

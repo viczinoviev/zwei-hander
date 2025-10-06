@@ -34,7 +34,7 @@ public class Wallmaster : IEnemy
     public Wallmaster(EnemySprites enemySprites)
     {
         _enemySprites = enemySprites;
-        _sprite = _enemySprites.Wallmaster();
+        _sprite = _enemySprites.WallmasterUp();
     }
     public virtual void Update(GameTime time)
     {
@@ -54,6 +54,7 @@ public class Wallmaster : IEnemy
                     if (position.Y > 40)
                     {
                         position = new Vector2(position.X, position.Y - 1);
+                        _sprite = _enemySprites.WallmasterUp();
                         face = 0;
                     }
                     else
@@ -76,6 +77,7 @@ public class Wallmaster : IEnemy
                     if (position.Y < 400)
                     {
                         position = new Vector2(position.X, position.Y + 1);
+                        _sprite = _enemySprites.WallmasterDown();
                         face = 2;
                     }
                     else

@@ -34,7 +34,8 @@ public class Rope : IEnemy
     public Rope(EnemySprites enemySprites)
     {
         _enemySprites = enemySprites;
-        _sprite = _enemySprites.Rope();
+        _sprite = _enemySprites.RopeLeft();
+        face = 3;
     }
     public virtual void Update(GameTime time)
     {
@@ -65,6 +66,7 @@ public class Rope : IEnemy
                     if (position.X < 750)
                     {
                         position = new Vector2(position.X + 1, position.Y);
+                        _sprite = _enemySprites.RopeRight();
                         face = 1;
                     }
                     else
@@ -87,6 +89,7 @@ public class Rope : IEnemy
                     if (position.X > 40)
                     {
                         position = new Vector2(position.X - 1, position.Y);
+                        _sprite = _enemySprites.RopeLeft();
                         face = 3;
                     }
                     else

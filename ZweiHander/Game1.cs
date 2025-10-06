@@ -165,6 +165,7 @@ namespace ZweiHander
                 _enemy = _enemyFactory.GetEnemy("Zol",enemyPosition),
                 _enemy = _enemyFactory.GetEnemy("Dodongo",enemyPosition),
                 _enemy = _enemyFactory.GetEnemy("Aquamentus",enemyPosition),
+                _enemy = _enemyFactory.GetEnemy("BladeTrap",enemyPosition),
             ];
 
             _block = _blockList[0];

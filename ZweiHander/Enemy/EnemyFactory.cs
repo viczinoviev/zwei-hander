@@ -79,6 +79,9 @@ public class EnemyFactory
                 case "Dodongo":
                 enemy = new Dodongo(_bossSprites);
                 break;
+                case "BladeTrap":
+                enemy = new BladeTrap(_enemySprites);
+                break;
             default:
                 // Should never actually reach here- will error out if so
                 break;
