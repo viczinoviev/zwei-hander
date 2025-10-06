@@ -1,0 +1,40 @@
+﻿Author of the code review: Jacob Scherzer
+Date of the code review: 2025-10-6
+Sprint number: 2
+Name of the .cs file being reviewed: AnimatedSprite.cs
+Author of the .cs file being reviewed: Victor
+Number of minutes taken to complete the review: 17 minutes.
+Specific comments on readability: 
+    The comments for anyone who wants to understand or work 
+    on the class itself is good, with each main properties' 
+    purpose explained well in a summary. The class itself 
+    even has a summary for those who want to know more 
+    specifically when to use this class and where. The 
+    constructor has this as well, with clear explanations of 
+    the purpose of each parameter. The Update method has no 
+    summary, but does inherit a summary from AbstractSprite 
+    that describes the method well. The main problem is the 
+    anchoring. The method and the properties associated with 
+    this method have no comments or summaries explaining what 
+    the purpose of this anchoring is.
+
+Author of the code review: Jacob Scherzer
+Date of the code review: 2025-10-6
+Sprint number: 2
+Name of the .cs file being reviewed: Aquamentus.cs
+Author of the .cs file being reviewed: Luke
+Number of minutes taken to complete the review: 8 minutes.
+Specific comments on maintainability/code quality: 
+    Overall, the class works as intended, and seems to be 
+    very maintainable. Any changes I could think of to the 
+    structure of the components it uses would already be 
+    handled or be easily handled via the current design of 
+    this class. Its handling of projectiles is not optimal 
+    given the current design of other components, but still 
+    works just as well from the program's perspective and is 
+    more suitable for if the design of those components ever 
+    changes. The only change I would recommend for better 
+    maintainability is to store the current projectiles in some 
+    sort of collection rather than 3 individual properties, so 
+    it will be easier to change the number of projectiles later 
+    on if desired.
