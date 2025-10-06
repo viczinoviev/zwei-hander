@@ -37,7 +37,7 @@ public enum ItemType
     /// </summary>
     Rupy,
     /// <summary>
-    /// Infinite, can be picked up, stationary, delete on collision
+    /// Infinite, animation, can be picked up, stationary, delete on collision
     /// </summary>
     Fairy,
     /// <summary>
