@@ -27,7 +27,7 @@ public class TreasureSprites : SpriteFactory
 
     // Potions and Quest Items
     public ISprite PotionLife() => new IdleSprite(_regions["potion-life"], _spriteBatch);
-    public ISprite Potion2nd() => new IdleSprite(_regions["potion-2nd"], _spriteBatch);
+    public ISprite PotionBlue() => new IdleSprite(_regions["potion-blue"], _spriteBatch);
     public ISprite Letter() => new IdleSprite(_regions["letter"], _spriteBatch);
     public ISprite BookMagic() => new IdleSprite(_regions["book-magic"], _spriteBatch);
 
