@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 using System.Numerics;
 using ZweiHander.Graphics;
 
@@ -52,6 +53,9 @@ public class PlayerSprites : SpriteFactory
         s.Effects = SpriteEffects.FlipHorizontally;
         return s;
     }
+
+    public ISprite Fire() => new AnimatedSprite(_spriteBatch, _animations["fire-animation"]);
+    public ISprite Ladder() => new IdleSprite(_regions["ladder"], _spriteBatch, true);
 
 }
 

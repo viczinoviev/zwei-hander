@@ -34,6 +34,9 @@
 		<Region name="bomb" x="129" y="185" width="8" height="16" />
 		<Region name="explosion-1" x="138" y="185" width="16" height="16" />
 		<Region name="explosion-2" x="155" y="185" width="16" height="16" />
+		<Region name="fire-1" x="191" y="185" width="16" height="16" />
+		<Region name="fire-2" x="191" y="204" width="16" height="16" />
+		<Region name="ladder" x="280" y="185" width="16" height="16" />
 	</Regions>
 	<Animations>
 		<!-- Link Animations -->
@@ -76,6 +79,10 @@
 		<Animation name="explosion-animation" delay="200">
 			<Frame region="explosion-1" />
 			<Frame region="explosion-2" />
+		</Animation>
+		<Animation name="fire-animation" delay="200">
+			<Frame region="fire-1" />
+			<Frame region="fire-2" />
 		</Animation>
 	</Animations>
 </TextureAtlas>
