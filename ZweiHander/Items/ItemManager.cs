@@ -131,6 +131,11 @@ public class ItemManager
                 item = new FireballItem([_bossSprites.AquamentusProjectile()], UseDefaultProperties);
                 item.Life = life == 0 ? 2 : life;
                 break;
+            case ItemType.Fire:
+                // I do not think the fire should rotate, but sure, why not?
+                item = new FireItem([_itemSprites.FireProjectile(velocity)], UseDefaultProperties);
+                item.Life = life == 0 ? 2.5 : life;
+                break;
             default:
                 // Should never actually reach here - will error out if so
                 break;
