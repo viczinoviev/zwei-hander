@@ -12,6 +12,15 @@
 		<Region name="aquamentus-projectile-2" x="110" y="11" width="8" height="16" />
 		<Region name="aquamentus-projectile-3" x="119" y="11" width="8" height="16" />
 		<Region name="aquamentus-projectile-4" x="128" y="11" width="8" height="16" />
+		<!-- Dodongo -->
+		<Region name="dodongo-down" x="1" y="58" width="16" height="16" />
+		<Region name="dodongo-down-hurt" x="18" y="58" width="16" height="16" />
+		<Region name="dodongo-up-1" x="35" y="58" width="16" height="16" />
+		<Region name="dodongo-up-2" x="52" y="58" width="16" height="16" />
+		<Region name="dodongo-right-1" x="69" y="58" width="32" height="16" />
+		<Region name="dodongo-right-2" x="102" y="58" width="32" height="16" />
+		<Region name="dodongo-right-hurt" x="135" y="58" width="32" height="16" />
+
 	</Regions>
 	<Animations>
 		<!-- Aquamentus Animation -->
@@ -27,6 +36,15 @@
 			<Frame region="aquamentus-projectile-2" />
 			<Frame region="aquamentus-projectile-3" />
 			<Frame region="aquamentus-projectile-4" />
+		</Animation>
+		<!-- Dodongo Animations -->
+		<Animation name="dodongo-move-up-animation" delay="200">
+			<Frame region="dodongo-up-1" />
+			<Frame region="dodongo-up-2" />
+		</Animation>
+		<Animation name="dodongo-move-right-animation" delay="200">
+			<Frame region="dodongo-right-1" />
+			<Frame region="dodongo-right-2" />
 		</Animation>
 	</Animations>
 </TextureAtlas>
