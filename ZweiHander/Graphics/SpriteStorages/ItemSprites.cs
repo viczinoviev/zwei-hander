@@ -1,5 +1,7 @@
-﻿using Microsoft.Xna.Framework.Content;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using ZweiHander.Graphics;
 
 namespace ZweiHander.Graphics.SpriteStorages;
@@ -13,18 +15,11 @@ public class ItemSprites : SpriteFactory
         _spriteBatch = spriteBatch;
     }
 
-    public ISprite ArrowUp() => new IdleSprite(_regions["arrow-up"], _spriteBatch);
-    public ISprite ArrowDown() { 
-        IdleSprite s = new IdleSprite(_regions["arrow-up"], _spriteBatch);
-        s.Effects = SpriteEffects.FlipHorizontally;
-        return s;
-    } 
-    public ISprite ArrowLeft() => new IdleSprite(_regions["arrow-right"], _spriteBatch);
-    public ISprite ArrowRight()
-    {
-        IdleSprite s = new IdleSprite(_regions["arrow-right"], _spriteBatch);
-        s.Effects = SpriteEffects.FlipHorizontally;
-        return s;
+    public ISprite Arrow(Vector2 direction) 
+    { 
+        ISprite sprite = new IdleSprite(_regions["arrow-right"], _spriteBatch);
+        sprite.Rotation = (float) Math.Atan2(direction.Y, direction.X);
+        return sprite;
     }
     public ISprite ProjectileOnHit() => new IdleSprite(_regions["projectile-hit"], _spriteBatch);
     public ISprite Boomerang() => new AnimatedSprite(_spriteBatch, _animations["boomerang-animation"]);

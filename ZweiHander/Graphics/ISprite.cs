@@ -11,6 +11,7 @@ public interface ISprite
     public Color Color { get; set; }
     public int Height { get; }
     public int Width { get; }
+    public float Rotation { get; set; }
 
     /// <summary>
     /// Draws this sprite on screen.

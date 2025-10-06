@@ -82,7 +82,7 @@ public class ItemManager
                 item.Life = life == 0 ? 3 : life;
                 break;
             case ItemType.Arrow:
-                item = new ArrowItem([_itemSprites.ArrowLeft(), _itemSprites.ProjectileOnHit()], UseDefaultProperties);
+                item = new ArrowItem([_itemSprites.Arrow(velocity), _itemSprites.ProjectileOnHit()], UseDefaultProperties);
                 item.Life = life == 0 ? 2 : life;
                 break;
             case ItemType.HeartContainer:

@@ -29,7 +29,7 @@ public abstract class AbstractSprite : ISprite
     /// <summary>
     /// The amount of rotation, in radians, to apply when drawing this sprite on screen
     /// </summary>
-    protected float Rotation = 0.0f;
+    public float Rotation { get; set; } = 0.0f;
 
     /// <summary>
     /// The center of rotation, scaling, and position when drawing this sprite on screen
