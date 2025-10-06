@@ -3,6 +3,7 @@ using Vector2 = Microsoft.Xna.Framework.Vector2;
 using ZweiHander.Graphics.SpriteStorages;
 using System.Collections.Generic;
 using ZweiHander.Items;
+using ZweiHander.boss;
 
 namespace ZweiHander.Enemy;
 
@@ -17,6 +18,10 @@ public class EnemyFactory
     /// </summary>
     EnemySprites _enemySprites;
     /// <summary>
+    /// Sprites for bosses
+    /// </summary>
+    BossSprites _bossSprites;
+    /// <summary>
     /// Manager for projectiles thrown by enemies
     /// </summary>
     ItemManager _projectileManager;
@@ -24,9 +29,10 @@ public class EnemyFactory
     /// List of currently existing enemies
     /// </summary>
     List<IEnemy> currentEnemies;
-    public EnemyFactory(EnemySprites enemysprites, ItemManager projectileManager)
+    public EnemyFactory(EnemySprites enemysprites, ItemManager projectileManager,BossSprites bossSprites)
     {
         _enemySprites = enemysprites;
+        _bossSprites = bossSprites;
         _projectileManager = projectileManager;
         currentEnemies = new List<IEnemy>();
     }
@@ -57,6 +63,21 @@ public class EnemyFactory
                 break;
             case "Stalfos":
                 enemy = new Stalfos(_enemySprites);
+                break;
+            case "Aquamentus":
+                enemy = new Aquamentus(_bossSprites, _projectileManager);
+                break;
+                case "Rope":
+                enemy = new Rope(_enemySprites);
+                break;
+                case "Wallmaster":
+                enemy = new Wallmaster(_enemySprites);
+                break;
+                case "Zol":
+                enemy = new Zol(_enemySprites);
+                break;
+                case "Dodongo":
+                enemy = new Dodongo(_bossSprites);
                 break;
             default:
                 // Should never actually reach here- will error out if so

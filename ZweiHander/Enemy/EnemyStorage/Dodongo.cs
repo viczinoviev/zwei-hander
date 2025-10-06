@@ -3,22 +3,23 @@ using Vector2 = Microsoft.Xna.Framework.Vector2;
 using ZweiHander.Graphics;
 using System;
 using ZweiHander.Graphics.SpriteStorages;
+using ZweiHander.Enemy;
 
-namespace ZweiHander.Enemy;
+namespace ZweiHander.boss;
 
 /// <summary>
-/// Keese enemy
+/// Dodongo boss
 /// </summary>
-public class Keese : IEnemy
+public class Dodongo : IEnemy
 {
     /// <summary>
-    /// The sprite associated with this Enemy.
+    /// The sprite associated with this boss.
     /// </summary>
     protected ISprite _sprite;
 /// <summary>
-/// Holds all sprites for this enemy
+/// Holds all sprites for this boss
 /// </summary>
-    private EnemySprites _enemySprites;
+    private BossSprites _bossSprites;
 
     public Vector2 position { get; set; } = default;
 
@@ -26,47 +27,24 @@ public class Keese : IEnemy
 
     public int thrower { get; set; } = 0;
 /// <summary>
-/// Random number generator to randomize enemy behavior
+/// Random number generator to randomize boss behavior
 /// </summary>
     Random rnd = new Random();
 
 
-    public Keese(EnemySprites enemySprites)
+    public Dodongo(BossSprites bossSprites)
     {
-        _enemySprites = enemySprites;
-        _sprite = _enemySprites.Keese();
+        _bossSprites = bossSprites;
+        _sprite = _bossSprites.DodongoUp();
     }
     public virtual void Update(GameTime time)
     {
         //Randomize  movement
-        int mov = rnd.Next(300);
+        int mov = rnd.Next(200);
         //Move according to current direction faced
-        if (mov > 8)
+        if (mov > 5)
         {
-            if (face < 4)
-            {
-                position = new Vector2(position.X + ((-1 + 2 * Convert.ToInt32(!(face == 3 && position.X > 40))) * Convert.ToInt32((face == 3 && position.X > 40) || (face == 1 && position.X < 750))), position.Y + ((-1 + 2 * Convert.ToInt32(!(face == 0 && position.Y > 40))) * Convert.ToInt32((face == 0 && position.Y > 40) || (face == 2 && position.Y < 400))));
-            }
-            else
-            {
-                switch (face)
-                {
-                    case 4:
-                        position = new Vector2(position.X + 1, position.Y + 1);
-                        break;
-                    case 5:
-                        position = new Vector2(position.X + 1, position.Y - 1);
-                        break;
-                    case 6:
-                        position = new Vector2(position.X - 1, position.Y + 1);
-                        break;
-                    case 7:
-                        position = new Vector2(position.X - 1, position.Y - 1);
-                        break;
-                    default:
-                        break;
-                }
-            }
+            position = new Vector2(position.X + ((-1 + 2 * Convert.ToInt32(!(face == 3 && position.X > 40))) * Convert.ToInt32((face == 3 && position.X > 40) || (face == 1 && position.X < 750))), position.Y + ((-1 + 2 * Convert.ToInt32(!(face == 0 && position.Y > 40))) * Convert.ToInt32((face == 0 && position.Y > 40) || (face == 2 && position.Y < 400))));
         }
         //Change face and sprite to new value according to the randomized value
         else
@@ -77,6 +55,7 @@ public class Keese : IEnemy
                     if (position.Y > 40)
                     {
                         position = new Vector2(position.X, position.Y - 1);
+                        _sprite = _bossSprites.DodongoUp();
                         face = 0;
                     }
                     else
@@ -88,6 +67,7 @@ public class Keese : IEnemy
                     if (position.X < 750)
                     {
                         position = new Vector2(position.X + 1, position.Y);
+                        _sprite = _bossSprites.DodongoRight();
                         face = 1;
                     }
                     else
@@ -99,6 +79,7 @@ public class Keese : IEnemy
                     if (position.Y < 400)
                     {
                         position = new Vector2(position.X, position.Y + 1);
+                        _sprite = _bossSprites.DodongoDown();
                         face = 2;
                     }
                     else
@@ -110,6 +91,7 @@ public class Keese : IEnemy
                     if (position.X > 40)
                     {
                         position = new Vector2(position.X - 1, position.Y);
+                        _sprite = _bossSprites.DodongoLeft();
                         face = 3;
                     }
                     else
@@ -118,7 +100,7 @@ public class Keese : IEnemy
                     }
                     break;
                 default:
-                    face = mov;
+                    //no movement  
                     break;
             }
         }

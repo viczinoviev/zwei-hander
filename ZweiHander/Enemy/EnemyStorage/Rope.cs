@@ -7,9 +7,9 @@ using ZweiHander.Graphics.SpriteStorages;
 namespace ZweiHander.Enemy;
 
 /// <summary>
-/// Keese enemy
+/// Rope enemy
 /// </summary>
-public class Keese : IEnemy
+public class Rope : IEnemy
 {
     /// <summary>
     /// The sprite associated with this Enemy.
@@ -31,42 +31,19 @@ public class Keese : IEnemy
     Random rnd = new Random();
 
 
-    public Keese(EnemySprites enemySprites)
+    public Rope(EnemySprites enemySprites)
     {
         _enemySprites = enemySprites;
-        _sprite = _enemySprites.Keese();
+        _sprite = _enemySprites.Rope();
     }
     public virtual void Update(GameTime time)
     {
         //Randomize  movement
-        int mov = rnd.Next(300);
+        int mov = rnd.Next(200);
         //Move according to current direction faced
-        if (mov > 8)
+        if (mov > 5)
         {
-            if (face < 4)
-            {
-                position = new Vector2(position.X + ((-1 + 2 * Convert.ToInt32(!(face == 3 && position.X > 40))) * Convert.ToInt32((face == 3 && position.X > 40) || (face == 1 && position.X < 750))), position.Y + ((-1 + 2 * Convert.ToInt32(!(face == 0 && position.Y > 40))) * Convert.ToInt32((face == 0 && position.Y > 40) || (face == 2 && position.Y < 400))));
-            }
-            else
-            {
-                switch (face)
-                {
-                    case 4:
-                        position = new Vector2(position.X + 1, position.Y + 1);
-                        break;
-                    case 5:
-                        position = new Vector2(position.X + 1, position.Y - 1);
-                        break;
-                    case 6:
-                        position = new Vector2(position.X - 1, position.Y + 1);
-                        break;
-                    case 7:
-                        position = new Vector2(position.X - 1, position.Y - 1);
-                        break;
-                    default:
-                        break;
-                }
-            }
+            position = new Vector2(position.X + ((-1 + 2 * Convert.ToInt32(!(face == 3 && position.X > 40))) * Convert.ToInt32((face == 3 && position.X > 40) || (face == 1 && position.X < 750))), position.Y + ((-1 + 2 * Convert.ToInt32(!(face == 0 && position.Y > 40))) * Convert.ToInt32((face == 0 && position.Y > 40) || (face == 2 && position.Y < 400))));
         }
         //Change face and sprite to new value according to the randomized value
         else
@@ -118,7 +95,7 @@ public class Keese : IEnemy
                     }
                     break;
                 default:
-                    face = mov;
+                    //no movement  
                     break;
             }
         }

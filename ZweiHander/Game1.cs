@@ -34,6 +34,7 @@ namespace ZweiHander
         private TreasureSprites _treasureSprites;
         private EnemySprites _enemySprites;
         private EnemyFactory _enemyFactory;
+        private BossSprites _bossSprites;
         private ItemSprites _itemSprites;
         private BlockFactory _blockFactory;
         private ItemManager _itemManager; //The item that is rotated through
@@ -104,7 +105,8 @@ namespace ZweiHander
             _itemManager = new ItemManager(_itemSprites, _treasureSprites);
             _projectileManager = new ItemManager(_itemSprites, _treasureSprites);
             _enemySprites = new EnemySprites(Content, _spriteBatch);
-            _enemyFactory = new EnemyFactory(_enemySprites,_projectileManager);
+            _bossSprites = new BossSprites(Content, _spriteBatch);
+            _enemyFactory = new EnemyFactory(_enemySprites,_projectileManager,_bossSprites);
 
             GameSetUp();
         }
@@ -151,12 +153,19 @@ namespace ZweiHander
                 _itemManager.GetItem(ItemType.Fairy, -1, position: itemPosition)
             ];
             //Create enemy list
-            _enemyList = new List<IEnemy>();
-            _enemyList.Add(_enemy = _enemyFactory.GetEnemy("Darknut", enemyPosition));
-            _enemyList.Add(_enemy = _enemyFactory.GetEnemy("Gel", enemyPosition));
-            _enemyList.Add(_enemy = _enemyFactory.GetEnemy("Goriya", enemyPosition));
-            _enemyList.Add(_enemy = _enemyFactory.GetEnemy("Keese", enemyPosition));
-            _enemyList.Add(_enemy = _enemyFactory.GetEnemy("Stalfos", enemyPosition));
+            _enemyList =
+            [
+                _enemy = _enemyFactory.GetEnemy("Darknut", enemyPosition),
+                _enemy = _enemyFactory.GetEnemy("Gel", enemyPosition),
+                _enemy = _enemyFactory.GetEnemy("Goriya", enemyPosition),
+                _enemy = _enemyFactory.GetEnemy("Keese", enemyPosition),
+                _enemy = _enemyFactory.GetEnemy("Stalfos", enemyPosition),
+                _enemy = _enemyFactory.GetEnemy("Rope",enemyPosition),
+                _enemy = _enemyFactory.GetEnemy("Wallmaster",enemyPosition),
+                _enemy = _enemyFactory.GetEnemy("Zol",enemyPosition),
+                _enemy = _enemyFactory.GetEnemy("Dodongo",enemyPosition),
+                _enemy = _enemyFactory.GetEnemy("Aquamentus",enemyPosition),
+            ];
 
             _block = _blockList[0];
             _enemy = _enemyList[0];
