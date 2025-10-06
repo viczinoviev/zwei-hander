@@ -21,6 +21,16 @@
 		<Region name="keese-2" x="200" y="11" width="16" height="16" />
 		<!-- Stalfos -->
 		<Region name="stalfos" x="1" y="59" width="16" height="16" />
+		<!-- Rope -->
+		<Region name="rope-1" x="126" y="59" width="16" height="16" />
+		<Region name="rope-2" x="145" y="59" width="16" height="16" />
+		<!-- Wall Master -->
+		<Region name="wallmaster-1" x="393" y="11" width="16" height="16" />
+		<Region name="wallmaster-2" x="410" y="11" width="16" height="16" />
+		<!-- Trap -->
+		<!-- Zol -->
+		<Region name="zol1-1" x="77" y="11" width="16" height="16" />
+		<Region name="zol1-2" x="94" y="11" width="16" height="16" />
 	</Regions>
 	<Animations>
 		<!-- Darknut Animations -->
@@ -44,6 +54,21 @@
 		<Animation name="keese-move-animation" delay="200">
 			<Frame region="keese-1" />
 			<Frame region="keese-2" />
+		</Animation>
+		<!-- Rope Animations -->
+		<Animation name="rope-move-animation" delay="200">
+			<Frame region="rope-1" />
+			<Frame region="rope-2" />
+		</Animation>
+		<!-- Wallmaster Animations -->
+		<Animation name="wallmaster-move-animation" delay="200">
+			<Frame region="wallmaster-1" />
+			<Frame region="wallmaster-2" />
+		</Animation>
+		<!-- Zol Animations -->
+		<Animation name="zol1-move-animation" delay="200">
+			<Frame region="zol1-1" />
+			<Frame region="zol1-2" />
 		</Animation>
 	</Animations>
 </TextureAtlas>
