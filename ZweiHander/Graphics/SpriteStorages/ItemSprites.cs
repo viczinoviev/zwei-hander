@@ -21,6 +21,13 @@ public class ItemSprites : SpriteFactory
         sprite.Rotation = (float) Math.Atan2(direction.Y, direction.X);
         return sprite;
     }
+    public ISprite FireProjectile(Vector2 direction)
+    {
+        ISprite sprite = new AnimatedSprite(_spriteBatch, _animations["fire-animation"]);
+        sprite.Rotation = (float)Math.Atan2(direction.Y, direction.X);
+        return sprite;
+    }
+    
     public ISprite ProjectileOnHit() => new IdleSprite(_regions["projectile-hit"], _spriteBatch);
     public ISprite Boomerang() => new AnimatedSprite(_spriteBatch, _animations["boomerang-animation"]);
     public ISprite Bomb() => new IdleSprite(_regions["bomb"], _spriteBatch);
