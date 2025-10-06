@@ -28,6 +28,7 @@
 		<Region name="wallmaster-1" x="393" y="11" width="16" height="16" />
 		<Region name="wallmaster-2" x="410" y="11" width="16" height="16" />
 		<!-- Trap -->
+		<Region name="trap" x="164" y="59" width="16" height="16" />
 		<!-- Zol -->
 		<Region name="zol1-1" x="77" y="11" width="16" height="16" />
 		<Region name="zol1-2" x="94" y="11" width="16" height="16" />
