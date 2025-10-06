@@ -1,5 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<XnaContent xmlns:ns="Microsoft.Xna.Framework">
-  <Asset Type="Object">
-  </Asset>
-</XnaContent>
+<TextureAtlas>
+	<Texture>SpriteSheets/Enemies-and-Bosses</Texture>
+	<Regions>
+		<!-- Aquamentus-->
+		<Region name="aquamentus-1" x="1" y="11" width="24" height="32" />
+		<Region name="aquamentus-2" x="26" y="11" width="24" height="32" />
+		<Region name="aquamentus-3" x="51" y="11" width="24" height="32" />
+		<Region name="aquamentus-4" x="76" y="11" width="24" height="32" />
+		<!-- Aquamentus Projectiles -->
+		<Region name="aquamentus-projectile-1" x="101" y="11" width="8" height="16" />
+		<Region name="aquamentus-projectile-2" x="110" y="11" width="8" height="16" />
+		<Region name="aquamentus-projectile-3" x="119" y="11" width="8" height="16" />
+		<Region name="aquamentus-projectile-4" x="128" y="11" width="8" height="16" />
+	</Regions>
+	<Animations>
+		<!-- Aquamentus Animation -->
+		<Animation name="aquamentus-animation" delay="200">
+			<Frame region="aquamentus-1" />
+			<Frame region="aquamentus-2" />
+			<Frame region="aquamentus-3" />
+			<Frame region="aquamentus-4" />
+		</Animation>
+		<!-- Aquamentus Projectile Animation-->
+		<Animation name="aquamentus-projectile-animation" delay="50">
+			<Frame region="aquamentus-projectile-1" />
+			<Frame region="aquamentus-projectile-2" />
+			<Frame region="aquamentus-projectile-3" />
+			<Frame region="aquamentus-projectile-4" />
+		</Animation>
+	</Animations>
+</TextureAtlas>
