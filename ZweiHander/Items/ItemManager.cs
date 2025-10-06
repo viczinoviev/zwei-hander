@@ -128,7 +128,7 @@ public class ItemManager
                 item.Life = life == 0 ? -1 : life;
                 break;
             case ItemType.Fireball:
-                item = new FairyItem([_bossSprites.AquamentusProjectile()], UseDefaultProperties);
+                item = new FireballItem([_bossSprites.AquamentusProjectile()], UseDefaultProperties);
                 item.Life = life == 0 ? 2 : life;
                 break;
             default:

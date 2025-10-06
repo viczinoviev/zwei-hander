@@ -67,5 +67,9 @@ public enum ItemType
     /// <summary>
     /// 2s life, animation, damages player, deletes on player
     /// </summary>
-    Fireball
+    Fireball,
+    /// <summary>
+    /// 2.5s life, animation
+    /// </summary>
+    Fire
 }
