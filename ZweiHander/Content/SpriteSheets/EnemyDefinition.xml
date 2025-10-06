@@ -21,6 +21,11 @@
 		<Region name="keese-2" x="200" y="11" width="16" height="16" />
 		<!-- Stalfos -->
 		<Region name="stalfos" x="1" y="59" width="16" height="16" />
+		<!-- Enemy projectile -->
+		<Region name="projectile-1" x="231" y="59" width="8" height="16" />
+		<Region name="projectile-2" x="240" y="59" width="8" height="16" />
+		<Region name="projectile-3" x="249" y="59" width="8" height="16" />
+		<Region name="projectile-4" x="158" y="59" width="8" height="16" />
 	</Regions>
 	<Animations>
 		<!-- Darknut Animations -->
@@ -44,6 +49,13 @@
 		<Animation name="keese-move-animation" delay="200">
 			<Frame region="keese-1" />
 			<Frame region="keese-2" />
+		</Animation>
+		<!-- Projectile Animation-->
+		<Animation name="projectile-animation" delay="50">
+			<Frame region="projectile-1" />
+			<Frame region="projectile-2" />
+			<Frame region="projectile-3" />
+			<Frame region="projectile-4" />
 		</Animation>
 	</Animations>
 </TextureAtlas>
