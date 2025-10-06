@@ -104,9 +104,9 @@ namespace ZweiHander
             _blockFactory = new BlockFactory(32, _blockSprites, _linkSprites);
             _enemySprites = new EnemySprites(Content, _spriteBatch);
             _bossSprites = new BossSprites(Content, _spriteBatch);
-            _enemyFactory = new EnemyFactory(_enemySprites,_projectileManager,_bossSprites);
             _itemManager = new ItemManager(_itemSprites, _treasureSprites, _bossSprites);
             _projectileManager = new ItemManager(_itemSprites, _treasureSprites, _bossSprites);
+            _enemyFactory = new EnemyFactory(_enemySprites, _projectileManager, _bossSprites);
 
             GameSetUp();
         }
