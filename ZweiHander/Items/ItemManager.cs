@@ -27,14 +27,21 @@ public class ItemManager
     private readonly TreasureSprites _treasureSprites;
 
     /// <summary>
+    /// Holds all the sprites related to bosses.
+    /// </summary>
+    private readonly BossSprites _bossSprites;
+
+    /// <summary>
     /// Number of items stored in this manager.
     /// </summary>
     public int ItemCount { get => _items.Count; }
 
-    public ItemManager(ItemSprites itemSprites, TreasureSprites treasureSprites)
+    //null for bossSprites since Player calls this right now.
+    public ItemManager(ItemSprites itemSprites, TreasureSprites treasureSprites, BossSprites bossSprites = null)
     {
         _itemSprites = itemSprites;
         _treasureSprites = treasureSprites;
+        _bossSprites = bossSprites;
     }
 
     /// <summary>
@@ -121,8 +128,7 @@ public class ItemManager
                 item.Life = life == 0 ? -1 : life;
                 break;
             case ItemType.Fireball:
-                // TODO: Correct Sprite
-                item = new FairyItem([_treasureSprites.Fairy()], UseDefaultProperties);
+                item = new FairyItem([_bossSprites.AquamentusProjectile()], UseDefaultProperties);
                 item.Life = life == 0 ? 2 : life;
                 break;
             default:
