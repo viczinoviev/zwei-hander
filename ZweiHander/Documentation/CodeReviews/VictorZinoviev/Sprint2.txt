@@ -27,25 +27,3 @@ A hypothetical change to make to the game related to file being reviewed and how
 	If we add an animation for when the player is picking up an item, we would need to add more cases to the switch statements.
 	This may clutter the code further, so it would be easier to refactor if logic specific to each state was separated.
 
-Author of the code review: Luke Howard
-Date of the code review: 2025-10-6
-Sprint number: 2
-Name of the .cs file being reviewed: BlockFactory.cs
-Author of the .cs file being reviewed: Darren
-Time spent reviewing: 15 minutes
-Specific comments on Readability:
-	Code is thoroughly commented and very easy to understand, no real issues found.
-	All parameters and methods are well explained.
-
-Author of the code review: Luke Howard
-Date of the code review: 2025-10-6
-Sprint number: 2
-Name of the .cs file being reviewed: AbstractItem.cs
-Author of the .cs file being reviewed: Jacob
-Time spent reviewing: 20 minutes
-Specific comments on code quality:
-	Some directives not needed, but the code seems very easy to use and adapt, without relying on too many other files.
-	Simple and easy to understand
-	Lots of properties but they all seem pretty needed.
-	Making items face proper direction not yet finished, but should fit here well.
-	Overall, seems very maintanable and fulfills what is needed for sprint2.
