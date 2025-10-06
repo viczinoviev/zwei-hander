@@ -6,27 +6,23 @@ using ZweiHander.Items;
 
 namespace ZweiHander.Enemy;
 
-/// <summary>
-/// All Enemies that exist are within this.
-/// </summary>
-/*public enum EnemyName
-{
-    Darknut,
-    Gel,
-    Goriya,
-    Keese,
-    Stalfos
-} */
-
 
 /// <summary>
 /// Manages creations of Enemies.
 /// </summary>
 public class EnemyFactory
 {
+    /// <summary>
+    /// Sprites for enemies
+    /// </summary>
     EnemySprites _enemySprites;
-
+    /// <summary>
+    /// Manager for projectiles thrown by enemies
+    /// </summary>
     ItemManager _projectileManager;
+    /// <summary>
+    /// List of currently existing enemies
+    /// </summary>
     List<IEnemy> currentEnemies;
     public EnemyFactory(EnemySprites enemysprites, ItemManager projectileManager)
     {

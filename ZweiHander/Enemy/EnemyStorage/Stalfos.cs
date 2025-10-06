@@ -1,10 +1,8 @@
 using Microsoft.Xna.Framework;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
-using ZweiHander.Items;
 using ZweiHander.Graphics;
 using System;
 using ZweiHander.Graphics.SpriteStorages;
-using System.Runtime.CompilerServices;
 
 namespace ZweiHander.Enemy;
 
@@ -17,16 +15,19 @@ public class Stalfos : IEnemy
     /// The sprite associated with this Enemy.
     /// </summary>
     protected ISprite _sprite;
-
-
+/// <summary>
+/// Holds all sprites for this enemy
+/// </summary>
     private EnemySprites _enemySprites;
 
     public Vector2 position { get; set; } = default;
 
     public int face { get; set; } = default;
 
-    public int thrower { get; set; } = 1;
-
+    public int thrower { get; set; } = 0;
+/// <summary>
+/// Random number generator to randomize enemy behavior
+/// </summary>
     Random rnd = new Random();
 
 
@@ -37,11 +38,14 @@ public class Stalfos : IEnemy
     }
     public virtual void Update(GameTime time)
     {
+        //Randomize  movement
         int mov = rnd.Next(200);
+        //Move according to current direction faced
         if (mov > 5)
         {
             position = new Vector2(position.X + ((-1 + 2 * Convert.ToInt32(!(face == 3 && position.X > 40))) * Convert.ToInt32((face == 3 && position.X > 40) || (face == 1 && position.X < 750))), position.Y + ((-1 + 2 * Convert.ToInt32(!(face == 0 && position.Y > 40))) * Convert.ToInt32((face == 0 && position.Y > 40) || (face == 2 && position.Y < 400))));
         }
+        //Change face and sprite to new value according to the randomized value
         else
         {
             switch (mov)
