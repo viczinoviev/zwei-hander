@@ -1,11 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ZweiHander.Graphics;
-using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace ZweiHander.Items.ItemStorages;
 public class ArrowItem : AbstractItem
@@ -15,9 +10,7 @@ public class ArrowItem : AbstractItem
     {
         if (defaultProperties)
         {
-            Properties = [
-                ItemProperty.FacingVelocity
-            ];
+            Properties = [];
         }
         DeathTime = 0.1;
     }

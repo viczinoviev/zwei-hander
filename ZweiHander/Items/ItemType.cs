@@ -25,7 +25,7 @@ public enum ItemType
     /// </summary>
     Boomerang,
     /// <summary>
-    /// 2s life, death sprite, facing velocity
+    /// 2s life, death sprite
     /// </summary>
     Arrow,
     /// <summary>
@@ -43,5 +43,29 @@ public enum ItemType
     /// <summary>
     /// 2s life, death animation
     /// </summary>
-    Bomb
+    Bomb,
+    /// <summary>
+    /// Infinite, Can be picked up, stationary, delete on collision
+    /// </summary>
+    TriforcePiece,
+    /// <summary>
+    /// Infinite, Can be picked up, stationary, delete on collision
+    /// </summary>
+    Bow,
+    /// <summary>
+    /// Infinite, Can be picked up, stationary, delete on collision
+    /// </summary>
+    Clock,
+    /// <summary>
+    /// Infinite, Can be picked up, stationary, delete on collision
+    /// </summary>
+    BlueCandle,
+    /// <summary>
+    /// Infinite, Can be picked up, stationary, delete on collision
+    /// </summary>
+    BluePotion,
+    /// <summary>
+    /// 2s life, animation, damages player, deletes on player
+    /// </summary>
+    Fireball
 }

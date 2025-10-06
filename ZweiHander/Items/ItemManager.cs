@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using ZweiHander.Graphics.SpriteStorages;
 using ZweiHander.Items.ItemStorages;
@@ -30,7 +29,7 @@ public class ItemManager
     /// <summary>
     /// Number of items stored in this manager.
     /// </summary>
-    public int ItemCount { get =>  _items.Count; }
+    public int ItemCount { get => _items.Count; }
 
     public ItemManager(ItemSprites itemSprites, TreasureSprites treasureSprites)
     {
@@ -49,11 +48,11 @@ public class ItemManager
     /// <param name="properties">Properties attached to this instance; will use default properties for type if not given.</param>
     /// <returns>The desired item.</returns>
     public IItem GetItem(
-        ItemType itemType, 
-        double life = 0f, 
-        ICollection<ItemProperty> properties = null, 
-        Vector2 position = default, 
-        Vector2 velocity = default, 
+        ItemType itemType,
+        double life = 0f,
+        ICollection<ItemProperty> properties = null,
+        Vector2 position = default,
+        Vector2 velocity = default,
         Vector2 acceleration = default
     )
     {
@@ -63,7 +62,7 @@ public class ItemManager
         {
             case ItemType.Compass:
                 item = new CompassItem([_treasureSprites.Compass()], UseDefaultProperties);
-                item.Life = life == 0 ? -1 : life; 
+                item.Life = life == 0 ? -1 : life;
                 break;
             case ItemType.Map:
                 item = new MapItem([_treasureSprites.Map()], UseDefaultProperties);
@@ -86,22 +85,44 @@ public class ItemManager
                 item.Life = life == 0 ? 2 : life;
                 break;
             case ItemType.HeartContainer:
-                // TODO: give this its own class
-                item = new HeartItem([_treasureSprites.HeartContainer()], UseDefaultProperties);
+                item = new HeartContainerItem([_treasureSprites.HeartContainer()], UseDefaultProperties);
                 item.Life = life == 0 ? -1 : life;
                 break;
             case ItemType.Rupy:
-                // TODO: give this its own class
-                item = new HeartItem([_treasureSprites.Rupy()], UseDefaultProperties);
+                item = new RupyItem([_treasureSprites.Rupy()], UseDefaultProperties);
                 item.Life = life == 0 ? -1 : life;
                 break;
             case ItemType.Fairy:
-                // TODO: give this its own class
-                item = new HeartItem([_treasureSprites.Fairy()], UseDefaultProperties);
+                item = new FairyItem([_treasureSprites.Fairy()], UseDefaultProperties);
                 item.Life = life == 0 ? -1 : life;
                 break;
             case ItemType.Bomb:
                 item = new BombItem([_itemSprites.Bomb(), _itemSprites.Explosion()], UseDefaultProperties);
+                item.Life = life == 0 ? 2 : life;
+                break;
+            case ItemType.BlueCandle:
+                item = new BlueCandleItem([_treasureSprites.CandleBlue()], UseDefaultProperties);
+                item.Life = life == 0 ? -1 : life;
+                break;
+            case ItemType.BluePotion:
+                item = new BluePotionItem([_treasureSprites.PotionBlue()], UseDefaultProperties);
+                item.Life = life == 0 ? -1 : life;
+                break;
+            case ItemType.Bow:
+                item = new BowItem([_treasureSprites.Bow()], UseDefaultProperties);
+                item.Life = life == 0 ? -1 : life;
+                break;
+            case ItemType.Clock:    
+                item = new ClockItem([_treasureSprites.Clock()], UseDefaultProperties);
+                item.Life = life == 0 ? -1 : life;
+                break;
+            case ItemType.TriforcePiece:
+                item = new TriforceItem([_treasureSprites.Triforce()], UseDefaultProperties);
+                item.Life = life == 0 ? -1 : life;
+                break;
+            case ItemType.Fireball:
+                // TODO: Correct Sprite
+                item = new FairyItem([_treasureSprites.Fairy()], UseDefaultProperties);
                 item.Life = life == 0 ? 2 : life;
                 break;
             default:
@@ -129,7 +150,7 @@ public class ItemManager
     /// <param name="gameTime">A snapshot of the game timing values provided by the framework.</param>
     public void Update(GameTime gameTime)
     {
-        foreach(IItem item in _items)
+        foreach (IItem item in _items)
         {
             if (item.Life == 0)
             {
@@ -142,7 +163,7 @@ public class ItemManager
         }
         _items.RemoveWhere(item => item.DeathTime <= 0); // Remove any dead items
     }
-    
+
     /// <summary>
     /// Draws all items on this manager on screen.
     /// </summary>

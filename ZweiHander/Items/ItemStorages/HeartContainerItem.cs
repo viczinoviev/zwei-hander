@@ -2,9 +2,9 @@
 using ZweiHander.Graphics;
 
 namespace ZweiHander.Items.ItemStorages;
-public class KeyItem : AbstractItem
+public class HeartContainerItem : AbstractItem
 {
-    public KeyItem(List<ISprite> sprites, bool defaultProperties)
+    public HeartContainerItem(List<ISprite> sprites, bool defaultProperties)
         : base(sprites)
     {
         if (defaultProperties)

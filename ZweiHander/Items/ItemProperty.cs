@@ -33,7 +33,7 @@ public enum ItemProperty
     /// </summary>
     DeleteOnEnemy,
     /// <summary>
-    /// Rotated in same direction as velocity
+    /// Rotated in same direction as velocity; UNTESTED
     /// </summary>
     FacingVelocity
 }

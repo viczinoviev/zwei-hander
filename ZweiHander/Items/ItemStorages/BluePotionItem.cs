@@ -2,9 +2,9 @@
 using ZweiHander.Graphics;
 
 namespace ZweiHander.Items.ItemStorages;
-public class KeyItem : AbstractItem
+public class BluePotionItem : AbstractItem
 {
-    public KeyItem(List<ISprite> sprites, bool defaultProperties)
+    public BluePotionItem(List<ISprite> sprites, bool defaultProperties)
         : base(sprites)
     {
         if (defaultProperties)

@@ -1,11 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System;
-
-using Vector2 = Microsoft.Xna.Framework.Vector2;
-
-using ZweiHander.Graphics;
 using System.Collections.Generic;
+using ZweiHander.Graphics;
+using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace ZweiHander.Items;
 
@@ -67,14 +64,10 @@ public abstract class AbstractItem : IItem
             Position += dt * Velocity + (dt * dt / 2) * Acceleration;
         }
 
-        // Face correct direction
+        // Face correct direction; UNTESTED
         if (Properties.Contains(ItemProperty.FacingVelocity))
         {
-            // NOT USED RIGHT NOW
-            // I am not sure exactly what it would be because of the grid orientation
-            // But I think one of these two:
-            // Standard coordinate grid, standard unit circle: Math.Atan2(Velocity.Y, Velocity.X)
-            // Pixel coordinate grid, standard unit rcircle: Math.Atan2(-Velocity.Y, Velocity.X)?
+            Sprite.Rotation = (float)Math.Atan2(Velocity.Y, Velocity.X);
         }
 
         // Life progression
