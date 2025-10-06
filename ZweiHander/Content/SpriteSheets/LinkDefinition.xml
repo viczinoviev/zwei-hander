@@ -81,7 +81,7 @@
 			<Frame region="explosion-2" />
 		</Animation>
 		<Animation name="fire-animation" delay="200">
-			<Frame region="fire-1" />
+			<Frame region="fire-1" />21
 			<Frame region="fire-2" />
 		</Animation>
 	</Animations>

@@ -101,7 +101,7 @@ namespace ZweiHander
             _blockSprites = new BlockSprites(Content, _spriteBatch);
             _treasureSprites = new TreasureSprites(Content, _spriteBatch);
             _itemSprites = new ItemSprites(Content, _spriteBatch);
-            _blockFactory = new BlockFactory(32, _blockSprites);
+            _blockFactory = new BlockFactory(32, _blockSprites, _linkSprites);
             _itemManager = new ItemManager(_itemSprites, _treasureSprites);
             _projectileManager = new ItemManager(_itemSprites, _treasureSprites);
             _enemySprites = new EnemySprites(Content, _spriteBatch);
@@ -139,6 +139,8 @@ namespace ZweiHander
             _blockList.Add(_block = _blockFactory.CreateBlock(BlockName.BrickTile, blockPosition));
             _blockList.Add(_block = _blockFactory.CreateBlock(BlockName.BlockTile, blockPosition));
             _blockList.Add(_block = _blockFactory.CreateBlock(BlockName.StairTile, blockPosition));
+            _blockList.Add(_block = _blockFactory.CreateBlock(BlockName.FireTile, blockPosition));
+            _blockList.Add(_block = _blockFactory.CreateBlock(BlockName.LadderTile, blockPosition));
 
             _itemManager.Clear();
             _items = [
