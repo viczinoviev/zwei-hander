@@ -106,23 +106,17 @@ public class Aquamentus : IEnemy
         if (attack == 5 && thrower != 2)
         {
             //Create a projectile
-            _currentProjectile1 = _projectileManager.GetItem(ItemType.Boomerang, -1, position: new Vector2(position.X - 20, position.Y - 20));
+            _currentProjectile1 = _projectileManager.GetItem(ItemType.Fireball, -1, position: new Vector2(position.X - 20, position.Y - 20));
             _currentProjectile1.Life = 3;
-            _currentProjectile2 = _projectileManager.GetItem(ItemType.Boomerang, -1, position: new Vector2(position.X - 20, position.Y - 20));
+            _currentProjectile2 = _projectileManager.GetItem(ItemType.Fireball, -1, position: new Vector2(position.X - 20, position.Y - 20));
             _currentProjectile2.Life = 3;
-            _currentProjectile3 = _projectileManager.GetItem(ItemType.Boomerang, -1, position: new Vector2(position.X - 20, position.Y - 20));
+            _currentProjectile3 = _projectileManager.GetItem(ItemType.Fireball, -1, position: new Vector2(position.X - 20, position.Y - 20));
             _currentProjectile3.Life = 3;
             thrower = 2;
             //Set up the projectiles behavior
-            (float v, float a) = ItemHelper.BoomerangTrajectory(50, 3);
-            v = -v;
-            a = -a;
-            _currentProjectile1.Velocity = new Vector2(v,0);
-            _currentProjectile1.Acceleration = new Vector2(a,0);
-            _currentProjectile2.Velocity = new Vector2(v,v);
-            _currentProjectile2.Acceleration = new Vector2(a,a);
-            _currentProjectile3.Velocity = new Vector2(v,-v);
-            _currentProjectile3.Acceleration = new Vector2(a,-a);
+            _currentProjectile1.Velocity = new Vector2(-100,0);
+            _currentProjectile2.Velocity = new Vector2(-100,30);
+            _currentProjectile3.Velocity = new Vector2(-100,-30);
 
         }
         else
