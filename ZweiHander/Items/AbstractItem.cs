@@ -9,12 +9,12 @@ namespace ZweiHander.Items;
 /// <summary>
 /// All Item classes implement this base class.
 /// </summary>
-public abstract class AbstractItem : IItem
+public abstract class AbstractItem(List<ISprite> sprites) : IItem
 {
     /// <summary>
     /// The sprites associated with this item.
     /// </summary>
-    protected List<ISprite> _sprites;
+    protected List<ISprite> _sprites = sprites;
 
     /// <summary>
     /// Current sprite index.
@@ -45,13 +45,6 @@ public abstract class AbstractItem : IItem
     /// The properties this item has.
     /// </summary>
     protected HashSet<ItemProperty> Properties = [];
-
-
-    protected AbstractItem(List<ISprite> sprites)
-    {
-        _sprites = sprites;
-    }
-
 
     public virtual void Update(GameTime time)
     {

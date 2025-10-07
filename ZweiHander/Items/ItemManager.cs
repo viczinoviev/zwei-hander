@@ -9,7 +9,7 @@ namespace ZweiHander.Items;
 /// <summary>
 /// Used to create items. Holds all items it creates, and can do collective actions on these items.
 /// </summary>
-public class ItemManager
+public class ItemManager(ItemSprites itemSprites, TreasureSprites treasureSprites, BossSprites bossSprites = null)
 {
     /// <summary>
     /// Holds all the items made by this factory.
@@ -19,30 +19,22 @@ public class ItemManager
     /// <summary>
     /// Holds all the sprites for items.
     /// </summary>
-    private readonly ItemSprites _itemSprites;
+    private readonly ItemSprites _itemSprites = itemSprites;
 
     /// <summary>
     /// Holds all the sprites for treasures.
     /// </summary>
-    private readonly TreasureSprites _treasureSprites;
+    private readonly TreasureSprites _treasureSprites = treasureSprites;
 
     /// <summary>
     /// Holds all the sprites related to bosses.
     /// </summary>
-    private readonly BossSprites _bossSprites;
+    private readonly BossSprites _bossSprites = bossSprites;
 
     /// <summary>
     /// Number of items stored in this manager.
     /// </summary>
     public int ItemCount { get => _items.Count; }
-
-    //null for bossSprites since Player calls this right now.
-    public ItemManager(ItemSprites itemSprites, TreasureSprites treasureSprites, BossSprites bossSprites = null)
-    {
-        _itemSprites = itemSprites;
-        _treasureSprites = treasureSprites;
-        _bossSprites = bossSprites;
-    }
 
     /// <summary>
     /// Creates a new item.
@@ -68,73 +60,107 @@ public class ItemManager
         switch (itemType)
         {
             case ItemType.Compass:
-                item = new CompassItem([_treasureSprites.Compass()], UseDefaultProperties);
-                item.Life = life == 0 ? -1 : life;
+                item = new CompassItem([_treasureSprites.Compass()], UseDefaultProperties)
+                {
+                    Life = life == 0 ? -1 : life
+                };
                 break;
             case ItemType.Map:
-                item = new MapItem([_treasureSprites.Map()], UseDefaultProperties);
-                item.Life = life == 0 ? -1 : life;
+                item = new MapItem([_treasureSprites.Map()], UseDefaultProperties)
+                {
+                    Life = life == 0 ? -1 : life
+                };
                 break;
             case ItemType.Key:
-                item = new KeyItem([_treasureSprites.Key()], UseDefaultProperties);
-                item.Life = life == 0 ? -1 : life;
+                item = new KeyItem([_treasureSprites.Key()], UseDefaultProperties)
+                {
+                    Life = life == 0 ? -1 : life
+                };
                 break;
             case ItemType.Heart:
-                item = new HeartItem([_treasureSprites.Heart()], UseDefaultProperties);
-                item.Life = life == 0 ? -1 : life;
+                item = new HeartItem([_treasureSprites.Heart()], UseDefaultProperties)
+                {
+                    Life = life == 0 ? -1 : life
+                };
                 break;
             case ItemType.Boomerang:
-                item = new BoomerangItem([_itemSprites.Boomerang()], UseDefaultProperties);
-                item.Life = life == 0 ? 3 : life;
+                item = new BoomerangItem([_itemSprites.Boomerang()], UseDefaultProperties)
+                {
+                    Life = life == 0 ? 3 : life
+                };
                 break;
             case ItemType.Arrow:
-                item = new ArrowItem([_itemSprites.Arrow(velocity), _itemSprites.ProjectileOnHit()], UseDefaultProperties);
-                item.Life = life == 0 ? 2 : life;
+                item = new ArrowItem([_itemSprites.Arrow(velocity), _itemSprites.ProjectileOnHit()], UseDefaultProperties)
+                {
+                    Life = life == 0 ? 2 : life
+                };
                 break;
             case ItemType.HeartContainer:
-                item = new HeartContainerItem([_treasureSprites.HeartContainer()], UseDefaultProperties);
-                item.Life = life == 0 ? -1 : life;
+                item = new HeartContainerItem([_treasureSprites.HeartContainer()], UseDefaultProperties)
+                {
+                    Life = life == 0 ? -1 : life
+                };
                 break;
             case ItemType.Rupy:
-                item = new RupyItem([_treasureSprites.Rupy()], UseDefaultProperties);
-                item.Life = life == 0 ? -1 : life;
+                item = new RupyItem([_treasureSprites.Rupy()], UseDefaultProperties)
+                {
+                    Life = life == 0 ? -1 : life
+                };
                 break;
             case ItemType.Fairy:
-                item = new FairyItem([_treasureSprites.Fairy()], UseDefaultProperties);
-                item.Life = life == 0 ? -1 : life;
+                item = new FairyItem([_treasureSprites.Fairy()], UseDefaultProperties)
+                {
+                    Life = life == 0 ? -1 : life
+                };
                 break;
             case ItemType.Bomb:
-                item = new BombItem([_itemSprites.Bomb(), _itemSprites.Explosion()], UseDefaultProperties);
-                item.Life = life == 0 ? 2 : life;
+                item = new BombItem([_itemSprites.Bomb(), _itemSprites.Explosion()], UseDefaultProperties)
+                {
+                    Life = life == 0 ? 2 : life
+                };
                 break;
             case ItemType.BlueCandle:
-                item = new BlueCandleItem([_treasureSprites.CandleBlue()], UseDefaultProperties);
-                item.Life = life == 0 ? -1 : life;
+                item = new BlueCandleItem([_treasureSprites.CandleBlue()], UseDefaultProperties)
+                {
+                    Life = life == 0 ? -1 : life
+                };
                 break;
             case ItemType.BluePotion:
-                item = new BluePotionItem([_treasureSprites.PotionBlue()], UseDefaultProperties);
-                item.Life = life == 0 ? -1 : life;
+                item = new BluePotionItem([_treasureSprites.PotionBlue()], UseDefaultProperties)
+                {
+                    Life = life == 0 ? -1 : life
+                };
                 break;
             case ItemType.Bow:
-                item = new BowItem([_treasureSprites.Bow()], UseDefaultProperties);
-                item.Life = life == 0 ? -1 : life;
+                item = new BowItem([_treasureSprites.Bow()], UseDefaultProperties)
+                {
+                    Life = life == 0 ? -1 : life
+                };
                 break;
-            case ItemType.Clock:    
-                item = new ClockItem([_treasureSprites.Clock()], UseDefaultProperties);
-                item.Life = life == 0 ? -1 : life;
+            case ItemType.Clock:
+                item = new ClockItem([_treasureSprites.Clock()], UseDefaultProperties)
+                {
+                    Life = life == 0 ? -1 : life
+                };
                 break;
             case ItemType.TriforcePiece:
-                item = new TriforceItem([_treasureSprites.Triforce()], UseDefaultProperties);
-                item.Life = life == 0 ? -1 : life;
+                item = new TriforceItem([_treasureSprites.Triforce()], UseDefaultProperties)
+                {
+                    Life = life == 0 ? -1 : life
+                };
                 break;
             case ItemType.Fireball:
-                item = new FireballItem([_bossSprites.AquamentusProjectile()], UseDefaultProperties);
-                item.Life = life == 0 ? 2 : life;
+                item = new FireballItem([_bossSprites.AquamentusProjectile()], UseDefaultProperties)
+                {
+                    Life = life == 0 ? 2 : life
+                };
                 break;
             case ItemType.Fire:
                 // I do not think the fire should rotate, but sure, why not?
-                item = new FireItem([_itemSprites.FireProjectile(velocity)], UseDefaultProperties);
-                item.Life = life == 0 ? 2.5 : life;
+                item = new FireItem([_itemSprites.FireProjectile(velocity)], UseDefaultProperties)
+                {
+                    Life = life == 0 ? 2.5 : life
+                };
                 break;
             default:
                 // Should never actually reach here - will error out if so
