@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using ZweiHander.Graphics;
 
 namespace ZweiHander.Graphics.SpriteStorages;
 public class ItemSprites : SpriteFactory
@@ -21,7 +20,7 @@ public class ItemSprites : SpriteFactory
         sprite.Rotation = (float) Math.Atan2(direction.Y, direction.X);
         return sprite;
     }
-    public ISprite FireProjectile(Vector2 direction)
+    public ISprite FireProjectile()
     {
         ISprite sprite = new AnimatedSprite(_spriteBatch, _animations["fire-animation"]);
         return sprite;
