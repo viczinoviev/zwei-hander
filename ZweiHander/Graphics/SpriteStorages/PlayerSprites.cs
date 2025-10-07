@@ -8,7 +8,7 @@ namespace ZweiHander.Graphics.SpriteStorages;
 public class PlayerSprites : SpriteFactory
 {
     private const string _definitionFile = "SpriteSheets/LinkDefinition.xml";
-    private SpriteBatch _spriteBatch;
+    readonly SpriteBatch _spriteBatch;
 
     // Logic for centering the player in animation
     private Vector2 _defaultOrigin = new Vector2(8, 8);
@@ -24,9 +24,10 @@ public class PlayerSprites : SpriteFactory
     public ISprite PlayerMoveRight() => new AnimatedSprite(_spriteBatch, _animations["link-move-animation-right"]);
     public ISprite PlayerMoveLeft()
     {
-        AnimatedSprite s = new AnimatedSprite(_spriteBatch, _animations["link-move-animation-right"]);
-        s.Effects = SpriteEffects.FlipHorizontally;
-        return s;
+        return new AnimatedSprite(_spriteBatch, _animations["link-move-animation-right"])
+        {
+            Effects = SpriteEffects.FlipHorizontally
+        };
     }
     public ISprite PlayerAttackSwordDown() => new AnimatedSprite(_spriteBatch, _animations["link-attack-sword-animation-down"]);
     public ISprite PlayerAttackSwordUp()
@@ -38,8 +39,10 @@ public class PlayerSprites : SpriteFactory
     public ISprite PlayerAttackSwordRight() => new AnimatedSprite(_spriteBatch, _animations["link-attack-sword-animation-right"]);
     public ISprite PlayerAttackSwordLeft()
     {
-        AnimatedSprite s = new AnimatedSprite(_spriteBatch, _animations["link-attack-sword-animation-right"]);
-        s.Effects = SpriteEffects.FlipHorizontally;
+        AnimatedSprite s = new AnimatedSprite(_spriteBatch, _animations["link-attack-sword-animation-right"])
+        {
+            Effects = SpriteEffects.FlipHorizontally
+        };
         s.AnchorBottomRight(_defaultOrigin);
         return s;
     }
@@ -49,9 +52,10 @@ public class PlayerSprites : SpriteFactory
     public ISprite PlayerUseItemRight() => new IdleSprite(_regions["link-use-item-right"], _spriteBatch, true);
     public ISprite PlayerUseItemLeft()
     {
-        IdleSprite s = new IdleSprite(_regions["link-use-item-right"], _spriteBatch, true);
-        s.Effects = SpriteEffects.FlipHorizontally;
-        return s;
+        return new IdleSprite(_regions["link-use-item-right"], _spriteBatch, true)
+        {
+            Effects = SpriteEffects.FlipHorizontally
+        };
     }
 
     public ISprite Fire() => new AnimatedSprite(_spriteBatch, _animations["fire-animation"]);

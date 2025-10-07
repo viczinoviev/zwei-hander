@@ -6,7 +6,7 @@ namespace ZweiHander.Graphics.SpriteStorages;
 public class TreasureSprites : SpriteFactory
 {
     private const string _definitionFile = "SpriteSheets/TreasureDefinition.xml";
-    private SpriteBatch _spriteBatch;
+    readonly SpriteBatch _spriteBatch;
     public TreasureSprites(ContentManager content, SpriteBatch spriteBatch)
     {
         FromFile(content, _definitionFile);
