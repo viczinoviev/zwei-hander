@@ -5,7 +5,7 @@ using ZweiHander.Graphics;
 using System;
 using ZweiHander.Graphics.SpriteStorages;
 
-namespace ZweiHander.Enemy;
+namespace ZweiHander.Enemy.EnemyStorage;
 
 /// <summary>
 /// Aquamentus enemy
@@ -31,7 +31,7 @@ public class Aquamentus : IEnemy
 /// <summary>
     /// Holds all sprites for this enemy
     /// </summary>
-    private BossSprites _bossSprites;
+    private readonly BossSprites _bossSprites;
 /// <summary>
 /// Manager for the projectile this enemy throws
 /// </summary>
@@ -44,7 +44,7 @@ public class Aquamentus : IEnemy
 /// <summary>
 /// Random number generator to randomize enemy behavior
 /// </summary>
-    Random rnd = new Random();
+    readonly Random rnd = new();
 
 
     public Aquamentus(BossSprites bossSprites, ItemManager projectileManager)

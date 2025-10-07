@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using ZweiHander.Commands;
 using ZweiHander.Enemy;
+using ZweiHander.Enemy.EnemyStorage;
 using ZweiHander.Environment;
 using ZweiHander.Graphics;
 using ZweiHander.Graphics.SpriteStorages;
