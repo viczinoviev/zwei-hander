@@ -95,6 +95,12 @@ public class ItemManager(ItemSprites itemSprites, TreasureSprites treasureSprite
                     Life = life == 0 ? 2 : life
                 };
                 break;
+            case ItemType.Sword:
+                item = new SwordItem([_itemSprites.Arrow(velocity), _itemSprites.ProjectileOnHit()], UseDefaultProperties)
+                {
+                    Life = life == 0 ? 2 : life
+                };
+                break;
             case ItemType.HeartContainer:
                 item = new HeartContainerItem([_treasureSprites.HeartContainer()], UseDefaultProperties)
                 {

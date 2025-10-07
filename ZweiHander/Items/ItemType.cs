@@ -71,5 +71,6 @@ public enum ItemType
     /// <summary>
     /// 2.5s life, animation
     /// </summary>
-    Fire
+    Fire,
+    Sword
 }
