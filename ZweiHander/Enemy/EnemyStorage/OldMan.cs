@@ -16,9 +16,9 @@ public class OldMan : IEnemy
     /// </summary>
     protected ISprite _sprite;
 /// <summary>
-/// Holds all sprites for this enemy
+/// Holds all sprites for this NPC
 /// </summary>
-    private EnemySprites _enemySprites;
+    private NPCSprites _npcSprites;
 
     public Vector2 position { get; set; } = default;
 
@@ -27,10 +27,10 @@ public class OldMan : IEnemy
     public int thrower { get; set; } = 0;
 
 
-    public OldMan(EnemySprites enemySprites)
+    public OldMan(NPCSprites npcSprites)
     {
-        _enemySprites = enemySprites;
-        //_sprite = _enemySprites.OldMan();
+        _npcSprites = npcSprites;
+        _sprite = _npcSprites.OldMan();
     }
     public virtual void Update(GameTime time)
     {
