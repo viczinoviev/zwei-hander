@@ -114,7 +114,7 @@ public class ItemManager(ItemSprites itemSprites, TreasureSprites treasureSprite
                 };
                 break;
             case ItemType.Fairy:
-                item = new FairyItem([_treasureSprites.Fairy()], UseDefaultProperties)
+                item = new FairyItem([_treasureSprites.Fairy()], UseDefaultProperties, position)
                 {
                     Life = life == 0 ? -1 : life
                 };

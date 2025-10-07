@@ -155,7 +155,7 @@ namespace ZweiHander
                 _itemManager.GetItem(ItemType.Compass, -1, position: itemPosition),
                 _itemManager.GetItem(ItemType.Map, -1, position: itemPosition),
                 _itemManager.GetItem(ItemType.Key, -1, position: itemPosition),
-                _itemManager.GetItem(ItemType.Fairy, -1, position: itemPosition)
+                _itemManager.GetItem(ItemType.Fairy, -1, position: itemPosition, velocity: new(0, -10.0f))
             ];
             //Create enemy list
             _enemyList =
