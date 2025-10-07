@@ -2,3 +2,7 @@
 later on. We made very good progress and coordinated pretty decently I think.
 We all had areas that we were essentially "specialized" in and I think that
 worked out pretty well overall.
+
+Luke: Overall, the sprint went very well. We had trouble making decisions early on but 
+it got much easier with time. We got a lot of work done early which was very nice.
+Biggest issue was how a lot of sudden requirements seemed to sneak up on us, but we worked it out.
