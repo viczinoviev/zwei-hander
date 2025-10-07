@@ -42,7 +42,9 @@ namespace ZweiHander.PlayerFiles
 
         public void BindKey(Keys key, ICommand command)
         {
+            #pragma warning disable //Ignoring the one warning here
             _commandBindings ??= new Dictionary<Keys, ICommand>();
+            #pragma warning restore
 
             _commandBindings[key] = command;
         }
