@@ -32,5 +32,19 @@ public class ItemSprites : SpriteFactory
     public ISprite Bomb() => new IdleSprite(_regions["bomb"], _spriteBatch);
     public ISprite Explosion() => new AnimatedSprite(_spriteBatch, _animations["explosion-animation"]);
 
+    public ISprite SwordProjectile(Vector2 direction)
+    {
+        ISprite sprite = new IdleSprite(_regions["sword-projectile-right"], _spriteBatch);
+        sprite.Rotation = (float)Math.Atan2(direction.Y, direction.X);
+        return sprite;
+    }
+
+    public ISprite SwordProjectileEffect(Vector2 direction)
+    {
+        ISprite sprite = new IdleSprite(_regions["sword-projectile-effect"], _spriteBatch);
+        sprite.Rotation = (float)Math.Atan2(direction.Y, direction.X);
+        return sprite;
+    }
+
 }
 

@@ -73,6 +73,21 @@
 #begin SpriteSheets/LinkDefinition.xml
 /copy:SpriteSheets/LinkDefinition.xml
 
+#begin SpriteSheets/NPC-definition.xml
+/copy:SpriteSheets/NPC-definition.xml
+
+#begin SpriteSheets/NPCs.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:SpriteSheets/NPCs.png
+
 #begin SpriteSheets/TreasureDefinition.xml
 /copy:SpriteSheets/TreasureDefinition.xml
 

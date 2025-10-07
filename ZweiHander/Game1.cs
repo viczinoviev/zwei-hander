@@ -35,6 +35,7 @@ namespace ZweiHander
         private EnemySprites _enemySprites;
         private EnemyFactory _enemyFactory;
         private BossSprites _bossSprites;
+        private NPCSprites _npcSprites;
         private ItemSprites _itemSprites;
         private BlockFactory _blockFactory;
         private ItemManager _itemManager; //The item that is rotated through
@@ -104,9 +105,10 @@ namespace ZweiHander
             _blockFactory = new BlockFactory(32, _blockSprites, _linkSprites);
             _enemySprites = new EnemySprites(Content, _spriteBatch);
             _bossSprites = new BossSprites(Content, _spriteBatch);
+            _npcSprites = new NPCSprites(Content, _spriteBatch);
             _itemManager = new ItemManager(_itemSprites, _treasureSprites, _bossSprites);
             _projectileManager = new ItemManager(_itemSprites, _treasureSprites, _bossSprites);
-            _enemyFactory = new EnemyFactory(_enemySprites, _projectileManager, _bossSprites);
+            _enemyFactory = new EnemyFactory(_enemySprites, _projectileManager, _bossSprites,_npcSprites);
 
             GameSetUp();
         }
@@ -168,6 +170,7 @@ namespace ZweiHander
                 _enemy = _enemyFactory.GetEnemy("Dodongo",enemyPosition),
                 _enemy = _enemyFactory.GetEnemy("Aquamentus",enemyPosition),
                 _enemy = _enemyFactory.GetEnemy("BladeTrap",enemyPosition),
+                _enemy = _enemyFactory.GetEnemy("OldMan", enemyPosition),
             ];
 
             _block = _blockList[0];
