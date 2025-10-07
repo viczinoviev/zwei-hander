@@ -26,7 +26,7 @@ namespace ZweiHander.Environment
         }
 
         // Converts grid position into world position in pixels
-        public Vector2 getVectorPosition()
+        public Vector2 GetVectorPosition()
         {
             return new Vector2(_gridPosition.X * _gridSize, _gridPosition.Y * _gridSize);
         }
@@ -34,7 +34,7 @@ namespace ZweiHander.Environment
         // Changes the type and sprite of the block at runtime
         // newType: the new block type
         // newSprite: the sprite to display for the new block type
-        public void changeBlock(BlockType newType, ISprite newSprite)
+        public void ChangeBlock(BlockType newType, ISprite newSprite)
         {
             _blockType = newType;
             _sprite = newSprite ?? throw new ArgumentNullException(nameof(newSprite)); ;
@@ -51,7 +51,7 @@ namespace ZweiHander.Environment
             _sprite.Update(gameTime);
         }
         // Returns the hitbox rectangle for collision detection
-        public Rectangle getBlockHitbox()
+        public Rectangle GetBlockHitbox()
         {
             return new Rectangle(
                 _gridPosition.X * _gridSize, 
@@ -62,7 +62,7 @@ namespace ZweiHander.Environment
         }
 
         // Determines if the block should be collidable
-        public bool isCollidable()
+        public bool IsCollidable()
         {
             // Decorative blocks do not collide
             if (_blockType == BlockType.Decorative) { collision = false; }
