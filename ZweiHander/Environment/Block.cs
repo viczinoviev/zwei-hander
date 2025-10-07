@@ -43,7 +43,7 @@ namespace ZweiHander.Environment
 
         public void Draw()
         {
-            _sprite.Draw(this.getVectorPosition());
+            _sprite.Draw(this.GetVectorPosition());
         }
 
         public void Update(GameTime gameTime)
