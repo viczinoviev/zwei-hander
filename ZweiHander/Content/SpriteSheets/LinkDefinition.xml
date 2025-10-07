@@ -37,6 +37,10 @@
 		<Region name="fire-1" x="191" y="185" width="16" height="16" />
 		<Region name="fire-2" x="191" y="204" width="16" height="16" />
 		<Region name="ladder" x="280" y="185" width="16" height="16" />
+		<!-- Sword Projectile -->
+		<Region name="sword-projectile-up" x="1" y="154" width="8" height="16" />
+		<Region name="sword-projectile-right" x="10" y="154" width="16" height="18" />
+		<Region name="sword-projectile-effect" x="27" y="154" width="8" height="16" />
 	</Regions>
 	<Animations>
 		<!-- Link Animations -->
