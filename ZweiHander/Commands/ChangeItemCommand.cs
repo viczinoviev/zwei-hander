@@ -1,15 +1,9 @@
 ﻿namespace ZweiHander.Commands;
 
-public class ChangeItemCommand : ICommand
+public class ChangeItemCommand(Game1 game, int direction) : ICommand
 {
-    private Game1 _game;
-    private int _direction;
-
-    public ChangeItemCommand(Game1 game, int direction)
-    {
-        _game = game;
-        _direction = direction;
-    }
+    private readonly Game1 _game = game;
+    private readonly int _direction = direction;
 
     public void Execute()
     {
