@@ -12,3 +12,11 @@ with the team communication and coordination. At first, the team disagreed
 on what each of our method input and output should be, and how the methods 
 should be called. But as we finished the framework of the game and gotten 
 more used to communicating with everyone, the project went a lot smoother.
+
+Victor: I think that the sprint went decently well. We made great progress after having
+our initial group meeting, where we discussed specific tasks for each group member. However,
+I would say that the work load distribution was a bit uneven. There were a lot of discussions
+about the design decision of the project, which I think was a good thing. We were able to 
+consider different perspectives and got us think how different approaches can be beneficial.
+Some things that I would like to improve on the next sprint are task distribution and group
+communication.
