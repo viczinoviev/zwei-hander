@@ -7,7 +7,7 @@ namespace ZweiHander.Graphics.SpriteStorages;
 public class BossSprites : SpriteFactory
 {
     private const string _definitionFile = "SpriteSheets/EnemyBossesDefinition.xml";
-    private SpriteBatch _spriteBatch;
+    readonly SpriteBatch _spriteBatch;
     public BossSprites(ContentManager content, SpriteBatch spriteBatch)
     {
         FromFile(content, _definitionFile);

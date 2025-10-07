@@ -23,7 +23,7 @@ public class AnimatedSprite : AbstractSprite
     /// <summary>
     /// Animation object containing animation info for the sprite
     /// </summary>
-    private Animation _animation;
+    readonly Animation _animation;
 
     private Boolean _anchor = false;
     private Vector2 _offset = Vector2.Zero;

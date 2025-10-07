@@ -7,7 +7,7 @@ namespace ZweiHander.Graphics.SpriteStorages;
 public class EnemySprites : SpriteFactory
 {
     private const string _definitionFile = "SpriteSheets/EnemyDefinition.xml";
-    private SpriteBatch _spriteBatch;
+    readonly SpriteBatch _spriteBatch;
     public EnemySprites(ContentManager content, SpriteBatch spriteBatch)
     {
         FromFile(content, _definitionFile);
@@ -19,9 +19,10 @@ public class EnemySprites : SpriteFactory
     
     public ISprite DarknutMoveLeft()
     {
-        AnimatedSprite s = new AnimatedSprite(_spriteBatch, _animations["darknut-move-animation-right"]);
-        s.Effects = SpriteEffects.FlipHorizontally;
-        return s;
+        return new AnimatedSprite(_spriteBatch, _animations["darknut-move-animation-right"])
+        {
+            Effects = SpriteEffects.FlipHorizontally
+        };
     }
     public ISprite Gel() => new AnimatedSprite(_spriteBatch, _animations["gel-move-animation"]);
     public ISprite GoriyaDown() => new IdleSprite(_regions["goriya-down"], _spriteBatch);
@@ -29,9 +30,10 @@ public class EnemySprites : SpriteFactory
     public ISprite GoriyaRight() => new IdleSprite(_regions["goriya-right"], _spriteBatch);
     public ISprite GoriyaLeft()
     {
-        IdleSprite s = new IdleSprite(_regions["goriya-right"], _spriteBatch);
-        s.Effects = SpriteEffects.FlipHorizontally;
-        return s;
+        return new IdleSprite(_regions["goriya-right"], _spriteBatch)
+        {
+            Effects = SpriteEffects.FlipHorizontally
+        };
     }
     public ISprite GoriyaUse() => new IdleSprite(_regions["goriya-use"], _spriteBatch);
     public ISprite Keese() => new AnimatedSprite(_spriteBatch, _animations["keese-move-animation"]);
@@ -42,18 +44,20 @@ public class EnemySprites : SpriteFactory
 
     public ISprite RopeLeft()
     {
-        AnimatedSprite s = new AnimatedSprite( _spriteBatch, _animations["rope-move-animation"]);
-        s.Effects = SpriteEffects.FlipHorizontally;
-        return s;
+        return new AnimatedSprite(_spriteBatch, _animations["rope-move-animation"])
+        {
+            Effects = SpriteEffects.FlipHorizontally
+        };
     }
     public ISprite Zol() => new AnimatedSprite(_spriteBatch, _animations["zol1-move-animation"]);
     public ISprite WallmasterUp() => new AnimatedSprite(_spriteBatch, _animations["wallmaster-move-animation"]);
 
     public ISprite WallmasterDown()
     {
-        AnimatedSprite s = new AnimatedSprite( _spriteBatch, _animations["wallmaster-move-animation"]);
-        s.Effects = SpriteEffects.FlipVertically;
-        return s;
+        return new AnimatedSprite(_spriteBatch, _animations["wallmaster-move-animation"])
+        {
+            Effects = SpriteEffects.FlipVertically
+        };
     }
     public ISprite Trap() => new IdleSprite(_regions["trap"], _spriteBatch);
 
