@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas>
+	<Texture>SpriteSheets/NPCs</Texture>
+	<Regions>
+		<!-- Old Man-->
+		<Region name="old-man-1" x="1" y="11" width="16" height="16" />
+		<Region name="old-man-2" x="18" y="11" width="16" height="16" />
+		<!-- Old Woman-->
+		<Region name="old-woman" x="35" y="11" width="16" height="16" />
+		<!-- Merchant -->
+		<Region name="merchant-1" x="126" y="11" width="16" height="16" />
+		<Region name="merchant-2" x="143" y="11" width="16" height="16" />
+		<Region name="merchant-3" x="160" y="11" width="16" height="16" />
+		<!-- Zelda -->
+		<Region name="zelda-green-1" x="1" y="42" width="16" height="16" />
+		<Region name="zelda-green-2" x="18" y="42" width="16" height="16" />
+		<Region name="zelda-white-1" x="35" y="42" width="16" height="16" />
+		<Region name="zelda-white-2" x="52" y="42" width="16" height="16" />
+		<Region name="zelda-red-1" x="69" y="42" width="16" height="16" />
+		<Region name="zelda-red-2" x="86" y="42" width="16" height="16" />
+	</Regions>
+	<Animations>
+	</Animations>
+</TextureAtlas>
