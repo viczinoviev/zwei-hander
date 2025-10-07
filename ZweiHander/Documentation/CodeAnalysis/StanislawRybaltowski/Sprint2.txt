@@ -1,45 +1,55 @@
-"Message (active)	IDE0044	Make field readonly	ZweiHander	\ZweiHander\PlayerFiles\PlayerStateMachine.cs	8		"					
-"Message (active)	IDE0044	Make field readonly	ZweiHander	\ZweiHander\PlayerFiles\PlayerStateMachine.cs	14		"					
-"Message (active)	IDE0044	Make field readonly	ZweiHander	\ZweiHander\PlayerFiles\PlayerStateMachine.cs	15		"					
-"Message (active)	IDE0044	Make field readonly	ZweiHander	\ZweiHander\PlayerFiles\PlayerHandler.cs	10		"														
-"Message (active)	IDE0044	Make field readonly	ZweiHander	\ZweiHander\PlayerFiles\PlayerHandler.cs	11		"														
-"Message (active)	IDE0044	Make field readonly	ZweiHander	\ZweiHander\PlayerFiles\PlayerHandler.cs	12		"														
-"Message (active)	IDE0044	Make field readonly	ZweiHander	\ZweiHander\PlayerFiles\PlayerHandler.cs	15		"														
-"Message (active)	IDE0044	Make field readonly	ZweiHander	\ZweiHander\PlayerFiles\PlayerHandler.cs	16		"			
-"Message (active)	IDE0044	Make field readonly	ZweiHander	\ZweiHander\PlayerFiles\Player.cs	11		"									
-"Message (active)	IDE0044	Make field readonly	ZweiHander	\ZweiHander\PlayerFiles\Player.cs	12		"									
-"Message (active)	IDE0044	Make field readonly	ZweiHander	\ZweiHander\PlayerFiles\Player.cs	13		"									
+Reflection:
 
-Made requested fields readonly
+	Most of the issues were about not making fields readonly when they should be and forgetting to put types in namespaces.
+	In the future I'll pay more attention as I write code to get ahead on these issues.
+	I'll also try to use features like primary constructors and collection expressions from the start since they make the code cleaner.
 
-"Message (active)	CA1050	Types are declared in namespaces to prevent name collisions and as a way to organize related types in an object hierarchy.	ZweiHander	\ZweiHander\PlayerFiles\PlayerStateMachine.cs	6		"					
-"Message (active)	CA1050	Types are declared in namespaces to prevent name collisions and as a way to organize related types in an object hierarchy.	ZweiHander	\ZweiHander\PlayerFiles\PlayerHandler.cs	8		"					
-"Message (active)	CA1050	Types are declared in namespaces to prevent name collisions and as a way to organize related types in an object hierarchy.	ZweiHander	\ZweiHander\PlayerFiles\Player.cs	9		"																			
-"Message (active)	CA1050	Types are declared in namespaces to prevent name collisions and as a way to organize related types in an object hierarchy.	ZweiHander	\ZweiHander\Player\IStateMachine.cs	4		"																				
-"Message (active)	CA1050	Types are declared in namespaces to prevent name collisions and as a way to organize related types in an object hierarchy.	ZweiHander	\ZweiHander\Player\IPlayer.cs	5		"																				
-"Message (active)	CA1050	Types are declared in namespaces to prevent name collisions and as a way to organize related types in an object hierarchy.	ZweiHander	\ZweiHander\Player\IController.cs	1		"			
-"Message (active)	CA1050	Types are declared in namespaces to prevent name collisions and as a way to organize related types in an object hierarchy.	ZweiHander	\ZweiHander\Player\KeyboardController.cs	7		"																			
 
-Added namespace
 
-"Message (active)	IDE0290	Use primary constructor	ZweiHander	\ZweiHander\PlayerFiles\PlayerStateMachine.cs	34		"					
+Individual fixes:
 
-Changed to be primary constructor
+	"Message (active)	IDE0044	Make field readonly	ZweiHander	\ZweiHander\PlayerFiles\PlayerStateMachine.cs	8		"					
+	"Message (active)	IDE0044	Make field readonly	ZweiHander	\ZweiHander\PlayerFiles\PlayerStateMachine.cs	14		"					
+	"Message (active)	IDE0044	Make field readonly	ZweiHander	\ZweiHander\PlayerFiles\PlayerStateMachine.cs	15		"					
+	"Message (active)	IDE0044	Make field readonly	ZweiHander	\ZweiHander\PlayerFiles\PlayerHandler.cs	10		"														
+	"Message (active)	IDE0044	Make field readonly	ZweiHander	\ZweiHander\PlayerFiles\PlayerHandler.cs	11		"														
+	"Message (active)	IDE0044	Make field readonly	ZweiHander	\ZweiHander\PlayerFiles\PlayerHandler.cs	12		"														
+	"Message (active)	IDE0044	Make field readonly	ZweiHander	\ZweiHander\PlayerFiles\PlayerHandler.cs	15		"														
+	"Message (active)	IDE0044	Make field readonly	ZweiHander	\ZweiHander\PlayerFiles\PlayerHandler.cs	16		"			
+	"Message (active)	IDE0044	Make field readonly	ZweiHander	\ZweiHander\PlayerFiles\Player.cs	11		"									
+	"Message (active)	IDE0044	Make field readonly	ZweiHander	\ZweiHander\PlayerFiles\Player.cs	12		"									
+	"Message (active)	IDE0044	Make field readonly	ZweiHander	\ZweiHander\PlayerFiles\Player.cs	13		"									
 
-"Message (active)	IDE0074	Use compound assignment	ZweiHander	\ZweiHander\Player\KeyboardController.cs	43		"												
-"Message (active)	IDE0028	Collection initialization can be simplified	ZweiHander	\ZweiHander\Player\KeyboardController.cs	44		"												
+	Made requested fields readonly
 
-Used compound assignment, simplied collection initialization.
+	"Message (active)	CA1050	Types are declared in namespaces to prevent name collisions and as a way to organize related types in an object hierarchy.	ZweiHander	\ZweiHander\PlayerFiles\PlayerStateMachine.cs	6		"					
+	"Message (active)	CA1050	Types are declared in namespaces to prevent name collisions and as a way to organize related types in an object hierarchy.	ZweiHander	\ZweiHander\PlayerFiles\PlayerHandler.cs	8		"					
+	"Message (active)	CA1050	Types are declared in namespaces to prevent name collisions and as a way to organize related types in an object hierarchy.	ZweiHander	\ZweiHander\PlayerFiles\Player.cs	9		"																			
+	"Message (active)	CA1050	Types are declared in namespaces to prevent name collisions and as a way to organize related types in an object hierarchy.	ZweiHander	\ZweiHander\Player\IStateMachine.cs	4		"																				
+	"Message (active)	CA1050	Types are declared in namespaces to prevent name collisions and as a way to organize related types in an object hierarchy.	ZweiHander	\ZweiHander\Player\IPlayer.cs	5		"																				
+	"Message (active)	CA1050	Types are declared in namespaces to prevent name collisions and as a way to organize related types in an object hierarchy.	ZweiHander	\ZweiHander\Player\IController.cs	1		"			
+	"Message (active)	CA1050	Types are declared in namespaces to prevent name collisions and as a way to organize related types in an object hierarchy.	ZweiHander	\ZweiHander\Player\KeyboardController.cs	7		"																			
 
-"Message (active)	CA1050	Types are declared in namespaces to prevent name collisions and as a way to organize related types in an object hierarchy.	ZweiHander	\ZweiHander\Player\Player.cs	103		"																					
-"Message (active)	CA1050	Types are declared in namespaces to prevent name collisions and as a way to organize related types in an object hierarchy.	ZweiHander	\ZweiHander\Player\Player.cs	111		"																					
+	Added namespace
 
-Moved enums to separate files
+	"Message (active)	IDE0290	Use primary constructor	ZweiHander	\ZweiHander\PlayerFiles\PlayerStateMachine.cs	34		"					
 
-"Message (active)	IDE0060	Avoid unused parameters in your code. If the parameter cannot be removed"	 then change its name so it starts with an underscore and is optionally followed by an integer	 such as '_'	 '_1'	 '_2'	" etc. These are treated as special discard symbol names.	ZweiHander	\ZweiHander\Player\PlayerHandler.cs	135		"													
+	Changed to be primary constructor
 
-Im not fixing this for now because those are our hardcoded items, this will be changed in Sprint 3.
+	"Message (active)	IDE0074	Use compound assignment	ZweiHander	\ZweiHander\Player\KeyboardController.cs	43		"												
+	"Message (active)	IDE0028	Collection initialization can be simplified	ZweiHander	\ZweiHander\Player\KeyboardController.cs	44		"												
 
-"Message (active)	IDE0028	Collection initialization can be simplified	ZweiHander	\ZweiHander\Player\Player.cs	16		"											
+	Used compound assignment, simplied collection initialization.
 
-Simplied from a "new HashSet<PlayerInput>();" to []
+	"Message (active)	CA1050	Types are declared in namespaces to prevent name collisions and as a way to organize related types in an object hierarchy.	ZweiHander	\ZweiHander\Player\Player.cs	103		"																					
+	"Message (active)	CA1050	Types are declared in namespaces to prevent name collisions and as a way to organize related types in an object hierarchy.	ZweiHander	\ZweiHander\Player\Player.cs	111		"																					
+
+	Moved enums to separate files
+
+	"Message (active)	IDE0060	Avoid unused parameters in your code. If the parameter cannot be removed"	 then change its name so it starts with an underscore and is optionally followed by an integer	 such as '_'	 '_1'	 '_2'	" etc. These are treated as special discard symbol names.	ZweiHander	\ZweiHander\Player\PlayerHandler.cs	135		"													
+
+	Im not fixing this for now because those are our hardcoded items, this will be changed in Sprint 3.
+
+	"Message (active)	IDE0028	Collection initialization can be simplified	ZweiHander	\ZweiHander\Player\Player.cs	16		"											
+
+	Simplied from a "new HashSet<PlayerInput>();" to []

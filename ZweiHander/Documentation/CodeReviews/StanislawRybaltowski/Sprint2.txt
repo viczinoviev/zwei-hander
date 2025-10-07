@@ -1,0 +1,35 @@
+Author of the code review: Stanislaw Rybaltowski
+Date of the code review: 2025-10-6
+Sprint number: 2
+Name of the .cs file being reviewed: Goriya.cs
+Author of the .cs file being reviewed: Luke Howard
+Number of minutes taken to complete the review: 15 minutes.
+Specific comments on readability: 
+
+    The code has good structure but some variables are hard to 
+    understand. The Face property uses numbers for direction but 
+    it is not clear what each number means. The Thrower property 
+    also uses numbers without explanation. The "rnd" variable name 
+    is too short.
+    My suggestions are:
+    - Change Face to use an enum like Direction.Up, Direction.Down
+    - Add comments to explain what Thrower numbers mean
+    - Replace magic numbers with constants
+
+Author of the code review: Stanislaw Rybaltowski
+Date of the code review: 2025-10-6
+Sprint number: 2
+Name of the .cs file being reviewed: HurtPlayerCommand.cs
+Author of the .cs file being reviewed: Darren Zhou
+Number of minutes taken to complete the review: 12 minutes.
+Specific comments on maintainability/code quality: 
+
+    The class works well and follows good patterns. The flashing 
+    effect timing works correctly. However, some parts could be 
+    improved. The numbers 1f and 0.075f are written directly in 
+    the code. The class depends on the whole Game1 object when it 
+    only needs the player. The color changing logic is complex.
+    My suggestions are:
+    - Move hardcoded numbers to constants at the top
+    - Pass only the player object instead of Game1
+    - Simplify the color switching logic
