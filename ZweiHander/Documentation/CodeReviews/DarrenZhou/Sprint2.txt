@@ -3,15 +3,23 @@ Date of the code review: 2025-10-6
 Sprint number: 2
 Name of the .cs file being reviewed: ItemHelper.cs
 Author of the .cs file being reviewed: Jacob
-Number of minutes taken to complete the review: 20
+Number of minutes taken to complete the reviews: 20
 Specific comments on what is readable and what is not:
+	Since it's a small chunk of code, it's easier to read naturally. The author wrote summary(xml comment) for the class to make the purpose of the class clear. Minor improvements can
+be made for things like the typo for "Furthest", "Time it takes to return" could be changed to "Total flight time for the boomerang." Adding another short summary on why 4f and -8f are
+chosen could also increase readability. Overall, this is a very effcient class to calculate Trajectory. The decision to make a class for trajectory calculation also helps with
+the maintainability of the code.
 	
 
 Author of the code review: Darren Zhou
 Date of the code review: 2025-10-6
 Sprint number: 2
-Name of the .cs file being reviewed: 
-Author of the .cs file being reviewed: Stash
+Name of the .cs file being reviewed: KeyboardController.cs
+Author of the .cs file being reviewed: Stash(Majority) & Darren(small portion)
 Specific comments on code quality:
+	The commands for player are hardcoded. We will look into moving those into a separate file for readability and maintability, as it will be easier to change the commands in a single
+place, since right now, the other half of the commands are in game1.cs. The other half of command are not only in a different place, but also are using and stored in a different
+dictionary altogether. It will better to have the keybinds together in a single dictionary, although this version right now does increase readability/maintainabilty slightly by separating
+the movement keys from the menu command keys. Also need more comments in Update() for readability as there is two different if statements, one for HOLD and the other for PRESS.
 	
 
