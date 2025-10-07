@@ -2,6 +2,7 @@
 A 2D sprite-based game built using MonoGame, featuring a controllable player (Link), enemies, items, and environment blocks. The project demonstrates object-oriented game architecture with factories, sprite management, and a command-based input system. It's a very cool project! Please.
 ## Controls
 R to reset to original state, Q to quit the program.
+
 T, Y to cycle through blocks.
 U, I to cycle through items.
 O, P to cycle through enemies.
