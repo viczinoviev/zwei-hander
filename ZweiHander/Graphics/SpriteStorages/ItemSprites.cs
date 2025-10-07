@@ -24,7 +24,6 @@ public class ItemSprites : SpriteFactory
     public ISprite FireProjectile(Vector2 direction)
     {
         ISprite sprite = new AnimatedSprite(_spriteBatch, _animations["fire-animation"]);
-        sprite.Rotation = (float)Math.Atan2(direction.Y, direction.X);
         return sprite;
     }
     
