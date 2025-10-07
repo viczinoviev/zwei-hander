@@ -1,0 +1,10 @@
+Using the analysis tool, I found that some of the private fields in the Sprite related classes can be set to readonly,
+such as the spriteBatch and animation fields in AnimatedSprite. These fields should in fact not be modified after initialization.
+
+Furthermore, I learned that it is more performant to use concrete as a intermidiate type instead of a generic type when modifying
+the properties of a class before returning it. Examples of these changes can be seen in any sprites that has their SpriteEffects modified.
+
+Some considerations for future refactoring includes how the sprite storages handles directional sprites, such as the player and the enemies.
+Currently, each directional sprite is given by its own method. However, this design results in other classes having to create switch cases for
+each possible direction. Having the direction passed in as a parameter and handling the switch case in the sprite storage class would be more
+usuable for the client side. 

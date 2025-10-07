@@ -28,6 +28,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Documentation\CodeReviews\LukeHoward\" />
+    <Folder Include="Documentation\CodeReviews\DarrenZhou\" />
     <Folder Include="Documentation\CodeReviews\VictorZinoviev\" />
   </ItemGroup>
   <Target Name="RestoreDotnetTools" BeforeTargets="CollectPackageReferences">

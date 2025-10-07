@@ -6,7 +6,7 @@ namespace ZweiHander.Graphics.SpriteStorages;
 public class NPCSprites : SpriteFactory
 {
     private const string _definitionFile = "SpriteSheets/NPC-Definition.xml";
-    private SpriteBatch _spriteBatch;
+    readonly SpriteBatch _spriteBatch;
     public NPCSprites(ContentManager content, SpriteBatch spriteBatch)
     {
         FromFile(content, _definitionFile);
