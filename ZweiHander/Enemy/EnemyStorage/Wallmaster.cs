@@ -20,11 +20,11 @@ public class Wallmaster : IEnemy
 /// </summary>
     private readonly EnemySprites _enemySprites;
 
-    public Vector2 position { get; set; } = default;
+    public Vector2 Position { get; set; } = default;
 
-    public int face { get; set; } = default;
+    public int Face { get; set; } = default;
 
-    public int thrower { get; set; } = 0;
+    public int Thrower { get; set; } = 0;
 /// <summary>
 /// Random number generator to randomize enemy behavior
 /// </summary>
@@ -43,7 +43,7 @@ public class Wallmaster : IEnemy
         //Move according to current direction faced
         if (mov > 5)
         {
-            position = new Vector2(position.X + ((-1 + 2 * Convert.ToInt32(!(face == 3 && position.X > 40))) * Convert.ToInt32((face == 3 && position.X > 40) || (face == 1 && position.X < 750))), position.Y + ((-1 + 2 * Convert.ToInt32(!(face == 0 && position.Y > 40))) * Convert.ToInt32((face == 0 && position.Y > 40) || (face == 2 && position.Y < 400))));
+            Position = new Vector2(Position.X + ((-1 + 2 * Convert.ToInt32(!(Face == 3 && Position.X > 40))) * Convert.ToInt32((Face == 3 && Position.X > 40) || (Face == 1 && Position.X < 750))), Position.Y + ((-1 + 2 * Convert.ToInt32(!(Face == 0 && Position.Y > 40))) * Convert.ToInt32((Face == 0 && Position.Y > 40) || (Face == 2 && Position.Y < 400))));
         }
         //Change face and sprite to new value according to the randomized value
         else
@@ -51,11 +51,11 @@ public class Wallmaster : IEnemy
             switch (mov)
             {
                 case 0:
-                    if (position.Y > 40)
+                    if (Position.Y > 40)
                     {
-                        position = new Vector2(position.X, position.Y - 1);
+                        Position = new Vector2(Position.X, Position.Y - 1);
                         _sprite = _enemySprites.WallmasterUp();
-                        face = 0;
+                        Face = 0;
                     }
                     else
                     {
@@ -63,10 +63,10 @@ public class Wallmaster : IEnemy
                     }
                     break;
                 case 1:
-                    if (position.X < 750)
+                    if (Position.X < 750)
                     {
-                        position = new Vector2(position.X + 1, position.Y);
-                        face = 1;
+                        Position = new Vector2(Position.X + 1, Position.Y);
+                        Face = 1;
                     }
                     else
                     {
@@ -74,11 +74,11 @@ public class Wallmaster : IEnemy
                     }
                     break;
                 case 2:
-                    if (position.Y < 400)
+                    if (Position.Y < 400)
                     {
-                        position = new Vector2(position.X, position.Y + 1);
+                        Position = new Vector2(Position.X, Position.Y + 1);
                         _sprite = _enemySprites.WallmasterDown();
-                        face = 2;
+                        Face = 2;
                     }
                     else
                     {
@@ -86,10 +86,10 @@ public class Wallmaster : IEnemy
                     }
                     break;
                 case 3:
-                    if (position.X > 40)
+                    if (Position.X > 40)
                     {
-                        position = new Vector2(position.X - 1, position.Y);
-                        face = 3;
+                        Position = new Vector2(Position.X - 1, Position.Y);
+                        Face = 3;
                     }
                     else
                     {
@@ -109,7 +109,7 @@ public class Wallmaster : IEnemy
 
     public void Draw()
     {
-        _sprite.Draw(position);
+        _sprite.Draw(Position);
     }
 }
 

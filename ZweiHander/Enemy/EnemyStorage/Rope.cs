@@ -20,11 +20,11 @@ public class Rope : IEnemy
 /// </summary>
     private readonly EnemySprites _enemySprites;
 
-    public Vector2 position { get; set; } = default;
+    public Vector2 Position { get; set; } = default;
 
-    public int face { get; set; } = default;
+    public int Face { get; set; } = default;
 
-    public int thrower { get; set; } = 0;
+    public int Thrower { get; set; } = 0;
 /// <summary>
 /// Random number generator to randomize enemy behavior
 /// </summary>
@@ -35,7 +35,7 @@ public class Rope : IEnemy
     {
         _enemySprites = enemySprites;
         _sprite = _enemySprites.RopeLeft();
-        face = 3;
+        Face = 3;
     }
     public virtual void Update(GameTime time)
     {
@@ -44,7 +44,7 @@ public class Rope : IEnemy
         //Move according to current direction faced
         if (mov > 5)
         {
-            position = new Vector2(position.X + ((-1 + 2 * Convert.ToInt32(!(face == 3 && position.X > 40))) * Convert.ToInt32((face == 3 && position.X > 40) || (face == 1 && position.X < 750))), position.Y + ((-1 + 2 * Convert.ToInt32(!(face == 0 && position.Y > 40))) * Convert.ToInt32((face == 0 && position.Y > 40) || (face == 2 && position.Y < 400))));
+            Position = new Vector2(Position.X + ((-1 + 2 * Convert.ToInt32(!(Face == 3 && Position.X > 40))) * Convert.ToInt32((Face == 3 && Position.X > 40) || (Face == 1 && Position.X < 750))), Position.Y + ((-1 + 2 * Convert.ToInt32(!(Face == 0 && Position.Y > 40))) * Convert.ToInt32((Face == 0 && Position.Y > 40) || (Face == 2 && Position.Y < 400))));
         }
         //Change face and sprite to new value according to the randomized value
         else
@@ -52,10 +52,10 @@ public class Rope : IEnemy
             switch (mov)
             {
                 case 0:
-                    if (position.Y > 40)
+                    if (Position.Y > 40)
                     {
-                        position = new Vector2(position.X, position.Y - 1);
-                        face = 0;
+                        Position = new Vector2(Position.X, Position.Y - 1);
+                        Face = 0;
                     }
                     else
                     {
@@ -63,11 +63,11 @@ public class Rope : IEnemy
                     }
                     break;
                 case 1:
-                    if (position.X < 750)
+                    if (Position.X < 750)
                     {
-                        position = new Vector2(position.X + 1, position.Y);
+                        Position = new Vector2(Position.X + 1, Position.Y);
                         _sprite = _enemySprites.RopeRight();
-                        face = 1;
+                        Face = 1;
                     }
                     else
                     {
@@ -75,10 +75,10 @@ public class Rope : IEnemy
                     }
                     break;
                 case 2:
-                    if (position.Y < 400)
+                    if (Position.Y < 400)
                     {
-                        position = new Vector2(position.X, position.Y + 1);
-                        face = 2;
+                        Position = new Vector2(Position.X, Position.Y + 1);
+                        Face = 2;
                     }
                     else
                     {
@@ -86,11 +86,11 @@ public class Rope : IEnemy
                     }
                     break;
                 case 3:
-                    if (position.X > 40)
+                    if (Position.X > 40)
                     {
-                        position = new Vector2(position.X - 1, position.Y);
+                        Position = new Vector2(Position.X - 1, Position.Y);
                         _sprite = _enemySprites.RopeLeft();
-                        face = 3;
+                        Face = 3;
                     }
                     else
                     {
@@ -110,7 +110,7 @@ public class Rope : IEnemy
 
     public void Draw()
     {
-        _sprite.Draw(position);
+        _sprite.Draw(Position);
     }
 }
 

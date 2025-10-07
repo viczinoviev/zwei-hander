@@ -3,8 +3,9 @@ using Vector2 = Microsoft.Xna.Framework.Vector2;
 using ZweiHander.Graphics.SpriteStorages;
 using System.Collections.Generic;
 using ZweiHander.Items;
+using ZweiHander.Enemy.EnemyStorage;
 
-namespace ZweiHander.Enemy.EnemyStorage;
+namespace ZweiHander.Enemy;
 
 
 /// <summary>
@@ -31,7 +32,7 @@ public class EnemyFactory(EnemySprites enemysprites, ItemManager projectileManag
     /// <summary>
     /// List of currently existing enemies
     /// </summary>
-    List<IEnemy> currentEnemies = new List<IEnemy>();
+    readonly List<IEnemy> currentEnemies = [];
 
     /// <summary>
     /// Creates a new Enemy.
@@ -53,7 +54,7 @@ public class EnemyFactory(EnemySprites enemysprites, ItemManager projectileManag
                 enemy = new Gel(_enemySprites);
                 break;
             case "Goriya":
-                enemy = new Goriya(_enemySprites,_projectileManager);
+                enemy = new Goriya(_enemySprites, _projectileManager);
                 break;
             case "Keese":
                 enemy = new Keese(_enemySprites);
@@ -64,31 +65,31 @@ public class EnemyFactory(EnemySprites enemysprites, ItemManager projectileManag
             case "Aquamentus":
                 enemy = new Aquamentus(_bossSprites, _projectileManager);
                 break;
-                case "Rope":
+            case "Rope":
                 enemy = new Rope(_enemySprites);
                 break;
-                case "Wallmaster":
+            case "Wallmaster":
                 enemy = new Wallmaster(_enemySprites);
                 break;
-                case "Zol":
+            case "Zol":
                 enemy = new Zol(_enemySprites);
                 break;
-                case "Dodongo":
+            case "Dodongo":
                 enemy = new Dodongo(_bossSprites);
                 break;
-                case "BladeTrap":
+            case "BladeTrap":
                 enemy = new BladeTrap(_enemySprites);
                 break;
-                case "OldMan":
+            case "OldMan":
                 enemy = new OldMan(_npcSprites);
                 break;
             default:
                 // Should never actually reach here- will error out if so
                 break;
         }
-        enemy.position = position;
-        enemy.face = face;
-        enemy.thrower = thrower;
+        enemy.Position = position;
+        enemy.Face = face;
+        enemy.Thrower = thrower;
         currentEnemies.Add(enemy);
         return enemy;
     }
