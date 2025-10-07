@@ -9,6 +9,7 @@ using ZweiHander.Environment;
 using ZweiHander.Graphics;
 using ZweiHander.Graphics.SpriteStorages;
 using ZweiHander.Items;
+using ZweiHander.PlayerFiles;
 
 namespace ZweiHander
 {
