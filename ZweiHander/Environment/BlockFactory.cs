@@ -110,7 +110,7 @@ namespace ZweiHander.Environment
             Block newBlock = new Block(blockType, gridPosition, _tileSize, sprite);
 
             // Store block hitbox for collision or mapping purposes
-            BlockMap.Add(newBlock.getBlockHitbox());
+            BlockMap.Add(newBlock.GetBlockHitbox());
 
             return newBlock; // Return the created block
         }
