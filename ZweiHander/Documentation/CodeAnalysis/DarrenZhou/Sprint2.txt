@@ -1,0 +1,2 @@
+Block.cs 
+Line 10, BlockType cant be readonly, as it's needed inside ChangeBlock method.

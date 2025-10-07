@@ -8,7 +8,7 @@ namespace ZweiHander.Commands
 {
     public class ResetCommand : ICommand
     {
-        private Game1 _game;
+        private readonly Game1 _game;
 
         public ResetCommand(Game1 game)
         {

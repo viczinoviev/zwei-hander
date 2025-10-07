@@ -7,9 +7,9 @@ namespace ZweiHander.Environment
 {
     public class Block
     {
-        private BlockType _blockType;   // Type of the block
-        private Point _gridPosition;    // Position in the grid (row, column)
-        private int _gridSize;          // Size of the block in pixels
+        private  BlockType _blockType;   // Type of the block
+        private readonly Point _gridPosition;    // Position in the grid (row, column)
+        private readonly int _gridSize;          // Size of the block in pixels
         private bool collision = true;  // Whether the block collides with other objects
 
         private ISprite _sprite;        // Sprite for the block
@@ -20,7 +20,7 @@ namespace ZweiHander.Environment
             _blockType = blockType;
             _gridPosition = gridPosition;
             _gridSize = gridSize;
-            _sprite = sprite;
+            _sprite = sprite ?? throw new ArgumentNullException(nameof(sprite));
         }
 
         // Converts grid position into world position in pixels
@@ -35,7 +35,7 @@ namespace ZweiHander.Environment
         public void changeBlock(BlockType newType, ISprite newSprite)
         {
             _blockType = newType;
-            _sprite = newSprite;
+            _sprite = newSprite ?? throw new ArgumentNullException(nameof(newSprite)); ;
             
         }
 

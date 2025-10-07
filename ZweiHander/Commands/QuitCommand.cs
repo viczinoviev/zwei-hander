@@ -8,7 +8,7 @@ namespace ZweiHander.Commands
 {
     public class QuitCommand : ICommand
     {
-        private Game1 _game;
+        private readonly Game1 _game;
 
         public QuitCommand(Game1 game)
         {

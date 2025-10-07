@@ -27,6 +27,7 @@
     <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.*" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Documentation\CodeAnalysis\DarrenZhou\" />
     <Folder Include="Documentation\CodeReviews\LukeHoward\" />
     <Folder Include="Documentation\CodeReviews\DarrenZhou\" />
     <Folder Include="Documentation\CodeReviews\VictorZinoviev\" />
