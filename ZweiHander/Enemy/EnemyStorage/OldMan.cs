@@ -20,11 +20,11 @@ public class OldMan : IEnemy
 /// </summary>
     private readonly NPCSprites _npcSprites;
 
-    public Vector2 position { get; set; } = default;
+    public Vector2 Position { get; set; } = default;
 
-    public int face { get; set; } = default;
+    public int Face { get; set; } = default;
 
-    public int thrower { get; set; } = 0;
+    public int Thrower { get; set; } = 0;
 
 
     public OldMan(NPCSprites npcSprites)
@@ -42,7 +42,7 @@ public class OldMan : IEnemy
 
     public void Draw()
     {
-        _sprite.Draw(position);
+        _sprite.Draw(Position);
     }
 }
 

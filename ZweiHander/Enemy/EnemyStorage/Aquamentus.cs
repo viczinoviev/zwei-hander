@@ -35,12 +35,12 @@ public class Aquamentus : IEnemy
 /// <summary>
 /// Manager for the projectile this enemy throws
 /// </summary>
-    private ItemManager _projectileManager;
-    public Vector2 position { get; set; } = default;
+    private readonly ItemManager _projectileManager;
+    public Vector2 Position { get; set; } = default;
 
-    public int face { get; set; } = default;
+    public int Face { get; set; } = default;
 
-    public int thrower { get; set; } = 1;
+    public int Thrower { get; set; } = 1;
 /// <summary>
 /// Random number generator to randomize enemy behavior
 /// </summary>
@@ -61,7 +61,7 @@ public class Aquamentus : IEnemy
             //Move according to current direction faced
             if (mov > 5)
             {
-                position = new Vector2(position.X + ((-1 + 2 * Convert.ToInt32(!(face == 3 && position.X > 40))) * Convert.ToInt32((face == 3 && position.X > 40) || (face == 1 && position.X < 750))), position.Y);
+                Position = new Vector2(Position.X + ((-1 + 2 * Convert.ToInt32(!(Face == 3 && Position.X > 40))) * Convert.ToInt32((Face == 3 && Position.X > 40) || (Face == 1 && Position.X < 750))), Position.Y);
             }
             //Change face and sprite to new value according to the randomized value
             else
@@ -71,10 +71,10 @@ public class Aquamentus : IEnemy
                     case 0:            
                             goto case 1;
                     case 1:
-                        if (position.X < 750)
+                        if (Position.X < 750)
                         {
-                            position = new Vector2(position.X + 1, position.Y);
-                            face = 1;
+                            Position = new Vector2(Position.X + 1, Position.Y);
+                            Face = 1;
                         }
                         else
                         {
@@ -84,10 +84,10 @@ public class Aquamentus : IEnemy
                     case 2:
                         goto case 3;
                     case 3:
-                        if (position.X > 40)
+                        if (Position.X > 40)
                         {
-                            position = new Vector2(position.X - 1, position.Y);
-                            face = 3;
+                            Position = new Vector2(Position.X - 1, Position.Y);
+                            Face = 3;
                         }
                         else
                         {
@@ -103,16 +103,16 @@ public class Aquamentus : IEnemy
         //Randomize attacking (projectile throwing)
         int attack = rnd.Next(300);
         //attack, as long as not already attacking
-        if (attack == 5 && thrower != 2)
+        if (attack == 5 && Thrower != 2)
         {
             //Create a projectile
-            _currentProjectile1 = _projectileManager.GetItem(ItemType.Fireball, -1, position: new Vector2(position.X - 20, position.Y - 20));
+            _currentProjectile1 = _projectileManager.GetItem(ItemType.Fireball, -1, position: new Vector2(Position.X - 20, Position.Y - 20));
             _currentProjectile1.Life = 3;
-            _currentProjectile2 = _projectileManager.GetItem(ItemType.Fireball, -1, position: new Vector2(position.X - 20, position.Y - 20));
+            _currentProjectile2 = _projectileManager.GetItem(ItemType.Fireball, -1, position: new Vector2(Position.X - 20, Position.Y - 20));
             _currentProjectile2.Life = 3;
-            _currentProjectile3 = _projectileManager.GetItem(ItemType.Fireball, -1, position: new Vector2(position.X - 20, position.Y - 20));
+            _currentProjectile3 = _projectileManager.GetItem(ItemType.Fireball, -1, position: new Vector2(Position.X - 20, Position.Y - 20));
             _currentProjectile3.Life = 3;
-            thrower = 2;
+            Thrower = 2;
             //Set up the projectiles behavior
             _currentProjectile1.Velocity = new Vector2(-100,0);
             _currentProjectile2.Velocity = new Vector2(-100,30);
@@ -122,12 +122,12 @@ public class Aquamentus : IEnemy
         else
         {
             //If currently throwing and projectile is dead, set back to not throwing
-            if (thrower == 2)
+            if (Thrower == 2)
             {
 
                 if (_currentProjectile1.Life <= 0)
                 {
-                    thrower = 1;
+                    Thrower = 1;
                 }
             }
         }
@@ -139,7 +139,7 @@ public class Aquamentus : IEnemy
 
     public void Draw()
     {
-        _sprite.Draw(position);
+        _sprite.Draw(Position);
         _projectileManager.Draw();
     }
 }

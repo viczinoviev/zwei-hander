@@ -29,11 +29,11 @@ public class BladeTrap : IEnemy
     /// </summary>
     private float returnTime = 0;
 
-    public Vector2 position { get; set; } = default;
+    public Vector2 Position { get; set; } = default;
 
-    public int face { get; set; } = default;
+    public int Face { get; set; } = default;
 
-    public int thrower { get; set; } = 1;
+    public int Thrower { get; set; } = 1;
 /// <summary>
 /// Random number generator to randomize enemy behavior
 /// </summary>
@@ -49,13 +49,13 @@ public class BladeTrap : IEnemy
     {
         float dt = (float)time.ElapsedGameTime.TotalSeconds;
         //Randomize  movement
-        if (thrower != 2)
+        if (Thrower != 2)
         {
             int mov = rnd.Next(200);
             if (mov < 4)
             {
-                face = mov;
-                thrower = 2;
+                Face = mov;
+                Thrower = 2;
                 attackTime = 1;
                 returnTime = 3;
             }
@@ -65,9 +65,9 @@ public class BladeTrap : IEnemy
             if (attackTime > 0)
             {
                 attackTime -= dt;
-                Vector2 currentPos = position;
-                position = new Vector2(position.X + ((-1 + 2 * Convert.ToInt32(!(face == 3 && position.X > 40))) * (3 * Convert.ToInt32((face == 3 && position.X > 40) || (face == 1 && position.X < 750)))), position.Y + ((-1 + 2 * Convert.ToInt32(!(face == 0 && position.Y > 40))) * (3 * Convert.ToInt32((face == 0 && position.Y > 40) || (face == 2 && position.Y < 400)))));
-                if (currentPos.X == position.X && currentPos.Y == position.Y)
+                Vector2 currentPos = Position;
+                Position = new Vector2(Position.X + ((-1 + 2 * Convert.ToInt32(!(Face == 3 && Position.X > 40))) * (3 * Convert.ToInt32((Face == 3 && Position.X > 40) || (Face == 1 && Position.X < 750)))), Position.Y + ((-1 + 2 * Convert.ToInt32(!(Face == 0 && Position.Y > 40))) * (3 * Convert.ToInt32((Face == 0 && Position.Y > 40) || (Face == 2 && Position.Y < 400)))));
+                if (currentPos.X == Position.X && currentPos.Y == Position.Y)
                 {
                     returnTime -= dt * 3;
                 }
@@ -77,11 +77,11 @@ public class BladeTrap : IEnemy
                 if (returnTime > 0)
                 {
                     returnTime -= dt;
-                    position = new Vector2(position.X - ((-1 + 2 * Convert.ToInt32(!(face == 3))) * (1 * Convert.ToInt32((face == 3) || (face == 1)))), position.Y - ((-1 + 2 * Convert.ToInt32(!(face == 0))) * (1 * Convert.ToInt32((face == 0) || (face == 2)))));
+                    Position = new Vector2(Position.X - ((-1 + 2 * Convert.ToInt32(!(Face == 3))) * (1 * Convert.ToInt32((Face == 3) || (Face == 1)))), Position.Y - ((-1 + 2 * Convert.ToInt32(!(Face == 0))) * (1 * Convert.ToInt32((Face == 0) || (Face == 2)))));
                 }
                 else
                 {
-                    thrower = 1;
+                    Thrower = 1;
                 }
             }
         }
@@ -93,7 +93,7 @@ public class BladeTrap : IEnemy
 
     public void Draw()
     {
-        _sprite.Draw(position);
+        _sprite.Draw(Position);
     }
 }
 

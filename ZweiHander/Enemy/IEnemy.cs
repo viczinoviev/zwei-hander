@@ -10,17 +10,17 @@ public interface IEnemy
     /// <summary>
     /// Current position using xy coordinate system; default is (0,0).
     /// </summary>
-    public Vector2 position { get; set; }
+    public Vector2 Position { get; set; }
 
     /// <summary>
     /// Current direction, equating to what sprite to draw (0 = up, 1 = right, 2 = down, 3 = left)
     /// </summary>
-    public int face { get; set; }
+    public int Face { get; set; }
 
     /// <summary>
     /// Current status of projectile use (0 = non throwing enemy, 1 = throwing enemy, not currently throwing, 2 = currently throwing)
     /// </summary>
-    public int thrower { get; set; }
+    public int Thrower { get; set; }
 
     /// <summary>
     /// Draws this Enemy on screen.
