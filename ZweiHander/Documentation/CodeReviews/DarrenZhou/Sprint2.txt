@@ -1,0 +1,17 @@
+Author of the code review: Darren Zhou
+Date of the code review: 2025-10-6
+Sprint number: 2
+Name of the .cs file being reviewed: ItemHelper.cs
+Author of the .cs file being reviewed: Jacob
+Number of minutes taken to complete the review: 20
+Specific comments on what is readable and what is not:
+	
+
+Author of the code review: Darren Zhou
+Date of the code review: 2025-10-6
+Sprint number: 2
+Name of the .cs file being reviewed: 
+Author of the .cs file being reviewed: Stash
+Specific comments on code quality:
+	
+
