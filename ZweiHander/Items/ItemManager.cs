@@ -162,8 +162,7 @@ public class ItemManager(ItemSprites itemSprites, TreasureSprites treasureSprite
                 };
                 break;
             case ItemType.Fire:
-                // I do not think the fire should rotate, but sure, why not?
-                item = new FireItem([_itemSprites.FireProjectile(velocity)], UseDefaultProperties)
+                item = new FireItem([_itemSprites.FireProjectile()], UseDefaultProperties)
                 {
                     Life = life == 0 ? 2.5 : life
                 };

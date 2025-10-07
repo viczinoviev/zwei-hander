@@ -6,7 +6,7 @@ namespace ZweiHander.Graphics.SpriteStorages;
 public class BlockSprites : SpriteFactory
 {
     private const string _definitionFile = "SpriteSheets/BlockDefinition.xml";
-    private SpriteBatch _spriteBatch;
+    readonly SpriteBatch _spriteBatch;
     public BlockSprites(ContentManager content, SpriteBatch spriteBatch)
     {
         FromFile(content, _definitionFile);

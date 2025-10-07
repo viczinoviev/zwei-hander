@@ -11,8 +11,7 @@ public class FairyItem : AbstractItem
         {
             Properties = [
                 ItemProperty.CanBePickedUp,
-                ItemProperty.DeleteOnCollision,
-                ItemProperty.Stationary
+                ItemProperty.DeleteOnCollision
             ];
         }
     }

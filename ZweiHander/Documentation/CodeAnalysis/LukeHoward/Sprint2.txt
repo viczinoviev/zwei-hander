@@ -1,0 +1,4 @@
+Made some properties readonly, such as sprite sheets and random generator
+Made some constuctors primary constructors
+Fixed namespace issues (primarily swapping enemy to enemy.storage)
+Fixed some naming conventions with IEnemy properties like position and face

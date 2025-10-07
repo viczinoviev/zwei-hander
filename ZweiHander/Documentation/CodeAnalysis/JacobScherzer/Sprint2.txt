@@ -1,5 +1,5 @@
-﻿AbstractItem's and ItemManager's constructor is just for assigning values, so making
-it a primary constructor made sense.
+﻿AbstractItem's, ItemManager's, and ChangeItemCommand's constructor is 
+just for assigning values, so making it a primary constructor made sense.
 
 BoomerangItem's UseDefaultProperties was not being used, so I gave a basic setup of
 making properties = []; so properties can easily be added later if desired.
@@ -8,3 +8,5 @@ ItemManager GetItem had Life for the created item right after the constructor.
 This could apparently be turned into a block where the Life property is directly
 referenced. I could not see any issue with this, and would allow for the option
 of making Life's set protected, so I agreed to that change.
+
+ChangeItemCommand's properties should never be changed, so they were made readonly.

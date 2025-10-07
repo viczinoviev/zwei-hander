@@ -18,5 +18,6 @@ public class BombItem : AbstractItem
     {
         base.OnDeath(gameTime);
         _spriteIndex = 1;
+        Sprite.Update(gameTime);
     }
 }

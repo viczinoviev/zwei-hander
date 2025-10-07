@@ -3,7 +3,7 @@ using Vector2 = Microsoft.Xna.Framework.Vector2;
 using ZweiHander.Graphics.SpriteStorages;
 using System.Collections.Generic;
 using ZweiHander.Items;
-using ZweiHander.boss;
+using ZweiHander.Enemy.EnemyStorage;
 
 namespace ZweiHander.Enemy;
 
@@ -11,36 +11,29 @@ namespace ZweiHander.Enemy;
 /// <summary>
 /// Manages creations of Enemies.
 /// </summary>
-public class EnemyFactory
+public class EnemyFactory(EnemySprites enemysprites, ItemManager projectileManager, BossSprites bossSprites, NPCSprites npcSprites)
 {
     /// <summary>
     /// Sprites for enemies
     /// </summary>
-    EnemySprites _enemySprites;
+    readonly EnemySprites _enemySprites = enemysprites;
     /// <summary>
     /// Sprites for bosses
     /// </summary>
-    BossSprites _bossSprites;
+    readonly BossSprites _bossSprites = bossSprites;
     /// <summary>
     /// Sprites for bosses
     /// </summary>
-    NPCSprites _npcSprites;
+    readonly NPCSprites _npcSprites = npcSprites;
     /// <summary>
     /// Manager for projectiles thrown by enemies
     /// </summary>
-    ItemManager _projectileManager;
+    readonly ItemManager _projectileManager = projectileManager;
     /// <summary>
     /// List of currently existing enemies
     /// </summary>
-    List<IEnemy> currentEnemies;
-    public EnemyFactory(EnemySprites enemysprites, ItemManager projectileManager,BossSprites bossSprites,NPCSprites npcSprites)
-    {
-        _enemySprites = enemysprites;
-        _bossSprites = bossSprites;
-        _npcSprites = npcSprites;
-        _projectileManager = projectileManager;
-        currentEnemies = new List<IEnemy>();
-    }
+    readonly List<IEnemy> currentEnemies = [];
+
     /// <summary>
     /// Creates a new Enemy.
     /// </summary>
@@ -61,7 +54,7 @@ public class EnemyFactory
                 enemy = new Gel(_enemySprites);
                 break;
             case "Goriya":
-                enemy = new Goriya(_enemySprites,_projectileManager);
+                enemy = new Goriya(_enemySprites, _projectileManager);
                 break;
             case "Keese":
                 enemy = new Keese(_enemySprites);
@@ -72,31 +65,31 @@ public class EnemyFactory
             case "Aquamentus":
                 enemy = new Aquamentus(_bossSprites, _projectileManager);
                 break;
-                case "Rope":
+            case "Rope":
                 enemy = new Rope(_enemySprites);
                 break;
-                case "Wallmaster":
+            case "Wallmaster":
                 enemy = new Wallmaster(_enemySprites);
                 break;
-                case "Zol":
+            case "Zol":
                 enemy = new Zol(_enemySprites);
                 break;
-                case "Dodongo":
+            case "Dodongo":
                 enemy = new Dodongo(_bossSprites);
                 break;
-                case "BladeTrap":
+            case "BladeTrap":
                 enemy = new BladeTrap(_enemySprites);
                 break;
-                case "OldMan":
+            case "OldMan":
                 enemy = new OldMan(_npcSprites);
                 break;
             default:
                 // Should never actually reach here- will error out if so
                 break;
         }
-        enemy.position = position;
-        enemy.face = face;
-        enemy.thrower = thrower;
+        enemy.Position = position;
+        enemy.Face = face;
+        enemy.Thrower = thrower;
         currentEnemies.Add(enemy);
         return enemy;
     }

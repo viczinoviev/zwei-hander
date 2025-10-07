@@ -2,13 +2,12 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using ZweiHander.Graphics;
 
 namespace ZweiHander.Graphics.SpriteStorages;
 public class ItemSprites : SpriteFactory
 {
     private const string _definitionFile = "SpriteSheets/LinkDefinition.xml";
-    private SpriteBatch _spriteBatch;
+    readonly SpriteBatch _spriteBatch;
     public ItemSprites(ContentManager content, SpriteBatch spriteBatch)
     {
         FromFile(content, _definitionFile);
@@ -16,12 +15,14 @@ public class ItemSprites : SpriteFactory
     }
 
     public ISprite Arrow(Vector2 direction) 
-    { 
-        ISprite sprite = new IdleSprite(_regions["arrow-right"], _spriteBatch);
-        sprite.Rotation = (float) Math.Atan2(direction.Y, direction.X);
+    {
+        IdleSprite sprite = new IdleSprite(_regions["arrow-right"], _spriteBatch)
+        {
+            Rotation = (float)Math.Atan2(direction.Y, direction.X)
+        };
         return sprite;
     }
-    public ISprite FireProjectile(Vector2 direction)
+    public ISprite FireProjectile()
     {
         ISprite sprite = new AnimatedSprite(_spriteBatch, _animations["fire-animation"]);
         return sprite;
@@ -34,15 +35,19 @@ public class ItemSprites : SpriteFactory
 
     public ISprite SwordProjectile(Vector2 direction)
     {
-        ISprite sprite = new IdleSprite(_regions["sword-projectile-right"], _spriteBatch);
-        sprite.Rotation = (float)Math.Atan2(direction.Y, direction.X);
+        IdleSprite sprite = new IdleSprite(_regions["sword-projectile-right"], _spriteBatch)
+        {
+            Rotation = (float)Math.Atan2(direction.Y, direction.X)
+        };
         return sprite;
     }
 
     public ISprite SwordProjectileEffect(Vector2 direction)
     {
-        ISprite sprite = new IdleSprite(_regions["sword-projectile-effect"], _spriteBatch);
-        sprite.Rotation = (float)Math.Atan2(direction.Y, direction.X);
+        IdleSprite sprite = new IdleSprite(_regions["sword-projectile-effect"], _spriteBatch)
+        {
+            Rotation = (float)Math.Atan2(direction.Y, direction.X)
+        };
         return sprite;
     }
 

@@ -4,7 +4,7 @@ using ZweiHander.Graphics;
 using System;
 using ZweiHander.Graphics.SpriteStorages;
 
-namespace ZweiHander.Enemy;
+namespace ZweiHander.Enemy.EnemyStorage;
 
 /// <summary>
 /// Not an enemy, but idk where to put for now. Old man.
@@ -18,13 +18,13 @@ public class OldMan : IEnemy
 /// <summary>
 /// Holds all sprites for this NPC
 /// </summary>
-    private NPCSprites _npcSprites;
+    private readonly NPCSprites _npcSprites;
 
-    public Vector2 position { get; set; } = default;
+    public Vector2 Position { get; set; } = default;
 
-    public int face { get; set; } = default;
+    public int Face { get; set; } = default;
 
-    public int thrower { get; set; } = 0;
+    public int Thrower { get; set; } = 0;
 
 
     public OldMan(NPCSprites npcSprites)
@@ -42,7 +42,7 @@ public class OldMan : IEnemy
 
     public void Draw()
     {
-        _sprite.Draw(position);
+        _sprite.Draw(Position);
     }
 }
 

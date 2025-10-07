@@ -41,7 +41,7 @@ public enum ItemType
     /// </summary>
     Fairy,
     /// <summary>
-    /// 2s life, death animation
+    /// 2s life, death animation, can be picked up, delete on collision
     /// </summary>
     Bomb,
     /// <summary>
