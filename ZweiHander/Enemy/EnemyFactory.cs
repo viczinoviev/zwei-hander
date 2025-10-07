@@ -22,6 +22,10 @@ public class EnemyFactory
     /// </summary>
     BossSprites _bossSprites;
     /// <summary>
+    /// Sprites for bosses
+    /// </summary>
+    NPCSprites _npcSprites;
+    /// <summary>
     /// Manager for projectiles thrown by enemies
     /// </summary>
     ItemManager _projectileManager;
@@ -29,10 +33,11 @@ public class EnemyFactory
     /// List of currently existing enemies
     /// </summary>
     List<IEnemy> currentEnemies;
-    public EnemyFactory(EnemySprites enemysprites, ItemManager projectileManager,BossSprites bossSprites)
+    public EnemyFactory(EnemySprites enemysprites, ItemManager projectileManager,BossSprites bossSprites,NPCSprites npcSprites)
     {
         _enemySprites = enemysprites;
         _bossSprites = bossSprites;
+        _npcSprites = npcSprites;
         _projectileManager = projectileManager;
         currentEnemies = new List<IEnemy>();
     }
@@ -81,6 +86,9 @@ public class EnemyFactory
                 break;
                 case "BladeTrap":
                 enemy = new BladeTrap(_enemySprites);
+                break;
+                case "OldMan":
+                enemy = new OldMan(_npcSprites);
                 break;
             default:
                 // Should never actually reach here- will error out if so
