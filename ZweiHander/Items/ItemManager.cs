@@ -96,7 +96,7 @@ public class ItemManager(ItemSprites itemSprites, TreasureSprites treasureSprite
                 };
                 break;
             case ItemType.Sword:
-                item = new SwordItem([_itemSprites.Arrow(velocity), _itemSprites.ProjectileOnHit()], UseDefaultProperties)
+                item = new SwordItem([_itemSprites.SwordProjectile(velocity), _itemSprites.SwordProjectileEffect(velocity)], UseDefaultProperties)
                 {
                     Life = life == 0 ? 2 : life
                 };

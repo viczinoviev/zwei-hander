@@ -10,7 +10,9 @@ public class SwordItem : AbstractItem
     {
         if (defaultProperties)
         {
-            Properties = [];
+            Properties = [
+                ItemProperty.CanDamageEnemy
+            ];
         }
         DeathTime = 0.1;
     }
