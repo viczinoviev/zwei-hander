@@ -141,6 +141,7 @@ namespace ZweiHander
             _blockList.Add(_block = _blockFactory.CreateBlock(BlockName.WhitePatternTile, blockPosition));
             _blockList.Add(_block = _blockFactory.CreateBlock(BlockName.BrickTile, blockPosition));
             _blockList.Add(_block = _blockFactory.CreateBlock(BlockName.BlockTile, blockPosition));
+            _blockList.Add(_block = _blockFactory.CreateBlock(BlockName.SolidBlackTile, blockPosition));
             _blockList.Add(_block = _blockFactory.CreateBlock(BlockName.StairTile, blockPosition));
             _blockList.Add(_block = _blockFactory.CreateBlock(BlockName.FireTile, blockPosition));
             _blockList.Add(_block = _blockFactory.CreateBlock(BlockName.LadderTile, blockPosition));

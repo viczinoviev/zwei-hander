@@ -9,12 +9,12 @@ namespace ZweiHander.Commands
 {
     public class ChangeBlockCommand : ICommand
     {
-        private Game1 _game;
-        private int _direction;
+        private readonly Game1 _game;
+        private readonly int _direction;
 
         public ChangeBlockCommand(Game1 game, int direction)
         {
-            _game = game;
+            _game = game ?? throw new ArgumentNullException(nameof(game));
             _direction = direction; 
         }
 

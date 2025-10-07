@@ -1,0 +1,3 @@
+Added readonly modifiers to fields where immutability is appropriate to increase code safety. 
+Some variable didn't need readonly as they were used later in some method in the class.
+Added exception checks for incorrect constructor names.

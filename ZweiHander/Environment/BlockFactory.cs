@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using ZweiHander.Graphics;
 using ZweiHander.Graphics.SpriteStorages;
@@ -7,10 +8,10 @@ namespace ZweiHander.Environment
 {
     public class BlockFactory
     {
-        private int _tileSize; // Size of each block in pixels
-        private BlockSprites _blockSprites; // Reference to sprite storage for blocks
+        private readonly int _tileSize; // Size of each block in pixels
+        private readonly BlockSprites _blockSprites; // Reference to sprite storage for blocks
         //temp
-        private PlayerSprites _playerSprites;
+        private readonly PlayerSprites _playerSprites;
         public List<Rectangle> BlockMap { get; private set; } // Stores all block hitboxes
 
         /// <summary>
@@ -36,8 +37,8 @@ namespace ZweiHander.Environment
         public BlockFactory(int tileSize, BlockSprites blockSprites, PlayerSprites playerSprites)
         {
             _tileSize = tileSize; // Set tile size
-            _blockSprites = blockSprites; // Store sprite storage
-            _playerSprites = playerSprites;
+            _blockSprites = blockSprites ?? throw new ArgumentNullException(nameof(blockSprites)); // Store sprite storage
+            _playerSprites = playerSprites ?? throw new ArgumentNullException(nameof(playerSprites));
             BlockMap = new List<Rectangle>(); // Initialize hitbox list
         }
 
