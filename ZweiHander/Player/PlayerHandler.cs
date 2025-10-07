@@ -49,6 +49,7 @@ public class PlayerHandler
                     else
                         _currentSprite = _playerSprites.PlayerAttackSwordDown();
                 }
+
                 break;
             case PlayerState.UsingItem:
                 // Use item sprite based on direction
@@ -139,11 +140,24 @@ public class PlayerHandler
         _currentSprite.Draw(_player.Position);
     }
     
+    public void SpawnSwordProjectile()
+    {
+        Vector2 swordPosition = _player.Position + _stateMachine.LastDirection * 10f;
+        Vector2 swordVelocity = _stateMachine.LastDirection * 400f;
+
+        _player.ItemManager.GetItem(
+            ItemType.Sword,
+            life: 1.0,
+            position: swordPosition,
+            velocity: swordVelocity
+        );
+    }
+    
     public void HandleItemUse(PlayerInput itemInput)
     {
         Vector2 itemPosition = _player.Position;
         Vector2 itemVelocity = _stateMachine.LastDirection * 300f;
-        
+
         ItemType itemType;
         if (itemInput == PlayerInput.UsingItem1)
         {
@@ -163,13 +177,24 @@ public class PlayerHandler
                 life: 2.15f,
                 position: itemPosition,
                 velocity: itemVelocity,
-                acceleration: -itemVelocity*0.9f
+                acceleration: -itemVelocity * 0.9f
+            );
+        }
+        else if (itemInput == PlayerInput.UsingItem3)
+        {
+            itemType = ItemType.Bomb;
+            _player.ItemManager.GetItem(
+                itemType,
+                life: 1.5f,
+                position: itemPosition + _stateMachine.LastDirection * 30f,
+                velocity: Vector2.Zero,
+                acceleration: Vector2.Zero
             );
         }
         else
         {
             return;
         }
-        
+
     }
 }

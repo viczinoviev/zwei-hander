@@ -82,10 +82,15 @@ public class Player : IPlayer
     {
         AddInput(PlayerInput.UsingItem2);
     }
+    
+    public void UseItem3()
+    {
+        AddInput(PlayerInput.UsingItem3);
+    }
 
     public void Idle()
     {
-        
+
     }
 
     public void Draw(SpriteBatch spriteBatch)
@@ -112,5 +117,6 @@ public enum PlayerInput
     MovingRight,
     Attacking,
     UsingItem1,
-    UsingItem2
+    UsingItem2,
+    UsingItem3
 }

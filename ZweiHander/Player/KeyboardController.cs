@@ -33,7 +33,8 @@ public class KeyboardController : IController
             { Keys.Z, () => _player.Attack() },
             { Keys.N, () => _player.Attack() },
             { Keys.D1, () => _player.UseItem1() },
-            { Keys.D2, () => _player.UseItem2() }
+            { Keys.D2, () => _player.UseItem2() },
+            { Keys.D3, () => _player.UseItem3() }
         };
     }
 

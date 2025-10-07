@@ -80,7 +80,7 @@ public class PlayerStateMachine : IStateMachine
         {
             return PlayerState.Attacking;
         }
-        else if (inputBuffer.Contains(PlayerInput.UsingItem1) || inputBuffer.Contains(PlayerInput.UsingItem2))
+        else if (inputBuffer.Contains(PlayerInput.UsingItem1) || inputBuffer.Contains(PlayerInput.UsingItem2) || inputBuffer.Contains(PlayerInput.UsingItem3))
         {
             return PlayerState.UsingItem;
         }
@@ -122,12 +122,14 @@ public class PlayerStateMachine : IStateMachine
         if (newState == PlayerState.Attacking)
         {
             _actionTimer = _attackDuration;
+
+            _playerHandler.SpawnSwordProjectile();
         }
         else if (newState == PlayerState.UsingItem && !_itemUsedLastFrame)
         {
             _actionTimer = _itemUseDuration;
             _itemUsedLastFrame = true;
-            
+
             // Pass the specific input to PlayerHandler
             if (_player.InputBuffer.Contains(PlayerInput.UsingItem1))
             {
@@ -136,6 +138,10 @@ public class PlayerStateMachine : IStateMachine
             else if (_player.InputBuffer.Contains(PlayerInput.UsingItem2))
             {
                 _playerHandler.HandleItemUse(PlayerInput.UsingItem2);
+            }
+            else if (_player.InputBuffer.Contains(PlayerInput.UsingItem3))
+            {
+                _playerHandler.HandleItemUse(PlayerInput.UsingItem3);
             }
         }
     }
