@@ -6,3 +6,9 @@ worked out pretty well overall.
 Luke: Overall, the sprint went very well. We had trouble making decisions early on but 
 it got much easier with time. We got a lot of work done early which was very nice.
 Biggest issue was how a lot of sudden requirements seemed to sneak up on us, but we worked it out.
+
+Darren: Dividing the project based on different components definitely helped 
+with the team communication and coordination. At first, the team disagreed 
+on what each of our method input and output should be, and how the methods 
+should be called. But as we finished the framework of the game and gotten 
+more used to communicating with everyone, the project went a lot smoother.
