@@ -20,3 +20,8 @@ about the design decision of the project, which I think was a good thing. We wer
 consider different perspectives and got us think how different approaches can be beneficial.
 Some things that I would like to improve on the next sprint are task distribution and group
 communication.
+
+Stanislaw: I thought we were on a good pace but it turns out that we were actually slightly behind.
+For the next sprint I will definetely try to learn about the actual expectations ahead of time instead of last minute.
+The team is getting along and we are slowly creating a cohesive vision for some sort of modern reimagining of the classic Zelda.
+We have a lot of ideas I can't wait to try to implement.
