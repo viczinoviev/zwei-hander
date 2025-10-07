@@ -5,7 +5,7 @@ using ZweiHander.Graphics;
 using System;
 using ZweiHander.Graphics.SpriteStorages;
 
-namespace ZweiHander.Enemy;
+namespace ZweiHander.Enemy.EnemyStorage;
 
 /// <summary>
 /// Goriya enemy
@@ -23,7 +23,7 @@ public class Goriya : IEnemy
 /// <summary>
 /// Holds all sprites for this enemy
 /// </summary>
-    private EnemySprites _enemySprites;
+    private readonly EnemySprites _enemySprites;
 /// <summary>
 /// Manager for the projectile this enemy throws
 /// </summary>
@@ -36,7 +36,7 @@ public class Goriya : IEnemy
 /// <summary>
 /// Random number generator to randomize enemy behavior
 /// </summary>
-    Random rnd = new Random();
+    readonly Random rnd = new();
 
 
     public Goriya(EnemySprites enemySprites, ItemManager projectileManager)

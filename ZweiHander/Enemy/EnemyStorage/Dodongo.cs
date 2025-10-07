@@ -3,9 +3,8 @@ using Vector2 = Microsoft.Xna.Framework.Vector2;
 using ZweiHander.Graphics;
 using System;
 using ZweiHander.Graphics.SpriteStorages;
-using ZweiHander.Enemy;
 
-namespace ZweiHander.boss;
+namespace ZweiHander.Enemy.EnemyStorage;
 
 /// <summary>
 /// Dodongo boss
@@ -19,7 +18,7 @@ public class Dodongo : IEnemy
 /// <summary>
 /// Holds all sprites for this boss
 /// </summary>
-    private BossSprites _bossSprites;
+    private readonly BossSprites _bossSprites;
 
     public Vector2 position { get; set; } = default;
 
@@ -29,7 +28,7 @@ public class Dodongo : IEnemy
 /// <summary>
 /// Random number generator to randomize boss behavior
 /// </summary>
-    Random rnd = new Random();
+    readonly Random rnd = new();
 
 
     public Dodongo(BossSprites bossSprites)

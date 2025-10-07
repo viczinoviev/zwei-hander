@@ -7,16 +7,10 @@ using System.Threading.Tasks;
 
 namespace ZweiHander.Commands
 {
-    public class ChangeEnemyCommand : ICommand
+    public class ChangeEnemyCommand(Game1 game, int direction) : ICommand
     {
-        private Game1 _game;
-        private int _direction;
-
-        public ChangeEnemyCommand(Game1 game, int direction)
-        {
-            _game = game;
-            _direction = direction; 
-        }
+        private readonly Game1 _game = game;
+        private readonly int _direction = direction;
 
         public void Execute()
         {

@@ -4,7 +4,7 @@ using ZweiHander.Graphics;
 using System;
 using ZweiHander.Graphics.SpriteStorages;
 
-namespace ZweiHander.Enemy;
+namespace ZweiHander.Enemy.EnemyStorage;
 
 /// <summary>
 /// BladeTrap enemy
@@ -18,7 +18,7 @@ public class BladeTrap : IEnemy
 /// <summary>
 /// Holds all sprites for this enemy
 /// </summary>
-    private EnemySprites _enemySprites;
+    private readonly EnemySprites _enemySprites;
     /// <summary>
     /// Time to attack
     /// </summary>
@@ -37,7 +37,7 @@ public class BladeTrap : IEnemy
 /// <summary>
 /// Random number generator to randomize enemy behavior
 /// </summary>
-    Random rnd = new Random();
+    readonly Random rnd = new();
 
 
     public BladeTrap(EnemySprites enemySprites)

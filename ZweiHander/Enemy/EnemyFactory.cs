@@ -3,44 +3,36 @@ using Vector2 = Microsoft.Xna.Framework.Vector2;
 using ZweiHander.Graphics.SpriteStorages;
 using System.Collections.Generic;
 using ZweiHander.Items;
-using ZweiHander.boss;
 
-namespace ZweiHander.Enemy;
+namespace ZweiHander.Enemy.EnemyStorage;
 
 
 /// <summary>
 /// Manages creations of Enemies.
 /// </summary>
-public class EnemyFactory
+public class EnemyFactory(EnemySprites enemysprites, ItemManager projectileManager, BossSprites bossSprites, NPCSprites npcSprites)
 {
     /// <summary>
     /// Sprites for enemies
     /// </summary>
-    EnemySprites _enemySprites;
+    readonly EnemySprites _enemySprites = enemysprites;
     /// <summary>
     /// Sprites for bosses
     /// </summary>
-    BossSprites _bossSprites;
+    readonly BossSprites _bossSprites = bossSprites;
     /// <summary>
     /// Sprites for bosses
     /// </summary>
-    NPCSprites _npcSprites;
+    readonly NPCSprites _npcSprites = npcSprites;
     /// <summary>
     /// Manager for projectiles thrown by enemies
     /// </summary>
-    ItemManager _projectileManager;
+    readonly ItemManager _projectileManager = projectileManager;
     /// <summary>
     /// List of currently existing enemies
     /// </summary>
-    List<IEnemy> currentEnemies;
-    public EnemyFactory(EnemySprites enemysprites, ItemManager projectileManager,BossSprites bossSprites,NPCSprites npcSprites)
-    {
-        _enemySprites = enemysprites;
-        _bossSprites = bossSprites;
-        _npcSprites = npcSprites;
-        _projectileManager = projectileManager;
-        currentEnemies = new List<IEnemy>();
-    }
+    List<IEnemy> currentEnemies = new List<IEnemy>();
+
     /// <summary>
     /// Creates a new Enemy.
     /// </summary>

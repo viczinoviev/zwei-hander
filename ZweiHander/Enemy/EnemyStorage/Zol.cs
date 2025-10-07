@@ -4,7 +4,7 @@ using ZweiHander.Graphics;
 using System;
 using ZweiHander.Graphics.SpriteStorages;
 
-namespace ZweiHander.Enemy;
+namespace ZweiHander.Enemy.EnemyStorage;
 
 /// <summary>
 /// zol enemy
@@ -18,7 +18,7 @@ public class Zol : IEnemy
 /// <summary>
 /// Holds all sprites for this enemy
 /// </summary>
-    private EnemySprites _enemySprites;
+    private readonly EnemySprites _enemySprites;
 
     public Vector2 position { get; set; } = default;
 
@@ -28,7 +28,7 @@ public class Zol : IEnemy
 /// <summary>
 /// Random number generator to randomize enemy behavior
 /// </summary>
-    Random rnd = new Random();
+    readonly Random rnd = new();
 
 
     public Zol(EnemySprites enemySprites)
