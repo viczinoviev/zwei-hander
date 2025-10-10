@@ -1,0 +1,199 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+<title>CSE 3902 Sprint 3</title>
+</head>
+<body>
+<h1>Sprint 3 - Level loading and segmentation and collision handling</h1>
+
+<p><strong>Due dates:</strong></p>
+<ul>
+  <li>Initial task planning: Tues. 10/7 before midnight
+  <li>Functionality check-in (on Carmen): Mon. 10/20 before midnight
+  <li>Due (on Carmen): Mon. 10/27 before midnight
+  <li>Team evaluation on CATME: Tues. 10/28 before midnight
+</ul>
+
+<p><strong>Objectives:</strong></p>
+<ul>
+  <li>Continue to develop more core features of your 2D game framework.
+  <li>Implement collision handling for all types of collisions that can occur, causing state transitions or position changes when necessary.</li>
+  <li>Instead of placing all objects on screen at once, create the individual "rooms" (or "screens" if you prefer) of the dungeon each with its own subset of objects. 
+  Store this information in one or more files (recommendation: csv or xml) and write code to initialize objects based on the contents of the file(s).</li>
+  <li>Create an artificial level that contains an instance of Link and all types of objects that are found in your first dungeon.
+	  For testing purposes, include a way for the user to quickly switch to any room in the dungeon instead of having to walk through multiple rooms to reach it.</li>
+</ul>
+
+Note: you should base the behavior of your game's objects off of the original game in order to complete a comparable amount of work to that of previous teams in this course,
+but you do not need to replicate everything with 100% accuracy.
+You should document any major deviations to avoid it getting marked as a bug. 
+Also note that you do not need a fully finished game by the end of this sprint, some elements such as sound, smooth camera transitions, etc. are not required until the next sprint.
+
+<p align="left"><strong>Controls and UI</strong></p>
+<ul>
+	<li>Use the arrow keys and WASD for player movement</li>
+    <li>This sprint is a good time to create a gamepad class, but this is not a hard requirement</li>
+	<li>Continue to allow the use of different items via numeric keys 1, 2, 3, etc.
+	<li>Recommendation: have all of the item pickups in the starting room, or start the player with an infinite amount of each item</li>
+	<li>Use the mouse controller as a way to transition between rooms. How you do this is entirely up to you, but consider doing so by clicking on a map. 
+	Alternatively, treat the rooms as in an ordered collection, with left click moving to the previous room and right click moving to the next room.</li>
+</ul>
+
+<br><center><img src="Sprint3(loz).png"></img></center><br>
+
+<hr>
+
+<h3>Sprint 3 Work Expectations (the following information is largely the same as Sprint 2, and will be repeated for all future sprints):</h3>
+<ul>
+  <li>Planning:
+    <ul>
+      <li>Enter start and end dates for the sprint.</li>
+      <li>Create product backlog items and tasks for the required features of the sprint.
+      <li>Associate all of these work items and tasks with the curernt sprint.</li>
+	</ul>
+  </li>
+  <li><b>Software developmentand task tracking:</b>
+    <ul>
+	  <li>Implement the features described in the sprint description.
+ 	  <li>Each team member should implement the tasks assigned to them.</li>
+      <li>When you start work on a task, drag the task to In-Progress on the board.</li>
+	  <li>If you did not finish the task that day, reduce the remaining work time estimate for the task.</li>
+      <li>If you finished the task, drag it to Done and make sure its remaining work time is zero.</li>
+	  <li>You should place a high priority on the readability and simplicity of your code during the first half of the sprint.
+	  <li>When refactoring, place a higher priority on the maintainability of the code.
+	  <li>Try to finish early, given a three week period for a sprint, here are some recommended deadlines:
+		<ul>
+			<li>First day of sprint - finish putting tasks up on the board
+			<li>End of second week - finish all of the functionality for the sprint ; complete one set of code reviews
+			<li>Middle of third week - finish all code refactoring for the sprint ; complete second set of code reviews
+			<li>End of the third week - complete remaining documentation and adminstrative tasks (described below)
+		</ul>
+    </ul>
+  </li>
+  <li><b>Other processes and tasks:</b>
+	<ul>
+		<li>README document
+			<ul>
+				<li>Write up a document with useful information on your project. This might include: 
+				program controls,
+				descriptions of known bugs that program has, 
+				and details of any tools or processes your team used that aren't explicitly required (for example, calculating and using Code Metrics as part of your design process)
+			</ul>
+		<li>Use tools to improve your code and/or create documentation about your codebase - do at least one of the following:
+			<ul>
+				<li>Calculate your code metrics within Visual Studio under the Analyze menu. 
+				Generate and record this values at least once a week, consider putting them in a spreadsheet and making graphs using the data. 
+				<li>Use the .NET code analyzers (Roslyn) with rules for <a href="https://docs.microsoft.com/en-us/dotnet/fundamentals/code-analysis/overview#code-quality-analysis">code quality analysis</a>.
+				Document any errors or warnings that you get, then on-by-one fix them or set them as supressed with an explanation in your documentation on why you supressed that particular warning/error.
+			</ul>
+		<li>Code Reviews
+			<ul>
+				<li>Each member of the team should review at least one class and have at least one of their classes reviewed, with a focus on code readability
+				<li>Each member of the team should review at least one class and have at least one of their classes reviewed, with a focus on code maintainability
+				<li>More detailed guidelines on a code review process can be found below
+			</ul>
+		<li>Sprint reflection
+			<ul>
+				<li>Near the end of the sprint, write up a brief report on how your team performed this sprint, using the burndown chart from the board as the basis for discussion.
+				<li>Feel free to also discuss your processes as a whole. 
+				Were any changes your made this sprint constructive or detrimental?
+				Do you have any plans for doing things differently next sprint?
+			</ul>
+	</ul>
+</ul>
+
+<p><strong>On code reviews</strong>:</p>
+<p>The best way to fulill the requirement of documenting reviewing of code within your team is by doing <a href="https://docs.github.com/en/github/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests">pull requests</a>.
+Alternatively, you can write up code reviews in plaintext documents to be submitted with the project.
+In the root folder of the project, add a folder to store code reviews.
+You can add plaintext files to the project in this folder by going to the Project menu, add new item, and select text file under the general option.
+</p>
+
+<p>
+In the plaintext file for a readability review, include the following information:
+<ul>
+	<li>Author of the code review
+	<li>Date of the code review
+	<li>Sprint number
+	<li>Name of the .cs file being reviewed
+	<li>Author of the .cs file being reviewed
+	<li>Number of minutes taken to complete the review
+	<li>Specific comments on what is readable and what is not
+</ul>
+</p>
+
+<p>
+In the plaintext file for a code quality review, include the following information:
+<ul>
+	<li>Author of the code review
+	<li>Date of the code review
+	<li>Sprint number
+	<li>Name of the .cs file being reviewed
+	<li>Author of the .cs file being reviewed
+	<li>Specific comments on code quality
+	<li>A hypothetical change to make to the game related to file being reviewed and how the current implementation could or could not easily support that change
+</ul>
+</p>
+
+<hr>
+
+<h3>Functionality check-in</h3>
+<p>
+One member of your team should follow project zipping process from Sprint0 and turn in your project on Carmen on the appropriate assignment page.
+The purpose of this submission is similar to the "early bonus" from Sprint0 - incentive for students to not delay in getting their portion of the project done before the last few days of the sprint.
+Your team should aim to have have at least 2/3 of the functional requirements for the sprint completed for this check-in. Detailed feedback will limited,
+but you will be informed on whether your team is exceeding, meeting, or behind in the expected amount of functionality. 
+The functional check-in is worth about 7.5% (the range of - to + within a letter grade) for the sprint as a whole.
+</p>
+
+<h3>Project Submission</h3>
+<p>
+One member of your team should follow project zipping process from Sprint0 and turn in your project on Carmen on the appropriate assignment page.
+If they aren't included in the zip file, also add your README and sprint reflection documents (and any other project management documents you made).
+After the sprint is over, everyone should fill out a peer review form rating the work of everyone on your team, yourself included, for that sprint and turn in the file on Carmen on the assignment page for the peer review.
+Additionally, at least one member of your team will need to arrange a meeting with your grader to review your work (at minimum the contents of your board, but you may review more). 
+Exceptions granted if you provide this documentation in another form, ex: screenshots of tasks board or direct log-in access to your taskboard
+</p>
+<p>
+<b>Lateness:</b> your grader is permitted to evaluate submissions turned in 1-2 days late, but expect it to come with a 5%, or half a letter grade, penalty.
+</p>
+
+<h3>Peer reviews</h3>
+<p>
+The peer reviews are one of the main ways we get information about how your team is doing, so take your time to fill them out thoroughly and honestly.
+In cases where peer reviews provide conflicting information, 
+either in inconsistent scores for a team member or inconsistency in scores and the overall functionality of the project,
+your team might be asked to meet with the instructor to review your code commit logs to obtain more detailed information on each team member's contribution.
+</p>
+
+<hr>
+
+<h3>Grading</h3>
+<p>
+Each sprint you'll receive feedback on how your team is progressing. Your grader will review your work and provide comments on
+<ul>
+	<li>your documentation (task tracking, code reviews, code metrics/analysis)
+	<li>code functionality (has your team implemented enough work for its size and how buggy is it)
+	<li>(workload permitting also comments on code quality)
+</ul>
+The team will get a rough letter grade for each sprint (within feedback, not as a score within the Carmen gradebook),
+<ul>
+	<li>A - exceptional work, goes beyond stated expectations
+	<li>B - good to average work
+	<li>C - needs improvement
+	<li>D - needs significant improvement
+</ul>
+Your instructor will review your work (frequency TBD, likely to be every other sprint) and provide comments on
+<ul>
+	<li>code quality
+</ul>
+Code quality will also play a role in determining numeric project scores at the end of the semester.
+Assume around 30-40% of the project scores are based on meeting high quality code standards.
+You should refactor your code to eliminate any major code quality problems cited by your instructor and grader.
+Minor issues may be excused but only after discussing the details with your instructor.
+</p>
+
+</body></html>
