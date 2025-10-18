@@ -16,7 +16,6 @@ namespace ZweiHander.CollisionFiles
 
         public abstract void UpdateCollisionBox();
 
-        // Cleanup method
         public virtual void Unsubscribe()
         {
             CollisionManager.Instance.RemoveCollider(this);

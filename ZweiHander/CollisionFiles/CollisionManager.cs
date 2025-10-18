@@ -36,16 +36,20 @@ namespace ZweiHander.CollisionFiles
 
 		public void CheckCollisions(GameTime gameTime)
 		{
+			for (int i = colliders.Count - 1; i >= 0; i--)
+			{
+				if (colliders[i] == null)
+				{
+					colliders.RemoveAt(i);
+				}
+			}
+
 			for (int i = 0; i < colliders.Count; i++)
 			{
 				for (int j = i + 1; j < colliders.Count; j++)
 				{
 					if (colliders[i].collisionBox.Intersects(colliders[j].collisionBox))
 					{
-						Rectangle intersection = Rectangle.Intersect(colliders[i].collisionBox, colliders[j].collisionBox);
-						System.Console.WriteLine($"{colliders[i].GetType().Name} hit {colliders[j].GetType().Name}, overlap: {intersection.Width}x{intersection.Height}");
-						
-						// Calculate collision information for both objects
 						CollisionInfo collisionInfoI = CalculateCollisionInfo(colliders[i].collisionBox, colliders[j].collisionBox);
 						CollisionInfo collisionInfoJ = CalculateCollisionInfo(colliders[j].collisionBox, colliders[i].collisionBox);
 
@@ -58,7 +62,6 @@ namespace ZweiHander.CollisionFiles
 
 		private CollisionInfo CalculateCollisionInfo(Rectangle movingRect, Rectangle staticRect)
 		{
-			// Calculate intersection rectangle
 			Rectangle intersection = Rectangle.Intersect(movingRect, staticRect);
 			Vector2 intersectionCenter = new Vector2(
 				intersection.X + intersection.Width / 2f,
@@ -68,13 +71,11 @@ namespace ZweiHander.CollisionFiles
 			Direction normal;
 			Vector2 resolutionOffset;
 
-			// Overlaps in each direction, assumes that "our" collider is the moving one
 			int leftOverlap = (movingRect.Right) - staticRect.Left;
 			int rightOverlap = staticRect.Right - movingRect.Left;
 			int topOverlap = movingRect.Bottom - staticRect.Top;
 			int bottomOverlap = staticRect.Bottom - movingRect.Top;
 
-			// Find the smallest overlap to determine the collision normal
 			int minOverlap = Math.Min(Math.Min(leftOverlap, rightOverlap), Math.Min(topOverlap, bottomOverlap));
 
 			if (minOverlap == leftOverlap)
@@ -103,12 +104,18 @@ namespace ZweiHander.CollisionFiles
 
 		public void AddCollider(ICollisionHandler collider)
 		{
-			colliders.Add(collider);
+			if (collider != null)
+			{
+				colliders.Add(collider);
+			}
 		}
 
 		public void RemoveCollider(ICollisionHandler collider)
 		{
-			colliders.Remove(collider);
+			if (collider != null && colliders.Contains(collider))
+			{
+				colliders.Remove(collider);
+			}
 		}
 
 	}
