@@ -1,11 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using ZweiHander.CollisionFiles;
 using ZweiHander.Graphics;
 
 namespace ZweiHander.Environment
 {
-    public class Block
+    public class Block : IBlock
     {
         private BlockType _blockType;   // Type of the block
         private readonly Point _gridPosition;    // Position in the grid (row, column)
@@ -13,6 +14,7 @@ namespace ZweiHander.Environment
         private bool collision = true;  // Whether the block collides with other objects
 
         private ISprite _sprite;        // Sprite for the block
+        private readonly BlockCollisionHandler _collisionHandler;
 
         // Constructor: creates a new block with given type, position, size, and sprite
         public Block(BlockType blockType, Point gridPosition, int gridSize, ISprite sprite)
@@ -23,6 +25,12 @@ namespace ZweiHander.Environment
             _gridPosition = gridPosition;
             _gridSize = gridSize;
             _sprite = sprite;
+            
+            // Only create collision handler for collidable blocks
+            if (IsCollidable())
+            {
+                _collisionHandler = new BlockCollisionHandler(this);
+            }
         }
 
         // Converts grid position into world position in pixels
@@ -54,8 +62,8 @@ namespace ZweiHander.Environment
         public Rectangle GetBlockHitbox()
         {
             return new Rectangle(
-                _gridPosition.X * _gridSize, 
-                _gridPosition.Y * _gridSize, 
+                _gridPosition.X * _gridSize - _gridSize / 2, 
+                _gridPosition.Y * _gridSize - _gridSize / 2, 
                 _gridSize, 
                 _gridSize
             );
@@ -68,5 +76,7 @@ namespace ZweiHander.Environment
             if (_blockType == BlockType.Decorative) { collision = false; }
             return collision;
         }
+
+
     }
 }

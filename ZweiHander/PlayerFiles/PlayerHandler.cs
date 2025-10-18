@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ZweiHander.CollisionFiles;
 using ZweiHander.Graphics;
 using ZweiHander.Graphics.SpriteStorages;
 using ZweiHander.Items;
@@ -12,6 +13,7 @@ namespace ZweiHander.PlayerFiles
         private readonly Player _player;
         private readonly PlayerStateMachine _stateMachine;
         private readonly PlayerSprites _playerSprites;
+        private readonly PlayerCollisionHandler _collisionHandler;
         private ISprite _currentSprite;
         private readonly float _moveSpeed = 200f;
         private readonly float _attackMoveSpeed = 50f;
@@ -28,6 +30,7 @@ namespace ZweiHander.PlayerFiles
             _currentSprite = _playerSprites.PlayerIdle();
             _lastState = _stateMachine.CurrentState;
             _lastDirectionVector = _stateMachine.LastDirection;
+            _collisionHandler = new PlayerCollisionHandler(_player);
         }
 
         private void UpdateSprite(PlayerState state, Vector2 directionVector)
@@ -198,5 +201,12 @@ namespace ZweiHander.PlayerFiles
             }
 
         }
+
+        public void UpdateCollisionBox()
+        {
+            _collisionHandler?.UpdateCollisionBox();
+        }
+
+
     }
 }

@@ -10,6 +10,7 @@ using ZweiHander.Graphics;
 using ZweiHander.Graphics.SpriteStorages;
 using ZweiHander.Items;
 using ZweiHander.PlayerFiles;
+using ZweiHander.CollisionFiles;
 
 namespace ZweiHander
 {
@@ -137,15 +138,15 @@ namespace ZweiHander
             //Create and load the Block List
             _blockList = new List<Block>();
             _blockList.Add(_block = _blockFactory.CreateBlock(BlockName.SolidCyanTile, blockPosition));
-            _blockList.Add(_block = _blockFactory.CreateBlock(BlockName.TexturedTile, blockPosition));
-            _blockList.Add(_block = _blockFactory.CreateBlock(BlockName.StatueTile1, blockPosition));
-            _blockList.Add(_block = _blockFactory.CreateBlock(BlockName.WhitePatternTile, blockPosition));
-            _blockList.Add(_block = _blockFactory.CreateBlock(BlockName.BrickTile, blockPosition));
-            _blockList.Add(_block = _blockFactory.CreateBlock(BlockName.BlockTile, blockPosition));
-            _blockList.Add(_block = _blockFactory.CreateBlock(BlockName.SolidBlackTile, blockPosition));
-            _blockList.Add(_block = _blockFactory.CreateBlock(BlockName.StairTile, blockPosition));
-            _blockList.Add(_block = _blockFactory.CreateBlock(BlockName.FireTile, blockPosition));
-            _blockList.Add(_block = _blockFactory.CreateBlock(BlockName.LadderTile, blockPosition));
+            //_blockList.Add(_block = _blockFactory.CreateBlock(BlockName.TexturedTile, blockPosition));
+            //_blockList.Add(_block = _blockFactory.CreateBlock(BlockName.StatueTile1, blockPosition));
+            //_blockList.Add(_block = _blockFactory.CreateBlock(BlockName.WhitePatternTile, blockPosition));
+            //_blockList.Add(_block = _blockFactory.CreateBlock(BlockName.BrickTile, blockPosition));
+            //_blockList.Add(_block = _blockFactory.CreateBlock(BlockName.BlockTile, blockPosition));
+            //_blockList.Add(_block = _blockFactory.CreateBlock(BlockName.SolidBlackTile, blockPosition));
+            //_blockList.Add(_block = _blockFactory.CreateBlock(BlockName.StairTile, blockPosition));
+            //_blockList.Add(_block = _blockFactory.CreateBlock(BlockName.FireTile, blockPosition));
+            //_blockList.Add(_block = _blockFactory.CreateBlock(BlockName.LadderTile, blockPosition));
 
             _itemManager.Clear();
             _items = [
@@ -217,6 +218,9 @@ namespace ZweiHander
             _gamePlayer.Update(gameTime);
             _hurtPlayerCommand.Update(gameTime);
 
+            // Update collision system - keeps everything synced
+            CollisionManager.Instance.Update(gameTime);
+
             base.Update(gameTime);
         }
 
@@ -240,7 +244,6 @@ namespace ZweiHander
             
 
             _gamePlayer.Draw(_spriteBatch);
-
 
             base.Draw(gameTime);
 

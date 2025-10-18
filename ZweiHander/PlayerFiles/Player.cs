@@ -13,7 +13,18 @@ namespace ZweiHander.PlayerFiles
         private readonly PlayerStateMachine _stateMachine;
         private readonly PlayerHandler _handler;
         private readonly ItemManager _itemManager;
-        public Vector2 Position { get; set; }
+        private Vector2 _position;
+
+        public Vector2 Position 
+        { 
+            get => _position; 
+            set 
+            { 
+                _position = value;
+                _handler?.UpdateCollisionBox();
+            } 
+        }
+        
         public float Speed { get; set; } = 100f;
         public HashSet<PlayerInput> InputBuffer { get; private set; } = [];
         public PlayerState CurrentState => _stateMachine.CurrentState;
@@ -48,6 +59,12 @@ namespace ZweiHander.PlayerFiles
         public void ClearInputBuffer()
         {
             InputBuffer.Clear();
+        }
+
+
+        public void SetPositionFromCollision(Vector2 newPosition)
+        {
+            _position = newPosition;
         }
 
         public void MoveUp()
@@ -100,5 +117,7 @@ namespace ZweiHander.PlayerFiles
             _handler.Draw(spriteBatch);
             _itemManager.Draw();
         }
+
+
     }
 }
