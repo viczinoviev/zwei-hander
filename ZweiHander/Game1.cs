@@ -137,7 +137,9 @@ namespace ZweiHander
 
             //Create and load the Block List
             _blockList = new List<Block>();
-            _blockList.Add(_block = _blockFactory.CreateBlock(BlockName.SolidCyanTile, blockPosition));
+            _blockList.Add(_blockFactory.CreateBlock(BlockName.SolidCyanTile, blockPosition));
+            _blockList.Add(_blockFactory.CreateBlock(BlockName.SolidCyanTile, new Point(blockPosition.X + 1, blockPosition.Y)));
+            _blockList.Add(_blockFactory.CreateBlock(BlockName.SolidCyanTile, new Point(blockPosition.X, blockPosition.Y + 1)));
             //_blockList.Add(_block = _blockFactory.CreateBlock(BlockName.TexturedTile, blockPosition));
             //_blockList.Add(_block = _blockFactory.CreateBlock(BlockName.StatueTile1, blockPosition));
             //_blockList.Add(_block = _blockFactory.CreateBlock(BlockName.WhitePatternTile, blockPosition));
@@ -187,16 +189,16 @@ namespace ZweiHander
             _gamePlayer.Position = new Vector2(400, 300);
 
             //Set up KeyboardController
-            _keyboardController = new KeyboardController(_gamePlayer);
-            _hurtPlayerCommand = new HurtPlayerCommand(this);
-            _keyboardController.BindKey(Keys.R, new ResetCommand(this));
-            _keyboardController.BindKey(Keys.Q, new QuitCommand(this));
-            _keyboardController.BindKey(Keys.T, new ChangeBlockCommand(this, -1));
-            _keyboardController.BindKey(Keys.Y, new ChangeBlockCommand(this, +1));
-            _keyboardController.BindKey(Keys.U, new ChangeItemCommand(this, -1));
-            _keyboardController.BindKey(Keys.I, new ChangeItemCommand(this, +1));
-            _keyboardController.BindKey(Keys.O, new ChangeEnemyCommand(this, -1));
-            _keyboardController.BindKey(Keys.P, new ChangeEnemyCommand(this, +1));
+             _keyboardController = new KeyboardController(_gamePlayer);
+             _hurtPlayerCommand = new HurtPlayerCommand(this);
+             _keyboardController.BindKey(Keys.R, new ResetCommand(this));
+             _keyboardController.BindKey(Keys.Q, new QuitCommand(this));
+            // _keyboardController.BindKey(Keys.T, new ChangeBlockCommand(this, -1));
+            // _keyboardController.BindKey(Keys.Y, new ChangeBlockCommand(this, +1));
+            // _keyboardController.BindKey(Keys.U, new ChangeItemCommand(this, -1));
+            // _keyboardController.BindKey(Keys.I, new ChangeItemCommand(this, +1));
+            // _keyboardController.BindKey(Keys.O, new ChangeEnemyCommand(this, -1));
+            // _keyboardController.BindKey(Keys.P, new ChangeEnemyCommand(this, +1));
             _keyboardController.BindKey(Keys.E, _hurtPlayerCommand);
         }
 
@@ -208,7 +210,11 @@ namespace ZweiHander
 
 
 
-            _block.Update(gameTime);
+            for (int i = 0; i < _blockList.Count; i++)
+            {
+                _blockList[i].Update(gameTime);
+            }
+
             _item.Update(gameTime);
             _enemy.Update(gameTime);
             _projectileManager.Update(gameTime);
@@ -232,7 +238,10 @@ namespace ZweiHander
 
 
 
-            _block.Draw();
+            for (int i = 0; i < _blockList.Count; i++)
+            {
+                _blockList[i].Draw();
+            }
 
             _enemy.Draw();
 
