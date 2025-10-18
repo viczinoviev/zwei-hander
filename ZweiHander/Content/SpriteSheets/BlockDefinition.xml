@@ -18,9 +18,34 @@
 		<Region name="wall-east-top" x="745" y="11" width="32" height="72" />
 
 		<Region name="wall-south-left" x="553" y="115" width="80" height="32" />
-		<Region name="wall-south-top" x="665" y="115" width="80" height="32" />
+		<Region name="wall-south-right" x="665" y="115" width="80" height="32" />
 		<Region name="wall-north-left" x="553" y="11" width="80" height="32" />
-		<Region name="wall-north-top" x="665" y="11" width="80" height="32" />
+		<Region name="wall-north-right" x="665" y="11" width="80" height="32" />
+
+		<Region name="wall-tile-north" x="815" y="11" width="32" height="32" />
+		<Region name="wall-tile-west" x="815" y="44" width="32" height="32" />
+		<Region name="wall-tile-east" x="815" y="77" width="32" height="32" />
+		<Region name="wall-tile-south" x="815" y="110" width="32" height="32" />
+
+		<Region name="enterance-tile-north" x="848" y="11" width="32" height="32" />
+		<Region name="enterance-tile-west" x="848" y="44" width="32" height="32" />
+		<Region name="enterance-tile-east" x="848" y="77" width="32" height="32" />
+		<Region name="enterance-tile-south" x="848" y="110" width="32" height="32" />
+
+		<Region name="locked-door-tile-north" x="881" y="11" width="32" height="32" />
+		<Region name="locked-door-tile-west" x="881" y="44" width="32" height="32" />
+		<Region name="locked-door-tile-east" x="881" y="77" width="32" height="32" />
+		<Region name="locked-door-tile-south" x="881" y="110" width="32" height="32" />
+
+		<Region name="door-tile-north" x="914" y="11" width="32" height="32" />
+		<Region name="door-tile-west" x="914" y="44" width="32" height="32" />
+		<Region name="door-tile-east" x="914" y="77" width="32" height="32" />
+		<Region name="door-tile-south" x="914" y="110" width="32" height="32" />
+
+		<Region name="hole-in-wall-north" x="947" y="11" width="32" height="32" />
+		<Region name="hole-in-wall-west" x="947" y="44" width="32" height="32" />
+		<Region name="hole-in-wall-east" x="947" y="77" width="32" height="32" />
+		<Region name="hole-in-wall-south" x="947" y="110" width="32" height="32" />
 	</Regions>
 	<Animations>
 	</Animations>

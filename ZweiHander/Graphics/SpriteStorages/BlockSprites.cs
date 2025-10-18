@@ -31,6 +31,35 @@ public class BlockSprites : SpriteFactory
     public ISprite WallEastTop() => new IdleSprite(_regions["wall-east-top"], _spriteBatch);
     public ISprite WallEastBottom() => new IdleSprite(_regions["wall-east-bottom"], _spriteBatch);
 
+    // Wall tile (center) variations
+    public ISprite WallTileNorth() => new IdleSprite(_regions["wall-tile-north"], _spriteBatch);
+    public ISprite WallTileWest() => new IdleSprite(_regions["wall-tile-west"], _spriteBatch);
+    public ISprite WallTileEast() => new IdleSprite(_regions["wall-tile-east"], _spriteBatch);
+    public ISprite WallTileSouth() => new IdleSprite(_regions["wall-tile-south"], _spriteBatch);
+
+    // Entrance tiles (note: XML key is "enterance-*")
+    public ISprite EntranceTileNorth() => new IdleSprite(_regions["enterance-tile-north"], _spriteBatch);
+    public ISprite EntranceTileWest() => new IdleSprite(_regions["enterance-tile-west"], _spriteBatch);
+    public ISprite EntranceTileEast() => new IdleSprite(_regions["enterance-tile-east"], _spriteBatch);
+    public ISprite EntranceTileSouth() => new IdleSprite(_regions["enterance-tile-south"], _spriteBatch);
+
+    // Locked door tiles
+    public ISprite LockedDoorTileNorth() => new IdleSprite(_regions["locked-door-tile-north"], _spriteBatch);
+    public ISprite LockedDoorTileWest() => new IdleSprite(_regions["locked-door-tile-west"], _spriteBatch);
+    public ISprite LockedDoorTileEast() => new IdleSprite(_regions["locked-door-tile-east"], _spriteBatch);
+    public ISprite LockedDoorTileSouth() => new IdleSprite(_regions["locked-door-tile-south"], _spriteBatch);
+
+    // Door tiles
+    public ISprite DoorTileNorth() => new IdleSprite(_regions["door-tile-north"], _spriteBatch);
+    public ISprite DoorTileWest() => new IdleSprite(_regions["door-tile-west"], _spriteBatch);
+    public ISprite DoorTileEast() => new IdleSprite(_regions["door-tile-east"], _spriteBatch);
+    public ISprite DoorTileSouth() => new IdleSprite(_regions["door-tile-south"], _spriteBatch);
+
+    // Hole-in-wall tiles
+    public ISprite HoleInWallNorth() => new IdleSprite(_regions["hole-in-wall-north"], _spriteBatch);
+    public ISprite HoleInWallWest() => new IdleSprite(_regions["hole-in-wall-west"], _spriteBatch);
+    public ISprite HoleInWallEast() => new IdleSprite(_regions["hole-in-wall-east"], _spriteBatch);
+    public ISprite HoleInWallSouth() => new IdleSprite(_regions["hole-in-wall-south"], _spriteBatch);
 }
 
 
