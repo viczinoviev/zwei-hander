@@ -21,6 +21,16 @@ public class BlockSprites : SpriteFactory
     public ISprite StairTile() => new IdleSprite(_regions["stair-tile"], _spriteBatch);
     public ISprite BrickTile() => new IdleSprite(_regions["brick-tile"], _spriteBatch);
     public ISprite WhitePatternTile() => new IdleSprite(_regions["white-pattern-tile"], _spriteBatch);
+
+    public ISprite WallNorthLeft() => new IdleSprite(_regions["wall-north-left"], _spriteBatch);
+    public ISprite WallNorthRight() => new IdleSprite(_regions["wall-north-right"], _spriteBatch);
+    public ISprite WallSouthLeft() => new IdleSprite(_regions["wall-south-left"], _spriteBatch);
+    public ISprite WallSouthRight() => new IdleSprite(_regions["wall-south-right"], _spriteBatch);
+    public ISprite WallWestTop() => new IdleSprite(_regions["wall-west-top"], _spriteBatch);
+    public ISprite WallWestBottom() => new IdleSprite(_regions["wall-west-bottom"], _spriteBatch);
+    public ISprite WallEastTop() => new IdleSprite(_regions["wall-east-top"], _spriteBatch);
+    public ISprite WallEastBottom() => new IdleSprite(_regions["wall-east-bottom"], _spriteBatch);
+
 }
 
 

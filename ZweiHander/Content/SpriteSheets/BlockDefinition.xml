@@ -11,6 +11,16 @@
 		<Region name="stair-tile" x="1035" y="28" width="16" height="16" />
 		<Region name="brick-tile" x="984" y="45" width="16" height="16" />
 		<Region name="white-pattern-tile" x="1001" y="45" width="16" height="16" />
+
+		<Region name="wall-west-bottom" x="521" y="115" width="32" height="72" />
+		<Region name="wall-west-top" x="521" y="11" width="32" height="72" />
+		<Region name="wall-east-bottom" x="745" y="115" width="32" height="72" />
+		<Region name="wall-east-top" x="745" y="11" width="32" height="72" />
+
+		<Region name="wall-south-left" x="553" y="115" width="80" height="32" />
+		<Region name="wall-south-top" x="665" y="115" width="80" height="32" />
+		<Region name="wall-north-left" x="553" y="11" width="80" height="32" />
+		<Region name="wall-north-top" x="665" y="11" width="80" height="32" />
 	</Regions>
 	<Animations>
 	</Animations>
