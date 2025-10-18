@@ -6,13 +6,16 @@ namespace ZweiHander.CollisionFiles
 {
 	public class CollisionManager : ICollisionManager
 	{
+		// Singleton pattern for one global collision manager
 		private static CollisionManager _instance;
 		private static readonly object _lock = new object();
 
+		// All the things that can collide with each other
 		private readonly List<ICollisionHandler> colliders = new List<ICollisionHandler>();
 
 		private CollisionManager() { }
 
+		// Gets the one and only collision manager
 		public static CollisionManager Instance
 		{
 			get
@@ -29,11 +32,13 @@ namespace ZweiHander.CollisionFiles
 			}
 		}
 
+		// Called every frame to check for collisions
 		public void Update(GameTime gameTime)
 		{
 			CheckCollisions(gameTime);
 		}
 
+		// Does the actual work of finding what hit what
 		public void CheckCollisions(GameTime gameTime)
 		{
 			for (int i = colliders.Count - 1; i >= 0; i--)
@@ -60,6 +65,7 @@ namespace ZweiHander.CollisionFiles
 			}
 		}
 
+		// Figures out collision details like which direction to push things
 		private CollisionInfo CalculateCollisionInfo(Rectangle movingRect, Rectangle staticRect)
 		{
 			Rectangle intersection = Rectangle.Intersect(movingRect, staticRect);
@@ -71,6 +77,7 @@ namespace ZweiHander.CollisionFiles
 			Direction normal;
 			Vector2 resolutionOffset;
 
+			// How much the rectangles overlap in each direction
 			int leftOverlap = (movingRect.Right) - staticRect.Left;
 			int rightOverlap = staticRect.Right - movingRect.Left;
 			int topOverlap = movingRect.Bottom - staticRect.Top;
@@ -102,6 +109,7 @@ namespace ZweiHander.CollisionFiles
 			return new CollisionInfo(normal, intersectionCenter, resolutionOffset);
 		}
 
+		// Adds something new that can be part of collisions
 		public void AddCollider(ICollisionHandler collider)
 		{
 			if (collider != null)
@@ -110,6 +118,7 @@ namespace ZweiHander.CollisionFiles
 			}
 		}
 
+		// Removes something so it stops being part of collisions
 		public void RemoveCollider(ICollisionHandler collider)
 		{
 			if (collider != null && colliders.Contains(collider))
