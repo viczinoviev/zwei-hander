@@ -19,7 +19,7 @@ namespace ZweiHander.Environment
         /// </summary>
         private static readonly Dictionary<BlockName, BlockType> BlockNameToType = new()
         {
-            { BlockName.SolidCyanTile, BlockType.Solid },
+            { BlockName.SolidCyanTile, BlockType.Decorative },
             { BlockName.SolidBlackTile, BlockType.Solid },
             { BlockName.BlockTile, BlockType.Pushable },
             { BlockName.BrickTile, BlockType.Breakable },
@@ -107,7 +107,7 @@ namespace ZweiHander.Environment
             }
 
             // Create the block with its type, position, size, and sprite
-            Block newBlock = new Block(blockType, gridPosition, _tileSize, sprite);
+            Block newBlock = new Block(name,blockType, gridPosition, _tileSize, sprite);
 
             // Store block hitbox for collision or mapping purposes
             BlockMap.Add(newBlock.GetBlockHitbox());

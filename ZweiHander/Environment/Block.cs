@@ -16,11 +16,17 @@ namespace ZweiHander.Environment
         private ISprite _sprite;        // Sprite for the block
         private readonly BlockCollisionHandler _collisionHandler;
 
+        public BlockType BlockType => _blockType;
+        public int GridSize => _gridSize;
+        public BlockName Name { get; private set; }
+
+
         // Constructor: creates a new block with given type, position, size, and sprite
-        public Block(BlockType blockType, Point gridPosition, int gridSize, ISprite sprite)
+        public Block(BlockName name, BlockType blockType, Point gridPosition, int gridSize, ISprite sprite)
         {
             if (sprite == null) throw new ArgumentNullException(nameof(sprite));
 
+            Name = name;
             _blockType = blockType;
             _gridPosition = gridPosition;
             _gridSize = gridSize;

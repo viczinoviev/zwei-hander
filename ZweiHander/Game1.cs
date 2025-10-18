@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using System.IO;
+using ZweiHander.CollisionFiles;
 using ZweiHander.Commands;
 using ZweiHander.Enemy;
 using ZweiHander.Enemy.EnemyStorage;
@@ -10,7 +12,6 @@ using ZweiHander.Graphics;
 using ZweiHander.Graphics.SpriteStorages;
 using ZweiHander.Items;
 using ZweiHander.PlayerFiles;
-using ZweiHander.CollisionFiles;
 
 namespace ZweiHander
 {
@@ -136,19 +137,8 @@ namespace ZweiHander
                 );
 
             //Create and load the Block List
-            _blockList = new List<Block>();
-            _blockList.Add(_blockFactory.CreateBlock(BlockName.SolidCyanTile, blockPosition));
-            _blockList.Add(_blockFactory.CreateBlock(BlockName.SolidCyanTile, new Point(blockPosition.X + 1, blockPosition.Y)));
-            _blockList.Add(_blockFactory.CreateBlock(BlockName.SolidCyanTile, new Point(blockPosition.X, blockPosition.Y + 1)));
-            //_blockList.Add(_block = _blockFactory.CreateBlock(BlockName.TexturedTile, blockPosition));
-            //_blockList.Add(_block = _blockFactory.CreateBlock(BlockName.StatueTile1, blockPosition));
-            //_blockList.Add(_block = _blockFactory.CreateBlock(BlockName.WhitePatternTile, blockPosition));
-            //_blockList.Add(_block = _blockFactory.CreateBlock(BlockName.BrickTile, blockPosition));
-            //_blockList.Add(_block = _blockFactory.CreateBlock(BlockName.BlockTile, blockPosition));
-            //_blockList.Add(_block = _blockFactory.CreateBlock(BlockName.SolidBlackTile, blockPosition));
-            //_blockList.Add(_block = _blockFactory.CreateBlock(BlockName.StairTile, blockPosition));
-            //_blockList.Add(_block = _blockFactory.CreateBlock(BlockName.FireTile, blockPosition));
-            //_blockList.Add(_block = _blockFactory.CreateBlock(BlockName.LadderTile, blockPosition));
+            string mapPath = Path.Combine(Content.RootDirectory, "Maps","map1.csv"); // CSV location
+            _blockList = CsvMapHandler.LoadMap(mapPath, _blockFactory);
 
             _itemManager.Clear();
             _items = [
@@ -186,7 +176,7 @@ namespace ZweiHander
             //END TEST
 
             _gamePlayer = new Player(_linkSprites, _itemSprites, _treasureSprites);
-            _gamePlayer.Position = new Vector2(400, 300);
+            _gamePlayer.Position = new Vector2(30, 450);
 
             //Set up KeyboardController
              _keyboardController = new KeyboardController(_gamePlayer);
