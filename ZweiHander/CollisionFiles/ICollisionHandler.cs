@@ -3,12 +3,31 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 namespace ZweiHander.CollisionFiles
 {
-	// Basic rules for anything that can be part of collisions
-	public interface ICollisionHandler
+    /// <summary>
+    /// Basic rules for anything that can be part of collisions
+    /// </summary>
+    public interface ICollisionHandler
 	{
-		// Where this thing can be hit
-		Rectangle collisionBox { get; set; }
-		// What happens when this thing hits something else, action can depend on the type of the other collider as well as collision information
-		void OnCollision(ICollisionHandler other, CollisionInfo collisionInfo);
-	}
+        /// <summary>
+        /// Where this thing can be hit
+        /// </summary>
+        Rectangle CollisionBox { get; set; }
+
+        /// <summary>
+        /// What happens when this thing hits something else, action can depend on the type of the other collider as well as collision information
+        /// </summary>
+        /// <param name="other">What is being collided with.</param>
+        /// <param name="collisionInfo">Info related to the collision.</param>
+        public void OnCollision(ICollisionHandler other, CollisionInfo collisionInfo);
+
+        /// <summary>
+        /// Updates where this thing can be hit.
+        /// </summary>
+        public void UpdateCollisionBox();
+
+        /// <summary>
+        /// Call this to stop this thing from being part of collisions.
+        /// </summary>
+        public void Unsubscribe();
+    }
 }
