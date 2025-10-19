@@ -24,7 +24,7 @@ public class Animation
     /// </summary>
     public Animation()
     {
-        Frames = new List<TextureRegion>();
+        Frames = [];
         Delay = TimeSpan.FromMilliseconds(100);
     }
 
