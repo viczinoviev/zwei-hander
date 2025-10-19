@@ -4,8 +4,8 @@ using ZweiHander.Graphics;
 namespace ZweiHander.Items.ItemStorages;
 public class BluePotionItem : AbstractItem
 {
-    public BluePotionItem(List<ISprite> sprites, bool defaultProperties)
-        : base(sprites)
+    public BluePotionItem(ItemConstructor itemConstructor, bool defaultProperties)
+        : base(itemConstructor)
     {
         if (defaultProperties)
         {

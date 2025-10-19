@@ -4,8 +4,8 @@ using ZweiHander.Graphics;
 namespace ZweiHander.Items.ItemStorages;
 public class TriforceItem : AbstractItem
 {
-    public TriforceItem(List<ISprite> sprites, bool defaultProperties)
-        : base(sprites)
+    public TriforceItem(ItemConstructor itemConstructor, bool defaultProperties)
+        : base(itemConstructor)
     {
         if (defaultProperties)
         {

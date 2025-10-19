@@ -6,8 +6,8 @@ namespace ZweiHander.Items.ItemStorages;
 public class FairyItem : AbstractItem
 {
     private Vector2 _startingPosition;
-    public FairyItem(List<ISprite> sprites, bool defaultProperties, Vector2 startingPosition)
-        : base(sprites)
+    public FairyItem(ItemConstructor itemConstructor, bool defaultProperties, Vector2 startingPosition)
+        : base(itemConstructor)
     {
         if (defaultProperties)
         {

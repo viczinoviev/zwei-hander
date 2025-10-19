@@ -4,8 +4,8 @@ using ZweiHander.Graphics;
 namespace ZweiHander.Items.ItemStorages;
 public class CompassItem : AbstractItem
 {
-    public CompassItem(List<ISprite> sprites, bool defaultProperties)
-        : base(sprites)
+    public CompassItem(ItemConstructor itemConstructor, bool defaultProperties)
+        : base(itemConstructor)
     {
         if (defaultProperties)
         {

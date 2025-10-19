@@ -23,23 +23,13 @@ public interface IItem
     public Vector2 Acceleration { get; set; }
 
     /// <summary>
-    /// The lifetime (in seconds) left for item; negative means infinite.
-    /// </summary>
-    public double Life { get; set; }
-
-    /// <summary>
-    /// The time (in seconds) to spend dying.
-    /// </summary>
-    public double DeathTime { get; }
-
-    /// <summary>
     /// Draws this item on screen.
     /// </summary>
     public void Draw();
 
     /// <summary>
     /// Updates this item, including life, sprite, and movement.
-    /// <para>WARNING: Update does not kill the item; the itemManager's update does that.</para>
+    /// <para>WARNING: Should not be called itself; let ItemManager call this.</para>
     /// </summary>
     /// <param name="gameTime">A snapshot of the game timing values provided by the framework.</param>
     public void Update(GameTime gameTime);
@@ -58,7 +48,20 @@ public interface IItem
 
     /// <summary>
     /// What to do when life reaches 0.
+    /// <para>WARNING: Should not be called itself; let ItemManager call this.</para>
     /// </summary>
     /// <param name="gameTime">A snapshot of the game timing values provided by the framework.</param>
     public void OnDeath(GameTime gameTime);
+
+    /// <summary>
+    /// Whether this item needs to be deleted.
+    /// </summary>
+    /// <returns>True if "dead", false if "alive".</returns>
+    public bool IsDead();
+    
+    /// <summary>
+    /// Gets the hitbox of this item.
+    /// </summary>
+    /// <returns>The rectangle (x,y,w,h) representing this hitbox.</returns>
+    public Rectangle GetHitBox();
 }

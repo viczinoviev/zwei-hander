@@ -106,12 +106,9 @@ public class Aquamentus : IEnemy
         if (attack == 5 && Thrower != 2)
         {
             //Create a projectile
-            _currentProjectile1 = _projectileManager.GetItem(ItemType.Fireball, -1, position: new Vector2(Position.X - 20, Position.Y - 20));
-            _currentProjectile1.Life = 3;
-            _currentProjectile2 = _projectileManager.GetItem(ItemType.Fireball, -1, position: new Vector2(Position.X - 20, Position.Y - 20));
-            _currentProjectile2.Life = 3;
-            _currentProjectile3 = _projectileManager.GetItem(ItemType.Fireball, -1, position: new Vector2(Position.X - 20, Position.Y - 20));
-            _currentProjectile3.Life = 3;
+            _currentProjectile1 = _projectileManager.GetItem(ItemType.Fireball, 3, position: new Vector2(Position.X - 20, Position.Y - 20));
+            _currentProjectile2 = _projectileManager.GetItem(ItemType.Fireball, 3, position: new Vector2(Position.X - 20, Position.Y - 20));
+            _currentProjectile3 = _projectileManager.GetItem(ItemType.Fireball, 3, position: new Vector2(Position.X - 20, Position.Y - 20));
             Thrower = 2;
             //Set up the projectiles behavior
             _currentProjectile1.Velocity = new Vector2(-100,0);
@@ -125,7 +122,7 @@ public class Aquamentus : IEnemy
             if (Thrower == 2)
             {
 
-                if (_currentProjectile1.Life <= 0)
+                if (_currentProjectile1.IsDead())
                 {
                     Thrower = 1;
                 }

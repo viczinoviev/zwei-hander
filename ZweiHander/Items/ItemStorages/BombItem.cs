@@ -5,8 +5,8 @@ using ZweiHander.Graphics;
 namespace ZweiHander.Items.ItemStorages;
 public class BombItem : AbstractItem
 {
-    public BombItem(List<ISprite> sprites, bool defaultProperties)
-        : base(sprites)
+    public BombItem(ItemConstructor itemConstructor, bool defaultProperties)
+        : base(itemConstructor)
     {
         if (defaultProperties)
         {

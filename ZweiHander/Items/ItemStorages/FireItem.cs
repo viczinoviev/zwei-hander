@@ -4,8 +4,8 @@ using ZweiHander.Graphics;
 namespace ZweiHander.Items.ItemStorages;
 public class FireItem : AbstractItem
 {
-    public FireItem(List<ISprite> sprites, bool defaultProperties)
-        : base(sprites)
+    public FireItem(ItemConstructor itemConstructor, bool defaultProperties)
+        : base(itemConstructor)
     {
         if (defaultProperties)
         {
