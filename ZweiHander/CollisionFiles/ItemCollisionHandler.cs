@@ -9,6 +9,11 @@ public class ItemCollisionHandler : CollisionHandlerAbstract
     /// </summary>
     private readonly IItem _item;
 
+    /// <summary>
+    /// The type of item this is handling.
+    /// </summary>
+    public ItemType ItemType { get => _item.ItemType; }
+
     public ItemCollisionHandler(IItem item)
     {
         _item = item;

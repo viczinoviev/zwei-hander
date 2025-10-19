@@ -24,6 +24,11 @@ public interface IItem
     public Vector2 Acceleration { get; set; }
 
     /// <summary>
+    /// What type of item this is.
+    /// </summary>
+    public ItemType ItemType { get; }
+
+    /// <summary>
     /// Draws this item on screen.
     /// </summary>
     public void Draw();

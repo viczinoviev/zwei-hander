@@ -37,6 +37,8 @@ public abstract class AbstractItem : IItem
     /// </summary>
     protected ItemType _itemType;
 
+    public ItemType ItemType { get => _itemType; }
+
     /// <summary>
     /// The current sprite.
     /// </summary>
