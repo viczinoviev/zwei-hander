@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using ZweiHander.CollisionFiles;
 
 namespace ZweiHander.Items;
 
@@ -58,10 +59,22 @@ public interface IItem
     /// </summary>
     /// <returns>True if "dead", false if "alive".</returns>
     public bool IsDead();
+
+    /// <summary>
+    /// Just kill this guy bruh.
+    /// </summary>
+    public void Kill();
     
     /// <summary>
     /// Gets the hitbox of this item.
     /// </summary>
     /// <returns>The rectangle (x,y,w,h) representing this hitbox.</returns>
     public Rectangle GetHitBox();
+
+    /// <summary>
+    /// What to do on collision.
+    /// </summary>
+    /// <param name="other">What is being collided with.</param>
+    /// <param name="collisionInfo">Info related to the collision.</param>
+    public void HandleCollision(ICollisionHandler other, CollisionInfo collisionInfo);
 }

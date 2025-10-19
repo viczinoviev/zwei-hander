@@ -51,17 +51,17 @@ public abstract class AbstractItem : IItem
     /// <summary>
     /// The lifetime (in seconds) left for item; negative means infinite.
     /// </summary>
-    protected double Life;
+    protected double _life;
 
     /// <summary>
     /// The time (in seconds) to spend dying.
     /// </summary>
-    protected double DeathTime { get; set; } = 0.00001;
+    protected double _deathTime = 0.00001;
 
     /// <summary>
     /// Handles the collisions for this item.
     /// </summary>
-    protected ItemCollisionHandler CollisionHandler;
+    protected ItemCollisionHandler _collisionHandler;
 
     /// <summary>
     /// The properties this item has.
@@ -73,8 +73,8 @@ public abstract class AbstractItem : IItem
         _sprites = itemConstructor.Sprites;
         _manager = itemConstructor.Manager;
         _itemType = itemConstructor.ItemType;
-        Life = itemConstructor.Life;
-        CollisionHandler = new ItemCollisionHandler(this);
+        _life = itemConstructor.Life;
+        _collisionHandler = new ItemCollisionHandler(this);
     }
 
     public virtual void Update(GameTime time)
@@ -82,12 +82,12 @@ public abstract class AbstractItem : IItem
         float dt = (float)time.ElapsedGameTime.TotalSeconds;
 
         // Life progression
-        if (Life > 0)
+        if (_life > 0)
         {
-            Life -= dt;
-            if (Life < 0)
+            _life -= dt;
+            if (_life < 0)
             {
-                Life = 0;
+                _life = 0;
             }
         } else
         {
@@ -128,7 +128,7 @@ public abstract class AbstractItem : IItem
 
     public virtual void OnDeath(GameTime gameTime)
     {
-        DeathTime -= gameTime.ElapsedGameTime.TotalSeconds;
+        _deathTime -= gameTime.ElapsedGameTime.TotalSeconds;
         if (IsDead())
         {
             _manager.ItemTypeCount[_itemType]--; 
@@ -137,7 +137,13 @@ public abstract class AbstractItem : IItem
 
     public bool IsDead()
     {
-        return DeathTime <= 0;
+        return _deathTime <= 0;
+    }
+
+    public void Kill()
+    {
+        _life = 0;
+        _deathTime = 0;
     }
 
     public Rectangle GetHitBox()
@@ -148,5 +154,39 @@ public abstract class AbstractItem : IItem
                 Sprite.Width,
                 Sprite.Height
             );
+    }
+
+    public virtual void HandleCollision(ICollisionHandler other, CollisionInfo collisionInfo)
+    {
+        switch (other)
+        {
+            case PlayerCollisionHandler:
+                if (Properties.Contains(ItemProperty.CanBePickedUp))
+                {
+                    Kill();
+                }
+                if (Properties.Contains(ItemProperty.DeleteOnPlayer))
+                {
+                    Kill();
+                }
+                break;
+            case BlockCollisionHandler:
+                if (Properties.Contains(ItemProperty.DeleteOnBlock))
+                {
+                    Kill();
+                }
+                if (Properties.Contains(ItemProperty.BounceOnBlock))
+                {
+                    Velocity *= -1;
+                }
+                if (Properties.Contains(ItemProperty.StopOnBlock))
+                {
+                    Velocity = Vector2.Zero;
+                    Acceleration = Vector2.Zero;
+                }
+                break;
+            case ItemCollisionHandler:
+                break;
+        }
     }
 }

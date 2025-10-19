@@ -17,15 +17,7 @@ public class ItemCollisionHandler : CollisionHandlerAbstract
 
     public override void OnCollision(ICollisionHandler other, CollisionInfo collisionInfo)
     {
-        switch (other)
-        {
-            case BlockCollisionHandler:
-                break;
-            case ItemCollisionHandler:
-                break;
-            case PlayerCollisionHandler:
-                break;
-        }
+        _item.HandleCollision(other, collisionInfo);
     }
 
     public override void UpdateCollisionBox()

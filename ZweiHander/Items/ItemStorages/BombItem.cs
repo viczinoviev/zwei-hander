@@ -11,7 +11,7 @@ public class BombItem : AbstractItem
         if (defaultProperties)
         {
         }
-        DeathTime = 0.3;
+        _deathTime = 0.3;
     }
 
     public override void OnDeath(GameTime gameTime)
