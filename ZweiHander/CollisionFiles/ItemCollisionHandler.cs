@@ -2,6 +2,9 @@
 
 namespace ZweiHander.CollisionFiles;
 
+/// <summary>
+/// Handles collisions for items.
+/// </summary>
 public class ItemCollisionHandler : CollisionHandlerAbstract
 {
     /// <summary>
@@ -22,6 +25,6 @@ public class ItemCollisionHandler : CollisionHandlerAbstract
 
     public override void UpdateCollisionBox()
     {
-        collisionBox = _item.GetHitBox();
+        CollisionBox = _item.GetHitBox();
     }
 }
