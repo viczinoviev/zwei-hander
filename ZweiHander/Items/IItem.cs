@@ -53,6 +53,13 @@ public interface IItem
     public void AddProperty(ItemProperty property);
 
     /// <summary>
+    /// Whether this item has this property or not.
+    /// </summary>
+    /// <param name="property">Property to check for.</param>
+    /// <returns></returns>
+    public bool HasProperty(ItemProperty property);
+
+    /// <summary>
     /// What to do when life reaches 0.
     /// <para>WARNING: Should not be called itself; let ItemManager call this.</para>
     /// </summary>

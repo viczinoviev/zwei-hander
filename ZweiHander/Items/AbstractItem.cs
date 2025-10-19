@@ -128,6 +128,11 @@ public abstract class AbstractItem : IItem
         Properties.Add(property);
     }
 
+    public bool HasProperty(ItemProperty property)
+    {
+        return Properties.Contains(property);
+    }
+
     public virtual void OnDeath(GameTime gameTime)
     {
         _deathTime -= gameTime.ElapsedGameTime.TotalSeconds;
