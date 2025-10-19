@@ -18,7 +18,7 @@ namespace ZweiHander
     public class Game1 : Game
     {
     //Hey team!
-        private GraphicsDeviceManager _graphics;
+        private readonly GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
         private Block _block;
