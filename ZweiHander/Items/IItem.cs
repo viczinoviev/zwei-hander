@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using System;
 using ZweiHander.CollisionFiles;
 
 namespace ZweiHander.Items;
@@ -58,6 +59,20 @@ public interface IItem
     /// <param name="property">Property to check for.</param>
     /// <returns></returns>
     public bool HasProperty(ItemProperty property);
+
+    /// <summary>
+    /// Adds type to be damaged by this item.
+    /// </summary>
+    /// <param name="damaged">Type to be damaged.</param>
+    /// <param name="damage">How this type is damaged.</param>
+    public void SetDamage(Type damaged, DamageObject damage);
+
+    /// <summary>
+    /// Gets the damage associated with a type.
+    /// </summary>
+    /// <param name="damaged">What is getting damaged.</param>
+    /// <returns>How to damage what is being damaged.</returns>
+    public DamageObject GetDamage(Type damaged);
 
     /// <summary>
     /// What to do when life reaches 0.
