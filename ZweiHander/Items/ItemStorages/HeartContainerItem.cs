@@ -4,8 +4,8 @@ using ZweiHander.Graphics;
 namespace ZweiHander.Items.ItemStorages;
 public class HeartContainerItem : AbstractItem
 {
-    public HeartContainerItem(List<ISprite> sprites, bool defaultProperties)
-        : base(sprites)
+    public HeartContainerItem(ItemConstructor itemConstructor, bool defaultProperties)
+        : base(itemConstructor)
     {
         if (defaultProperties)
         {

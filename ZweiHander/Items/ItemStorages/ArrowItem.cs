@@ -5,14 +5,14 @@ using ZweiHander.Graphics;
 namespace ZweiHander.Items.ItemStorages;
 public class ArrowItem : AbstractItem
 {
-    public ArrowItem(List<ISprite> sprites, bool defaultProperties)
-        : base(sprites)
+    public ArrowItem(ItemConstructor itemConstructor, bool defaultProperties)
+        : base(itemConstructor)
     {
         if (defaultProperties)
         {
             Properties = [];
         }
-        DeathTime = 0.1;
+        _deathTime = 0.1;
     }
 
     public override void OnDeath(GameTime gameTime)

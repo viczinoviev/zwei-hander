@@ -4,8 +4,8 @@ using ZweiHander.Graphics;
 namespace ZweiHander.Items.ItemStorages;
 public class RupyItem : AbstractItem
 {
-    public RupyItem(List<ISprite> sprites, bool defaultProperties)
-        : base(sprites)
+    public RupyItem(ItemConstructor itemConstructor, bool defaultProperties)
+        : base(itemConstructor)
     {
         if (defaultProperties)
         {

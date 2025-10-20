@@ -2,22 +2,24 @@ using Microsoft.Xna.Framework;
 
 namespace ZweiHander.CollisionFiles
 {
-    public struct CollisionInfo
+    /// <summary>
+    /// Holds all the info about a collision that just happened.
+    /// </summary>
+    public readonly struct CollisionInfo(Direction normal, Vector2 collisionPosition, Vector2 resolutionOffset)
     {
-        // The normal direction of the collision (which side of the object was hit)
-        public Direction Normal { get; }
+        /// <summary>
+        /// Which direction the collision came from.
+        /// </summary>
+        public Direction Normal { get; } = normal;
 
-        // The center point of the collision intersection
-        public Vector2 CollisionPosition { get; }
+        /// <summary>
+        /// Where the collision happened in the world.
+        /// </summary>
+        public Vector2 CollisionPosition { get; } = collisionPosition;
 
-        // The offset that should remove the object from inside the collision
-        public Vector2 ResolutionOffset { get; }
-
-        public CollisionInfo(Direction normal, Vector2 collisionPosition, Vector2 resolutionOffset)
-        {
-            Normal = normal;
-            CollisionPosition = collisionPosition;
-            ResolutionOffset = resolutionOffset;
-        }
+        /// <summary>
+        /// How much to move to get out of the collision.
+        /// </summary>
+        public Vector2 ResolutionOffset { get; } = resolutionOffset;
     }
 }

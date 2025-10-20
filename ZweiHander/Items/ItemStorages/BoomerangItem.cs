@@ -4,8 +4,8 @@ using ZweiHander.Graphics;
 namespace ZweiHander.Items.ItemStorages;
 public class BoomerangItem : AbstractItem
 {
-    public BoomerangItem(List<ISprite> sprites, bool defaultProperties)
-        : base(sprites)
+    public BoomerangItem(ItemConstructor itemConstructor, bool defaultProperties)
+        : base(itemConstructor)
     {
         if (defaultProperties)
         {

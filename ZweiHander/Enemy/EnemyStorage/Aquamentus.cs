@@ -99,20 +99,16 @@ public class Aquamentus : IEnemy
         //attack, as long as not already attacking
         if (attack == 5 && Thrower != 2)
         {
-            //Create a projectile
-            IItem _currentProjectile1 = _projectileManager.GetItem(ItemType.Fireball, -1, position: new Vector2(Position.X - 20, Position.Y - 20));
+            //Create projectiles and Set up the projectiles behavior
+            IItem _currentProjectile1 = _projectileManager.GetItem(ItemType.Fireball, 3, position: new Vector2(Position.X - 20, Position.Y - 20));
             _currentProjectile1.Velocity = new Vector2(-100,0);
-            IItem _currentProjectile2 = _projectileManager.GetItem(ItemType.Fireball, -1, position: new Vector2(Position.X - 20, Position.Y - 20));
+            IItem _currentProjectile2 = _projectileManager.GetItem(ItemType.Fireball, 3, position: new Vector2(Position.X - 20, Position.Y - 20));
             _currentProjectile2.Velocity = new Vector2(-100,30);
-            IItem _currentProjectile3 = _projectileManager.GetItem(ItemType.Fireball, -1, position: new Vector2(Position.X - 20, Position.Y - 20));
+            IItem _currentProjectile3 = _projectileManager.GetItem(ItemType.Fireball, 3, position: new Vector2(Position.X - 20, Position.Y - 20));
             _currentProjectile3.Velocity = new Vector2(-100, -30);
             _projectiles.Add(_currentProjectile1);
             _projectiles.Add(_currentProjectile2);
             _projectiles.Add(_currentProjectile3);
-            foreach (IItem i in _projectiles)
-            {
-                i.Life = 3; 
-            }
             Thrower = 2;
             //Set up the projectiles behavior
         }
@@ -122,7 +118,7 @@ public class Aquamentus : IEnemy
             if (Thrower == 2)
             {
 
-                if (_projectiles.First().Life <= 0)
+                if (_projectiles.First().IsDead())
                 {
                     Thrower = 1;
                     _projectiles = new List<IItem>();

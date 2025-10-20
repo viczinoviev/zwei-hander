@@ -4,8 +4,8 @@ using ZweiHander.Graphics;
 namespace ZweiHander.Items.ItemStorages;
 public class BowItem : AbstractItem
 {
-    public BowItem(List<ISprite> sprites, bool defaultProperties)
-        : base(sprites)
+    public BowItem(ItemConstructor itemConstructor, bool defaultProperties)
+        : base(itemConstructor)
     {
         if (defaultProperties)
         {

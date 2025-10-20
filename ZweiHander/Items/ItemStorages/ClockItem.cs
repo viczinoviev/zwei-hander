@@ -4,8 +4,8 @@ using ZweiHander.Graphics;
 namespace ZweiHander.Items.ItemStorages;
 public class ClockItem : AbstractItem
 {
-    public ClockItem(List<ISprite> sprites, bool defaultProperties)
-        : base(sprites)
+    public ClockItem(ItemConstructor itemConstructor, bool defaultProperties)
+        : base(itemConstructor)
     {
         if (defaultProperties)
         {

@@ -35,5 +35,17 @@ public enum ItemProperty
     /// <summary>
     /// Rotated in same direction as velocity; UNTESTED
     /// </summary>
-    FacingVelocity
+    FacingVelocity,
+    /// <summary>
+    /// On collision with block, this is deleted
+    /// </summary>
+    DeleteOnBlock,
+    /// <summary>
+    /// On collision with block, its velocity is reversed
+    /// </summary>
+    BounceOnBlock,
+    /// <summary>
+    /// On collision with block, acceleration=velocity=(0,0)
+    /// </summary>
+    StopOnBlock
 }

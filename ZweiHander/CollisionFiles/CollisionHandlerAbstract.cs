@@ -2,9 +2,12 @@ using Microsoft.Xna.Framework;
 
 namespace ZweiHander.CollisionFiles
 {
+    /// <summary>
+    /// Base class that handles the common collision handler logic.
+    /// </summary>
     public abstract class CollisionHandlerAbstract : ICollisionHandler
     {
-        public Rectangle collisionBox { get; set; }
+        public Rectangle CollisionBox { get; set; }
 
         protected CollisionHandlerAbstract()
         {

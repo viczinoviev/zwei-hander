@@ -4,8 +4,8 @@ using ZweiHander.Graphics;
 namespace ZweiHander.Items.ItemStorages;
 public class KeyItem : AbstractItem
 {
-    public KeyItem(List<ISprite> sprites, bool defaultProperties)
-        : base(sprites)
+    public KeyItem(ItemConstructor itemConstructor, bool defaultProperties)
+        : base(itemConstructor)
     {
         if (defaultProperties)
         {

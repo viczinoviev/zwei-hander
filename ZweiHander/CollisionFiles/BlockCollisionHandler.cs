@@ -4,8 +4,14 @@ using ZweiHander.Environment;
 
 namespace ZweiHander.CollisionFiles
 {
+    /// <summary>
+    /// Handles collisions for blocks.
+    /// </summary>
     public class BlockCollisionHandler : CollisionHandlerAbstract
     {
+        /// <summary>
+        /// The actual block this handler is taking care of
+        /// </summary>
         private readonly Block _block;
 
         public BlockCollisionHandler(Block block)
@@ -21,7 +27,7 @@ namespace ZweiHander.CollisionFiles
 
         public override void UpdateCollisionBox()
         {
-            collisionBox = _block.GetBlockHitbox();
+            CollisionBox = _block.GetBlockHitbox();
         }
     }
 }

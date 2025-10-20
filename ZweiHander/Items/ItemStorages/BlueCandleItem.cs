@@ -4,8 +4,8 @@ using ZweiHander.Graphics;
 namespace ZweiHander.Items.ItemStorages;
 public class BlueCandleItem : AbstractItem
 {
-    public BlueCandleItem(List<ISprite> sprites, bool defaultProperties)
-        : base(sprites)
+    public BlueCandleItem(ItemConstructor itemConstructor, bool defaultProperties)
+        : base(itemConstructor)
     {
         if (defaultProperties)
         {

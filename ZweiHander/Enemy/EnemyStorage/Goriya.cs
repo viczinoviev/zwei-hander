@@ -122,8 +122,7 @@ private int Thrower = 1;
         if (attack == 5 && Thrower != 2)
         {
             //Create a projectile
-            _currentProjectile = _projectileManager.GetItem(ItemType.Boomerang, -1, position: Position);
-            _currentProjectile.Life = 3;
+            _currentProjectile = _projectileManager.GetItem(ItemType.Boomerang, 3, position: Position);
             Thrower = 2;
             //Set up the projectiles behavior
             (float v, float a) = ItemHelper.BoomerangTrajectory(50, 3);
@@ -136,7 +135,7 @@ private int Thrower = 1;
             if (Thrower == 2)
             {
 
-                if (_currentProjectile.Life <= 0)
+                if (_currentProjectile.IsDead())
                 {
                     Thrower = 1;
                 }

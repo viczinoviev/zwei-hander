@@ -22,12 +22,12 @@ public abstract class SpriteFactory
     /// <summary>
     /// Stores texture regions created
     /// </summary>
-    protected Dictionary<string, TextureRegion> _regions = new Dictionary<string, TextureRegion>();
+    protected Dictionary<string, TextureRegion> _regions = [];
 
     /// <summary>
     /// Stores animations created
     /// </summary>
-    protected Dictionary<string, Animation> _animations = new Dictionary<string, Animation>();
+    protected Dictionary<string, Animation> _animations = [];
 
     /// <summary>
     /// Creates a new region and adds it to this texture atlas.
@@ -139,7 +139,7 @@ public abstract class SpriteFactory
                         float delayInMilliseconds = float.Parse(animationElement.Attribute("delay")?.Value ?? "0");
                         TimeSpan delay = TimeSpan.FromMilliseconds(delayInMilliseconds);
 
-                        List<TextureRegion> frames = new List<TextureRegion>();
+                        List<TextureRegion> frames = [];
 
                         var frameElements = animationElement.Elements("Frame");
 
