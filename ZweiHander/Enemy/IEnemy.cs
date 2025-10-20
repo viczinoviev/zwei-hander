@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using ZweiHander.Graphics;
 
 namespace ZweiHander.Enemy;
 
@@ -16,7 +17,8 @@ public interface IEnemy
     /// Currently faced direction, equating to what sprite to draw (0 = up, 1 = right, 2 = down, 3 = left)
     /// </summary>
 
-    public int Face{ get; set; }
+    public int Face { get; set; }
+
 
     /// <summary>
     /// Draws this Enemy on screen.
@@ -28,5 +30,7 @@ public interface IEnemy
     /// </summary>
     /// <param name="gameTime">A snapshot of the game timing values provided by the framework.</param>
     public void Update(GameTime gameTime);
+
+    public Rectangle GetCollisionBox();
     
 }

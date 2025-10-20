@@ -15,7 +15,7 @@ public class Darknut : IEnemy
     /// <summary>
     /// The sprite associated with this Enemy.
     /// </summary>
-    protected ISprite _sprite;
+    public ISprite _sprite { get; set; } = default;
 /// <summary>
 /// Holds all sprites for this enemy
 /// </summary>
@@ -44,7 +44,7 @@ public class Darknut : IEnemy
         //Randomize  movement
         int mov = rnd.Next(200);
         //Move according to current direction faced
-        if (mov > 5)
+        if (mov > 3)
         {
             Position = EnemyHelper.BehaveFromFace(this, 1);
         }
@@ -79,11 +79,20 @@ public class Darknut : IEnemy
         }
 
 
-    
+
 
     public void Draw()
     {
         _sprite.Draw(Position);
+    }
+    public Rectangle GetCollisionBox()
+    {
+        return new Rectangle(
+                (int)(Position.X - _sprite.Width),
+                (int)(Position.Y - _sprite.Height),
+                _sprite.Width + 15,
+                _sprite.Height + 15
+            );
     }
 }
 

@@ -18,7 +18,7 @@ namespace ZweiHander
     public class Game1 : Game
     {
     //Hey team!
-        private readonly GraphicsDeviceManager _graphics;
+        private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
         private Block _block;
@@ -37,7 +37,7 @@ namespace ZweiHander
         private BlockSprites _blockSprites;
         private TreasureSprites _treasureSprites;
         private EnemySprites _enemySprites;
-        private EnemyFactory _enemyFactory;
+        private EnemyManager _enemyManager;
         private BossSprites _bossSprites;
         private NPCSprites _npcSprites;
         private ItemSprites _itemSprites;
@@ -112,7 +112,7 @@ namespace ZweiHander
             _npcSprites = new NPCSprites(Content, _spriteBatch);
             _itemManager = new ItemManager(_itemSprites, _treasureSprites, _bossSprites);
             _projectileManager = new ItemManager(_itemSprites, _treasureSprites, _bossSprites);
-            _enemyFactory = new EnemyFactory(_enemySprites, _projectileManager, _bossSprites,_npcSprites);
+            _enemyManager = new EnemyManager(_enemySprites, _projectileManager, _bossSprites,_npcSprites);
 
             GameSetUp();
         }
@@ -122,10 +122,6 @@ namespace ZweiHander
         /// </summary>
         public void GameSetUp()
         {
-            treasurePosition = new Vector2(
-                GraphicsDevice.PresentationParameters.BackBufferWidth * 0.25f,
-                GraphicsDevice.PresentationParameters.BackBufferHeight * 0.25f
-                );
             itemPosition = new Vector2(
                 GraphicsDevice.PresentationParameters.BackBufferWidth * 0.5f,
                 GraphicsDevice.PresentationParameters.BackBufferHeight * 0.75f
@@ -155,18 +151,18 @@ namespace ZweiHander
             //Create enemy list
             _enemyList =
             [
-                _enemy = _enemyFactory.GetEnemy("Darknut", enemyPosition),
-                _enemy = _enemyFactory.GetEnemy("Gel", enemyPosition),
-                _enemy = _enemyFactory.GetEnemy("Goriya", enemyPosition),
-                _enemy = _enemyFactory.GetEnemy("Keese", enemyPosition),
-                _enemy = _enemyFactory.GetEnemy("Stalfos", enemyPosition),
-                _enemy = _enemyFactory.GetEnemy("Rope",enemyPosition),
-                _enemy = _enemyFactory.GetEnemy("Wallmaster",enemyPosition),
-                _enemy = _enemyFactory.GetEnemy("Zol",enemyPosition),
-                _enemy = _enemyFactory.GetEnemy("Dodongo",enemyPosition),
-                _enemy = _enemyFactory.GetEnemy("Aquamentus",enemyPosition),
-                _enemy = _enemyFactory.GetEnemy("BladeTrap",enemyPosition),
-                _enemy = _enemyFactory.GetEnemy("OldMan", enemyPosition),
+                _enemy = _enemyManager.GetEnemy("Darknut", enemyPosition),
+                _enemy = _enemyManager.GetEnemy("Gel", enemyPosition),
+                _enemy = _enemyManager.GetEnemy("Goriya", enemyPosition),
+                _enemy = _enemyManager.GetEnemy("Keese", enemyPosition),
+                _enemy = _enemyManager.GetEnemy("Stalfos", enemyPosition),
+                _enemy = _enemyManager.GetEnemy("Rope",enemyPosition),
+                _enemy = _enemyManager.GetEnemy("Wallmaster",enemyPosition),
+                _enemy = _enemyManager.GetEnemy("Zol",enemyPosition),
+                _enemy = _enemyManager.GetEnemy("Dodongo",enemyPosition),
+                _enemy = _enemyManager.GetEnemy("Aquamentus",enemyPosition),
+                _enemy = _enemyManager.GetEnemy("BladeTrap",enemyPosition),
+                _enemy = _enemyManager.GetEnemy("OldMan", enemyPosition),
             ];
 
             _block = _blockList[0];
@@ -187,8 +183,8 @@ namespace ZweiHander
             // _keyboardController.BindKey(Keys.Y, new ChangeBlockCommand(this, +1));
             // _keyboardController.BindKey(Keys.U, new ChangeItemCommand(this, -1));
             // _keyboardController.BindKey(Keys.I, new ChangeItemCommand(this, +1));
-            // _keyboardController.BindKey(Keys.O, new ChangeEnemyCommand(this, -1));
-            // _keyboardController.BindKey(Keys.P, new ChangeEnemyCommand(this, +1));
+             _keyboardController.BindKey(Keys.O, new ChangeEnemyCommand(this, -1));
+             _keyboardController.BindKey(Keys.P, new ChangeEnemyCommand(this, +1));
             _keyboardController.BindKey(Keys.E, _hurtPlayerCommand);
         }
 

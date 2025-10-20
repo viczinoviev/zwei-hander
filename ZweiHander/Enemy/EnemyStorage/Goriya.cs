@@ -4,6 +4,7 @@ using ZweiHander.Items;
 using ZweiHander.Graphics;
 using System;
 using ZweiHander.Graphics.SpriteStorages;
+using ZweiHander.CollisionFiles;
 
 namespace ZweiHander.Enemy.EnemyStorage;
 
@@ -15,7 +16,7 @@ public class Goriya : IEnemy
     /// <summary>
     /// The sprite associated with this Enemy.
     /// </summary>
-    protected ISprite _sprite;
+    public ISprite _sprite { get; set; } = default;
 /// <summary>
 /// Projectile for this enemy
 /// </summary>
@@ -32,6 +33,8 @@ public class Goriya : IEnemy
 
     public int Face { get; set; } = default;
 
+    readonly EnemyCollisionHandler _collisionHandler;
+
 private int Thrower = 1;
     /// <summary>
     /// Random number generator to randomize enemy behavior
@@ -44,6 +47,7 @@ private int Thrower = 1;
         _projectileManager = projectileManager;
         _enemySprites = enemySprites;
         _sprite = _enemySprites.GoriyaUp();
+        _collisionHandler = new EnemyCollisionHandler(this);
     }
     public virtual void Update(GameTime time)
     {
@@ -53,7 +57,7 @@ private int Thrower = 1;
             //Randomize  movement
             int mov = rnd.Next(200);
             //Move according to current direction faced
-            if (mov > 5)
+            if (mov > 3)
             {
                 Position = EnemyHelper.BehaveFromFace(this,1);
             }
@@ -141,16 +145,26 @@ private int Thrower = 1;
                 }
             }
         }
+        _collisionHandler.UpdateCollisionBox();
         _sprite.Update(time);
         _projectileManager.Update(time);
         }
 
-    
+
 
     public void Draw()
     {
         _sprite.Draw(Position);
         _projectileManager.Draw();
+    }
+    public Rectangle GetCollisionBox()
+    {
+        return new Rectangle(
+                (int)(Position.X - _sprite.Width),
+                (int)(Position.Y - _sprite.Height),
+                _sprite.Width + 15,
+                _sprite.Height + 15
+            );
     }
 }
 

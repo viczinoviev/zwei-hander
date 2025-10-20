@@ -6,6 +6,7 @@ using System;
 using ZweiHander.Graphics.SpriteStorages;
 using System.Collections.Generic;
 using System.Linq;
+using ZweiHander.CollisionFiles;
 
 namespace ZweiHander.Enemy.EnemyStorage;
 
@@ -17,7 +18,7 @@ public class Aquamentus : IEnemy
     /// <summary>
     /// The sprite associated with this Enemy.
     /// </summary>
-    protected ISprite _sprite;
+    public ISprite _sprite;
 /// <summary>
     /// Projectiles for this enemy
     /// </summary>
@@ -40,12 +41,14 @@ public class Aquamentus : IEnemy
 /// </summary>
     readonly Random rnd = new();
 
+    readonly EnemyCollisionHandler _collisionHandler;
 
     public Aquamentus(BossSprites bossSprites, ItemManager projectileManager)
     {
         _projectileManager = projectileManager;
         _bossSprites = bossSprites;
         _sprite = _bossSprites.Aquamentus();
+        _collisionHandler = new EnemyCollisionHandler(this);
     }
     public virtual void Update(GameTime time)
     {
@@ -53,7 +56,7 @@ public class Aquamentus : IEnemy
             //Randomize  movement
             int mov = rnd.Next(200);
             //Move according to current direction faced
-            if (mov > 5)
+            if (mov > 3)
             {
                 Position = EnemyHelper.BehaveFromFace(this,1);
             }
@@ -89,7 +92,6 @@ public class Aquamentus : IEnemy
                         }
                         break;
                     default:
-                        //no movement  
                         break;
                 }
             }
@@ -101,9 +103,9 @@ public class Aquamentus : IEnemy
         {
             //Create projectiles and Set up the projectiles behavior
             IItem _currentProjectile1 = _projectileManager.GetItem(ItemType.Fireball, 3, position: new Vector2(Position.X - 20, Position.Y - 20));
-            _currentProjectile1.Velocity = new Vector2(-100,0);
+            _currentProjectile1.Velocity = new Vector2(-100, 0);
             IItem _currentProjectile2 = _projectileManager.GetItem(ItemType.Fireball, 3, position: new Vector2(Position.X - 20, Position.Y - 20));
-            _currentProjectile2.Velocity = new Vector2(-100,30);
+            _currentProjectile2.Velocity = new Vector2(-100, 30);
             IItem _currentProjectile3 = _projectileManager.GetItem(ItemType.Fireball, 3, position: new Vector2(Position.X - 20, Position.Y - 20));
             _currentProjectile3.Velocity = new Vector2(-100, -30);
             _projectiles.Add(_currentProjectile1);
@@ -125,16 +127,26 @@ public class Aquamentus : IEnemy
                 }
             }
         }
+        _collisionHandler.UpdateCollisionBox();
         _sprite.Update(time);
         _projectileManager.Update(time);
         }
 
-    
+
 
     public void Draw()
     {
         _sprite.Draw(Position);
         _projectileManager.Draw();
+    }
+    public Rectangle GetCollisionBox()
+    {
+        return new Rectangle(
+                (int)(Position.X - _sprite.Width),
+                (int)(Position.Y - _sprite.Height),
+                _sprite.Width + 25,
+                _sprite.Height + 15
+            );
     }
 }
 

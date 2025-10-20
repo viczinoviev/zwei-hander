@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using ZweiHander.Items;
 using ZweiHander.Enemy.EnemyStorage;
 using ZweiHander.CollisionFiles;
+using Microsoft.Xna.Framework;
 
 namespace ZweiHander.Enemy;
 
@@ -12,7 +13,7 @@ namespace ZweiHander.Enemy;
 /// <summary>
 /// Manages creations of Enemies.
 /// </summary>
-public class EnemyFactory(EnemySprites enemysprites, ItemManager projectileManager, BossSprites bossSprites, NPCSprites npcSprites)
+public class EnemyManager(EnemySprites enemysprites, ItemManager projectileManager, BossSprites bossSprites, NPCSprites npcSprites)
 {
     /// <summary>
     /// Sprites for enemies
@@ -93,6 +94,22 @@ public class EnemyFactory(EnemySprites enemysprites, ItemManager projectileManag
         enemy.Face = face;
         currentEnemies.Add(enemy);
         return enemy;
+    }
+
+    public void Update(GameTime time)
+    {
+        foreach (IEnemy _enemy in currentEnemies)
+        {
+            _enemy.Update(time);
+        }
+    }
+
+    public void Draw()
+    {
+        foreach (IEnemy _enemy in currentEnemies)
+        {
+            _enemy.Draw();
+        }
     }
 
 }

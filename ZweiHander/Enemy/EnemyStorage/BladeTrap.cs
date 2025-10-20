@@ -3,6 +3,7 @@ using Vector2 = Microsoft.Xna.Framework.Vector2;
 using ZweiHander.Graphics;
 using System;
 using ZweiHander.Graphics.SpriteStorages;
+using ZweiHander.CollisionFiles;
 
 namespace ZweiHander.Enemy.EnemyStorage;
 
@@ -14,7 +15,7 @@ public class BladeTrap : IEnemy
     /// <summary>
     /// The sprite associated with this Enemy.
     /// </summary>
-    protected ISprite _sprite;
+    public ISprite _sprite { get; set; } = default;
 /// <summary>
 /// Holds all sprites for this enemy
 /// </summary>
@@ -34,6 +35,8 @@ public class BladeTrap : IEnemy
     public int Face { get; set; } = default;
 
     private int Thrower = 1;
+
+    readonly EnemyCollisionHandler _collisionHandler;
     /// <summary>
     /// Random number generator to randomize enemy behavior
     /// </summary>
@@ -44,6 +47,7 @@ public class BladeTrap : IEnemy
     {
         _enemySprites = enemySprites;
         _sprite = _enemySprites.Trap();
+        _collisionHandler = new EnemyCollisionHandler(this);
     }
     public virtual void Update(GameTime time)
     {
@@ -85,16 +89,27 @@ public class BladeTrap : IEnemy
                 }
             }
         }
+        _collisionHandler.UpdateCollisionBox();
         _sprite.Update(time);
         }
 
 
-    
+
 
     public void Draw()
     {
         _sprite.Draw(Position);
     }
+    public Rectangle GetCollisionBox()
+    {
+        return new Rectangle(
+                (int)(Position.X - _sprite.Width),
+                (int)(Position.Y - _sprite.Height),
+                _sprite.Width + 15,
+                _sprite.Height + 15
+            );
+    }
+
 }
 
 

@@ -3,6 +3,7 @@ using Vector2 = Microsoft.Xna.Framework.Vector2;
 using ZweiHander.Graphics;
 using System;
 using ZweiHander.Graphics.SpriteStorages;
+using ZweiHander.CollisionFiles;
 
 namespace ZweiHander.Enemy.EnemyStorage;
 
@@ -14,7 +15,7 @@ public class Dodongo : IEnemy
     /// <summary>
     /// The sprite associated with this boss.
     /// </summary>
-    protected ISprite _sprite;
+    public ISprite _sprite { get; set; } = default;
 /// <summary>
 /// Holds all sprites for this boss
 /// </summary>
@@ -23,6 +24,8 @@ public class Dodongo : IEnemy
     public Vector2 Position { get; set; } = default;
 
     public int Face { get; set; } = default;
+
+    readonly EnemyCollisionHandler _collisionHandler;
 
 /// <summary>
 /// Random number generator to randomize boss behavior
@@ -34,15 +37,16 @@ public class Dodongo : IEnemy
     {
         _bossSprites = bossSprites;
         _sprite = _bossSprites.DodongoUp();
+        _collisionHandler = new EnemyCollisionHandler(this);
     }
     public virtual void Update(GameTime time)
     {
         //Randomize  movement
         int mov = rnd.Next(200);
         //Move according to current direction faced
-        if (mov > 5)
+        if (mov > 3)
         {
-            Position = EnemyHelper.BehaveFromFace(this,1);
+            Position = EnemyHelper.BehaveFromFace(this, 1);
         }
         //Change face and sprite to new value according to the randomized value
         else
@@ -102,16 +106,27 @@ public class Dodongo : IEnemy
                     break;
             }
         }
+        _collisionHandler.UpdateCollisionBox();
         _sprite.Update(time);
         }
 
 
-    
+
 
     public void Draw()
     {
         _sprite.Draw(Position);
     }
+public Rectangle GetCollisionBox()
+    {
+        return new Rectangle(
+                (int)(Position.X - _sprite.Width),
+                (int)(Position.Y - _sprite.Height),
+                _sprite.Width + 15,
+                _sprite.Height + 15
+            );
+    }
+
 }
 
 
