@@ -70,6 +70,8 @@ public abstract class AbstractItem : IItem
     /// </summary>
     protected HashSet<ItemProperty> Properties = [];
 
+    protected Dictionary<Type, DamageObject> Damage = [];
+
     public AbstractItem(ItemConstructor itemConstructor)
     {
         _sprites = itemConstructor.Sprites;
@@ -98,14 +100,14 @@ public abstract class AbstractItem : IItem
         }
 
         // Movement
-        if (!Properties.Contains(ItemProperty.Stationary))
+        if (!HasProperty(ItemProperty.Stationary))
         {
             Velocity += dt * Acceleration;
             Position += dt * Velocity + (dt * dt / 2) * Acceleration;
         }
 
         // Face correct direction; UNTESTED
-        if (Properties.Contains(ItemProperty.FacingVelocity))
+        if (HasProperty(ItemProperty.FacingVelocity))
         {
             Sprite.Rotation = (float)Math.Atan2(Velocity.Y, Velocity.X);
         }
@@ -131,6 +133,16 @@ public abstract class AbstractItem : IItem
     public bool HasProperty(ItemProperty property)
     {
         return Properties.Contains(property);
+    }
+
+    public void SetDamage(Type damaged, DamageObject damage)
+    {
+        Damage[damaged] = damage;
+    }
+
+    public DamageObject GetDamage(Type damaged)
+    {
+        return Damage[damaged];
     }
 
     public virtual void OnDeath(GameTime gameTime)
@@ -168,25 +180,25 @@ public abstract class AbstractItem : IItem
         switch (other)
         {
             case PlayerCollisionHandler:
-                if (Properties.Contains(ItemProperty.CanBePickedUp))
+                if (HasProperty(ItemProperty.CanBePickedUp))
                 {
                     Kill();
                 }
-                if (Properties.Contains(ItemProperty.DeleteOnPlayer))
+                if (HasProperty(ItemProperty.DeleteOnPlayer))
                 {
                     Kill();
                 }
                 break;
             case BlockCollisionHandler:
-                if (Properties.Contains(ItemProperty.DeleteOnBlock))
+                if (HasProperty(ItemProperty.DeleteOnBlock))
                 {
                     Kill();
                 }
-                if (Properties.Contains(ItemProperty.BounceOnBlock))
+                if (HasProperty(ItemProperty.BounceOnBlock))
                 {
                     Velocity *= -1;
                 }
-                if (Properties.Contains(ItemProperty.StopOnBlock))
+                if (HasProperty(ItemProperty.StopOnBlock))
                 {
                     Velocity = Vector2.Zero;
                     Acceleration = Vector2.Zero;
