@@ -4,6 +4,7 @@ using ZweiHander.Graphics.SpriteStorages;
 using System.Collections.Generic;
 using ZweiHander.Items;
 using ZweiHander.Enemy.EnemyStorage;
+using ZweiHander.CollisionFiles;
 
 namespace ZweiHander.Enemy;
 
@@ -33,6 +34,7 @@ public class EnemyFactory(EnemySprites enemysprites, ItemManager projectileManag
     /// List of currently existing enemies
     /// </summary>
     readonly List<IEnemy> currentEnemies = [];
+
 
     /// <summary>
     /// Creates a new Enemy.
@@ -89,7 +91,6 @@ public class EnemyFactory(EnemySprites enemysprites, ItemManager projectileManag
         }
         enemy.Position = position;
         enemy.Face = face;
-        enemy.Thrower = thrower;
         currentEnemies.Add(enemy);
         return enemy;
     }

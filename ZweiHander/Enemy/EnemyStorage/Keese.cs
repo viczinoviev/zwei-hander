@@ -24,7 +24,6 @@ public class Keese : IEnemy
 
     public int Face { get; set; } = default;
 
-    public int Thrower { get; set; } = 0;
 /// <summary>
 /// Random number generator to randomize enemy behavior
 /// </summary>
@@ -45,7 +44,7 @@ public class Keese : IEnemy
         {
             if (Face < 4)
             {
-                Position = new Vector2(Position.X + ((-1 + 2 * Convert.ToInt32(!(Face == 3 && Position.X > 40))) * Convert.ToInt32((Face == 3 && Position.X > 40) || (Face == 1 && Position.X < 750))), Position.Y + ((-1 + 2 * Convert.ToInt32(!(Face == 0 && Position.Y > 40))) * Convert.ToInt32((Face == 0 && Position.Y > 40) || (Face == 2 && Position.Y < 400))));
+                Position = EnemyHelper.BehaveFromFace(this,1);
             }
             else
             {

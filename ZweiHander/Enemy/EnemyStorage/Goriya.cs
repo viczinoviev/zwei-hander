@@ -32,10 +32,10 @@ public class Goriya : IEnemy
 
     public int Face { get; set; } = default;
 
-    public int Thrower { get; set; } = 1;
-/// <summary>
-/// Random number generator to randomize enemy behavior
-/// </summary>
+private int Thrower = 1;
+    /// <summary>
+    /// Random number generator to randomize enemy behavior
+    /// </summary>
     readonly Random rnd = new();
 
 
@@ -55,7 +55,7 @@ public class Goriya : IEnemy
             //Move according to current direction faced
             if (mov > 5)
             {
-                Position = new Vector2(Position.X + ((-1 + 2 * Convert.ToInt32(!(Face == 3 && Position.X > 40))) * Convert.ToInt32((Face == 3 && Position.X > 40) || (Face == 1 && Position.X < 750))), Position.Y + ((-1 + 2 * Convert.ToInt32(!(Face == 0 && Position.Y > 40))) * Convert.ToInt32((Face == 0 && Position.Y > 40) || (Face == 2 && Position.Y < 400))));
+                Position = EnemyHelper.BehaveFromFace(this,1);
             }
             //Change face and sprite to new value according to the randomized value
             else
@@ -127,8 +127,8 @@ public class Goriya : IEnemy
             Thrower = 2;
             //Set up the projectiles behavior
             (float v, float a) = ItemHelper.BoomerangTrajectory(50, 3);
-            _currentProjectile.Velocity = new Vector2((-1 + 2 * Convert.ToInt32(!(Face == 3))) * (v * Convert.ToInt32((Face == 3) || (Face == 1))), (-1 + 2 * Convert.ToInt32(!(Face == 0))) * (v * Convert.ToInt32((Face == 0) || (Face == 2))));
-            _currentProjectile.Acceleration = new Vector2((-1 + 2 * Convert.ToInt32(!(Face == 3))) * (a * Convert.ToInt32((Face == 3) || (Face == 1))), (-1 + 2 * Convert.ToInt32(!(Face == 0))) * (a * Convert.ToInt32((Face == 0) || (Face == 2))));
+            _currentProjectile.Velocity = EnemyHelper.BehaveFromFace(this, v);
+            _currentProjectile.Acceleration = EnemyHelper.BehaveFromFace(this, a);
         }
         else
         {

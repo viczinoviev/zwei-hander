@@ -24,7 +24,6 @@ public class Dodongo : IEnemy
 
     public int Face { get; set; } = default;
 
-    public int Thrower { get; set; } = 0;
 /// <summary>
 /// Random number generator to randomize boss behavior
 /// </summary>
@@ -43,7 +42,7 @@ public class Dodongo : IEnemy
         //Move according to current direction faced
         if (mov > 5)
         {
-            Position = new Vector2(Position.X + ((-1 + 2 * Convert.ToInt32(!(Face == 3 && Position.X > 40))) * Convert.ToInt32((Face == 3 && Position.X > 40) || (Face == 1 && Position.X < 750))), Position.Y + ((-1 + 2 * Convert.ToInt32(!(Face == 0 && Position.Y > 40))) * Convert.ToInt32((Face == 0 && Position.Y > 40) || (Face == 2 && Position.Y < 400))));
+            Position = EnemyHelper.BehaveFromFace(this,1);
         }
         //Change face and sprite to new value according to the randomized value
         else

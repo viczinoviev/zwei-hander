@@ -4,6 +4,8 @@ using ZweiHander.Items;
 using ZweiHander.Graphics;
 using System;
 using ZweiHander.Graphics.SpriteStorages;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ZweiHander.Enemy.EnemyStorage;
 
@@ -17,17 +19,9 @@ public class Aquamentus : IEnemy
     /// </summary>
     protected ISprite _sprite;
 /// <summary>
-/// Projectile for this enemy
-/// </summary>
-    IItem _currentProjectile1;
-    /// <summary>
-/// Projectile for this enemy
-/// </summary>
-    IItem _currentProjectile2;
-    /// <summary>
-/// Projectile for this enemy
-/// </summary>
-    IItem _currentProjectile3;
+    /// Projectiles for this enemy
+    /// </summary>
+    List<IItem> _projectiles = new List<IItem>();
 /// <summary>
     /// Holds all sprites for this enemy
     /// </summary>
@@ -40,7 +34,7 @@ public class Aquamentus : IEnemy
 
     public int Face { get; set; } = default;
 
-    public int Thrower { get; set; } = 1;
+    private int Thrower = 1;
 /// <summary>
 /// Random number generator to randomize enemy behavior
 /// </summary>
@@ -61,7 +55,7 @@ public class Aquamentus : IEnemy
             //Move according to current direction faced
             if (mov > 5)
             {
-                Position = new Vector2(Position.X + ((-1 + 2 * Convert.ToInt32(!(Face == 3 && Position.X > 40))) * Convert.ToInt32((Face == 3 && Position.X > 40) || (Face == 1 && Position.X < 750))), Position.Y);
+                Position = EnemyHelper.BehaveFromFace(this,1);
             }
             //Change face and sprite to new value according to the randomized value
             else
@@ -106,18 +100,21 @@ public class Aquamentus : IEnemy
         if (attack == 5 && Thrower != 2)
         {
             //Create a projectile
-            _currentProjectile1 = _projectileManager.GetItem(ItemType.Fireball, -1, position: new Vector2(Position.X - 20, Position.Y - 20));
-            _currentProjectile1.Life = 3;
-            _currentProjectile2 = _projectileManager.GetItem(ItemType.Fireball, -1, position: new Vector2(Position.X - 20, Position.Y - 20));
-            _currentProjectile2.Life = 3;
-            _currentProjectile3 = _projectileManager.GetItem(ItemType.Fireball, -1, position: new Vector2(Position.X - 20, Position.Y - 20));
-            _currentProjectile3.Life = 3;
+            IItem _currentProjectile1 = _projectileManager.GetItem(ItemType.Fireball, -1, position: new Vector2(Position.X - 20, Position.Y - 20));
+            _currentProjectile1.Velocity = new Vector2(-100,0);
+            IItem _currentProjectile2 = _projectileManager.GetItem(ItemType.Fireball, -1, position: new Vector2(Position.X - 20, Position.Y - 20));
+            _currentProjectile2.Velocity = new Vector2(-100,30);
+            IItem _currentProjectile3 = _projectileManager.GetItem(ItemType.Fireball, -1, position: new Vector2(Position.X - 20, Position.Y - 20));
+            _currentProjectile3.Velocity = new Vector2(-100, -30);
+            _projectiles.Add(_currentProjectile1);
+            _projectiles.Add(_currentProjectile2);
+            _projectiles.Add(_currentProjectile3);
+            foreach (IItem i in _projectiles)
+            {
+                i.Life = 3; 
+            }
             Thrower = 2;
             //Set up the projectiles behavior
-            _currentProjectile1.Velocity = new Vector2(-100,0);
-            _currentProjectile2.Velocity = new Vector2(-100,30);
-            _currentProjectile3.Velocity = new Vector2(-100,-30);
-
         }
         else
         {
@@ -125,9 +122,10 @@ public class Aquamentus : IEnemy
             if (Thrower == 2)
             {
 
-                if (_currentProjectile1.Life <= 0)
+                if (_projectiles.First().Life <= 0)
                 {
                     Thrower = 1;
+                    _projectiles = new List<IItem>();
                 }
             }
         }

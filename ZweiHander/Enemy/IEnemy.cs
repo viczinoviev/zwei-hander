@@ -13,14 +13,10 @@ public interface IEnemy
     public Vector2 Position { get; set; }
 
     /// <summary>
-    /// Current direction, equating to what sprite to draw (0 = up, 1 = right, 2 = down, 3 = left)
+    /// Currently faced direction, equating to what sprite to draw (0 = up, 1 = right, 2 = down, 3 = left)
     /// </summary>
-    public int Face { get; set; }
 
-    /// <summary>
-    /// Current status of projectile use (0 = non throwing enemy, 1 = throwing enemy, not currently throwing, 2 = currently throwing)
-    /// </summary>
-    public int Thrower { get; set; }
+    public int Face{ get; set; }
 
     /// <summary>
     /// Draws this Enemy on screen.
@@ -32,4 +28,5 @@ public interface IEnemy
     /// </summary>
     /// <param name="gameTime">A snapshot of the game timing values provided by the framework.</param>
     public void Update(GameTime gameTime);
+    
 }

@@ -33,10 +33,10 @@ public class BladeTrap : IEnemy
 
     public int Face { get; set; } = default;
 
-    public int Thrower { get; set; } = 1;
-/// <summary>
-/// Random number generator to randomize enemy behavior
-/// </summary>
+    private int Thrower = 1;
+    /// <summary>
+    /// Random number generator to randomize enemy behavior
+    /// </summary>
     readonly Random rnd = new();
 
 
@@ -66,7 +66,7 @@ public class BladeTrap : IEnemy
             {
                 attackTime -= dt;
                 Vector2 currentPos = Position;
-                Position = new Vector2(Position.X + ((-1 + 2 * Convert.ToInt32(!(Face == 3 && Position.X > 40))) * (3 * Convert.ToInt32((Face == 3 && Position.X > 40) || (Face == 1 && Position.X < 750)))), Position.Y + ((-1 + 2 * Convert.ToInt32(!(Face == 0 && Position.Y > 40))) * (3 * Convert.ToInt32((Face == 0 && Position.Y > 40) || (Face == 2 && Position.Y < 400)))));
+                Position = EnemyHelper.BehaveFromFace(this, 3);
                 if (currentPos.X == Position.X && currentPos.Y == Position.Y)
                 {
                     returnTime -= dt * 3;

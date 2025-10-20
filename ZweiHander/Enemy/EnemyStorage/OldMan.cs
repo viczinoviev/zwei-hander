@@ -24,7 +24,6 @@ public class OldMan : IEnemy
 
     public int Face { get; set; } = default;
 
-    public int Thrower { get; set; } = 0;
 
 
     public OldMan(NPCSprites npcSprites)
