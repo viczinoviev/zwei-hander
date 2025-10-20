@@ -109,8 +109,8 @@ public abstract class AbstractItem : IItem
         {
             Sprite.Rotation = (float)Math.Atan2(Velocity.Y, Velocity.X);
         }
-
         Sprite.Update(time);
+        _collisionHandler.UpdateCollisionBox();
     }
 
     public void Draw()
