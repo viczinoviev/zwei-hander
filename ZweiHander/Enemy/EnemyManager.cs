@@ -100,8 +100,10 @@ public class EnemyManager(EnemySprites enemysprites, ItemManager projectileManag
     {
         foreach (IEnemy _enemy in currentEnemies)
         {
+
             _enemy.Update(time);
         }
+        currentEnemies.RemoveAll(enemy => enemy.Hitpoints <= 0);
     }
 
     public void Draw()
