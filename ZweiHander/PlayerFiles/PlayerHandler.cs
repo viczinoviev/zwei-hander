@@ -15,10 +15,12 @@ namespace ZweiHander.PlayerFiles
         private readonly PlayerSprites _playerSprites;
         private readonly PlayerCollisionHandler _collisionHandler;
         private ISprite _currentSprite;
-        private readonly float _moveSpeed = 200f;
+        private readonly float _moveSpeed = 250f;
         private readonly float _attackMoveSpeed = 50f;
         private PlayerState _lastState = PlayerState.Idle;
         private Vector2 _lastDirectionVector = Vector2.UnitY; // Default facing down
+
+        public Vector2 movement = Vector2.Zero;
 
         public Color Color { get; set; } = Color.White;
 
@@ -131,7 +133,7 @@ namespace ZweiHander.PlayerFiles
 
             // Get normalized movement vector from state machine
             Vector2 movementVector = _stateMachine.CurrentMovementVector;
-            Vector2 movement = movementVector * currentSpeed * deltaTime;
+            movement = movementVector * currentSpeed * deltaTime;
 
             _player.Position += movement;
         }

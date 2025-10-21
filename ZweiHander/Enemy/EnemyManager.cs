@@ -86,6 +86,9 @@ public class EnemyManager(EnemySprites enemysprites, ItemManager projectileManag
             case "OldMan":
                 enemy = new OldMan(_npcSprites);
                 break;
+            case "MovingBlock":
+                enemy = new MovingBlock(_enemySprites);
+                break;
             default:
                 // Should never actually reach here- will error out if so
                 break;

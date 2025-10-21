@@ -25,7 +25,7 @@ namespace ZweiHander.PlayerFiles
             } 
         }
         
-        public float Speed { get; set; } = 100f;
+
         public HashSet<PlayerInput> InputBuffer { get; private set; } = [];
         public PlayerState CurrentState => _stateMachine.CurrentState;
         public ItemManager ItemManager => _itemManager;
