@@ -14,7 +14,7 @@ namespace ZweiHander.CollisionFiles
         /// <summary>
         /// The player this handler is watching over
         /// </summary>
-        private readonly Player _player;
+        public readonly Player _player;
 
         /// <summary>
         /// How big the player's collision box is (for now a rectangle 24 by 24 px)

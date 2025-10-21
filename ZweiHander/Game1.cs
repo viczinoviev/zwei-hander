@@ -202,7 +202,7 @@ namespace ZweiHander
             }
 
             _item.Update(gameTime);
-            _enemy.Update(gameTime);
+            _enemyManager.Update(gameTime);
             _projectileManager.Update(gameTime);
 
 
@@ -229,7 +229,7 @@ namespace ZweiHander
                 _blockList[i].Draw();
             }
 
-            _enemy.Draw();
+            _enemyManager.Draw();
 
 
             _item.Draw();

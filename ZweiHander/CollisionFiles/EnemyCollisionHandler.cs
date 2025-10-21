@@ -3,12 +3,14 @@ using Microsoft.Xna.Framework.Graphics;
 using ZweiHander.Enemy;
 using ZweiHander.Environment;
 using ZweiHander.PlayerFiles;
+using ZweiHander.Items;
+using ZweiHander.Commands;
 
 namespace ZweiHander.CollisionFiles
 {
     public class EnemyCollisionHandler : CollisionHandlerAbstract
     {
-        private readonly IEnemy _enemy;
+        public readonly IEnemy _enemy;
         private const int COLLISION_SIZE = 24;
 
         public EnemyCollisionHandler(IEnemy enemy)
@@ -29,13 +31,18 @@ namespace ZweiHander.CollisionFiles
             }
             if (other is ItemCollisionHandler)
             {
-                //if enemy projectile, nothing happens
-                //if player projectile, take damage
+                if(((ItemCollisionHandler)other).Item.HasProperty(ItemProperty.CanDamageEnemy)){
+                    _enemy.Hitpoints -= 5;
+                    
+                }
             }
             if (other is PlayerCollisionHandler)
             {
-                //if colliding with sword, take damage
-                //else damage player
+                if (((PlayerCollisionHandler)other)._player.CurrentState == PlayerState.Attacking)
+                {
+                    _enemy.Hitpoints -= 5;
+                } 
+                
             }
         }
 
