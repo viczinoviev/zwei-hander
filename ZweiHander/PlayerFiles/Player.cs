@@ -14,21 +14,25 @@ namespace ZweiHander.PlayerFiles
         private readonly PlayerHandler _handler;
         private readonly ItemManager _itemManager;
         private Vector2 _position;
+        private bool _isDamaged;
+        private float _damageTimer;
+        private const float DAMAGE_DURATION = 1.0f; // How long the damage state lasts
 
-        public Vector2 Position 
-        { 
-            get => _position; 
-            set 
-            { 
+        public Vector2 Position
+        {
+            get => _position;
+            set
+            {
                 _position = value;
                 _handler?.UpdateCollisionBox();
-            } 
+            }
         }
-        
+
 
         public HashSet<PlayerInput> InputBuffer { get; private set; } = [];
         public PlayerState CurrentState => _stateMachine.CurrentState;
         public ItemManager ItemManager => _itemManager;
+        public bool IsDamaged => _isDamaged;
 
         public Color Color
         {
@@ -46,6 +50,17 @@ namespace ZweiHander.PlayerFiles
 
         public void Update(GameTime gameTime)
         {
+            // Update damage state timer
+            if (_isDamaged)
+            {
+                _damageTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+                if (_damageTimer <= 0f)
+                {
+                    _isDamaged = false;
+                    _damageTimer = 0f;
+                }
+            }
+
             _stateMachine.Update(gameTime);
             _handler.Update(gameTime);
             _itemManager.Update(gameTime);
@@ -61,6 +76,21 @@ namespace ZweiHander.PlayerFiles
             InputBuffer.Clear();
         }
 
+        /// <summary>
+        /// Attempts to damage the player. Returns true if damage was applied, false if player is already in damaged state.
+        /// </summary>
+        public bool TakeDamage()
+        {
+            // Player is invulnerable while already damaged
+            if (_isDamaged)
+            {
+                return false;
+            }
+
+            _isDamaged = true;
+            _damageTimer = DAMAGE_DURATION;
+            return true;
+        }
 
         public void SetPositionFromCollision(Vector2 newPosition)
         {

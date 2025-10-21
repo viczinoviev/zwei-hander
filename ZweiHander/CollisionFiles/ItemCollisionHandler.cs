@@ -10,26 +10,26 @@ public class ItemCollisionHandler : CollisionHandlerAbstract
     /// <summary>
     /// The actual item this handles.
     /// </summary>
-    private readonly IItem _item;
+    public readonly IItem Item;
 
     /// <summary>
     /// The type of item this is handling.
     /// </summary>
-    public ItemType ItemType { get => _item.ItemType; }
+    public ItemType ItemType { get => Item.ItemType; }
 
     public ItemCollisionHandler(IItem item)
     {
-        _item = item;
+        Item = item;
         UpdateCollisionBox();
     }
 
     public override void OnCollision(ICollisionHandler other, CollisionInfo collisionInfo)
     {
-        _item.HandleCollision(other, collisionInfo);
+        Item.HandleCollision(other, collisionInfo);
     }
 
     public override void UpdateCollisionBox()
     {
-        CollisionBox = _item.GetHitBox();
+        CollisionBox = Item.GetHitBox();
     }
 }

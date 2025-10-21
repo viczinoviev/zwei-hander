@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ZweiHander.Environment;
 using ZweiHander.PlayerFiles;
+using ZweiHander.Items;
 
 namespace ZweiHander.CollisionFiles
 {
@@ -31,11 +32,20 @@ namespace ZweiHander.CollisionFiles
             // If the player hit a block, stop them from going through it
             if (other is BlockCollisionHandler)
             {
-                                
+
                 Vector2 newPosition = _player.Position + collisionInfo.ResolutionOffset;
                 _player.SetPositionFromCollision(newPosition);
-                
+
                 UpdateCollisionBox();
+            }
+
+            // If the player hit a damaging item, apply damage
+            if (other is ItemCollisionHandler itemHandler)
+            {
+                if (itemHandler.Item.HasProperty(ItemProperty.CanDamagePlayer))
+                {
+                    _player.TakeDamage();
+                }
             }
         }
 

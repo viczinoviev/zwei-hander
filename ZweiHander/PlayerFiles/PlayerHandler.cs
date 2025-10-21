@@ -22,6 +22,11 @@ namespace ZweiHander.PlayerFiles
 
         public Vector2 movement = Vector2.Zero;
 
+        // Blink effect settings for damage state
+        private float _blinkTimer = 0f;
+        private const float BLINK_INTERVAL = 0.075f; // How fast to blink
+        private bool _isVisible = true;
+
         public Color Color { get; set; } = Color.White;
 
         public PlayerHandler(PlayerSprites playerSprites, Player player, PlayerStateMachine stateMachine)
@@ -115,6 +120,23 @@ namespace ZweiHander.PlayerFiles
                 UpdateSprite(currentState, currentDirectionVector);
             }
 
+            // Handle damage blink effect
+            if (_player.IsDamaged)
+            {
+                _blinkTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                if (_blinkTimer >= BLINK_INTERVAL)
+                {
+                    _isVisible = !_isVisible;
+                    _blinkTimer = 0f;
+                }
+            }
+            else
+            {
+                // Reset blinking effect
+                _isVisible = true;
+                _blinkTimer = 0f;
+            }
+
             UpdatePosition(gameTime);
             // Let the sprite animate automatically (AnimatedSprite handles this)
             _currentSprite.Update(gameTime);
@@ -140,8 +162,17 @@ namespace ZweiHander.PlayerFiles
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            //always refresh color no matter if a different state has been triggered
-            _currentSprite.Color = this.Color;
+            // Apply blink effect when damaged
+            if (_player.IsDamaged && !_isVisible)
+            {
+                // Make sprite transparent during blink
+                _currentSprite.Color = new Color(0f, 0f, 0f, 0f);
+            }
+            else
+            {
+                // Normal color
+                _currentSprite.Color = this.Color;
+            }
 
             _currentSprite.Draw(_player.Position);
         }
