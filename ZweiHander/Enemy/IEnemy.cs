@@ -19,6 +19,7 @@ public interface IEnemy
 
     public int Face { get; set; }
 
+    public int Hitpoints { get; set; }
 
     /// <summary>
     /// Draws this Enemy on screen.

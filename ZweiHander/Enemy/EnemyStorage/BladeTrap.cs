@@ -33,6 +33,7 @@ public class BladeTrap : IEnemy
     public Vector2 Position { get; set; } = default;
 
     public int Face { get; set; } = default;
+    public int Hitpoints { get; set; } = 5;
 
     private int Thrower = 1;
 
@@ -74,7 +75,7 @@ public class BladeTrap : IEnemy
                 if (currentPos.X == Position.X && currentPos.Y == Position.Y)
                 {
                     returnTime -= dt * 3;
-                }
+                }  
             }
             else
             {

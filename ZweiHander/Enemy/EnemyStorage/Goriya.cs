@@ -32,6 +32,7 @@ public class Goriya : IEnemy
     public Vector2 Position { get; set; } = default;
 
     public int Face { get; set; } = default;
+    public int Hitpoints { get; set; } = 5;
 
     readonly EnemyCollisionHandler _collisionHandler;
 

@@ -35,6 +35,7 @@ public class Aquamentus : IEnemy
 
     public int Face { get; set; } = default;
 
+    public int Hitpoints { get; set; } = 5;
     private int Thrower = 1;
 /// <summary>
 /// Random number generator to randomize enemy behavior
