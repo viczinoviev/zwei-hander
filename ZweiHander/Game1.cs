@@ -223,11 +223,8 @@ namespace ZweiHander
             _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
 
 
-
-            for (int i = 0; i < _blockList.Count; i++)
-            {
-                _blockList[i].Draw();
-            }
+            //Draws the map
+            _blockFactory.Draw();
 
             _enemyManager.Draw();
 

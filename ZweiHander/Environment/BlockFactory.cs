@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using ZweiHander.Enemy;
 using ZweiHander.Graphics;
 using ZweiHander.Graphics.SpriteStorages;
 
@@ -12,7 +13,7 @@ namespace ZweiHander.Environment
         private readonly BlockSprites _blockSprites; // Reference to sprite storage for blocks
         //temp
         private readonly PlayerSprites _playerSprites;
-        public List<Rectangle> BlockMap { get; private set; } // Stores all block hitboxes
+        public List<Block> BlockMap { get; private set; } // Stores all blocks
 
         /// <summary>
         /// Maps block names to their logic type (Solid, Pushable, Breakable, Decorative)
@@ -39,7 +40,7 @@ namespace ZweiHander.Environment
             _tileSize = tileSize; // Set tile size
             _blockSprites = blockSprites ?? throw new ArgumentNullException(nameof(blockSprites)); // Store sprite storage
             _playerSprites = playerSprites ?? throw new ArgumentNullException(nameof(playerSprites));
-            BlockMap = new List<Rectangle>(); // Initialize hitbox list
+            BlockMap = new List<Block>(); // Initialize hitbox list
         }
 
         /// <summary>
@@ -110,9 +111,16 @@ namespace ZweiHander.Environment
             Block newBlock = new Block(name,blockType, gridPosition, _tileSize, sprite);
 
             // Store block hitbox for collision or mapping purposes
-            BlockMap.Add(newBlock.GetBlockHitbox());
+            BlockMap.Add(newBlock);
 
             return newBlock; // Return the created block
+        }
+        public void Draw()
+        {
+            foreach (Block _block in BlockMap)
+            {
+                _block.Draw();
+            }
         }
     }
 }
