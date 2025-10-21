@@ -97,5 +97,10 @@ namespace ZweiHander.Enemy.EnemyStorage
 
             _sprite.Draw(Position);
         }
-    }
+
+		public Rectangle GetCollisionBox()
+		{
+			return new Rectangle((int)Position.X, (int)Position.Y, _sprite.Width, _sprite.Height);
+		}
+	}
 }

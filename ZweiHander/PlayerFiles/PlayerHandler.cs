@@ -15,7 +15,7 @@ namespace ZweiHander.PlayerFiles
         private readonly PlayerSprites _playerSprites;
         private readonly PlayerCollisionHandler _collisionHandler;
         private ISprite _currentSprite;
-        private readonly float _moveSpeed = 500f;
+        private readonly float _moveSpeed = 250f;
         private readonly float _attackMoveSpeed = 50f;
         private PlayerState _lastState = PlayerState.Idle;
         private Vector2 _lastDirectionVector = Vector2.UnitY; // Default facing down
@@ -32,7 +32,7 @@ namespace ZweiHander.PlayerFiles
             _currentSprite = _playerSprites.PlayerIdle();
             _lastState = _stateMachine.CurrentState;
             _lastDirectionVector = _stateMachine.LastDirection;
-            _collisionHandler = new PlayerCollisionHandler(_player, this);
+            _collisionHandler = new PlayerCollisionHandler(_player);
         }
 
         private void UpdateSprite(PlayerState state, Vector2 directionVector)
