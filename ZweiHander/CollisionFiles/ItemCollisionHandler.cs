@@ -36,7 +36,7 @@ public class ItemCollisionHandler : CollisionHandlerAbstract
     /// <summary>
     /// Whether the item this handles has this property or not.
     /// </summary>
-    /// <param name="property">Property to check for.</param>
+    /// <param name="itemProperty">Property to check for.</param>
     /// <returns>If the item has this property.</returns>
     public bool HasProperty(ItemProperty itemProperty)
     {
