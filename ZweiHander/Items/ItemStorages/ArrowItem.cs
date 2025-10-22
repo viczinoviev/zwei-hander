@@ -12,7 +12,7 @@ public class ArrowItem : AbstractItem
         {
             Properties = [];
         }
-        _deathTime = 0.1;
+        DeathTime = 0.1;
     }
 
     public override void OnDeath(GameTime gameTime)
