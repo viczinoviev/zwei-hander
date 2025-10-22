@@ -57,7 +57,7 @@ public interface IItem
     /// Whether this item has this property or not.
     /// </summary>
     /// <param name="property">Property to check for.</param>
-    /// <returns></returns>
+    /// <returns>If the item has this property.</returns>
     public bool HasProperty(ItemProperty property);
 
     /// <summary>

@@ -42,7 +42,7 @@ namespace ZweiHander.CollisionFiles
             // If the player hit a damaging item, apply damage
             if (other is ItemCollisionHandler itemHandler)
             {
-                if (itemHandler.Item.HasProperty(ItemProperty.CanDamagePlayer))
+                if (itemHandler.HasProperty(ItemProperty.CanDamagePlayer))
                 {
                     _player.TakeDamage();
                 }

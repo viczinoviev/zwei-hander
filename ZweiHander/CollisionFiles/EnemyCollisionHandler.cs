@@ -31,7 +31,7 @@ namespace ZweiHander.CollisionFiles
             }
             if (other is ItemCollisionHandler)
             {
-                if(((ItemCollisionHandler)other).Item.HasProperty(ItemProperty.CanDamageEnemy)){
+                if(((ItemCollisionHandler)other).HasProperty(ItemProperty.CanDamageEnemy)){
                     _enemy.Hitpoints -= 5;
                     
                 }
