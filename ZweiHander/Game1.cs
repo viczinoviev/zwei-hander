@@ -142,7 +142,15 @@ namespace ZweiHander
             _borderManager.CreateBorder(WallName.WallNorthLeft);
             _borderManager.CreateBorder(WallName.WallWestTop); 
             _borderManager.CreateBorder(WallName.LockedDoorTileNorth); 
-            _borderManager.CreateBorder(WallName.LockedDoorTileWest);
+            _borderManager.CreateBorder(WallName.LockedDoorTileWest); 
+            _borderManager.CreateBorder(WallName.WallWestBottom); 
+            _borderManager.CreateBorder(WallName.WallSouthLeft);
+            _borderManager.CreateBorder(WallName.LockedDoorTileSouth); 
+            _borderManager.CreateBorder(WallName.WallSouthRight);
+            _borderManager.CreateBorder(WallName.WallNorthRight);
+            _borderManager.CreateBorder(WallName.WallEastTop);
+            _borderManager.CreateBorder(WallName.WallEastBottom);
+            _borderManager.CreateBorder(WallName.LockedDoorTileEast);
 
             _itemManager.Clear();
             _items = [

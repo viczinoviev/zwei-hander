@@ -31,13 +31,15 @@ namespace ZweiHander.Map
                     break;  
                 case WallName.WallNorthRight:
                     sprite = _blockSprites.WallNorthRight();
-                    
+                    position = new Vector2(383, 175);
                     break;
                 case WallName.WallSouthLeft:
                     sprite = _blockSprites.WallSouthLeft();
+                    position = new Vector2(159, 463);
                     break;
                 case WallName.WallSouthRight:
                     sprite = _blockSprites.WallSouthRight();
+                    position = new Vector2(383, 463);
                     break;
                 case WallName.WallWestTop:
                     sprite = _blockSprites.WallWestTop();
@@ -45,12 +47,15 @@ namespace ZweiHander.Map
                     break;
                 case WallName.WallWestBottom:
                     sprite = _blockSprites.WallWestBottom();
+                    position = new Vector2(47, 423);
                     break;
                 case WallName.WallEastTop:
-                    sprite = _blockSprites.WallEastTop();   
+                    sprite = _blockSprites.WallEastTop();
+                    position = new Vector2(495, 215);
                     break;
                 case WallName.WallEastBottom:
                     sprite = _blockSprites.WallEastBottom();
+                    position = new Vector2(495, 423);
                     break;
 
                 // Wall tile (center) variations
@@ -60,6 +65,7 @@ namespace ZweiHander.Map
                     break;
                 case WallName.WallTileWest:
                     sprite = _blockSprites.WallTileWest();
+                    position = new Vector2(47, 319);
                     break;
                 case WallName.WallTileEast:
                     sprite = _blockSprites.WallTileEast();
@@ -75,6 +81,7 @@ namespace ZweiHander.Map
                     break;
                 case WallName.EntranceTileWest:
                     sprite = _blockSprites.EntranceTileWest();
+                    position = new Vector2(47, 319);
                     break;
                 case WallName.EntranceTileEast:
                     sprite = _blockSprites.EntranceTileEast();
@@ -90,13 +97,15 @@ namespace ZweiHander.Map
                     break;
                 case WallName.LockedDoorTileWest:
                     sprite = _blockSprites.LockedDoorTileWest();
-                    position = new Vector2(47, 300);
+                    position = new Vector2(47, 319);
                     break;
                 case WallName.LockedDoorTileEast:
                     sprite = _blockSprites.LockedDoorTileEast();
+                    position = new Vector2(495, 319);
                     break;
                 case WallName.LockedDoorTileSouth:
                     sprite = _blockSprites.LockedDoorTileSouth();
+                    position = new Vector2(271, 463);
                     break;
 
                 // Door tiles
@@ -106,6 +115,7 @@ namespace ZweiHander.Map
                     break;
                 case WallName.DoorTileWest:
                     sprite = _blockSprites.DoorTileWest();
+                    position = new Vector2(47, 319);
                     break;
                 case WallName.DoorTileEast:
                     sprite = _blockSprites.DoorTileEast();
@@ -121,6 +131,7 @@ namespace ZweiHander.Map
                     break;
                 case WallName.HoleInWallWest:
                     sprite = _blockSprites.HoleInWallWest();
+                    position = new Vector2(47, 319);
                     break;
                 case WallName.HoleInWallEast:
                     sprite = _blockSprites.HoleInWallEast();
