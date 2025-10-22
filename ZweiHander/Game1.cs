@@ -139,18 +139,19 @@ namespace ZweiHander
             string mapPath = Path.Combine(Content.RootDirectory, "Maps","map1.csv"); // CSV location
             _blockList = CsvMapHandler.LoadMap(mapPath, _blockFactory);
 
+            //Border creation for now(Will change shortly)
             _borderManager.CreateBorder(WallName.WallNorthLeft);
             _borderManager.CreateBorder(WallName.WallWestTop); 
             _borderManager.CreateBorder(WallName.LockedDoorTileNorth); 
-            _borderManager.CreateBorder(WallName.LockedDoorTileWest); 
+            _borderManager.CreateBorder(WallName.WallTileWest); 
             _borderManager.CreateBorder(WallName.WallWestBottom); 
             _borderManager.CreateBorder(WallName.WallSouthLeft);
-            _borderManager.CreateBorder(WallName.LockedDoorTileSouth); 
+            _borderManager.CreateBorder(WallName.DoorTileSouth); 
             _borderManager.CreateBorder(WallName.WallSouthRight);
             _borderManager.CreateBorder(WallName.WallNorthRight);
             _borderManager.CreateBorder(WallName.WallEastTop);
             _borderManager.CreateBorder(WallName.WallEastBottom);
-            _borderManager.CreateBorder(WallName.LockedDoorTileEast);
+            _borderManager.CreateBorder(WallName.HoleInWallEast);
 
             _itemManager.Clear();
             _items = [
