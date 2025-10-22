@@ -191,7 +191,7 @@ namespace ZweiHander
             //END TEST
 
             _gamePlayer = new Player(_linkSprites, _itemSprites, _treasureSprites);
-            _gamePlayer.Position = new Vector2(30, 450);
+            _gamePlayer.Position = new Vector2(450, 350);
 
             //Set up KeyboardController
              _keyboardController = new KeyboardController(_gamePlayer);
