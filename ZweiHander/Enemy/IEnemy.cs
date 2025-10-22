@@ -21,6 +21,12 @@ public interface IEnemy
 
     public int Hitpoints { get; set; }
 
+
+    /// <summary>
+    /// The sprite associated with this Enemy.
+    /// </summary>
+    public ISprite Sprite { get; set; }
+
     /// <summary>
     /// Draws this Enemy on screen.
     /// </summary>

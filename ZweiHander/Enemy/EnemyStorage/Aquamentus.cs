@@ -15,21 +15,18 @@ namespace ZweiHander.Enemy.EnemyStorage;
 /// </summary>
 public class Aquamentus : IEnemy
 {
+    public ISprite Sprite { get; set; }
     /// <summary>
-    /// The sprite associated with this Enemy.
-    /// </summary>
-    public ISprite _sprite;
-/// <summary>
     /// Projectiles for this enemy
     /// </summary>
-    List<IItem> _projectiles = new List<IItem>();
-/// <summary>
+    List<IItem> _projectiles = [];
+    /// <summary>
     /// Holds all sprites for this enemy
     /// </summary>
     private readonly BossSprites _bossSprites;
-/// <summary>
-/// Manager for the projectile this enemy throws
-/// </summary>
+    /// <summary>
+    /// Manager for the projectile this enemy throws
+    /// </summary>
     private readonly ItemManager _projectileManager;
     public Vector2 Position { get; set; } = default;
 
@@ -37,9 +34,9 @@ public class Aquamentus : IEnemy
 
     public int Hitpoints { get; set; } = 5;
     private int Thrower = 1;
-/// <summary>
-/// Random number generator to randomize enemy behavior
-/// </summary>
+    /// <summary>
+    /// Random number generator to randomize enemy behavior
+    /// </summary>
     readonly Random rnd = new();
 
     readonly EnemyCollisionHandler _collisionHandler;
@@ -48,7 +45,7 @@ public class Aquamentus : IEnemy
     {
         _projectileManager = projectileManager;
         _bossSprites = bossSprites;
-        _sprite = _bossSprites.Aquamentus();
+        Sprite = _bossSprites.Aquamentus();
         _collisionHandler = new EnemyCollisionHandler(this);
     }
     public virtual void Update(GameTime time)
@@ -124,12 +121,12 @@ public class Aquamentus : IEnemy
                 if (_projectiles.First().IsDead())
                 {
                     Thrower = 1;
-                    _projectiles = new List<IItem>();
+                    _projectiles = [];
                 }
             }
         }
         _collisionHandler.UpdateCollisionBox();
-        _sprite.Update(time);
+        Sprite.Update(time);
         _projectileManager.Update(time);
         }
 
@@ -137,16 +134,16 @@ public class Aquamentus : IEnemy
 
     public void Draw()
     {
-        _sprite.Draw(Position);
+        Sprite.Draw(Position);
         _projectileManager.Draw();
     }
     public Rectangle GetCollisionBox()
     {
         return new Rectangle(
-                (int)(Position.X - _sprite.Width),
-                (int)(Position.Y - _sprite.Height),
-                _sprite.Width + 25,
-                _sprite.Height + 15
+                (int)(Position.X - Sprite.Width),
+                (int)(Position.Y - Sprite.Height),
+                Sprite.Width + 25,
+                Sprite.Height + 15
             );
     }
 }
