@@ -11,6 +11,7 @@ using ZweiHander.Environment;
 using ZweiHander.Graphics;
 using ZweiHander.Graphics.SpriteStorages;
 using ZweiHander.Items;
+using ZweiHander.Map;
 using ZweiHander.PlayerFiles;
 
 namespace ZweiHander
@@ -44,6 +45,7 @@ namespace ZweiHander
         private BlockFactory _blockFactory;
         private ItemManager _itemManager; //The item that is rotated through
         private ItemManager _projectileManager; //Any projectiles from enemies or player
+        private BorderManager _borderManager;
 
         //Stores all the blocks created
         private List<Block> _blockList;
@@ -113,6 +115,7 @@ namespace ZweiHander
             _itemManager = new ItemManager(_itemSprites, _treasureSprites, _bossSprites);
             _projectileManager = new ItemManager(_itemSprites, _treasureSprites, _bossSprites);
             _enemyManager = new EnemyManager(_enemySprites, _projectileManager, _bossSprites,_npcSprites);
+            _borderManager = new BorderManager(_blockSprites);
 
             GameSetUp();
         }
@@ -135,6 +138,11 @@ namespace ZweiHander
             //Create and load the Block List
             string mapPath = Path.Combine(Content.RootDirectory, "Maps","map1.csv"); // CSV location
             _blockList = CsvMapHandler.LoadMap(mapPath, _blockFactory);
+
+            _borderManager.CreateBorder(WallName.WallNorthLeft);
+            _borderManager.CreateBorder(WallName.WallWestTop); 
+            _borderManager.CreateBorder(WallName.LockedDoorTileNorth); 
+            _borderManager.CreateBorder(WallName.LockedDoorTileWest);
 
             _itemManager.Clear();
             _items = [
@@ -164,6 +172,8 @@ namespace ZweiHander
                 _enemy = _enemyManager.GetEnemy("BladeTrap",enemyPosition),
                 _enemy = _enemyManager.GetEnemy("OldMan", enemyPosition),
             ];
+
+
 
             _block = _blockList[0];
             _enemy = _enemyList[0];
@@ -225,6 +235,7 @@ namespace ZweiHander
 
             //Draws the map
             _blockFactory.Draw();
+            _borderManager.Draw();
 
             _enemyManager.Draw();
 

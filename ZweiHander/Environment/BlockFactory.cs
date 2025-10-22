@@ -40,7 +40,7 @@ namespace ZweiHander.Environment
             _tileSize = tileSize; // Set tile size
             _blockSprites = blockSprites ?? throw new ArgumentNullException(nameof(blockSprites)); // Store sprite storage
             _playerSprites = playerSprites ?? throw new ArgumentNullException(nameof(playerSprites));
-            BlockMap = new List<Block>(); // Initialize hitbox list
+            BlockMap = new List<Block>(); // Initialize map list
         }
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace ZweiHander.Environment
             // Create the block with its type, position, size, and sprite
             Block newBlock = new Block(name,blockType, gridPosition, _tileSize, sprite);
 
-            // Store block hitbox for collision or mapping purposes
+            // Store blocks in a map
             BlockMap.Add(newBlock);
 
             return newBlock; // Return the created block
