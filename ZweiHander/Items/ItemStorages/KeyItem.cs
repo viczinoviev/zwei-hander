@@ -9,11 +9,7 @@ public class KeyItem : AbstractItem
     {
         if (defaultProperties)
         {
-            Properties = [
-                ItemProperty.CanBePickedUp,
-                ItemProperty.DeleteOnCollision,
-                ItemProperty.Stationary
-            ];
+            Properties = ItemProperty.Collectable;
         }
     }
 }

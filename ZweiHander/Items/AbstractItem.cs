@@ -68,7 +68,7 @@ public abstract class AbstractItem : IItem
     /// <summary>
     /// The properties this item has.
     /// </summary>
-    protected HashSet<ItemProperty> Properties { get; set; } = [];
+    protected ItemProperty Properties { get; set; } = 0x0;
 
     /// <summary>
     /// How to damage different object types.
@@ -125,17 +125,17 @@ public abstract class AbstractItem : IItem
 
     public void RemoveProperty(ItemProperty property)
     {
-        Properties.Remove(property);
+        Properties = Properties | property;
     }
 
     public void AddProperty(ItemProperty property)
     {
-        Properties.Add(property);
+        Properties = Properties | property;
     }
 
     public bool HasProperty(ItemProperty property)
     {
-        return Properties.Contains(property);
+        return Properties.HasFlag(property);
     }
 
     public void SetDamage(Type damaged, DamageObject damage)

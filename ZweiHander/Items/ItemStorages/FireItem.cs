@@ -9,9 +9,6 @@ public class FireItem : AbstractItem
     {
         if (defaultProperties)
         {
-            Properties = [
-
-            ];
         }
     }
 }

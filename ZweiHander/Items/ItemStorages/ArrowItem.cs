@@ -10,7 +10,6 @@ public class ArrowItem : AbstractItem
     {
         if (defaultProperties)
         {
-            Properties = [];
         }
         DeathTime = 0.1;
     }
