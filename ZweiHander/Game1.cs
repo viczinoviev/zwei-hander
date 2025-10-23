@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using System.IO;
+using ZweiHander.Camera;
 using ZweiHander.CollisionFiles;
 using ZweiHander.Commands;
 using ZweiHander.Enemy;
@@ -21,6 +22,7 @@ namespace ZweiHander
     //Hey team!
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        private Camera.Camera _camera;
 
         private Block _block;
         private IEnemy _enemy;
@@ -102,6 +104,10 @@ namespace ZweiHander
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            // Initialize camera
+            _camera = new Camera.Camera(GraphicsDevice.Viewport);
+
             //TEST: Link Sprites, Should be part of link initialization
 
             // This line will load all of the sprites into the program through an xml file
@@ -248,6 +254,9 @@ namespace ZweiHander
             // Update collision system - keeps everything synced
             CollisionManager.Instance.Update(gameTime);
 
+            // Update camera to follow player
+            _camera.Update(_gamePlayer.Position);
+
             base.Update(gameTime);
         }
 
@@ -255,7 +264,10 @@ namespace ZweiHander
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+            _spriteBatch.Begin(
+                samplerState: SamplerState.PointClamp,
+                transformMatrix: _camera.GetTransformMatrix() //matrix used to change rendering position based on camera position
+            );
 
 
             //Draws the map
@@ -270,7 +282,7 @@ namespace ZweiHander
 
             _projectileManager.Draw();
 
-            
+
 
             _gamePlayer.Draw(_spriteBatch);
 
