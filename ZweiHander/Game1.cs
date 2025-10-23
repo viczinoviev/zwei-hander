@@ -46,6 +46,7 @@ namespace ZweiHander
         private ItemManager _itemManager; //The item that is rotated through
         private ItemManager _projectileManager; //Any projectiles from enemies or player
         private BorderManager _borderManager;
+        private BorderManager _borderManager2;
 
         //Stores all the blocks created
         private List<Block> _blockList;
@@ -115,7 +116,8 @@ namespace ZweiHander
             _itemManager = new ItemManager(_itemSprites, _treasureSprites, _bossSprites);
             _projectileManager = new ItemManager(_itemSprites, _treasureSprites, _bossSprites);
             _enemyManager = new EnemyManager(_enemySprites, _projectileManager, _bossSprites,_npcSprites);
-            _borderManager = new BorderManager(_blockSprites);
+            _borderManager = new BorderManager(_blockSprites,new Vector2(47,175));
+            _borderManager2 = new BorderManager(_blockSprites, new Vector2(559, 175));
 
             GameSetUp();
         }
@@ -140,18 +142,32 @@ namespace ZweiHander
             _blockList = CsvMapHandler.LoadMap(mapPath, _blockFactory);
 
             //Border creation for now(Will change shortly)
-            _borderManager.CreateBorder(WallName.WallNorthLeft);
-            _borderManager.CreateBorder(WallName.WallWestTop); 
-            _borderManager.CreateBorder(WallName.LockedDoorTileNorth); 
-            _borderManager.CreateBorder(WallName.WallTileWest); 
-            _borderManager.CreateBorder(WallName.WallWestBottom); 
-            _borderManager.CreateBorder(WallName.WallSouthLeft);
-            _borderManager.CreateBorder(WallName.DoorTileSouth); 
-            _borderManager.CreateBorder(WallName.WallSouthRight);
-            _borderManager.CreateBorder(WallName.WallNorthRight);
-            _borderManager.CreateBorder(WallName.WallEastTop);
-            _borderManager.CreateBorder(WallName.WallEastBottom);
-            _borderManager.CreateBorder(WallName.HoleInWallEast);
+            _borderManager.CreateWall(WallName.WallNorthLeft);
+            _borderManager.CreateWall(WallName.WallWestTop); 
+            _borderManager.CreateWall(WallName.LockedDoorTileNorth); 
+            _borderManager.CreateWall(WallName.WallTileWest); 
+            _borderManager.CreateWall(WallName.WallWestBottom); 
+            _borderManager.CreateWall(WallName.WallSouthLeft);
+            _borderManager.CreateWall(WallName.DoorTileSouth); 
+            _borderManager.CreateWall(WallName.WallSouthRight);
+            _borderManager.CreateWall(WallName.WallNorthRight);
+            _borderManager.CreateWall(WallName.WallEastTop);
+            _borderManager.CreateWall(WallName.WallEastBottom);
+            _borderManager.CreateWall(WallName.HoleInWallEast);
+
+            //2nd game room(will move all room creation into a different file later)
+            _borderManager2.CreateWall(WallName.WallNorthLeft);
+            _borderManager2.CreateWall(WallName.WallWestTop);
+            _borderManager2.CreateWall(WallName.LockedDoorTileNorth);
+            _borderManager2.CreateWall(WallName.HoleInWallWest);
+            _borderManager2.CreateWall(WallName.WallWestBottom);
+            _borderManager2.CreateWall(WallName.WallSouthLeft);
+            _borderManager2.CreateWall(WallName.DoorTileSouth);
+            _borderManager2.CreateWall(WallName.WallSouthRight);
+            _borderManager2.CreateWall(WallName.WallNorthRight);
+            _borderManager2.CreateWall(WallName.WallEastTop);
+            _borderManager2.CreateWall(WallName.WallEastBottom);
+            _borderManager2.CreateWall(WallName.WallTileEast);
 
             _itemManager.Clear();
             _items = [
@@ -245,6 +261,7 @@ namespace ZweiHander
             //Draws the map
             _blockFactory.Draw();
             _borderManager.Draw();
+            _borderManager2.Draw();
 
             _enemyManager.Draw();
 

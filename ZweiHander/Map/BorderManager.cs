@@ -11,150 +11,154 @@ namespace ZweiHander.Map
     public class BorderManager
     {
         private readonly BlockSprites _blockSprites;
+        private Vector2 _borderPosition;
         public List<Border> Borders { get; private set; } // Stores all borders
-        public BorderManager(BlockSprites blockSprites) 
+        public BorderManager(BlockSprites blockSprites, Vector2 borderPosition) 
         {
             _blockSprites = blockSprites;
+            _borderPosition = borderPosition;
             Borders = new List<Border>();
         }
 
-        public Border CreateBorder(WallName name)
+        public Border CreateWall(WallName name)
         {
             ISprite sprite;
-            Vector2 position = new Vector2(0, 0);
+            Vector2 wallPosition = new Vector2(0, 0);
+            int x = (int)_borderPosition.X;
+            int y = (int)_borderPosition.Y;
             switch (name)
             {
                 // Wall corners
                 case WallName.WallNorthLeft:
-                    sprite = _blockSprites.WallNorthLeft();         
-                    position = new Vector2(159, 175);
+                    sprite = _blockSprites.WallNorthLeft();
+                    wallPosition = new Vector2(x+112, y);//159 175
                     break;  
                 case WallName.WallNorthRight:
                     sprite = _blockSprites.WallNorthRight();
-                    position = new Vector2(383, 175);
+                    wallPosition = new Vector2(x+336, y);//383 175
                     break;
                 case WallName.WallSouthLeft:
                     sprite = _blockSprites.WallSouthLeft();
-                    position = new Vector2(159, 463);
+                    wallPosition = new Vector2(x+112, y+288);//159 463
                     break;
                 case WallName.WallSouthRight:
                     sprite = _blockSprites.WallSouthRight();
-                    position = new Vector2(383, 463);
+                    wallPosition = new Vector2(x+336, y+288);//383 463
                     break;
                 case WallName.WallWestTop:
                     sprite = _blockSprites.WallWestTop();
-                    position = new Vector2(47, 215);
+                    wallPosition = new Vector2(x, y+40);//47 215
                     break;
                 case WallName.WallWestBottom:
                     sprite = _blockSprites.WallWestBottom();
-                    position = new Vector2(47, 423);
+                    wallPosition = new Vector2(x, y+248);//47 423
                     break;
                 case WallName.WallEastTop:
                     sprite = _blockSprites.WallEastTop();
-                    position = new Vector2(495, 215);
+                    wallPosition = new Vector2(x+448, y+40);//495 215
                     break;
                 case WallName.WallEastBottom:
                     sprite = _blockSprites.WallEastBottom();
-                    position = new Vector2(495, 423);
+                    wallPosition = new Vector2(x+448, y+248);//495 423
                     break;
 
                 // Wall tile (center) variations
                 case WallName.WallTileNorth:
                     sprite = _blockSprites.WallTileNorth();
-                    position = new Vector2(271, 175);
+                    wallPosition = new Vector2(x+224, y);//271 175
                     break;
                 case WallName.WallTileWest:
                     sprite = _blockSprites.WallTileWest();
-                    position = new Vector2(47, 319);
+                    wallPosition = new Vector2(x, y+144);//47 319
                     break;
                 case WallName.WallTileEast:
                     sprite = _blockSprites.WallTileEast();
-                    position = new Vector2(495, 319);
+                    wallPosition = new Vector2(x+448, y+144);//495 319
                     break;
                 case WallName.WallTileSouth:
                     sprite = _blockSprites.WallTileSouth();
-                    position = new Vector2(271, 463);
+                    wallPosition = new Vector2(x+224, y+288);//271 463
                     break;
 
                 // Entrance tiles
                 case WallName.EntranceTileNorth:    
                     sprite = _blockSprites.EntranceTileNorth();
-                    position = new Vector2(271, 175);
+                    wallPosition = new Vector2(x+224, y);//271 175
                     break;
                 case WallName.EntranceTileWest:
                     sprite = _blockSprites.EntranceTileWest();
-                    position = new Vector2(47, 319);
+                    wallPosition = new Vector2(x, y+144);//47 319
                     break;
                 case WallName.EntranceTileEast:
                     sprite = _blockSprites.EntranceTileEast();
-                    position = new Vector2(495, 319);
+                    wallPosition = new Vector2(x+448, y+144);//495 319
                     break;
                 case WallName.EntranceTileSouth:
                     sprite = _blockSprites.EntranceTileSouth();
-                    position = new Vector2(271, 463);
+                    wallPosition = new Vector2(x+224, y+288);//271 463
                     break;
 
                 // Locked door tiles
                 case WallName.LockedDoorTileNorth:
                     sprite = _blockSprites.LockedDoorTileNorth();
-                    position = new Vector2(271, 175);
+                    wallPosition = new Vector2(x+224, y);//271 175
                     break;
                 case WallName.LockedDoorTileWest:
                     sprite = _blockSprites.LockedDoorTileWest();
-                    position = new Vector2(47, 319);
+                    wallPosition = new Vector2(x, y + 144);//47 319
                     break;
                 case WallName.LockedDoorTileEast:
                     sprite = _blockSprites.LockedDoorTileEast();
-                    position = new Vector2(495, 319);
+                    wallPosition = new Vector2(x + 448, y + 144);//495 319
                     break;
                 case WallName.LockedDoorTileSouth:
                     sprite = _blockSprites.LockedDoorTileSouth();
-                    position = new Vector2(271, 463);
+                    wallPosition = new Vector2(x + 224, y + 288);//271 463
                     break;
 
                 // Door tiles
                 case WallName.DoorTileNorth:
                     sprite = _blockSprites.DoorTileNorth();
-                    position = new Vector2(271, 175);
+                    wallPosition = new Vector2(271, 175);//271 175
                     break;
                 case WallName.DoorTileWest:
                     sprite = _blockSprites.DoorTileWest();
-                    position = new Vector2(47, 319);
+                    wallPosition = new Vector2(x, y + 144);//47 319
                     break;
                 case WallName.DoorTileEast:
                     sprite = _blockSprites.DoorTileEast();
-                    position = new Vector2(495, 319);
+                    wallPosition = new Vector2(x + 448, y + 144);//495 319
                     break;
                 case WallName.DoorTileSouth:
                     sprite = _blockSprites.DoorTileSouth();
-                    position = new Vector2(271, 463);
+                    wallPosition = new Vector2(x + 224, y + 288);//271 463
                     break;
 
                 // Hole-in-wall tiles
                 case WallName.HoleInWallNorth:
                     sprite = _blockSprites.HoleInWallNorth();
-                    position = new Vector2(271, 175);
+                    wallPosition = new Vector2(x + 224, y);//271 175
                     break;
                 case WallName.HoleInWallWest:
                     sprite = _blockSprites.HoleInWallWest();
-                    position = new Vector2(47, 319);
+                    wallPosition = new Vector2(x, y + 144);//47 319
                     break;
                 case WallName.HoleInWallEast:
                     sprite = _blockSprites.HoleInWallEast();
-                    position = new Vector2(495, 319);
+                    wallPosition = new Vector2(x + 448, y + 144);//495 319
                     break;
                 case WallName.HoleInWallSouth:
                     sprite = _blockSprites.HoleInWallSouth();
-                    position = new Vector2(271, 463);
+                    wallPosition = new Vector2(x + 224, y + 288);//271 463
                     break;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(name), $"Unhandled wall name: {name}");
             }
-            Border newBorder = new Border(name, WallType.Solid, position, sprite);
-            Borders.Add(newBorder);
+            Border newWall = new Border(name, WallType.Solid, wallPosition, sprite);
+            Borders.Add(newWall);
 
-            return newBorder;
+            return newWall;
         }
         public void Draw()
         {
