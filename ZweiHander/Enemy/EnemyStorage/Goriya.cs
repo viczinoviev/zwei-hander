@@ -5,6 +5,8 @@ using ZweiHander.Graphics;
 using System;
 using ZweiHander.Graphics.SpriteStorages;
 using ZweiHander.CollisionFiles;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ZweiHander.Enemy.EnemyStorage;
 
@@ -17,6 +19,11 @@ public class Goriya : IEnemy
     /// <summary>
     /// Projectile for this enemy
     /// </summary>
+    
+    /// <summary>
+    /// List of Sprites for this enemy
+    /// <summary>
+    public List<ISprite> _sprites = new List<ISprite>();
     IItem _currentProjectile;
     /// <summary>
     /// Holds all sprites for this enemy
@@ -44,11 +51,17 @@ private int Thrower = 1;
     {
         _projectileManager = projectileManager;
         _enemySprites = enemySprites;
-        Sprite = _enemySprites.GoriyaUp();
+        //create list of all sprites associated with the enemy to swap with
+        _sprites.Add(_enemySprites.GoriyaUp());
+        _sprites.Add(_enemySprites.GoriyaRight());
+        _sprites.Add(_enemySprites.GoriyaDown());
+        _sprites.Add(_enemySprites.GoriyaLeft());
+        Sprite = _sprites[0];
         _collisionHandler = new EnemyCollisionHandler(this);
     }
     public virtual void Update(GameTime time)
     {
+        Sprite = _sprites[Face];
         //Only move if not currrently throwing a projectile
         if (Thrower != 2)
         {
@@ -57,65 +70,12 @@ private int Thrower = 1;
             //Move according to current direction faced
             if (mov > 3)
             {
-                Position = EnemyHelper.BehaveFromFace(this,1,0);
+                Position = EnemyHelper.BehaveFromFace(this, 1, 0);
             }
             //Change face and sprite to new value according to the randomized value
             else
             {
-                switch (mov)
-                {
-                    case 0:
-                        if (Position.Y > 40)
-                        {
-                            Position = new Vector2(Position.X, Position.Y - 1);
-                            Sprite = _enemySprites.GoriyaUp();
-                            Face = 0;
-                        }
-                        else
-                        {
-                            goto case 2;
-                        }
-                        break;
-                    case 1:
-                        if (Position.X < 750)
-                        {
-                            Position = new Vector2(Position.X + 1, Position.Y);
-                            Sprite = _enemySprites.GoriyaRight();
-                            Face = 1;
-                        }
-                        else
-                        {
-                            goto case 3;
-                        }
-                        break;
-                    case 2:
-                        if (Position.Y < 400)
-                        {
-                            Position = new Vector2(Position.X, Position.Y + 1);
-                            Sprite = _enemySprites.GoriyaDown();
-                            Face = 2;
-                        }
-                        else
-                        {
-                            goto case 0;
-                        }
-                        break;
-                    case 3:
-                        if (Position.X > 40)
-                        {
-                            Position = new Vector2(Position.X - 1, Position.Y);
-                            Sprite = _enemySprites.GoriyaLeft();
-                            Face = 3;
-                        }
-                        else
-                        {
-                            goto case 1;
-                        }
-                        break;
-                    default:
-                        //no movement  
-                        break;
-                }
+                Face = mov;
             }
         }
         //Randomize attacking (projectile throwing)

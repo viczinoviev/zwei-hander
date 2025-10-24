@@ -4,6 +4,7 @@ using ZweiHander.Graphics;
 using System;
 using ZweiHander.Graphics.SpriteStorages;
 using ZweiHander.CollisionFiles;
+using System.Collections.Generic;
 
 namespace ZweiHander.Enemy.EnemyStorage;
 
@@ -16,6 +17,11 @@ public class Wallmaster : IEnemy
     /// <summary>
     /// Holds all sprites for this enemy
     /// </summary>
+    
+    /// <summary>
+    /// List of Sprites for this enemy
+    /// <summary>
+    public List<ISprite> _sprites = new List<ISprite>();
     private readonly EnemySprites _enemySprites;
 
     public Vector2 Position { get; set; } = default;
@@ -34,11 +40,17 @@ public class Wallmaster : IEnemy
     public Wallmaster(EnemySprites enemySprites)
     {
         _enemySprites = enemySprites;
-        Sprite = _enemySprites.WallmasterUp();
+        _sprites.Add(_enemySprites.WallmasterUp());
+        _sprites.Add(_enemySprites.WallmasterDown());
+        Sprite = _sprites[0];
         _collisionHandler = new EnemyCollisionHandler(this);
     }
     public virtual void Update(GameTime time)
     {
+        if (Face == 0 || Face == 2)
+        {
+            Sprite = _sprites[Face / 2];
+        }
         //Randomize  movement
         int mov = rnd.Next(200);
         //Move according to current direction faced
@@ -49,58 +61,7 @@ public class Wallmaster : IEnemy
         //Change face and sprite to new value according to the randomized value
         else
         {
-            switch (mov)
-            {
-                case 0:
-                    if (Position.Y > 40)
-                    {
-                        Position = new Vector2(Position.X, Position.Y - 1);
-                        Sprite = _enemySprites.WallmasterUp();
-                        Face = 0;
-                    }
-                    else
-                    {
-                        goto case 2;
-                    }
-                    break;
-                case 1:
-                    if (Position.X < 750)
-                    {
-                        Position = new Vector2(Position.X + 1, Position.Y);
-                        Face = 1;
-                    }
-                    else
-                    {
-                        goto case 3;
-                    }
-                    break;
-                case 2:
-                    if (Position.Y < 400)
-                    {
-                        Position = new Vector2(Position.X, Position.Y + 1);
-                        Sprite = _enemySprites.WallmasterDown();
-                        Face = 2;
-                    }
-                    else
-                    {
-                        goto case 0;
-                    }
-                    break;
-                case 3:
-                    if (Position.X > 40)
-                    {
-                        Position = new Vector2(Position.X - 1, Position.Y);
-                        Face = 3;
-                    }
-                    else
-                    {
-                        goto case 1;
-                    }
-                    break;
-                default:
-                    //no movement  
-                    break;
-            }
+            Face = mov;
         }
         _collisionHandler.UpdateCollisionBox();
         Sprite.Update(time);

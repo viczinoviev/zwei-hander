@@ -4,6 +4,7 @@ using ZweiHander.Graphics;
 using System;
 using ZweiHander.Graphics.SpriteStorages;
 using ZweiHander.CollisionFiles;
+using System.Collections.Generic;
 
 namespace ZweiHander.Enemy.EnemyStorage;
 
@@ -16,6 +17,10 @@ public class Rope : IEnemy
     /// <summary>
     /// Holds all sprites for this enemy
     /// </summary>
+        /// <summary>
+    /// List of Sprites for this enemy
+    /// <summary>
+    public List<ISprite> _sprites = new List<ISprite>();
     private readonly EnemySprites _enemySprites;
 
     public Vector2 Position { get; set; } = default;
@@ -34,12 +39,18 @@ public class Rope : IEnemy
     public Rope(EnemySprites enemySprites)
     {
         _enemySprites = enemySprites;
-        Sprite = _enemySprites.RopeLeft();
-        Face = 3;
+        _sprites.Add(_enemySprites.RopeRight());
+        _sprites.Add(_enemySprites.RopeLeft());
+        Sprite = _sprites[0];
+        Face = 1;
         _collisionHandler = new EnemyCollisionHandler(this);
     }
     public virtual void Update(GameTime time)
     {
+        if (Face == 1 || Face == 3)
+        {
+            Sprite = _sprites[(Face * 2 + 1) % 3];
+        }
         //Randomize  movement
         int mov = rnd.Next(200);
         //Move according to current direction faced
@@ -50,58 +61,7 @@ public class Rope : IEnemy
         //Change face and sprite to new value according to the randomized value
         else
         {
-            switch (mov)
-            {
-                case 0:
-                    if (Position.Y > 40)
-                    {
-                        Position = new Vector2(Position.X, Position.Y - 1);
-                        Face = 0;
-                    }
-                    else
-                    {
-                        goto case 2;
-                    }
-                    break;
-                case 1:
-                    if (Position.X < 750)
-                    {
-                        Position = new Vector2(Position.X + 1, Position.Y);
-                        Sprite = _enemySprites.RopeRight();
-                        Face = 1;
-                    }
-                    else
-                    {
-                        goto case 3;
-                    }
-                    break;
-                case 2:
-                    if (Position.Y < 400)
-                    {
-                        Position = new Vector2(Position.X, Position.Y + 1);
-                        Face = 2;
-                    }
-                    else
-                    {
-                        goto case 0;
-                    }
-                    break;
-                case 3:
-                    if (Position.X > 40)
-                    {
-                        Position = new Vector2(Position.X - 1, Position.Y);
-                        Sprite = _enemySprites.RopeLeft();
-                        Face = 3;
-                    }
-                    else
-                    {
-                        goto case 1;
-                    }
-                    break;
-                default:
-                    //no movement  
-                    break;
-            }
+            Face = mov;
         }
         _collisionHandler.UpdateCollisionBox();
         Sprite.Update(time);

@@ -4,6 +4,7 @@ using ZweiHander.Graphics;
 using System;
 using ZweiHander.Graphics.SpriteStorages;
 using ZweiHander.CollisionFiles;
+using System.Collections.Generic;
 
 namespace ZweiHander.Enemy.EnemyStorage;
 
@@ -13,6 +14,8 @@ namespace ZweiHander.Enemy.EnemyStorage;
 public class Darknut : IEnemy
 {
     public ISprite Sprite { get; set; } = default;
+
+    private readonly List<ISprite> _sprites = new List<ISprite>();
     /// <summary>
     /// Holds all sprites for this enemy
     /// </summary>
@@ -34,11 +37,18 @@ public class Darknut : IEnemy
     public Darknut(EnemySprites enemySprites)
     {
         _enemySprites = enemySprites;
-        Sprite = _enemySprites.DarknutMoveUp();
+        //create list of all sprites associated with the enemy to swap with
+        _sprites.Add(_enemySprites.DarknutMoveUp());
+        _sprites.Add(_enemySprites.DarknutMoveRight());
+        _sprites.Add(_enemySprites.DarknutMoveDown());
+        _sprites.Add(_enemySprites.DarknutMoveLeft());
+        Sprite = _sprites[0];
         _collisionHandler = new EnemyCollisionHandler(this);
     }
     public virtual void Update(GameTime time)
     {
+        //Change sprite to correct sprite
+        Sprite = _sprites[Face];
         //Randomize  movement
         int mov = rnd.Next(200);
         //Move according to current direction faced
@@ -49,28 +59,7 @@ public class Darknut : IEnemy
         //Change face and sprite to new value according to the randomized value
         else
         {
-            switch (mov)
-            {
-                case 0:
-                        Sprite = _enemySprites.DarknutMoveUp();
-                        Face = 0;
-                    break;
-                case 1:
-                        Sprite = _enemySprites.DarknutMoveRight();
-                        Face = 1;
-                    break;
-                case 2:
-                        Sprite = _enemySprites.DarknutMoveDown();
-                        Face = 2;
-                    break;
-                case 3:
-                        Sprite = _enemySprites.DarknutMoveLeft();
-                        Face = 3;
-                    break;
-                default:
-                    //no movement  
-                    break;
-            }
+            Face = mov;
         }
         _collisionHandler.UpdateCollisionBox();
         Sprite.Update(time);

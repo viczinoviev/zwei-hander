@@ -23,7 +23,7 @@ public interface IEnemy
 
 
     /// <summary>
-    /// The sprite associated with this Enemy.
+    /// The current sprite associated with this Enemy.
     /// </summary>
     public ISprite Sprite { get; set; }
 

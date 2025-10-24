@@ -58,40 +58,10 @@ public class Aquamentus : IEnemy
             {
                 Position = EnemyHelper.BehaveFromFace(this,1,0);
             }
-            //Change face and sprite to new value according to the randomized value
+            //Change face to new value according to the randomized value
             else
             {
-                switch (mov)
-                {
-                    case 0:            
-                            goto case 1;
-                    case 1:
-                        if (Position.X < 750)
-                        {
-                            Position = new Vector2(Position.X + 1, Position.Y);
-                            Face = 1;
-                        }
-                        else
-                        {
-                            goto case 3;
-                        }
-                        break;
-                    case 2:
-                        goto case 3;
-                    case 3:
-                        if (Position.X > 40)
-                        {
-                            Position = new Vector2(Position.X - 1, Position.Y);
-                            Face = 3;
-                        }
-                        else
-                        {
-                            goto case 1;
-                        }
-                        break;
-                    default:
-                        break;
-                }
+            Face = mov;
             }
         
         //Randomize attacking (projectile throwing)
