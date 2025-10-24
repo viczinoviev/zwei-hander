@@ -8,6 +8,7 @@ namespace ZweiHander.CollisionFiles
     public abstract class CollisionHandlerAbstract : ICollisionHandler
     {
         public Rectangle CollisionBox { get; set; }
+        public bool Dead { get; set; }
 
         protected CollisionHandlerAbstract()
         {

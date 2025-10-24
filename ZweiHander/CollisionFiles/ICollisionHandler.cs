@@ -13,6 +13,8 @@ namespace ZweiHander.CollisionFiles
         /// </summary>
         Rectangle CollisionBox { get; set; }
 
+        public bool Dead { get; set; }
+
         /// <summary>
         /// What happens when this thing hits something else, action can depend on the type of the other collider as well as collision information
         /// </summary>

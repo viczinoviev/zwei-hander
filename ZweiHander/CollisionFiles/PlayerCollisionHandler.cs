@@ -16,6 +16,8 @@ namespace ZweiHander.CollisionFiles
         /// </summary>
         public readonly Player _player;
 
+    public bool Dead  = false;
+
         /// <summary>
         /// How big the player's collision box is (for now a rectangle 24 by 24 px)
         /// </summary>
