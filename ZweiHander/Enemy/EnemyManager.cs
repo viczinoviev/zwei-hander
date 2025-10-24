@@ -45,7 +45,7 @@ public class EnemyManager(EnemySprites enemysprites, ItemManager projectileManag
     /// <param name="face">The enemies intial facing direction</param>
     /// <param name="throw">Whether or not the enemy shoots projectiles/is shooting</param> 
     /// <returns>The desired item.</returns>
-    public IEnemy GetEnemy(String enemyName, Vector2 position = default, int face = default, int thrower = default)
+    public IEnemy GetEnemy(String enemyName, Vector2 position = default, int face = default)
     {
         IEnemy enemy = null;
         switch (enemyName)

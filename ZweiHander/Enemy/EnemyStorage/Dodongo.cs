@@ -12,13 +12,10 @@ namespace ZweiHander.Enemy.EnemyStorage;
 /// </summary>
 public class Dodongo : IEnemy
 {
+    public ISprite Sprite { get; set; } = default;
     /// <summary>
-    /// The sprite associated with this boss.
+    /// Holds all sprites for this boss
     /// </summary>
-    public ISprite _sprite { get; set; } = default;
-/// <summary>
-/// Holds all sprites for this boss
-/// </summary>
     private readonly BossSprites _bossSprites;
 
     public Vector2 Position { get; set; } = default;
@@ -29,16 +26,16 @@ public class Dodongo : IEnemy
 
     readonly EnemyCollisionHandler _collisionHandler;
 
-/// <summary>
-/// Random number generator to randomize boss behavior
-/// </summary>
+    /// <summary>
+    /// Random number generator to randomize boss behavior
+    /// </summary>
     readonly Random rnd = new();
 
 
     public Dodongo(BossSprites bossSprites)
     {
         _bossSprites = bossSprites;
-        _sprite = _bossSprites.DodongoUp();
+        Sprite = _bossSprites.DodongoUp();
         _collisionHandler = new EnemyCollisionHandler(this);
     }
     public virtual void Update(GameTime time)
@@ -59,7 +56,7 @@ public class Dodongo : IEnemy
                     if (Position.Y > 40)
                     {
                         Position = new Vector2(Position.X, Position.Y - 1);
-                        _sprite = _bossSprites.DodongoUp();
+                        Sprite = _bossSprites.DodongoUp();
                         Face = 0;
                     }
                     else
@@ -71,7 +68,7 @@ public class Dodongo : IEnemy
                     if (Position.X < 750)
                     {
                         Position = new Vector2(Position.X + 1, Position.Y);
-                        _sprite = _bossSprites.DodongoRight();
+                        Sprite = _bossSprites.DodongoRight();
                         Face = 1;
                     }
                     else
@@ -83,7 +80,7 @@ public class Dodongo : IEnemy
                     if (Position.Y < 400)
                     {
                         Position = new Vector2(Position.X, Position.Y + 1);
-                        _sprite = _bossSprites.DodongoDown();
+                        Sprite = _bossSprites.DodongoDown();
                         Face = 2;
                     }
                     else
@@ -95,7 +92,7 @@ public class Dodongo : IEnemy
                     if (Position.X > 40)
                     {
                         Position = new Vector2(Position.X - 1, Position.Y);
-                        _sprite = _bossSprites.DodongoLeft();
+                        Sprite = _bossSprites.DodongoLeft();
                         Face = 3;
                     }
                     else
@@ -109,7 +106,7 @@ public class Dodongo : IEnemy
             }
         }
         _collisionHandler.UpdateCollisionBox();
-        _sprite.Update(time);
+        Sprite.Update(time);
         }
 
 
@@ -117,15 +114,15 @@ public class Dodongo : IEnemy
 
     public void Draw()
     {
-        _sprite.Draw(Position);
+        Sprite.Draw(Position);
     }
 public Rectangle GetCollisionBox()
     {
         return new Rectangle(
-                (int)(Position.X - _sprite.Width),
-                (int)(Position.Y - _sprite.Height),
-                _sprite.Width + 15,
-                _sprite.Height + 15
+                (int)(Position.X - Sprite.Width),
+                (int)(Position.Y - Sprite.Height),
+                Sprite.Width + 15,
+                Sprite.Height + 15
             );
     }
 

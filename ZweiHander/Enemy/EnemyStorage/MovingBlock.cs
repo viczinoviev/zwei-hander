@@ -7,7 +7,7 @@ namespace ZweiHander.Enemy.EnemyStorage
 {
     public class MovingBlock : IEnemy
     {
-        protected ISprite _sprite;
+        public ISprite Sprite { get; set; }
         private readonly EnemySprites _enemySprites;
 
         private Vector2 _startPosition;
@@ -33,7 +33,7 @@ namespace ZweiHander.Enemy.EnemyStorage
             Face = 0;
             Thrower = 0;
 
-            _sprite = _enemySprites.Gel();
+            Sprite = _enemySprites.Gel();
         }
 
         public MovingBlock(EnemySprites enemySprites, Vector2 startPos, Vector2 endPos, float moveTime)
@@ -50,7 +50,7 @@ namespace ZweiHander.Enemy.EnemyStorage
             Face = 0;
             Thrower = 0;
 
-            _sprite = _enemySprites.Gel();
+            Sprite = _enemySprites.Gel();
         }
 
         public void SetMovement(Vector2 startPos, Vector2 endPos, float timeToMove)
@@ -88,7 +88,7 @@ namespace ZweiHander.Enemy.EnemyStorage
                 Position = Vector2.Lerp(_endPosition, _startPosition, progress);
             }
 
-            _sprite.Update(gameTime);
+            Sprite.Update(gameTime);
         }
 
         public void Draw()
@@ -96,12 +96,12 @@ namespace ZweiHander.Enemy.EnemyStorage
             if (!_isConfigured)
                 return;
 
-            _sprite.Draw(Position);
+            Sprite.Draw(Position);
         }
 
 		public Rectangle GetCollisionBox()
 		{
-			return new Rectangle((int)Position.X, (int)Position.Y, _sprite.Width, _sprite.Height);
+			return new Rectangle((int)Position.X, (int)Position.Y, Sprite.Width, Sprite.Height);
 		}
 	}
 }
