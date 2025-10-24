@@ -12,13 +12,10 @@ namespace ZweiHander.Enemy.EnemyStorage;
 /// </summary>
 public class Wallmaster : IEnemy
 {
+    public ISprite Sprite { get; set; } = default;
     /// <summary>
-    /// The sprite associated with this Enemy.
+    /// Holds all sprites for this enemy
     /// </summary>
-    public ISprite _sprite { get; set; } = default;
-/// <summary>
-/// Holds all sprites for this enemy
-/// </summary>
     private readonly EnemySprites _enemySprites;
 
     public Vector2 Position { get; set; } = default;
@@ -28,16 +25,16 @@ public class Wallmaster : IEnemy
 
     readonly EnemyCollisionHandler _collisionHandler;
 
-/// <summary>
-/// Random number generator to randomize enemy behavior
-/// </summary>
+    /// <summary>
+    /// Random number generator to randomize enemy behavior
+    /// </summary>
     readonly Random rnd = new();
 
 
     public Wallmaster(EnemySprites enemySprites)
     {
         _enemySprites = enemySprites;
-        _sprite = _enemySprites.WallmasterUp();
+        Sprite = _enemySprites.WallmasterUp();
         _collisionHandler = new EnemyCollisionHandler(this);
     }
     public virtual void Update(GameTime time)
@@ -58,7 +55,7 @@ public class Wallmaster : IEnemy
                     if (Position.Y > 40)
                     {
                         Position = new Vector2(Position.X, Position.Y - 1);
-                        _sprite = _enemySprites.WallmasterUp();
+                        Sprite = _enemySprites.WallmasterUp();
                         Face = 0;
                     }
                     else
@@ -81,7 +78,7 @@ public class Wallmaster : IEnemy
                     if (Position.Y < 400)
                     {
                         Position = new Vector2(Position.X, Position.Y + 1);
-                        _sprite = _enemySprites.WallmasterDown();
+                        Sprite = _enemySprites.WallmasterDown();
                         Face = 2;
                     }
                     else
@@ -106,7 +103,7 @@ public class Wallmaster : IEnemy
             }
         }
         _collisionHandler.UpdateCollisionBox();
-        _sprite.Update(time);
+        Sprite.Update(time);
         }
 
 
@@ -114,15 +111,15 @@ public class Wallmaster : IEnemy
 
     public void Draw()
     {
-        _sprite.Draw(Position);
+        Sprite.Draw(Position);
     }
     public Rectangle GetCollisionBox()
     {
         return new Rectangle(
-                (int)(Position.X - _sprite.Width),
-                (int)(Position.Y - _sprite.Height),
-                _sprite.Width + 15,
-                _sprite.Height + 15
+                (int)(Position.X - Sprite.Width),
+                (int)(Position.Y - Sprite.Height),
+                Sprite.Width + 15,
+                Sprite.Height + 15
             );
     }
 }

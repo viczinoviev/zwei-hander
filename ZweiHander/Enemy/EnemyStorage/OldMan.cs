@@ -12,13 +12,11 @@ namespace ZweiHander.Enemy.EnemyStorage;
 /// </summary>
 public class OldMan : IEnemy
 {
+    public ISprite Sprite { get; set; } = default;
+
     /// <summary>
-    /// The sprite associated with this Enemy.
+    /// Holds all sprites for this NPC
     /// </summary>
-    public ISprite _sprite { get; set; } = default;
-/// <summary>
-/// Holds all sprites for this NPC
-/// </summary>
     private readonly NPCSprites _npcSprites;
 
     public Vector2 Position { get; set; } = default;
@@ -31,13 +29,13 @@ readonly EnemyCollisionHandler _collisionHandler;
     public OldMan(NPCSprites npcSprites)
     {
         _npcSprites = npcSprites;
-        _sprite = _npcSprites.OldMan();
+        Sprite = _npcSprites.OldMan();
         _collisionHandler = new EnemyCollisionHandler(this);
     }
     public virtual void Update(GameTime time)
     {
         _collisionHandler.UpdateCollisionBox();
-        _sprite.Update(time);
+        Sprite.Update(time);
         }
 
 
@@ -45,15 +43,15 @@ readonly EnemyCollisionHandler _collisionHandler;
 
     public void Draw()
     {
-        _sprite.Draw(Position);
+        Sprite.Draw(Position);
     }
     public Rectangle GetCollisionBox()
     {
         return new Rectangle(
-                (int)(Position.X - _sprite.Width),
-                (int)(Position.Y - _sprite.Height),
-                _sprite.Width + 15,
-                _sprite.Height + 15
+                (int)(Position.X - Sprite.Width),
+                (int)(Position.Y - Sprite.Height),
+                Sprite.Width + 15,
+                Sprite.Height + 15
             );
     }
 }

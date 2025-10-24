@@ -12,13 +12,10 @@ namespace ZweiHander.Enemy.EnemyStorage;
 /// </summary>
 public class Gel : IEnemy
 {
+    public ISprite Sprite { get; set; } = default;
     /// <summary>
-    /// The sprite associated with this Enemy.
+    /// Holds all sprites for this enemy
     /// </summary>
-    public ISprite _sprite { get; set; } = default;
-/// <summary>
-/// Holds all sprites for this enemy
-/// </summary>
     private readonly EnemySprites _enemySprites;
 
     public Vector2 Position { get; set; } = default;
@@ -28,16 +25,16 @@ public class Gel : IEnemy
 
     readonly EnemyCollisionHandler _collisionHandler;
 
-/// <summary>
-/// Random number generator to randomize enemy behavior
-/// </summary>
+    /// <summary>
+    /// Random number generator to randomize enemy behavior
+    /// </summary>
     readonly Random rnd = new();
 
 
     public Gel(EnemySprites enemySprites)
     {
         _enemySprites = enemySprites;
-        _sprite = _enemySprites.Gel();
+        Sprite = _enemySprites.Gel();
         _collisionHandler = new EnemyCollisionHandler(this);
     }
     public virtual void Update(GameTime time)
@@ -55,7 +52,7 @@ public class Gel : IEnemy
             Face = mov;
         }
         _collisionHandler.UpdateCollisionBox();
-        _sprite.Update(time);
+        Sprite.Update(time);
         }
 
 
@@ -63,15 +60,15 @@ public class Gel : IEnemy
 
     public void Draw()
     {
-        _sprite.Draw(Position);
+        Sprite.Draw(Position);
     }
     public Rectangle GetCollisionBox()
     {
         return new Rectangle(
-                (int)(Position.X - _sprite.Width/2),
-                (int)(Position.Y - _sprite.Height/2),
-                _sprite.Width,
-                _sprite.Height
+                (int)(Position.X - Sprite.Width/2),
+                (int)(Position.Y - Sprite.Height/2),
+                Sprite.Width,
+                Sprite.Height
             );
     }
 }

@@ -10,11 +10,9 @@ public class SwordItem : AbstractItem
     {
         if (defaultProperties)
         {
-            Properties = [
-                ItemProperty.CanDamageEnemy
-            ];
+            Properties = ItemProperty.CanDamageEnemy;
         }
-        _deathTime = 0.1;
+        DeathTime = 0.1;
     }
 
     public override void OnDeath(GameTime gameTime)

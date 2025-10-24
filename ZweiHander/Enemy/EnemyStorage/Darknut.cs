@@ -12,13 +12,10 @@ namespace ZweiHander.Enemy.EnemyStorage;
 /// </summary>
 public class Darknut : IEnemy
 {
+    public ISprite Sprite { get; set; } = default;
     /// <summary>
-    /// The sprite associated with this Enemy.
+    /// Holds all sprites for this enemy
     /// </summary>
-    public ISprite _sprite { get; set; } = default;
-/// <summary>
-/// Holds all sprites for this enemy
-/// </summary>
     private readonly EnemySprites _enemySprites;
 
     public Vector2 Position { get; set; } = default;
@@ -28,16 +25,16 @@ public class Darknut : IEnemy
 
     readonly EnemyCollisionHandler _collisionHandler;
 
-/// <summary>
-/// Random number generator to randomize enemy behavior
-/// </summary>
+    /// <summary>
+    /// Random number generator to randomize enemy behavior
+    /// </summary>
     readonly Random rnd = new();
 
 
     public Darknut(EnemySprites enemySprites)
     {
         _enemySprites = enemySprites;
-        _sprite = _enemySprites.DarknutMoveUp();
+        Sprite = _enemySprites.DarknutMoveUp();
         _collisionHandler = new EnemyCollisionHandler(this);
     }
     public virtual void Update(GameTime time)
@@ -55,19 +52,19 @@ public class Darknut : IEnemy
             switch (mov)
             {
                 case 0:
-                        _sprite = _enemySprites.DarknutMoveUp();
+                        Sprite = _enemySprites.DarknutMoveUp();
                         Face = 0;
                     break;
                 case 1:
-                        _sprite = _enemySprites.DarknutMoveRight();
+                        Sprite = _enemySprites.DarknutMoveRight();
                         Face = 1;
                     break;
                 case 2:
-                        _sprite = _enemySprites.DarknutMoveDown();
+                        Sprite = _enemySprites.DarknutMoveDown();
                         Face = 2;
                     break;
                 case 3:
-                        _sprite = _enemySprites.DarknutMoveLeft();
+                        Sprite = _enemySprites.DarknutMoveLeft();
                         Face = 3;
                     break;
                 default:
@@ -76,7 +73,7 @@ public class Darknut : IEnemy
             }
         }
         _collisionHandler.UpdateCollisionBox();
-        _sprite.Update(time);
+        Sprite.Update(time);
         }
 
 
@@ -84,15 +81,15 @@ public class Darknut : IEnemy
 
     public void Draw()
     {
-        _sprite.Draw(Position);
+        Sprite.Draw(Position);
     }
     public Rectangle GetCollisionBox()
     {
         return new Rectangle(
-                (int)(Position.X - _sprite.Width),
-                (int)(Position.Y - _sprite.Height),
-                _sprite.Width + 15,
-                _sprite.Height + 15
+                (int)(Position.X - Sprite.Width),
+                (int)(Position.Y - Sprite.Height),
+                Sprite.Width + 15,
+                Sprite.Height + 15
             );
     }
 }

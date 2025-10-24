@@ -53,32 +53,35 @@ public abstract class AbstractItem : IItem
     /// <summary>
     /// The lifetime (in seconds) left for item; negative means infinite.
     /// </summary>
-    protected double _life;
+    protected double Life { get; set; }
 
     /// <summary>
     /// The time (in seconds) to spend dying.
     /// </summary>
-    protected double _deathTime = 0.00001;
+    protected double DeathTime { get; set; } = 0.00001;
 
     /// <summary>
     /// Handles the collisions for this item.
     /// </summary>
-    protected ItemCollisionHandler _collisionHandler;
+    protected ItemCollisionHandler CollisionHandler { get; set; }
 
     /// <summary>
     /// The properties this item has.
     /// </summary>
-    protected HashSet<ItemProperty> Properties = [];
+    protected ItemProperty Properties { get; set; } = 0x0;
 
-    protected Dictionary<Type, DamageObject> Damage = [];
+    /// <summary>
+    /// How to damage different object types.
+    /// </summary>
+    protected Dictionary<Type, DamageObject> Damage { get; set; } = [];
 
     public AbstractItem(ItemConstructor itemConstructor)
     {
         _sprites = itemConstructor.Sprites;
         _manager = itemConstructor.Manager;
         _itemType = itemConstructor.ItemType;
-        _life = itemConstructor.Life;
-        _collisionHandler = new ItemCollisionHandler(this);
+        Life = itemConstructor.Life;
+        CollisionHandler = new ItemCollisionHandler(this);
     }
 
     public virtual void Update(GameTime time)
@@ -86,12 +89,12 @@ public abstract class AbstractItem : IItem
         float dt = (float)time.ElapsedGameTime.TotalSeconds;
 
         // Life progression
-        if (_life > 0)
+        if (Life > 0)
         {
-            _life -= dt;
-            if (_life < 0)
+            Life -= dt;
+            if (Life < 0)
             {
-                _life = 0;
+                Life = 0;
             }
         } else
         {
@@ -112,7 +115,7 @@ public abstract class AbstractItem : IItem
             Sprite.Rotation = (float)Math.Atan2(Velocity.Y, Velocity.X);
         }
         Sprite.Update(time);
-        _collisionHandler.UpdateCollisionBox();
+        CollisionHandler.UpdateCollisionBox();
     }
 
     public void Draw()
@@ -122,17 +125,17 @@ public abstract class AbstractItem : IItem
 
     public void RemoveProperty(ItemProperty property)
     {
-        Properties.Remove(property);
+        Properties = Properties | property;
     }
 
     public void AddProperty(ItemProperty property)
     {
-        Properties.Add(property);
+        Properties = Properties | property;
     }
 
     public bool HasProperty(ItemProperty property)
     {
-        return Properties.Contains(property);
+        return Properties.HasFlag(property);
     }
 
     public void SetDamage(Type damaged, DamageObject damage)
@@ -147,7 +150,7 @@ public abstract class AbstractItem : IItem
 
     public virtual void OnDeath(GameTime gameTime)
     {
-        _deathTime -= gameTime.ElapsedGameTime.TotalSeconds;
+        DeathTime -= gameTime.ElapsedGameTime.TotalSeconds;
         if (IsDead())
         {
             _manager.ItemTypeCount[_itemType]--; 
@@ -156,13 +159,13 @@ public abstract class AbstractItem : IItem
 
     public bool IsDead()
     {
-        return _deathTime <= 0;
+        return DeathTime <= 0;
     }
 
     public void Kill()
     {
-        _life = 0;
-        _deathTime = 0;
+        Life = 0;
+        DeathTime = 0;
     }
 
     public Rectangle GetHitBox()

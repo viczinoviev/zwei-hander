@@ -12,13 +12,10 @@ namespace ZweiHander.Enemy.EnemyStorage;
 /// </summary>
 public class BladeTrap : IEnemy
 {
+    public ISprite Sprite { get; set; } = default;
     /// <summary>
-    /// The sprite associated with this Enemy.
+    /// Holds all sprites for this enemy
     /// </summary>
-    public ISprite _sprite { get; set; } = default;
-/// <summary>
-/// Holds all sprites for this enemy
-/// </summary>
     private readonly EnemySprites _enemySprites;
     /// <summary>
     /// Time to attack
@@ -47,7 +44,7 @@ public class BladeTrap : IEnemy
     public BladeTrap(EnemySprites enemySprites)
     {
         _enemySprites = enemySprites;
-        _sprite = _enemySprites.Trap();
+        Sprite = _enemySprites.Trap();
         _collisionHandler = new EnemyCollisionHandler(this);
     }
     public virtual void Update(GameTime time)
@@ -91,7 +88,7 @@ public class BladeTrap : IEnemy
             }
         }
         _collisionHandler.UpdateCollisionBox();
-        _sprite.Update(time);
+        Sprite.Update(time);
         }
 
 
@@ -99,15 +96,15 @@ public class BladeTrap : IEnemy
 
     public void Draw()
     {
-        _sprite.Draw(Position);
+        Sprite.Draw(Position);
     }
     public Rectangle GetCollisionBox()
     {
         return new Rectangle(
-                (int)(Position.X - _sprite.Width),
-                (int)(Position.Y - _sprite.Height),
-                _sprite.Width + 15,
-                _sprite.Height + 15
+                (int)(Position.X - Sprite.Width),
+                (int)(Position.Y - Sprite.Height),
+                Sprite.Width + 15,
+                Sprite.Height + 15
             );
     }
 

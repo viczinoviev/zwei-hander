@@ -29,9 +29,9 @@ namespace ZweiHander.CollisionFiles
 
                 UpdateCollisionBox();
             }
-            if (other is ItemCollisionHandler)
+            if (other is ItemCollisionHandler itemCollisionHandler)
             {
-                if(((ItemCollisionHandler)other).Item.HasProperty(ItemProperty.CanDamageEnemy)){
+                if(itemCollisionHandler.HasProperty(ItemProperty.CanDamageEnemy)){
                     _enemy.Hitpoints -= 5;
                     if (_enemy.Hitpoints <= 0)
                     {
@@ -39,9 +39,9 @@ namespace ZweiHander.CollisionFiles
                     }
                 }
             }
-            if (other is PlayerCollisionHandler)
+            if (other is PlayerCollisionHandler playerCollisionHandler)
             {
-                if (((PlayerCollisionHandler)other)._player.CurrentState == PlayerState.Attacking)
+                if (playerCollisionHandler._player.CurrentState == PlayerState.Attacking)
                 {
                     _enemy.Hitpoints -= 5;
                     if (_enemy.Hitpoints <= 0)

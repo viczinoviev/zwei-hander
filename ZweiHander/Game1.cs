@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using System.IO;
+using ZweiHander.Camera;
 using ZweiHander.CollisionFiles;
 using ZweiHander.Commands;
 using ZweiHander.Enemy;
@@ -11,6 +12,7 @@ using ZweiHander.Environment;
 using ZweiHander.Graphics;
 using ZweiHander.Graphics.SpriteStorages;
 using ZweiHander.Items;
+using ZweiHander.Map;
 using ZweiHander.PlayerFiles;
 
 namespace ZweiHander
@@ -20,6 +22,7 @@ namespace ZweiHander
     //Hey team!
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        private Camera.Camera _camera;
 
         private Block _block;
         private IEnemy _enemy;
@@ -44,6 +47,8 @@ namespace ZweiHander
         private BlockFactory _blockFactory;
         private ItemManager _itemManager; //The item that is rotated through
         private ItemManager _projectileManager; //Any projectiles from enemies or player
+        private BorderManager _borderManager;
+        private BorderManager _borderManager2;
 
         //Stores all the blocks created
         private List<Block> _blockList;
@@ -99,6 +104,10 @@ namespace ZweiHander
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            // Initialize camera
+            _camera = new Camera.Camera(GraphicsDevice.Viewport);
+
             //TEST: Link Sprites, Should be part of link initialization
 
             // This line will load all of the sprites into the program through an xml file
@@ -113,6 +122,8 @@ namespace ZweiHander
             _itemManager = new ItemManager(_itemSprites, _treasureSprites, _bossSprites);
             _projectileManager = new ItemManager(_itemSprites, _treasureSprites, _bossSprites);
             _enemyManager = new EnemyManager(_enemySprites, _projectileManager, _bossSprites,_npcSprites);
+            _borderManager = new BorderManager(_blockSprites,new Vector2(47,175));
+            _borderManager2 = new BorderManager(_blockSprites, new Vector2(559, 175));
 
             GameSetUp();
         }
@@ -135,6 +146,34 @@ namespace ZweiHander
             //Create and load the Block List
             string mapPath = Path.Combine(Content.RootDirectory, "Maps","map1.csv"); // CSV location
             _blockList = CsvMapHandler.LoadMap(mapPath, _blockFactory);
+
+            //Border creation for now(Will change shortly)
+            _borderManager.CreateWall(WallName.WallNorthLeft);
+            _borderManager.CreateWall(WallName.WallWestTop); 
+            _borderManager.CreateWall(WallName.LockedDoorTileNorth); 
+            _borderManager.CreateWall(WallName.WallTileWest); 
+            _borderManager.CreateWall(WallName.WallWestBottom); 
+            _borderManager.CreateWall(WallName.WallSouthLeft);
+            _borderManager.CreateWall(WallName.DoorTileSouth); 
+            _borderManager.CreateWall(WallName.WallSouthRight);
+            _borderManager.CreateWall(WallName.WallNorthRight);
+            _borderManager.CreateWall(WallName.WallEastTop);
+            _borderManager.CreateWall(WallName.WallEastBottom);
+            _borderManager.CreateWall(WallName.HoleInWallEast);
+
+            //2nd game room(will move all room creation into a different file later)
+            _borderManager2.CreateWall(WallName.WallNorthLeft);
+            _borderManager2.CreateWall(WallName.WallWestTop);
+            _borderManager2.CreateWall(WallName.LockedDoorTileNorth);
+            _borderManager2.CreateWall(WallName.HoleInWallWest);
+            _borderManager2.CreateWall(WallName.WallWestBottom);
+            _borderManager2.CreateWall(WallName.WallSouthLeft);
+            _borderManager2.CreateWall(WallName.DoorTileSouth);
+            _borderManager2.CreateWall(WallName.WallSouthRight);
+            _borderManager2.CreateWall(WallName.WallNorthRight);
+            _borderManager2.CreateWall(WallName.WallEastTop);
+            _borderManager2.CreateWall(WallName.WallEastBottom);
+            _borderManager2.CreateWall(WallName.WallTileEast);
 
             _itemManager.Clear();
             _items = [
@@ -165,6 +204,8 @@ namespace ZweiHander
                 _enemy = _enemyManager.GetEnemy("OldMan", enemyPosition),
             ];
 
+
+
             _block = _blockList[0];
             _enemy = _enemyList[0];
             ItemIndex = 0;
@@ -172,7 +213,7 @@ namespace ZweiHander
             //END TEST
 
             _gamePlayer = new Player(_linkSprites, _itemSprites, _treasureSprites);
-            _gamePlayer.Position = new Vector2(30, 450);
+            _gamePlayer.Position = new Vector2(450, 350);
 
             //Set up KeyboardController
              _keyboardController = new KeyboardController(_gamePlayer);
@@ -213,6 +254,9 @@ namespace ZweiHander
             // Update collision system - keeps everything synced
             CollisionManager.Instance.Update(gameTime);
 
+            // Update camera to follow player
+            _camera.Update(_gamePlayer.Position);
+
             base.Update(gameTime);
         }
 
@@ -220,11 +264,16 @@ namespace ZweiHander
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+            _spriteBatch.Begin(
+                samplerState: SamplerState.PointClamp,
+                transformMatrix: _camera.GetTransformMatrix() //matrix used to change rendering position based on camera position
+            );
 
 
             //Draws the map
             _blockFactory.Draw();
+            _borderManager.Draw();
+            _borderManager2.Draw();
 
             _enemyManager.Draw();
 
@@ -233,7 +282,7 @@ namespace ZweiHander
 
             _projectileManager.Draw();
 
-            
+
 
             _gamePlayer.Draw(_spriteBatch);
 

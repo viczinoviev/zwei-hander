@@ -13,21 +13,18 @@ namespace ZweiHander.Enemy.EnemyStorage;
 /// </summary>
 public class Goriya : IEnemy
 {
+    public ISprite Sprite { get; set; } = default;
     /// <summary>
-    /// The sprite associated with this Enemy.
+    /// Projectile for this enemy
     /// </summary>
-    public ISprite _sprite { get; set; } = default;
-/// <summary>
-/// Projectile for this enemy
-/// </summary>
     IItem _currentProjectile;
-/// <summary>
-/// Holds all sprites for this enemy
-/// </summary>
+    /// <summary>
+    /// Holds all sprites for this enemy
+    /// </summary>
     private readonly EnemySprites _enemySprites;
-/// <summary>
-/// Manager for the projectile this enemy throws
-/// </summary>
+    /// <summary>
+    /// Manager for the projectile this enemy throws
+    /// </summary>
     private readonly ItemManager _projectileManager;
     public Vector2 Position { get; set; } = default;
 
@@ -47,7 +44,7 @@ private int Thrower = 1;
     {
         _projectileManager = projectileManager;
         _enemySprites = enemySprites;
-        _sprite = _enemySprites.GoriyaUp();
+        Sprite = _enemySprites.GoriyaUp();
         _collisionHandler = new EnemyCollisionHandler(this);
     }
     public virtual void Update(GameTime time)
@@ -71,7 +68,7 @@ private int Thrower = 1;
                         if (Position.Y > 40)
                         {
                             Position = new Vector2(Position.X, Position.Y - 1);
-                            _sprite = _enemySprites.GoriyaUp();
+                            Sprite = _enemySprites.GoriyaUp();
                             Face = 0;
                         }
                         else
@@ -83,7 +80,7 @@ private int Thrower = 1;
                         if (Position.X < 750)
                         {
                             Position = new Vector2(Position.X + 1, Position.Y);
-                            _sprite = _enemySprites.GoriyaRight();
+                            Sprite = _enemySprites.GoriyaRight();
                             Face = 1;
                         }
                         else
@@ -95,7 +92,7 @@ private int Thrower = 1;
                         if (Position.Y < 400)
                         {
                             Position = new Vector2(Position.X, Position.Y + 1);
-                            _sprite = _enemySprites.GoriyaDown();
+                            Sprite = _enemySprites.GoriyaDown();
                             Face = 2;
                         }
                         else
@@ -107,7 +104,7 @@ private int Thrower = 1;
                         if (Position.X > 40)
                         {
                             Position = new Vector2(Position.X - 1, Position.Y);
-                            _sprite = _enemySprites.GoriyaLeft();
+                            Sprite = _enemySprites.GoriyaLeft();
                             Face = 3;
                         }
                         else
@@ -147,7 +144,7 @@ private int Thrower = 1;
             }
         }
         _collisionHandler.UpdateCollisionBox();
-        _sprite.Update(time);
+        Sprite.Update(time);
         _projectileManager.Update(time);
         }
 
@@ -155,16 +152,16 @@ private int Thrower = 1;
 
     public void Draw()
     {
-        _sprite.Draw(Position);
+        Sprite.Draw(Position);
         _projectileManager.Draw();
     }
     public Rectangle GetCollisionBox()
     {
         return new Rectangle(
-                (int)(Position.X - _sprite.Width),
-                (int)(Position.Y - _sprite.Height),
-                _sprite.Width + 15,
-                _sprite.Height + 15
+                (int)(Position.X - Sprite.Width),
+                (int)(Position.Y - Sprite.Height),
+                Sprite.Width + 15,
+                Sprite.Height + 15
             );
     }
 }

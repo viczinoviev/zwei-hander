@@ -9,10 +9,8 @@ public class FireballItem : AbstractItem
     {
         if (defaultProperties)
         {
-            Properties = [
-                ItemProperty.DeleteOnPlayer,
-                ItemProperty.CanDamagePlayer
-            ];
+            Properties = ItemProperty.DeleteOnPlayer
+                | ItemProperty.CanDamagePlayer;
         }
     }
 }
