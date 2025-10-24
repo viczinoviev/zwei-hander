@@ -25,8 +25,8 @@ public class EnemySprites : SpriteFactory
         };
     }
     public ISprite Gel() => new AnimatedSprite(_spriteBatch, _animations["gel-move-animation"]);
-    public ISprite GoriyaDown() => new IdleSprite(_regions["goriya-down"], _spriteBatch);
-    public ISprite GoriyaUp() => new IdleSprite(_regions["goriya-up"], _spriteBatch);
+    public ISprite GoriyaDown() => new FlippingSprites(_regions["goriya-down"], _spriteBatch);
+    public ISprite GoriyaUp() => new FlippingSprites(_regions["goriya-up"], _spriteBatch);
     public ISprite GoriyaRight() => new IdleSprite(_regions["goriya-right"], _spriteBatch);
     public ISprite GoriyaLeft()
     {

@@ -15,7 +15,7 @@ public class BossSprites : SpriteFactory
     }
     public ISprite Aquamentus() => new AnimatedSprite(_spriteBatch, _animations["aquamentus-animation"]);
     public ISprite AquamentusProjectile() => new AnimatedSprite(_spriteBatch, _animations["aquamentus-projectile-animation"]);
-    public ISprite DodongoDown() => new IdleSprite(_regions["dodongo-down"], _spriteBatch);
+    public ISprite DodongoDown() => new FlippingSprites(_regions["dodongo-down"], _spriteBatch);
     public ISprite DodongoDownHurt() => new AnimatedSprite(_spriteBatch, _animations["dodongo-down-hurt"]);
     public ISprite DodongoUp() => new AnimatedSprite(_spriteBatch, _animations["dodongo-move-up-animation"]);
     public ISprite DodongoRight() => new AnimatedSprite(_spriteBatch, _animations["dodongo-move-right-animation"]);
