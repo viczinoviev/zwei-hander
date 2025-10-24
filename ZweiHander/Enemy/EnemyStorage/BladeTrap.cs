@@ -71,7 +71,7 @@ public class BladeTrap : IEnemy
             {
                 attackTime -= dt;
                 Vector2 currentPos = Position;
-                Position = EnemyHelper.BehaveFromFace(this, 3);
+                Position = EnemyHelper.BehaveFromFace(this, 3,0);
                 if (currentPos.X == Position.X && currentPos.Y == Position.Y)
                 {
                     returnTime -= dt * 3;

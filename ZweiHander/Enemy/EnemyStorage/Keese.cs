@@ -49,7 +49,7 @@ public class Keese : IEnemy
         {
             if (Face < 4)
             {
-                Position = EnemyHelper.BehaveFromFace(this, 1);
+                Position = EnemyHelper.BehaveFromFace(this, 1,0);
             }
             else
             {

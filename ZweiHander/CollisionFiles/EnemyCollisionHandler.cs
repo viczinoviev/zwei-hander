@@ -33,7 +33,10 @@ namespace ZweiHander.CollisionFiles
             {
                 if(((ItemCollisionHandler)other).Item.HasProperty(ItemProperty.CanDamageEnemy)){
                     _enemy.Hitpoints -= 5;
-                    
+                    if (_enemy.Hitpoints <= 0)
+                    {
+                        //this.Unsubscribe();
+                    }
                 }
             }
             if (other is PlayerCollisionHandler)
@@ -41,6 +44,10 @@ namespace ZweiHander.CollisionFiles
                 if (((PlayerCollisionHandler)other)._player.CurrentState == PlayerState.Attacking)
                 {
                     _enemy.Hitpoints -= 5;
+                    if (_enemy.Hitpoints <= 0)
+                    {
+                        //this.Unsubscribe();
+                    }
                 } 
                 
             }

@@ -48,7 +48,7 @@ public class Rope : IEnemy
         //Move according to current direction faced
         if (mov > 3)
         {
-            Position = EnemyHelper.BehaveFromFace(this, 1);
+            Position = EnemyHelper.BehaveFromFace(this, 1,0);
         }
         //Change face and sprite to new value according to the randomized value
         else

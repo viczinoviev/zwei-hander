@@ -60,7 +60,7 @@ private int Thrower = 1;
             //Move according to current direction faced
             if (mov > 3)
             {
-                Position = EnemyHelper.BehaveFromFace(this,1);
+                Position = EnemyHelper.BehaveFromFace(this,1,0);
             }
             //Change face and sprite to new value according to the randomized value
             else
@@ -127,12 +127,12 @@ private int Thrower = 1;
         if (attack == 5 && Thrower != 2)
         {
             //Create a projectile
-            _currentProjectile = _projectileManager.GetItem(ItemType.Boomerang, 3, position: Position);
+            _currentProjectile = _projectileManager.GetItem(ItemType.Boomerang, position: Position);
             Thrower = 2;
             //Set up the projectiles behavior
             (float v, float a) = ItemHelper.BoomerangTrajectory(50, 3);
-            _currentProjectile.Velocity = EnemyHelper.BehaveFromFace(this, v);
-            _currentProjectile.Acceleration = EnemyHelper.BehaveFromFace(this, a);
+            _currentProjectile.Velocity = EnemyHelper.BehaveFromFace(this, v,1);
+            _currentProjectile.Acceleration = EnemyHelper.BehaveFromFace(this, a,1);
         }
         else
         {
