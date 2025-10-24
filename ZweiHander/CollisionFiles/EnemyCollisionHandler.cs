@@ -14,7 +14,6 @@ namespace ZweiHander.CollisionFiles
         public readonly IEnemy _enemy;
         private const int COLLISION_SIZE = 24;
 
-        public bool Dead = false;
         public EnemyCollisionHandler(IEnemy enemy)
         {
             _enemy = enemy;
