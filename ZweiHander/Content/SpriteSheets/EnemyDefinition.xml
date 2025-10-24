@@ -14,8 +14,8 @@
 		<!-- Goriya -->
 		<Region name="goriya-down" x="222" y="11" width="16" height="16" />
 		<Region name="goriya-up" x="239" y="11" width="16" height="16" />
-		<Region name="goriya-right" x="256" y="11" width="16" height="16" />
-		<Region name="goriya-use" x="273" y="11" width="16" height="16" />
+		<Region name="goriya-right-1" x="256" y="11" width="16" height="16" />
+		<Region name="goriya-right-2" x="273" y="11" width="16" height="16" />
 		<!-- Keese -->
 		<Region name="keese-1" x="183" y="11" width="16" height="16" />
 		<Region name="keese-2" x="200" y="11" width="16" height="16" />
@@ -70,6 +70,11 @@
 		<Animation name="zol1-move-animation" delay="200">
 			<Frame region="zol1-1" />
 			<Frame region="zol1-2" />
+		</Animation>
+		<!-- Goriya Animation -->
+		<Animation name="goriya-move-animation-right" delay="200">
+			<Frame region="goriya-right-1" />
+			<Frame region="goriya-right-2" />
 		</Animation>
 	</Animations>
 </TextureAtlas>

@@ -27,15 +27,14 @@ public class EnemySprites : SpriteFactory
     public ISprite Gel() => new AnimatedSprite(_spriteBatch, _animations["gel-move-animation"]);
     public ISprite GoriyaDown() => new FlippingSprites(_regions["goriya-down"], _spriteBatch);
     public ISprite GoriyaUp() => new FlippingSprites(_regions["goriya-up"], _spriteBatch);
-    public ISprite GoriyaRight() => new IdleSprite(_regions["goriya-right"], _spriteBatch);
+    public ISprite GoriyaRight() => new AnimatedSprite(_spriteBatch, _animations["goriya-move-animation-right"]);
     public ISprite GoriyaLeft()
     {
-        return new IdleSprite(_regions["goriya-right"], _spriteBatch)
+        return new AnimatedSprite(_spriteBatch, _animations["goriya-move-animation-right"])
         {
             Effects = SpriteEffects.FlipHorizontally
         };
     }
-    public ISprite GoriyaUse() => new IdleSprite(_regions["goriya-use"], _spriteBatch);
     public ISprite Keese() => new AnimatedSprite(_spriteBatch, _animations["keese-move-animation"]);
 
     public ISprite Stalfos() => new FlippingSprites(_regions["stalfos"], _spriteBatch);
