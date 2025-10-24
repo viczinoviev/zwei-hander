@@ -8,10 +8,6 @@ namespace ZweiHander.Items;
 public enum ItemProperty : Int16
 {
     /// <summary>
-    /// Player can pick this item up
-    /// </summary>
-    CanBePickedUp = 0x0,
-    /// <summary>
     /// On collision with anything, this is deleted
     /// </summary>
     DeleteOnCollision = 0x1,
@@ -51,6 +47,10 @@ public enum ItemProperty : Int16
     /// On collision with block, acceleration=velocity=(0,0)
     /// </summary>
     StopOnBlock = 0x200,
+    /// <summary>
+    /// Player can pick this item up
+    /// </summary>
+    CanBePickedUp = 0x400,
     /// <summary>
     /// Item meant to be collected by player
     /// </summary>
