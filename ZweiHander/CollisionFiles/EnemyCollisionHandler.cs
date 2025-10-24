@@ -5,6 +5,7 @@ using ZweiHander.Environment;
 using ZweiHander.PlayerFiles;
 using ZweiHander.Items;
 using ZweiHander.Commands;
+using System.Data;
 
 namespace ZweiHander.CollisionFiles
 {
@@ -13,6 +14,7 @@ namespace ZweiHander.CollisionFiles
         public readonly IEnemy _enemy;
         private const int COLLISION_SIZE = 24;
 
+        public bool Dead = false;
         public EnemyCollisionHandler(IEnemy enemy)
         {
             _enemy = enemy;
@@ -35,7 +37,7 @@ namespace ZweiHander.CollisionFiles
                     _enemy.Hitpoints -= 5;
                     if (_enemy.Hitpoints <= 0)
                     {
-                        //this.Unsubscribe();
+                        Dead = true;
                     }
                 }
             }
@@ -46,7 +48,7 @@ namespace ZweiHander.CollisionFiles
                     _enemy.Hitpoints -= 5;
                     if (_enemy.Hitpoints <= 0)
                     {
-                        //this.Unsubscribe();
+                        Dead = true;
                     }
                 } 
                 

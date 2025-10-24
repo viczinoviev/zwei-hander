@@ -140,7 +140,7 @@ namespace ZweiHander
             blockPosition = new Point(10, 6);
             enemyPosition = new Vector2(
                 GraphicsDevice.PresentationParameters.BackBufferWidth * 0.75f,
-                GraphicsDevice.PresentationParameters.BackBufferHeight * 0.25f
+                GraphicsDevice.PresentationParameters.BackBufferHeight * 0.75f
                 );
 
             //Create and load the Block List

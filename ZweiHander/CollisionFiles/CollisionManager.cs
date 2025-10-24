@@ -15,7 +15,7 @@ namespace ZweiHander.CollisionFiles
 		/// <summary>
 		/// All the things that can collide with each other
 		/// </summary>
-		private readonly List<ICollisionHandler> colliders = [];
+		private List<ICollisionHandler> colliders = [];
 
 		private CollisionManager() { }
 
@@ -50,7 +50,7 @@ namespace ZweiHander.CollisionFiles
 			// Remove empty colliders
 			for (int i = colliders.Count - 1; i >= 0; i--)
 			{
-				if (colliders[i] == null)
+				if (colliders[i].Dead == true)
 				{
 					colliders.RemoveAt(i);
 				}
@@ -65,7 +65,6 @@ namespace ZweiHander.CollisionFiles
 					{
 						CollisionInfo collisionInfoI = CalculateCollisionInfo(colliders[i].CollisionBox, colliders[j].CollisionBox);
 						CollisionInfo collisionInfoJ = CalculateCollisionInfo(colliders[j].CollisionBox, colliders[i].CollisionBox);
-
 						colliders[i].OnCollision(colliders[j], collisionInfoI);
 						colliders[j].OnCollision(colliders[i], collisionInfoJ);
 					}

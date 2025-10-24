@@ -14,6 +14,7 @@ namespace ZweiHander.CollisionFiles
         /// </summary>
         private readonly Block _block;
 
+        public bool Dead  = false;
         public BlockCollisionHandler(Block block)
         {
             _block = block;

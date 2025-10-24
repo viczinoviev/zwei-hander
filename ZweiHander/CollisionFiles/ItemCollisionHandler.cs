@@ -12,6 +12,8 @@ public class ItemCollisionHandler : CollisionHandlerAbstract
     /// </summary>
     protected IItem Item { get; set; }
 
+    public bool Dead = false;
+    
     /// <summary>
     /// The type of item this is handling.
     /// </summary>
