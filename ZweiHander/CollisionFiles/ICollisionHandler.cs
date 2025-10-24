@@ -13,6 +13,9 @@ namespace ZweiHander.CollisionFiles
         /// </summary>
         Rectangle CollisionBox { get; set; }
 
+        /// <summary>
+        /// If this Handler is done and needs to be deleted.
+        /// </summary>
         public bool Dead { get; set; }
 
         /// <summary>
