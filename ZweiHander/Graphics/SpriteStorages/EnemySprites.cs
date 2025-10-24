@@ -38,7 +38,7 @@ public class EnemySprites : SpriteFactory
     public ISprite GoriyaUse() => new IdleSprite(_regions["goriya-use"], _spriteBatch);
     public ISprite Keese() => new AnimatedSprite(_spriteBatch, _animations["keese-move-animation"]);
 
-    public ISprite Stalfos() => new IdleSprite(_regions["stalfos"], _spriteBatch);
+    public ISprite Stalfos() => new FlippingSprites(_regions["stalfos"], _spriteBatch);
 
     public ISprite RopeRight() => new AnimatedSprite(_spriteBatch, _animations["rope-move-animation"]);
 
