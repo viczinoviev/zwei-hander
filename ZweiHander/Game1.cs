@@ -210,12 +210,6 @@ namespace ZweiHander
              _hurtPlayerCommand = new HurtPlayerCommand(this);
              _keyboardController.BindKey(Keys.R, new ResetCommand(this));
              _keyboardController.BindKey(Keys.Q, new QuitCommand(this));
-            // _keyboardController.BindKey(Keys.T, new ChangeBlockCommand(this, -1));
-            // _keyboardController.BindKey(Keys.Y, new ChangeBlockCommand(this, +1));
-            // _keyboardController.BindKey(Keys.U, new ChangeItemCommand(this, -1));
-            // _keyboardController.BindKey(Keys.I, new ChangeItemCommand(this, +1));
-             _keyboardController.BindKey(Keys.O, new ChangeEnemyCommand(this, -1));
-             _keyboardController.BindKey(Keys.P, new ChangeEnemyCommand(this, +1));
             _keyboardController.BindKey(Keys.E, _hurtPlayerCommand);
         }
 
