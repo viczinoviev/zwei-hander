@@ -10,3 +10,9 @@ Luke:
 This sprint was a good bit easier than the first. Most of my work was refactoring and making
 Enemies cleaner. Some collisions are not complete a bit to close to the deadline for my 
 tastes, but overall I think the team has done very well for this sprint.
+
+Jacob:
+This sprint felt like a lot less work. I am hoping that is because it was less work overall
+and not because I contributed less. I was hoping to get things done sooner, but ended up
+getting caught up with other things. There are still some major communication issues, like
+what we want from each other and how to use each other's code.
