@@ -25,10 +25,6 @@ namespace ZweiHander
         private SpriteBatch _spriteBatch;
         private Camera.Camera _camera;
 
-        private Block _block;
-        private IEnemy _enemy;
-
-
         private Player _gamePlayer;
         private KeyboardController _keyboardController;
 
@@ -53,31 +49,9 @@ namespace ZweiHander
 
         //Stores all the blocks created
         private List<Block> _blockList;
-        private int _blockIndex = 0;
-
-        //Stores all the enemies created
-        private List<IEnemy> _enemyList;
-        private int _enemyIndex = 0;
 
         //dummy position for treasure, item, block, and enemy
-        Vector2 treasurePosition;
-        Vector2 itemPosition;
-        Point blockPosition;
         Vector2 enemyPosition;
-
-        //Expose 
-        public List<Block> BlockList => _blockList;
-        public Block Block { get => _block; set => _block = value; }
-        public int BlockIndex { get => _blockIndex; set => _blockIndex = value; }
-
-        public List<IEnemy> EnemyList => _enemyList;
-        public IEnemy Enemy { get => _enemy; set => _enemy = value; }
-        public int EnemyIndex { get => _enemyIndex; set => _enemyIndex = value; }
-
-        /// <summary>
-        /// Number of items available.
-        /// </summary>
-        public int ItemCount { get => _itemManager.ItemCount; }
 
         public Player GamePlayer => _gamePlayer;
 
@@ -127,11 +101,6 @@ namespace ZweiHander
         /// </summary>
         public void GameSetUp()
         {
-            itemPosition = new Vector2(
-                GraphicsDevice.PresentationParameters.BackBufferWidth * 0.5f,
-                GraphicsDevice.PresentationParameters.BackBufferHeight * 0.75f
-                );
-            blockPosition = new Point(10, 6);
             enemyPosition = new Vector2(
                 GraphicsDevice.PresentationParameters.BackBufferWidth * 0.75f,
                 GraphicsDevice.PresentationParameters.BackBufferHeight * 0.75f
@@ -179,27 +148,18 @@ namespace ZweiHander
 
             _itemManager.Clear();
             //Create enemy list
-            _enemyList =
-            [
-                _enemy = _enemyManager.GetEnemy("Darknut", enemyPosition),
-                _enemy = _enemyManager.GetEnemy("Darknut",new Vector2(enemyPosition.X + 30, enemyPosition.Y)),
-                _enemy = _enemyManager.GetEnemy("Darknut", new Vector2(enemyPosition.X + 60, enemyPosition.Y + 30)),
-                _enemy = _enemyManager.GetEnemy("Darknut", new Vector2(enemyPosition.X, enemyPosition.Y + 60)),
-                _enemy = _enemyManager.GetEnemy("Goriya", new Vector2(enemyPosition.X + 90, enemyPosition.Y + 30)),
-                _enemy = _enemyManager.GetEnemy("Goriya", new Vector2(enemyPosition.X + 90, enemyPosition.Y + 90)),
-                _enemy = _enemyManager.GetEnemy("Gel", new Vector2(enemyPosition.X - 300, enemyPosition.Y + 30)),
-                _enemy = _enemyManager.GetEnemy("Gel", new Vector2(enemyPosition.X - 330, enemyPosition.Y + 30)),
-                _enemy = _enemyManager.GetEnemy("Gel", new Vector2(enemyPosition.X - 360, enemyPosition.Y + 60)),
-                _enemy = _enemyManager.GetEnemy("Gel", new Vector2(enemyPosition.X - 390, enemyPosition.Y + 90)),
-                _enemy = _enemyManager.GetEnemy("Gel", new Vector2(enemyPosition.X - 420, enemyPosition.Y + 60)),
-                _enemy = _enemyManager.GetEnemy("Gel", new Vector2(enemyPosition.X - 440, enemyPosition.Y + 30)),
-            ];
-
-
-
-            _block = _blockList[0];
-            _enemy = _enemyList[0];
-
+            _enemyManager.GetEnemy("Darknut", enemyPosition);
+            _enemyManager.GetEnemy("Darknut", new Vector2(enemyPosition.X + 30, enemyPosition.Y));
+            _enemyManager.GetEnemy("Darknut", new Vector2(enemyPosition.X + 60, enemyPosition.Y + 30));
+            _enemyManager.GetEnemy("Darknut", new Vector2(enemyPosition.X, enemyPosition.Y + 60));
+            _enemyManager.GetEnemy("Goriya", new Vector2(enemyPosition.X + 90, enemyPosition.Y + 30));
+            _enemyManager.GetEnemy("Goriya", new Vector2(enemyPosition.X + 90, enemyPosition.Y + 90));
+            _enemyManager.GetEnemy("Gel", new Vector2(enemyPosition.X - 300, enemyPosition.Y + 30));
+            _enemyManager.GetEnemy("Gel", new Vector2(enemyPosition.X - 330, enemyPosition.Y + 30));
+            _enemyManager.GetEnemy("Gel", new Vector2(enemyPosition.X - 360, enemyPosition.Y + 60));
+            _enemyManager.GetEnemy("Gel", new Vector2(enemyPosition.X - 390, enemyPosition.Y + 90));
+            _enemyManager.GetEnemy("Gel", new Vector2(enemyPosition.X - 420, enemyPosition.Y + 60));
+            _enemyManager.GetEnemy("Gel", new Vector2(enemyPosition.X - 440, enemyPosition.Y + 30));
             //END TEST
 
             _gamePlayer = new (_linkSprites, _itemSprites, _treasureSprites);
