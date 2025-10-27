@@ -27,7 +27,7 @@ public class Dodongo : IEnemy
 
     public int Face { get; set; } = default;
 
-    public int Hitpoints { get; set; } = 5;
+    public int Hitpoints { get; set; } = 15;
 
     readonly EnemyCollisionHandler _collisionHandler;
 

@@ -18,14 +18,16 @@ public interface IEnemy
     /// </summary>
 
     public int Face { get; set; }
-
+/// <summary>
+/// Current amount of health, when <= 0, this enemy is dead.
+/// </summary>
     public int Hitpoints { get; set; }
 
 
     /// <summary>
     /// The current sprite associated with this Enemy.
     /// </summary>
-    public ISprite Sprite { get; set; }
+    protected ISprite Sprite { get; set; }
 
     /// <summary>
     /// Draws this Enemy on screen.
@@ -37,7 +39,10 @@ public interface IEnemy
     /// </summary>
     /// <param name="gameTime">A snapshot of the game timing values provided by the framework.</param>
     public void Update(GameTime gameTime);
-
+/// <summary>
+/// Gets the collisionBox for the enemy
+/// </summary>
+/// <returns>Rectangle equating to the collision box</returns>
     public Rectangle GetCollisionBox();
     
 }
