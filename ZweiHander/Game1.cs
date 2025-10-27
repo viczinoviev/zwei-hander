@@ -27,7 +27,6 @@ namespace ZweiHander
 
         private Block _block;
         private IEnemy _enemy;
-        private IItem _item;
 
 
         private Player _gamePlayer;
@@ -74,13 +73,6 @@ namespace ZweiHander
         public List<IEnemy> EnemyList => _enemyList;
         public IEnemy Enemy { get => _enemy; set => _enemy = value; }
         public int EnemyIndex { get => _enemyIndex; set => _enemyIndex = value; }
-
-        private List<IItem> _items;
-        private int _itemIndex = 0;
-        /// <summary>
-        /// Index for current item.
-        /// </summary>
-        public int ItemIndex { get => _itemIndex; set { _itemIndex = value; _item = _items[value];  } }
 
         /// <summary>
         /// Number of items available.
@@ -186,17 +178,6 @@ namespace ZweiHander
             _borderManager2.CreateWall(WallName.WallTileEast);
 
             _itemManager.Clear();
-            _items = [
-                _itemManager.GetItem(ItemType.Heart, -1, position: itemPosition),
-                _itemManager.GetItem(ItemType.Boomerang, -1, position: itemPosition),
-                _itemManager.GetItem(ItemType.Arrow, -1, position: itemPosition),
-                _itemManager.GetItem(ItemType.HeartContainer, -1, position: itemPosition),
-                _itemManager.GetItem(ItemType.Rupy, -1, position: itemPosition),
-                _itemManager.GetItem(ItemType.Compass, -1, position: itemPosition),
-                _itemManager.GetItem(ItemType.Map, -1, position: itemPosition),
-                _itemManager.GetItem(ItemType.Key, -1, position: itemPosition),
-                _itemManager.GetItem(ItemType.Fairy, -1, position: itemPosition, velocity: new(0, -10.0f))
-            ];
             //Create enemy list
             _enemyList =
             [
@@ -218,7 +199,6 @@ namespace ZweiHander
 
             _block = _blockList[0];
             _enemy = _enemyList[0];
-            ItemIndex = 0;
 
             //END TEST
 
@@ -230,13 +210,7 @@ namespace ZweiHander
              _hurtPlayerCommand = new HurtPlayerCommand(this);
              _keyboardController.BindKey(Keys.R, new ResetCommand(this));
              _keyboardController.BindKey(Keys.Q, new QuitCommand(this));
-            // _keyboardController.BindKey(Keys.T, new ChangeBlockCommand(this, -1));
-            // _keyboardController.BindKey(Keys.Y, new ChangeBlockCommand(this, +1));
-            // _keyboardController.BindKey(Keys.U, new ChangeItemCommand(this, -1));
-            // _keyboardController.BindKey(Keys.I, new ChangeItemCommand(this, +1));
-             _keyboardController.BindKey(Keys.O, new ChangeEnemyCommand(this, -1));
-             _keyboardController.BindKey(Keys.P, new ChangeEnemyCommand(this, +1));
-            _keyboardController.BindKey(Keys.E, _hurtPlayerCommand);
+             _keyboardController.BindKey(Keys.E, _hurtPlayerCommand);
         }
 
         protected override void Update(GameTime gameTime)
@@ -251,8 +225,7 @@ namespace ZweiHander
             {
                 _blockList[i].Update(gameTime);
             }
-
-            _item.Update(gameTime);
+            _itemManager.Update(gameTime);
             _enemyManager.Update(gameTime);
             _projectileManager.Update(gameTime);
 
@@ -288,7 +261,7 @@ namespace ZweiHander
             _enemyManager.Draw();
 
 
-            _item.Draw();
+            _itemManager.Draw();
 
             _projectileManager.Draw();
 
