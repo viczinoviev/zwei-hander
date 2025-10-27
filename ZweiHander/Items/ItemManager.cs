@@ -3,6 +3,7 @@
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using ZweiHander.Graphics.SpriteStorages;
 using ZweiHander.Items.ItemStorages;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
@@ -37,7 +38,7 @@ public class ItemManager
     /// <summary>
     /// Count of each item type in this; -1 is infinite.
     /// </summary>
-    public Dictionary<ItemType, int> ItemTypeCount { get; } = [];
+    private Dictionary<ItemType, int> ItemTypeCount { get; } = [];
 
     /// <summary>
     /// Number of items stored in this manager.
@@ -203,7 +204,12 @@ public class ItemManager
         {
             item.Update(gameTime); // Do each item's update
         }
-        _items.RemoveWhere(item => item.IsDead()); // Remove any dead items
+        IEnumerable<IItem> DeadItems = _items.Where(item => item.IsDead());
+        foreach (IItem item in DeadItems)
+        {
+            ItemTypeCount[item.ItemType]--;
+            _items.Remove(item);
+        }
     }
 
     /// <summary>
@@ -251,6 +257,9 @@ public class ItemManager
         }
     }
 
+    /// <summary>
+    /// Remove all items from this manager.
+    /// </summary>
     public void Clear()
     {
         _items.Clear();
@@ -258,5 +267,15 @@ public class ItemManager
         {
             ItemTypeCount[item] = 0;
         }
+    }
+
+    /// <summary>
+    /// Provides the amount of an item. -1 is inifinite.
+    /// </summary>
+    /// <param name="itemType">Type of desired item to get count of.</param>
+    /// <returns>Amount of desired item.</returns>
+    public int CountOf(ItemType itemType)
+    {
+        return ItemTypeCount[itemType];
     }
 }

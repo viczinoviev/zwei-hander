@@ -54,5 +54,5 @@ public enum ItemProperty : Int16
     /// <summary>
     /// Item meant to be collected by player
     /// </summary>
-    Collectable = Stationary | DeleteOnPlayer | CanBePickedUp
+    Collectable = Stationary | CanBePickedUp
 }
