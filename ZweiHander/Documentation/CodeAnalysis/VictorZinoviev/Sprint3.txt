@@ -1,0 +1,8 @@
+The only message that I got from the code analysis tool was that the constructor for my camera class could be simplified to using a primary constructor.
+Although this was counterintuitive at first, it turned out to make the class more organized and clean.
+
+I believe that the camera class was built fairly well so far. This could be because it has minimal functionality to it now, but it shows a maintainability index of 89, cycolomatic
+complexity of 7, and just 4 class couplings. I believe that these values will worsen as we add new features to the camera, but I am glad to know that it is doing well so far.
+
+The sprite storage class has the one of te greatest cyclomatic complexity in the game. However, I also think that there is not much way around it since it is one of the few points
+where static files are loaded into the game. I am planning to work on making the methods in the class broken down so that it is maintainable.

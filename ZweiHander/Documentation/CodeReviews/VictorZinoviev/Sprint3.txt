@@ -1,0 +1,24 @@
+Author of the code review: Victor Zinoviev
+Date of the code review: 2025-10-27
+Sprint number: 3
+Name of the .cs file being reviewed: CsvMapHandler.cs
+Author of the .cs file being reviewed: Darren
+Number of minutes taken to complete the review: 20
+Specific comments on what is readable and what is not:
+	Overall, I think that the class is very readable. Although I did not have any information about how the csv files are
+	used in the game to create the map, reading the code gave me a good idea of how each of the cell represents a type of 
+	a block. There is nothing much to comment on how readable it is, I think that there is not much to fix. I would recommend
+	adding a summary comment of the class to explain what the class is doing.
+
+Author of the code review: Victor Zinoviev
+Date of the code review: 2025-10-27
+Sprint number: 3
+Name of the .cs file being reviewed: ItemManager
+Author of the .cs file being reviewed: Jacob
+Specific comments on code quality:
+	I only thing that I am concerned about is the giant switch case statement for setting the default properties of the items.
+	It is quite hard to figure out what each item has as its default properties. I believe there is some reason why the properties
+	are being handled in the manager class, but my first though would be to define them in each item class and maybe add a method
+	to change the properties later on. The items itselves are working fine, I just think that the class need to be taken a look at
+	for how maintainable it would be if we were to have a major change in the items.
+

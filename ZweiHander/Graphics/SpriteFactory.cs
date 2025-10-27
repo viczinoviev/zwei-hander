@@ -68,96 +68,110 @@ public abstract class SpriteFactory
     /// </summary>
     /// <param name="content">The content manager used to load the texture for the atlas.</param>
     /// <param name="fileName">The path to the xml file, relative to the content root directory.</param>
-    /// <returns>The texture atlas created by this method.</returns>
     protected void FromFile(ContentManager content, string fileName)
     {
+        XElement root = LoadXmlDocument(content, fileName);
+        LoadTexture(content, root);
+        LoadRegions(root);
+        LoadAnimations(root);
+    }
 
+    /// <summary>
+    /// Loads and parses the XML document from the specified file.
+    /// </summary>
+    /// <param name="content">The content manager.</param>
+    /// <param name="fileName">The path to the xml file, relative to the content root directory.</param>
+    /// <returns>The root element of the XML document.</returns>
+    private XElement LoadXmlDocument(ContentManager content, string fileName)
+    {
         string filePath = Path.Combine(content.RootDirectory, fileName);
 
         using (Stream stream = TitleContainer.OpenStream(filePath))
+        using (XmlReader reader = XmlReader.Create(stream))
         {
-            using (XmlReader reader = XmlReader.Create(stream))
+            XDocument doc = XDocument.Load(reader);
+            return doc.Root;
+        }
+    }
+
+    /// <summary>
+    /// Loads the texture specified in the XML root element.
+    /// </summary>
+    /// <param name="content">The content manager used to load the texture.</param>
+    /// <param name="root">The root element of the XML document.</param>
+    private void LoadTexture(ContentManager content, XElement root)
+    {
+        string texturePath = root.Element("Texture").Value;
+        _texture = content.Load<Texture2D>(texturePath);
+    }
+
+    /// <summary>
+    /// Loads all texture regions defined in the XML root element.
+    /// </summary>
+    /// <param name="root">The root element of the XML document.</param>
+    private void LoadRegions(XElement root)
+    {
+        var regions = root.Element("Regions")?.Elements("Region");
+
+        if (regions == null) return;
+
+        foreach (var region in regions)
+        {
+            string name = region.Attribute("name")?.Value;
+            int x = int.Parse(region.Attribute("x")?.Value ?? "0");
+            int y = int.Parse(region.Attribute("y")?.Value ?? "0");
+            int width = int.Parse(region.Attribute("width")?.Value ?? "0");
+            int height = int.Parse(region.Attribute("height")?.Value ?? "0");
+
+            if (!string.IsNullOrEmpty(name))
             {
-                XDocument doc = XDocument.Load(reader);
-                XElement root = doc.Root;
-
-                // The <Texture> element contains the content path for the Texture2D to load.
-                // So we will retrieve that value then use the content manager to load the texture.
-                string texturePath = root.Element("Texture").Value;
-                this._texture = content.Load<Texture2D>(texturePath);
-
-                // The <Regions> element contains individual <Region> elements, each one describing
-                // a different texture region within the atlas.  
-                //
-                // Example:
-                // <Regions>
-                //      <Region name="spriteOne" x="0" y="0" width="32" height="32" />
-                //      <Region name="spriteTwo" x="32" y="0" width="32" height="32" />
-                // </Regions>
-                //
-                // So we retrieve all of the <Region> elements then loop through each one
-                // and generate a new TextureRegion instance from it and add it to this atlas.
-                var regions = root.Element("Regions")?.Elements("Region");
-
-                if (regions != null)
-                {
-                    foreach (var region in regions)
-                    {
-                        string name = region.Attribute("name")?.Value;
-                        int x = int.Parse(region.Attribute("x")?.Value ?? "0");
-                        int y = int.Parse(region.Attribute("y")?.Value ?? "0");
-                        int width = int.Parse(region.Attribute("width")?.Value ?? "0");
-                        int height = int.Parse(region.Attribute("height")?.Value ?? "0");
-
-                        if (!string.IsNullOrEmpty(name))
-                        {
-                            this.AddRegion(name, x, y, width, height);
-                        }
-                    }
-                }
-
-                // The <Animations> element contains individual <Animation> elements, each one describing
-                // a different animation within the atlas.
-                //
-                // Example:
-                // <Animations>
-                //      <Animation name="animation" delay="100">
-                //          <Frame region="spriteOne" />
-                //          <Frame region="spriteTwo" />
-                //      </Animation>
-                // </Animations>
-                //
-                // So we retrieve all of the <Animation> elements then loop through each one
-                // and generate a new Animation instance from it and add it to this atlas.
-                var animationElements = root.Element("Animations").Elements("Animation");
-
-                if (animationElements != null)
-                {
-                    foreach (var animationElement in animationElements)
-                    {
-                        string name = animationElement.Attribute("name")?.Value;
-                        float delayInMilliseconds = float.Parse(animationElement.Attribute("delay")?.Value ?? "0");
-                        TimeSpan delay = TimeSpan.FromMilliseconds(delayInMilliseconds);
-
-                        List<TextureRegion> frames = [];
-
-                        var frameElements = animationElement.Elements("Frame");
-
-                        if (frameElements != null)
-                        {
-                            foreach (var frameElement in frameElements)
-                            {
-                                string regionName = frameElement.Attribute("region").Value;
-                                TextureRegion region = this.GetRegion(regionName);
-                                frames.Add(region);
-                            }
-                        }
-
-                        Animation animation = new Animation(frames, delay);
-                        this.AddAnimation(name, animation);
-                    }
-                }
+                AddRegion(name, x, y, width, height);
             }
         }
+    }
+
+    /// <summary>
+    /// Loads all animations defined in the XML root element.
+    /// </summary>
+    /// <param name="root">The root element of the XML document.</param>
+    private void LoadAnimations(XElement root)
+    {
+        var animationElements = root.Element("Animations")?.Elements("Animation");
+
+        if (animationElements == null) return;
+
+        foreach (var animationElement in animationElements)
+        {
+            string name = animationElement.Attribute("name")?.Value;
+            float delayInMilliseconds = float.Parse(animationElement.Attribute("delay")?.Value ?? "0");
+            TimeSpan delay = TimeSpan.FromMilliseconds(delayInMilliseconds);
+
+            List<TextureRegion> frames = ParseAnimationFrames(animationElement);
+
+            Animation animation = new Animation(frames, delay);
+            AddAnimation(name, animation);
+        }
+    }
+
+    /// <summary>
+    /// Parses all frame elements for a single animation.
+    /// </summary>
+    /// <param name="animationElement">The animation XML element.</param>
+    /// <returns>A list of texture regions representing the animation frames.</returns>
+    private List<TextureRegion> ParseAnimationFrames(XElement animationElement)
+    {
+        List<TextureRegion> frames = [];
+        var frameElements = animationElement.Elements("Frame");
+
+        if (frameElements == null) return frames;
+
+        foreach (var frameElement in frameElements)
+        {
+            string regionName = frameElement.Attribute("region").Value;
+            TextureRegion region = GetRegion(regionName);
+            frames.Add(region);
+        }
+
+        return frames;
     }
 }
