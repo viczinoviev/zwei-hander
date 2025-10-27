@@ -201,17 +201,17 @@ namespace ZweiHander
             _enemyList =
             [
                 _enemy = _enemyManager.GetEnemy("Darknut", enemyPosition),
-                _enemy = _enemyManager.GetEnemy("Gel", enemyPosition),
-                _enemy = _enemyManager.GetEnemy("Goriya", enemyPosition),
-                _enemy = _enemyManager.GetEnemy("Keese", enemyPosition),
-                _enemy = _enemyManager.GetEnemy("Stalfos", enemyPosition),
-                _enemy = _enemyManager.GetEnemy("Rope",enemyPosition),
-                _enemy = _enemyManager.GetEnemy("Wallmaster",enemyPosition),
-                _enemy = _enemyManager.GetEnemy("Zol",enemyPosition),
-                _enemy = _enemyManager.GetEnemy("Dodongo",enemyPosition),
-                _enemy = _enemyManager.GetEnemy("Aquamentus",enemyPosition),
-                _enemy = _enemyManager.GetEnemy("BladeTrap",enemyPosition),
-                _enemy = _enemyManager.GetEnemy("OldMan", enemyPosition),
+                _enemy = _enemyManager.GetEnemy("Darknut",new Vector2(enemyPosition.X + 30, enemyPosition.Y)),
+                _enemy = _enemyManager.GetEnemy("Darknut", new Vector2(enemyPosition.X + 60, enemyPosition.Y + 30)),
+                _enemy = _enemyManager.GetEnemy("Darknut", new Vector2(enemyPosition.X, enemyPosition.Y + 60)),
+                _enemy = _enemyManager.GetEnemy("Goriya", new Vector2(enemyPosition.X + 90, enemyPosition.Y + 30)),
+                _enemy = _enemyManager.GetEnemy("Goriya", new Vector2(enemyPosition.X + 90, enemyPosition.Y + 90)),
+                _enemy = _enemyManager.GetEnemy("Gel", new Vector2(enemyPosition.X - 300, enemyPosition.Y + 30)),
+                _enemy = _enemyManager.GetEnemy("Gel", new Vector2(enemyPosition.X - 330, enemyPosition.Y + 30)),
+                _enemy = _enemyManager.GetEnemy("Gel", new Vector2(enemyPosition.X - 360, enemyPosition.Y + 60)),
+                _enemy = _enemyManager.GetEnemy("Gel", new Vector2(enemyPosition.X - 390, enemyPosition.Y + 90)),
+                _enemy = _enemyManager.GetEnemy("Gel", new Vector2(enemyPosition.X - 420, enemyPosition.Y + 60)),
+                _enemy = _enemyManager.GetEnemy("Gel", new Vector2(enemyPosition.X - 440, enemyPosition.Y + 30)),
             ];
 
 
@@ -234,8 +234,8 @@ namespace ZweiHander
             // _keyboardController.BindKey(Keys.Y, new ChangeBlockCommand(this, +1));
             // _keyboardController.BindKey(Keys.U, new ChangeItemCommand(this, -1));
             // _keyboardController.BindKey(Keys.I, new ChangeItemCommand(this, +1));
-             _keyboardController.BindKey(Keys.O, new ChangeEnemyCommand(this, -1));
-             _keyboardController.BindKey(Keys.P, new ChangeEnemyCommand(this, +1));
+            //_keyboardController.BindKey(Keys.O, new ChangeEnemyCommand(this, -1));
+            //_keyboardController.BindKey(Keys.P, new ChangeEnemyCommand(this, +1));
             _keyboardController.BindKey(Keys.E, _hurtPlayerCommand);
         }
 
