@@ -27,7 +27,7 @@ public interface IEnemy
     /// <summary>
     /// The current sprite associated with this Enemy.
     /// </summary>
-    public ISprite Sprite { get; set; }
+    protected ISprite Sprite { get; set; }
 
     /// <summary>
     /// Draws this Enemy on screen.
