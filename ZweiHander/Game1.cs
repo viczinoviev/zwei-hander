@@ -50,6 +50,7 @@ namespace ZweiHander
         private ItemManager _projectileManager; //Any projectiles from enemies or player
         private BorderManager _borderManager;
         private BorderManager _borderManager2;
+        private Dungeon _dungeon;
 
         //Stores all the blocks created
         private List<Block> _blockList;
@@ -147,6 +148,14 @@ namespace ZweiHander
             //Create and load the Block List
             string mapPath = Path.Combine(Content.RootDirectory, "Maps","map1.csv"); // CSV location
             _blockList = CsvMapHandler.LoadMap(mapPath, _blockFactory);
+
+            //TODO: this is for testing, find a way to not have it hard coded
+            _dungeon = new Dungeon();
+            Room room1 = new Room(new Vector2(47, 175), new Vector2(Room.ROOM_WIDTH, Room.ROOM_HEIGHT));
+            Room room2 = new Room(new Vector2(559, 175), new Vector2(Room.ROOM_WIDTH, Room.ROOM_HEIGHT));
+            _dungeon.AddRoom(room1);
+            _dungeon.AddRoom(room2);
+            _camera.SetDungeon(_dungeon);
 
             //Border creation for now(Will change shortly)
             _borderManager.CreateWall(WallName.WallNorthLeft);
