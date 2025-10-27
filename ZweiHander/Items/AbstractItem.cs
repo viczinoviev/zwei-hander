@@ -153,7 +153,6 @@ public abstract class AbstractItem : IItem
         DeathTime -= gameTime.ElapsedGameTime.TotalSeconds;
         if (IsDead())
         {
-            _manager.ItemTypeCount[_itemType]--;
             CollisionHandler.Dead = true;
         }
     }
