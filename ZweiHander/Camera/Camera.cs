@@ -11,7 +11,7 @@ namespace ZweiHander.Camera
         /// </summary>
         public Vector2 Position { get; private set; }
         /// <summary>
-        /// Dimentions of the game screen
+        /// Dimensions of the game screen
         /// </summary>
         public Viewport Viewport { get; private set; }
 
