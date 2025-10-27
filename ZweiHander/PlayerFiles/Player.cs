@@ -18,6 +18,8 @@ namespace ZweiHander.PlayerFiles
         private float _damageTimer;
         private const float DAMAGE_DURATION = 1.0f; // How long the damage state lasts
 
+        public Dictionary<ItemType, int> Inventory { get; private set; } = new Dictionary<ItemType, int>();
+
         public Vector2 Position
         {
             get => _position;
@@ -74,6 +76,26 @@ namespace ZweiHander.PlayerFiles
         public void ClearInputBuffer()
         {
             InputBuffer.Clear();
+        }
+
+        public void addItemToInventory(ItemType itemType)
+        {
+            if (Inventory.ContainsKey(itemType))
+            {
+                Inventory[itemType]++;
+            }
+            else
+            {
+                Inventory[itemType] = 1;
+            }
+        }
+
+        public void removeItemFromInventory(ItemType itemType)
+        {
+            if (Inventory.ContainsKey(itemType) && Inventory[itemType] > 0)
+            {
+                Inventory[itemType]--;
+            }
         }
 
         /// <summary>
