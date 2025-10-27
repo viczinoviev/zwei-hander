@@ -160,7 +160,7 @@ namespace ZweiHander.PlayerFiles
             _player.Position += movement;
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw()
         {
             // Apply blink effect when damaged
             if (_player.IsDamaged && !_isVisible)

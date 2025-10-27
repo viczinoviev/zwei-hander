@@ -1,0 +1,31 @@
+Reflection:
+
+	This sprint I did not receive nearly as many errors as last one, they mostly come from the how the analyzer defines "simple".
+	In my opinion a little extra text does not hurt if it improves readability but I will not fight against it, it makes very little difference.
+	Very happy with the quality of my code.
+
+Individual fixes:
+
+	Message (active)	IDE0044	Make field readonly	ZweiHander	ZweiHander\CollisionFiles\CollisionManager.cs	18	
+
+	Made list of colliders readonly.
+
+	Message (active)	IDE0074	Use compound assignment	ZweiHander	ZweiHander\CollisionFiles\CollisionManager.cs	31	
+
+	Made into compound assignment.
+
+	Message (active)	IDE0090	'new' expression can be simplified	ZweiHander	ZweiHander\CollisionFiles\CollisionManager.cs	84		
+
+	Removed "Vector2" from the constructor.
+
+	Message (active)	IDE0044	Make field readonly	ZweiHander	ZweiHander\Game1.cs	24	
+
+	Made the graphics manager readonly.
+
+	Message (active)	IDE0017	Object initialization can be simplified	ZweiHander	ZweiHander\Game1.cs	216	
+
+	Simplified player initilization.
+
+	Message (active)	IDE0060	Avoid unused parameters in your code. If the parameter cannot be removed, then change its name so it starts with an underscore and is optionally followed by an integer, such as '_', '_1', '_2', etc. These are treated as special discard symbol names.	ZweiHander	ZweiHander\PlayerFiles\PlayerHandler.cs	163	
+
+	Removed unused parameter from the method and calls.

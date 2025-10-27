@@ -144,7 +144,7 @@ namespace ZweiHander.PlayerFiles
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            _handler.Draw(spriteBatch);
+            _handler.Draw();
             _itemManager.Draw();
         }
 

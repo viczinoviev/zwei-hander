@@ -15,7 +15,7 @@ namespace ZweiHander.CollisionFiles
 		/// <summary>
 		/// All the things that can collide with each other
 		/// </summary>
-		private List<ICollisionHandler> colliders = [];
+		readonly private List<ICollisionHandler> colliders = [];
 
 		private CollisionManager() { }
 
@@ -28,8 +28,7 @@ namespace ZweiHander.CollisionFiles
 				{
 					lock (_lock)
 					{
-						if (_instance == null)
-							_instance = new CollisionManager();
+						_instance ??= new CollisionManager();
 					}
 				}
 				return _instance;
@@ -81,7 +80,7 @@ namespace ZweiHander.CollisionFiles
 		private static CollisionInfo CalculateCollisionInfo(Rectangle movingRect, Rectangle staticRect)
 		{
 			Rectangle intersection = Rectangle.Intersect(movingRect, staticRect);
-			Vector2 intersectionCenter = new Vector2(
+			Vector2 intersectionCenter = new (
 				intersection.X + intersection.Width / 2f,
 				intersection.Y + intersection.Height / 2f
 			);

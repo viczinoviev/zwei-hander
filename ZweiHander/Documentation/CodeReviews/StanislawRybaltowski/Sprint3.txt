@@ -1,0 +1,32 @@
+Author of the code review: Stanislaw Rybaltowski
+Date of the code review: 2025-10-27
+Sprint number: 3
+Name of the .cs file being reviewed: ItemCollisionHandler.cs
+Author of the .cs file being reviewed: Jacob Scherzer
+Number of minutes taken to complete the review: 10 minutes.
+Specific comments on readability: 
+
+    The item collision handler script is extremely readable. The methods are
+    short and they efficiently distribute data to their handling scripts. My only
+    possible concern is that it might be redistributing too much of its 
+    responsibilities to other files, especially Item.cs. I do not think theres
+    an effiecient way to fix it, since this script is responsible for so many
+    types of items, but maybe at least the calculation of the collision box could
+    be done "in-house", using position and size parameters. Lastly, it could use
+    a comment on the idea behind "OnCollision" for this particular type of collider.
+
+Author of the code review: Stanislaw Rybaltowski
+Date of the code review: 2025-10-27
+Sprint number: 3
+Name of the .cs file being reviewed: Camera.cs
+Author of the .cs file being reviewed: Victor Zinoviev
+Number of minutes taken to complete the review: 8 minutes.
+Specific comments on maintainability/code quality: 
+
+    The script is condensed and with great comments, but it might not be enough for more advanced use-cases.
+    Some things that could be used for future is:
+    - scaling the camera
+    - changing the offset on a target (look-ahead camera for example)
+    - smoothing the motion (to fix jitters)
+    Otherwise the encapsulation and private setters are great.
+    The comments are very complete as well, with the minor exception of describing the purpose of the whole class.

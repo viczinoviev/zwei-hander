@@ -20,7 +20,8 @@ namespace ZweiHander
     public class Game1 : Game
     {
     //Hey team!
-        private GraphicsDeviceManager _graphics;
+    // Hey hows it going?
+        readonly private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private Camera.Camera _camera;
 
@@ -212,7 +213,7 @@ namespace ZweiHander
 
             //END TEST
 
-            _gamePlayer = new Player(_linkSprites, _itemSprites, _treasureSprites);
+            _gamePlayer = new (_linkSprites, _itemSprites, _treasureSprites);
             _gamePlayer.Position = new Vector2(450, 350);
 
             //Set up KeyboardController

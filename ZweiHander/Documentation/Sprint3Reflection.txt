@@ -1,0 +1,7 @@
+﻿Stanislaw:
+This sprint I did not have as much work to do as last one. I had to create only one system,
+that being the Collisions. I am pretty happy with my implementation, it seems to meet our use
+cases and everyone seems to be able to extend it easily for any purpose. I was done ahead of
+time too. I had slight concerns that some of our scripts get only half-baked before we move
+on onto the next one, saying that we will come back to them later. For now we are managing
+to keep the quality of our work pretty high, lessening my worries.
