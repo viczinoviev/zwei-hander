@@ -98,7 +98,10 @@ public class EnemyManager(EnemySprites enemysprites, ItemManager projectileManag
         currentEnemies.Add(enemy);
         return enemy;
     }
-
+/// <summary>
+/// Updates all enemies in the manager and removes dead enemies
+/// </summary>
+/// <param name="time">gametime</param>
     public void Update(GameTime time)
     {
         foreach (IEnemy _enemy in currentEnemies)
@@ -108,7 +111,9 @@ public class EnemyManager(EnemySprites enemysprites, ItemManager projectileManag
         }
         currentEnemies.RemoveAll(enemy => enemy.Hitpoints <= 0);
     }
-
+/// <summary>
+/// Draws all enemies in the manager
+/// </summary>
     public void Draw()
     {
         foreach (IEnemy _enemy in currentEnemies)
