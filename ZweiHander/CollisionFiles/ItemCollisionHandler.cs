@@ -42,4 +42,12 @@ public class ItemCollisionHandler : CollisionHandlerAbstract
     {
         return Item.HasProperty(itemProperty);
     }
+
+    /// <summary>
+    ///  Kills the item this handler is for.
+    /// </summary>
+    public void Kill()
+    {
+        Item.Kill();
+    }
 }

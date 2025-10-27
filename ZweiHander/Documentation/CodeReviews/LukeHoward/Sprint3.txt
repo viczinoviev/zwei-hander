@@ -1,0 +1,24 @@
+Author of the code review: Luke Howarrd
+Date of the code review: 2025-10-27
+Sprint number: 3
+Name of the .cs file being reviewed: PlayerCollisionHandler.cs
+Author of the .cs file being reviewed: Victor Zinoviev
+Number of minutes taken to complete the review: 10 minutes.
+Specific comments on readability: 
+
+    This file is very easy to read. It is not particularly long and had comments throughout the whole thing.
+    All cases for collision are described and the fields in the class are explained. Not setup for player collision
+    right now, but should be done quickly.
+
+Author of the code review: Luke Howard
+Date of the code review: 2025-10-27
+Sprint number: 3
+Name of the .cs file being reviewed: ItemCollisionHandler.cs
+Author of the .cs file being reviewed: Jacob Scherzer
+Number of minutes taken to complete the review: 10 minutes.
+Specific comments on maintainability/code quality: 
+
+    This script is very nice and easy. It is highly maintanable, as most of the responsibility falls on items themselves.
+    The actual collision handler does not have much responsibility. Since items can behave in different ways, I think this is a good idea.
+    I did something similar with collision boxes, as different enemies are significantly different sizes. Overall, this is very high quality
+    And i see no major issues.

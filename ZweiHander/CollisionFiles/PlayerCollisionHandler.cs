@@ -46,6 +46,13 @@ namespace ZweiHander.CollisionFiles
                 {
                     _player.TakeDamage();
                 }
+
+                if (itemHandler.HasProperty(ItemProperty.CanBePickedUp))
+                {
+
+                    _player.addItemToInventory(itemHandler.ItemType);
+                    itemHandler.Kill();
+                }
             }
         }
 

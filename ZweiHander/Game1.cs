@@ -25,11 +25,6 @@ namespace ZweiHander
         private SpriteBatch _spriteBatch;
         private Camera.Camera _camera;
 
-        private Block _block;
-        private IEnemy _enemy;
-        private IItem _item;
-
-
         private Player _gamePlayer;
         private KeyboardController _keyboardController;
 
@@ -50,41 +45,13 @@ namespace ZweiHander
         private ItemManager _projectileManager; //Any projectiles from enemies or player
         private BorderManager _borderManager;
         private BorderManager _borderManager2;
+        private Dungeon _dungeon;
 
         //Stores all the blocks created
         private List<Block> _blockList;
-        private int _blockIndex = 0;
-
-        //Stores all the enemies created
-        private List<IEnemy> _enemyList;
-        private int _enemyIndex = 0;
 
         //dummy position for treasure, item, block, and enemy
-        Vector2 treasurePosition;
-        Vector2 itemPosition;
-        Point blockPosition;
         Vector2 enemyPosition;
-
-        //Expose 
-        public List<Block> BlockList => _blockList;
-        public Block Block { get => _block; set => _block = value; }
-        public int BlockIndex { get => _blockIndex; set => _blockIndex = value; }
-
-        public List<IEnemy> EnemyList => _enemyList;
-        public IEnemy Enemy { get => _enemy; set => _enemy = value; }
-        public int EnemyIndex { get => _enemyIndex; set => _enemyIndex = value; }
-
-        private List<IItem> _items;
-        private int _itemIndex = 0;
-        /// <summary>
-        /// Index for current item.
-        /// </summary>
-        public int ItemIndex { get => _itemIndex; set { _itemIndex = value; _item = _items[value];  } }
-
-        /// <summary>
-        /// Number of items available.
-        /// </summary>
-        public int ItemCount { get => _itemManager.ItemCount; }
 
         public Player GamePlayer => _gamePlayer;
 
@@ -134,11 +101,6 @@ namespace ZweiHander
         /// </summary>
         public void GameSetUp()
         {
-            itemPosition = new Vector2(
-                GraphicsDevice.PresentationParameters.BackBufferWidth * 0.5f,
-                GraphicsDevice.PresentationParameters.BackBufferHeight * 0.75f
-                );
-            blockPosition = new Point(10, 6);
             enemyPosition = new Vector2(
                 GraphicsDevice.PresentationParameters.BackBufferWidth * 0.75f,
                 GraphicsDevice.PresentationParameters.BackBufferHeight * 0.75f
@@ -147,6 +109,14 @@ namespace ZweiHander
             //Create and load the Block List
             string mapPath = Path.Combine(Content.RootDirectory, "Maps","map1.csv"); // CSV location
             _blockList = CsvMapHandler.LoadMap(mapPath, _blockFactory);
+
+            //TODO: this is for testing, find a way to not have it hard coded
+            _dungeon = new Dungeon();
+            Room room1 = new Room(new Vector2(47, 175), new Vector2(Room.ROOM_WIDTH, Room.ROOM_HEIGHT));
+            Room room2 = new Room(new Vector2(559, 175), new Vector2(Room.ROOM_WIDTH, Room.ROOM_HEIGHT));
+            _dungeon.AddRoom(room1);
+            _dungeon.AddRoom(room2);
+            _camera.SetDungeon(_dungeon);
 
             //Border creation for now(Will change shortly)
             _borderManager.CreateWall(WallName.WallNorthLeft);
@@ -177,40 +147,19 @@ namespace ZweiHander
             _borderManager2.CreateWall(WallName.WallTileEast);
 
             _itemManager.Clear();
-            _items = [
-                _itemManager.GetItem(ItemType.Heart, -1, position: itemPosition),
-                _itemManager.GetItem(ItemType.Boomerang, -1, position: itemPosition),
-                _itemManager.GetItem(ItemType.Arrow, -1, position: itemPosition),
-                _itemManager.GetItem(ItemType.HeartContainer, -1, position: itemPosition),
-                _itemManager.GetItem(ItemType.Rupy, -1, position: itemPosition),
-                _itemManager.GetItem(ItemType.Compass, -1, position: itemPosition),
-                _itemManager.GetItem(ItemType.Map, -1, position: itemPosition),
-                _itemManager.GetItem(ItemType.Key, -1, position: itemPosition),
-                _itemManager.GetItem(ItemType.Fairy, -1, position: itemPosition, velocity: new(0, -10.0f))
-            ];
             //Create enemy list
-            _enemyList =
-            [
-                _enemy = _enemyManager.GetEnemy("Darknut", enemyPosition),
-                _enemy = _enemyManager.GetEnemy("Gel", enemyPosition),
-                _enemy = _enemyManager.GetEnemy("Goriya", enemyPosition),
-                _enemy = _enemyManager.GetEnemy("Keese", enemyPosition),
-                _enemy = _enemyManager.GetEnemy("Stalfos", enemyPosition),
-                _enemy = _enemyManager.GetEnemy("Rope",enemyPosition),
-                _enemy = _enemyManager.GetEnemy("Wallmaster",enemyPosition),
-                _enemy = _enemyManager.GetEnemy("Zol",enemyPosition),
-                _enemy = _enemyManager.GetEnemy("Dodongo",enemyPosition),
-                _enemy = _enemyManager.GetEnemy("Aquamentus",enemyPosition),
-                _enemy = _enemyManager.GetEnemy("BladeTrap",enemyPosition),
-                _enemy = _enemyManager.GetEnemy("OldMan", enemyPosition),
-            ];
-
-
-
-            _block = _blockList[0];
-            _enemy = _enemyList[0];
-            ItemIndex = 0;
-
+            _enemyManager.GetEnemy("Darknut", enemyPosition);
+            _enemyManager.GetEnemy("Darknut", new Vector2(enemyPosition.X + 30, enemyPosition.Y));
+            _enemyManager.GetEnemy("Darknut", new Vector2(enemyPosition.X + 60, enemyPosition.Y + 30));
+            _enemyManager.GetEnemy("Darknut", new Vector2(enemyPosition.X, enemyPosition.Y + 60));
+            _enemyManager.GetEnemy("Goriya", new Vector2(enemyPosition.X + 90, enemyPosition.Y + 30));
+            _enemyManager.GetEnemy("Goriya", new Vector2(enemyPosition.X + 90, enemyPosition.Y + 90));
+            _enemyManager.GetEnemy("Gel", new Vector2(enemyPosition.X - 300, enemyPosition.Y + 30));
+            _enemyManager.GetEnemy("Gel", new Vector2(enemyPosition.X - 330, enemyPosition.Y + 30));
+            _enemyManager.GetEnemy("Gel", new Vector2(enemyPosition.X - 360, enemyPosition.Y + 60));
+            _enemyManager.GetEnemy("Gel", new Vector2(enemyPosition.X - 390, enemyPosition.Y + 90));
+            _enemyManager.GetEnemy("Gel", new Vector2(enemyPosition.X - 420, enemyPosition.Y + 60));
+            _enemyManager.GetEnemy("Gel", new Vector2(enemyPosition.X - 440, enemyPosition.Y + 30));
             //END TEST
 
             _gamePlayer = new (_linkSprites, _itemSprites, _treasureSprites);
@@ -221,12 +170,6 @@ namespace ZweiHander
              _hurtPlayerCommand = new HurtPlayerCommand(this);
              _keyboardController.BindKey(Keys.R, new ResetCommand(this));
              _keyboardController.BindKey(Keys.Q, new QuitCommand(this));
-            // _keyboardController.BindKey(Keys.T, new ChangeBlockCommand(this, -1));
-            // _keyboardController.BindKey(Keys.Y, new ChangeBlockCommand(this, +1));
-            // _keyboardController.BindKey(Keys.U, new ChangeItemCommand(this, -1));
-            // _keyboardController.BindKey(Keys.I, new ChangeItemCommand(this, +1));
-             _keyboardController.BindKey(Keys.O, new ChangeEnemyCommand(this, -1));
-             _keyboardController.BindKey(Keys.P, new ChangeEnemyCommand(this, +1));
             _keyboardController.BindKey(Keys.E, _hurtPlayerCommand);
         }
 
@@ -242,8 +185,7 @@ namespace ZweiHander
             {
                 _blockList[i].Update(gameTime);
             }
-
-            _item.Update(gameTime);
+            _itemManager.Update(gameTime);
             _enemyManager.Update(gameTime);
             _projectileManager.Update(gameTime);
 
@@ -279,7 +221,7 @@ namespace ZweiHander
             _enemyManager.Draw();
 
 
-            _item.Draw();
+            _itemManager.Draw();
 
             _projectileManager.Draw();
 

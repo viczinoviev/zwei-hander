@@ -5,3 +5,8 @@ cases and everyone seems to be able to extend it easily for any purpose. I was d
 time too. I had slight concerns that some of our scripts get only half-baked before we move
 on onto the next one, saying that we will come back to them later. For now we are managing
 to keep the quality of our work pretty high, lessening my worries.
+
+Luke:
+This sprint was a good bit easier than the first. Most of my work was refactoring and making
+Enemies cleaner. Some collisions are not complete a bit to close to the deadline for my 
+tastes, but overall I think the team has done very well for this sprint.

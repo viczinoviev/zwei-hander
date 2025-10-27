@@ -11,8 +11,7 @@ public class FairyItem : AbstractItem
     {
         if (defaultProperties)
         {
-            Properties = ItemProperty.CanBePickedUp |
-                ItemProperty.DeleteOnPlayer;
+            Properties = ItemProperty.CanBePickedUp;
         }
         _startingPosition = startingPosition;
     }
