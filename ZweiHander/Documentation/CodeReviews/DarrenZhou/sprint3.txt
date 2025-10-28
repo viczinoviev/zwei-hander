@@ -1,0 +1,32 @@
+Author of the code review: Darren Zhou
+Date of the code review: 2025-10-27
+Sprint number: 3
+Name of the .cs file being reviewed: Room.cs
+Author of the .cs file being reviewed: Victor Zinoviev
+Number of minutes taken to complete the review: 10 minutes.
+Specific comments on readability: 
+
+    A very nice way to keep track of rooms for camera class to use and in 
+    the future for the map UI. A simple class with detailed comments, 
+    very high readability. Room height and length are hard coded in, which
+    is totally fine, as the room size will not be changing as its the 
+    very outer boundry of game window. As we continue to develop this game,
+    this class will most likely be merged with the border classes I wrote 
+    for refactoring. 
+
+Author of the code review: Darren Zhou
+Date of the code review: 2025-10-27
+Sprint number: 3
+Name of the .cs file being reviewed: EnemyCollisionHandler.cs
+Author of the .cs file being reviewed: Luke Howard
+Number of minutes taken to complete the review: 10 minutes.
+Specific comments on maintainability/code quality: 
+
+    The maintainbility is good. Some of the codes are repeated multiple 
+    times, so we can maybe have a helper function for the repeated lines 
+    of code. In terms of maintainability, this class should be kept 
+    relatively unchanged, as it has most if not all of the encounter types 
+    of collision. The comments are very descriptive, very easy to understand
+    what each part of the code is doing. This class and _enemy has very tight
+    coupling, which is fine as this class is meant solely for _enemy 
+    funcionaility.
