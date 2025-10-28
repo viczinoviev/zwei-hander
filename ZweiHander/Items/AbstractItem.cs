@@ -209,6 +209,12 @@ public abstract class AbstractItem : IItem
                 break;
             case ItemCollisionHandler:
                 break;
+            case EnemyCollisionHandler:
+                if (HasProperty(ItemProperty.DeleteOnEnemy))
+                {
+                    Kill();
+                }
+                break;
         }
     }
 }

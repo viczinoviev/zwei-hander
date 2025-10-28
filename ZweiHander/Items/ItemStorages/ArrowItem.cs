@@ -10,6 +10,8 @@ public class ArrowItem : AbstractItem
     {
         if (defaultProperties)
         {
+            Properties = ItemProperty.DeleteOnBlock
+                | ItemProperty.DeleteOnEnemy;
         }
         DeathTime = 0.1;
     }

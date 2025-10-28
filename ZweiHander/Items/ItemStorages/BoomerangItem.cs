@@ -9,6 +9,7 @@ public class BoomerangItem : AbstractItem
     {
         if (defaultProperties)
         {
+            Properties = ItemProperty.DeleteOnBlock;
         }
     }
 }

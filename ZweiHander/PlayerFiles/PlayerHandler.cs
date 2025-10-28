@@ -203,7 +203,10 @@ namespace ZweiHander.PlayerFiles
                     itemType,
                     life: 2.0,
                     position: itemPosition,
-                    velocity: itemVelocity
+                    velocity: itemVelocity,
+                    properties: [ItemProperty.DeleteOnEnemy,
+                    ItemProperty.DeleteOnBlock,
+                    ItemProperty.CanDamageEnemy]
                 );
             }
             else if (itemInput == PlayerInput.UsingItem2)
@@ -214,7 +217,9 @@ namespace ZweiHander.PlayerFiles
                     life: 2.15f,
                     position: itemPosition,
                     velocity: itemVelocity,
-                    acceleration: -itemVelocity * 0.9f
+                    acceleration: -itemVelocity * 0.9f,
+                    properties: [ItemProperty.DeleteOnBlock,
+                         ItemProperty.CanDamageEnemy]
                 );
             }
             else if (itemInput == PlayerInput.UsingItem3)
