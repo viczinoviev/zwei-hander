@@ -125,12 +125,12 @@ public abstract class AbstractItem : IItem
 
     public void RemoveProperty(ItemProperty property)
     {
-        Properties = Properties | property;
+        Properties |= property;
     }
 
     public void AddProperty(ItemProperty property)
     {
-        Properties = Properties | property;
+        Properties |= property;
     }
 
     public bool HasProperty(ItemProperty property)
