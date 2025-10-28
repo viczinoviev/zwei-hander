@@ -148,6 +148,7 @@ namespace ZweiHander
             _borderManager2.CreateWall(WallName.WallTileEast);
 
             _itemManager.Clear();
+            _enemyManager.Clear();
             //Create enemy list
             _enemyManager.GetEnemy("Darknut", enemyPosition);
             _enemyManager.GetEnemy("Darknut", new Vector2(enemyPosition.X + 30, enemyPosition.Y));
