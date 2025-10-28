@@ -21,7 +21,7 @@ public class Wallmaster : IEnemy
     /// <summary>
     /// List of Sprites for this enemy
     /// <summary>
-    public List<ISprite> _sprites = new List<ISprite>();
+    public List<ISprite> _sprites = [];
     private readonly EnemySprites _enemySprites;
 
     public Vector2 Position { get; set; } = default;
