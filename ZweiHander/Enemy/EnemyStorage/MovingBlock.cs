@@ -1,7 +1,8 @@
 using Microsoft.Xna.Framework;
 using ZweiHander.Graphics;
 using ZweiHander.Graphics.SpriteStorages;
-using System;
+
+using ZweiHander.CollisionFiles;
 
 namespace ZweiHander.Enemy.EnemyStorage
 {
@@ -21,7 +22,7 @@ namespace ZweiHander.Enemy.EnemyStorage
         public int Face { get; set; }
         public int Hitpoints { get; set; } = 5;
         public int Thrower { get; set; }
-
+        public EnemyCollisionHandler CollisionHandler { get; } = default;
         public MovingBlock(EnemySprites enemySprites)
         {
             _enemySprites = enemySprites;

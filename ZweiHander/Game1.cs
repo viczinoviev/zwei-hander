@@ -53,6 +53,7 @@ namespace ZweiHander
         //dummy position for treasure, item, block, and enemy
         Vector2 enemyPosition;
 
+
         public Player GamePlayer => _gamePlayer;
 
         public Game1()
@@ -200,7 +201,7 @@ namespace ZweiHander
             // Update camera to follow player
             _camera.Update(_gamePlayer.Position);
 
-            base.Update(gameTime);
+                base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)

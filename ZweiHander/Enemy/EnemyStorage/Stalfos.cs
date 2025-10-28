@@ -24,7 +24,7 @@ public class Stalfos : IEnemy
     public int Face { get; set; } = default;
     public int Hitpoints { get; set; } = 5;
 
-    readonly EnemyCollisionHandler _collisionHandler;
+    public EnemyCollisionHandler CollisionHandler { get; } = default;
 
     /// <summary>
     /// Random number generator to randomize enemy behavior
@@ -36,7 +36,7 @@ public class Stalfos : IEnemy
     {
         _enemySprites = enemySprites;
         Sprite = _enemySprites.Stalfos();
-        _collisionHandler = new EnemyCollisionHandler(this);
+        CollisionHandler = new EnemyCollisionHandler(this);
     }
     public virtual void Update(GameTime time)
     {
@@ -52,7 +52,7 @@ public class Stalfos : IEnemy
         {
             Face = mov;
         }
-        _collisionHandler.UpdateCollisionBox();
+        CollisionHandler.UpdateCollisionBox();
         Sprite.Update(time);
         }
 

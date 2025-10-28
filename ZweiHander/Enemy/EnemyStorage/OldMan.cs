@@ -24,17 +24,17 @@ public class OldMan : IEnemy
     public int Face { get; set; } = default;
     public int Hitpoints { get; set; } = 5;
 
-readonly EnemyCollisionHandler _collisionHandler;
+    public EnemyCollisionHandler CollisionHandler { get; } = default;
 
     public OldMan(NPCSprites npcSprites)
     {
         _npcSprites = npcSprites;
         Sprite = _npcSprites.OldMan();
-        _collisionHandler = new EnemyCollisionHandler(this);
+        CollisionHandler = new EnemyCollisionHandler(this);
     }
     public virtual void Update(GameTime time)
     {
-        _collisionHandler.UpdateCollisionBox();
+        CollisionHandler.UpdateCollisionBox();
         Sprite.Update(time);
         }
 

@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using ZweiHander.CollisionFiles;
 using ZweiHander.Graphics;
 
 namespace ZweiHander.Enemy;
@@ -22,7 +23,10 @@ public interface IEnemy
 /// Current amount of health, when <= 0, this enemy is dead.
 /// </summary>
     public int Hitpoints { get; set; }
-
+/// <summary>
+/// Collision manager for the enemy
+/// </summary>
+    public EnemyCollisionHandler CollisionHandler { get; }
 
     /// <summary>
     /// The current sprite associated with this Enemy.

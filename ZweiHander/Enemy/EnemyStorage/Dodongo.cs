@@ -29,7 +29,7 @@ public class Dodongo : IEnemy
 
     public int Hitpoints { get; set; } = 15;
 
-    readonly EnemyCollisionHandler _collisionHandler;
+    public EnemyCollisionHandler CollisionHandler { get; } = default;
 
     /// <summary>
     /// Random number generator to randomize boss behavior
@@ -45,7 +45,7 @@ public class Dodongo : IEnemy
         _sprites.Add(_bossSprites.DodongoDown());
         _sprites.Add(_bossSprites.DodongoLeft());
         Sprite = _sprites[0];
-        _collisionHandler = new EnemyCollisionHandler(this);
+        CollisionHandler = new EnemyCollisionHandler(this);
     }
     public virtual void Update(GameTime time)
     {
@@ -62,7 +62,7 @@ public class Dodongo : IEnemy
         {
             Face = mov;
         }
-        _collisionHandler.UpdateCollisionBox();
+        CollisionHandler.UpdateCollisionBox();
         Sprite.Update(time);
         }
 

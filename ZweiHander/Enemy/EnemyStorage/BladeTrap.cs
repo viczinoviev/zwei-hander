@@ -34,7 +34,7 @@ public class BladeTrap : IEnemy
 
     private int Thrower = 1;
 
-    readonly EnemyCollisionHandler _collisionHandler;
+    public EnemyCollisionHandler CollisionHandler { get; } = default;
     /// <summary>
     /// Random number generator to randomize enemy behavior
     /// </summary>
@@ -45,7 +45,7 @@ public class BladeTrap : IEnemy
     {
         _enemySprites = enemySprites;
         Sprite = _enemySprites.Trap();
-        _collisionHandler = new EnemyCollisionHandler(this);
+        CollisionHandler = new EnemyCollisionHandler(this);
     }
     public virtual void Update(GameTime time)
     {
@@ -87,7 +87,7 @@ public class BladeTrap : IEnemy
                 }
             }
         }
-        _collisionHandler.UpdateCollisionBox();
+        CollisionHandler.UpdateCollisionBox();
         Sprite.Update(time);
         }
 

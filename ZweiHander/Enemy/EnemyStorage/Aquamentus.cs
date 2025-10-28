@@ -33,20 +33,21 @@ public class Aquamentus : IEnemy
     public int Face { get; set; } = default;
 
     public int Hitpoints { get; set; } = 15;
+
+    public EnemyCollisionHandler CollisionHandler { get; } = default;
     private int Thrower = 1;
     /// <summary>
     /// Random number generator to randomize enemy behavior
     /// </summary>
     readonly Random rnd = new();
 
-    readonly EnemyCollisionHandler _collisionHandler;
 
     public Aquamentus(BossSprites bossSprites, ItemManager projectileManager)
     {
         _projectileManager = projectileManager;
         _bossSprites = bossSprites;
         Sprite = _bossSprites.Aquamentus();
-        _collisionHandler = new EnemyCollisionHandler(this);
+        CollisionHandler = new EnemyCollisionHandler(this);
     }
     public virtual void Update(GameTime time)
     {
@@ -95,7 +96,7 @@ public class Aquamentus : IEnemy
                 }
             }
         }
-        _collisionHandler.UpdateCollisionBox();
+        CollisionHandler.UpdateCollisionBox();
         Sprite.Update(time);
         _projectileManager.Update(time);
         }

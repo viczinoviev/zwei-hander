@@ -28,7 +28,7 @@ public class Rope : IEnemy
     public int Face { get; set; } = default;
     public int Hitpoints { get; set; } = 5;
 
-    readonly EnemyCollisionHandler _collisionHandler;
+    public EnemyCollisionHandler CollisionHandler { get; } = default;
 
     /// <summary>
     /// Random number generator to randomize enemy behavior
@@ -43,7 +43,7 @@ public class Rope : IEnemy
         _sprites.Add(_enemySprites.RopeLeft());
         Sprite = _sprites[0];
         Face = 1;
-        _collisionHandler = new EnemyCollisionHandler(this);
+        CollisionHandler = new EnemyCollisionHandler(this);
     }
     public virtual void Update(GameTime time)
     {
@@ -63,7 +63,7 @@ public class Rope : IEnemy
         {
             Face = mov;
         }
-        _collisionHandler.UpdateCollisionBox();
+        CollisionHandler.UpdateCollisionBox();
         Sprite.Update(time);
         }
 

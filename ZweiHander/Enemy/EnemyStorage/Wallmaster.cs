@@ -29,7 +29,7 @@ public class Wallmaster : IEnemy
     public int Face { get; set; } = default;
     public int Hitpoints { get; set; } = 5;
 
-    readonly EnemyCollisionHandler _collisionHandler;
+    public EnemyCollisionHandler CollisionHandler { get; } = default;
 
     /// <summary>
     /// Random number generator to randomize enemy behavior
@@ -43,7 +43,7 @@ public class Wallmaster : IEnemy
         _sprites.Add(_enemySprites.WallmasterUp());
         _sprites.Add(_enemySprites.WallmasterDown());
         Sprite = _sprites[0];
-        _collisionHandler = new EnemyCollisionHandler(this);
+        CollisionHandler = new EnemyCollisionHandler(this);
     }
     public virtual void Update(GameTime time)
     {
@@ -63,7 +63,7 @@ public class Wallmaster : IEnemy
         {
             Face = mov;
         }
-        _collisionHandler.UpdateCollisionBox();
+        CollisionHandler.UpdateCollisionBox();
         Sprite.Update(time);
         }
 
