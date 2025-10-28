@@ -3,12 +3,6 @@ A 2D sprite-based game built using MonoGame, featuring a controllable player (Li
 ## Controls
 R to reset to original state, Q to quit the program.
 
-T, Y to cycle through blocks.
-
-U, I to cycle through items.
-
-O, P to cycle through enemies.
-
 E to hurt player.
 
 WASD or arrow keys to move; diagonal movememnt allowed.
