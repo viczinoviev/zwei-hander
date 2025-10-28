@@ -185,7 +185,6 @@ public abstract class AbstractItem : IItem
             case PlayerCollisionHandler:
                 if (HasProperty(ItemProperty.CanBePickedUp))
                 {
-                    Kill();
                 }
                 if (HasProperty(ItemProperty.DeleteOnPlayer))
                 {
