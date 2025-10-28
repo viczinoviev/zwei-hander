@@ -1,0 +1,4 @@
+﻿I tried to keep in mind a lot of the messages that were said last time by the analysis,
+so I only had 2 suggested fixes, both for using "|=" instead of "a = a | b". I did both
+of these, as I did not know that such an assignment was even possible and it makes sense
+to do.

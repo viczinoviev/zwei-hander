@@ -1,0 +1,31 @@
+﻿Author of the code review: Jacob Scherzer
+Date of the code review: 2025-10-27
+Sprint number: 3
+Name of the .cs file being reviewed: CollisionManager.cs
+Author of the .cs file being reviewed: Stash
+Number of minutes taken to complete the review: 9 minutes.
+Specific comments on maintainability/code quality:
+	The class works as intended, using a singleton framework
+	as far as I know and can tell. I am unsure what the lock
+	does, and there is no comments explaining its purpose. It
+	seems to be ready for most future situations as well, having
+	methods like "RemoveCollider", which while unused right now,
+	could have use in the future. Additionally, the "Update" method
+	only calls "CheckCollisions", but having this be a separate method
+	allows for easier usage of adding additional updates in the future.
+
+Author of the code review: Jacob Scherzer
+Date of the code review: 2025-10-27
+Sprint number: 3
+Name of the .cs file being reviewed: EnemyManager.cs
+Author of the .cs file being reviewed: Luke
+Number of minutes taken to complete the review: # minutes.
+Specific comments on readability:
+	While everything seems commented, not all of the comments seem up to date.
+	In particular, the parameters for GetEnemy do not match the arguments in
+	the actual signature of the method. The class fields do not have an explicit
+	access modifier, and is thus implicitly private. GetEnemy itself uses a string
+	to get the enemy, with no warning or error to handle typos, which could cause
+	problems down the line. Overall, for anyone working on the class itself, there
+	is high readability. However, the readability for anyone who wishes to use the
+	class, specifically for GetEnemy, seems to be a bit lower.
