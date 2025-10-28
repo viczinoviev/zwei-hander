@@ -1,0 +1,5 @@
+The magic numbers in BorderManager are fine since the border size will 
+always be the same as each room is the same size. The IsCollidable 
+function in Border.cs isn't called right now because I am still
+deciding if I should make the walls plastic and use blocks below it for
+collision or make them concrete.

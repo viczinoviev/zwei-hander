@@ -3,12 +3,6 @@ A 2D sprite-based game built using MonoGame, featuring a controllable player (Li
 ## Controls
 R to reset to original state, Q to quit the program.
 
-T, Y to cycle through blocks.
-
-U, I to cycle through items.
-
-O, P to cycle through enemies.
-
 E to hurt player.
 
 WASD or arrow keys to move; diagonal movememnt allowed.
@@ -17,15 +11,12 @@ WASD or arrow keys to move; diagonal movememnt allowed.
 
 N or Z to make Link attack with sword.
 ## Known issues
-Fairy is bound in imaginary chains, unable to move :(
-
-Items, enemies, and blocks are not yet interactive (no collision or state changes).
+The game lags really hard if reset is used multiple times.
 
 Player health system is partially implemented.
 
 Some sprite transitions may not align perfectly with movement direction.
 
-Projectiles currently have no collision detection.
 ## Code Structure
 Game1.cs – Main entry point, handles initialization, loading content, and game loop.
 
@@ -42,6 +33,8 @@ Graphics/ – Includes all sprite classes and storage systems for player, blocks
 Player/ – Defines Player behavior, movement, attacks, and sprite rendering.
 
 Controllers/ – Implements the KeyboardController to map keys to commands. (In Player Class as of Sprint 2)
+
+Collisions/ - Handles collisions between player, enemies, items, and blocks.
 ## Tools/Frameworks
 Used .NET messages to help put code into better format.
 
