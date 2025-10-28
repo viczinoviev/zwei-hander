@@ -15,7 +15,7 @@ public class Darknut : IEnemy
 {
     public ISprite Sprite { get; set; } = default;
 
-    private readonly List<ISprite> _sprites = new List<ISprite>();
+    private readonly List<ISprite> _sprites = [];
     /// <summary>
     /// Holds all sprites for this enemy
     /// </summary>

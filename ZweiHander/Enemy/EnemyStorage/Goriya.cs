@@ -23,7 +23,7 @@ public class Goriya : IEnemy
     /// <summary>
     /// List of Sprites for this enemy
     /// <summary>
-    public List<ISprite> _sprites = new List<ISprite>();
+    public List<ISprite> _sprites = [];
     IItem _currentProjectile;
     /// <summary>
     /// Holds all sprites for this enemy

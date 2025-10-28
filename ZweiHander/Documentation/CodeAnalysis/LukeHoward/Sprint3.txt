@@ -1,0 +1,2 @@
+Some of my lists for enemy sprites could have their initilization simplified which was fixed
+Enemy handler assigned a name to other when colliding with enemies like the other cases, which was not needed and was fixed

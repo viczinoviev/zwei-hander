@@ -59,7 +59,7 @@ namespace ZweiHander.CollisionFiles
 
             }
             //Player collision
-            if (other is EnemyCollisionHandler EnemyCollisionHandler)
+            if (other is EnemyCollisionHandler)
             {
                 //If enemy is running into another enemy, prevent enemy from going into the enemy
                 Vector2 newPosition = _enemy.Position + collisionInfo.ResolutionOffset;
