@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using ZweiHander.Camera;
 using ZweiHander.CollisionFiles;
@@ -102,10 +103,7 @@ namespace ZweiHander
         /// </summary>
         public void GameSetUp()
         {
-            enemyPosition = new Vector2(
-                GraphicsDevice.PresentationParameters.BackBufferWidth * 0.75f,
-                GraphicsDevice.PresentationParameters.BackBufferHeight * 0.75f
-                );
+            enemyPosition = new Vector2(700, 300);
 
             //Create and load the Block List
             string mapPath = Path.Combine(Content.RootDirectory, "Maps","map1.csv"); // CSV location
@@ -148,6 +146,7 @@ namespace ZweiHander
             _borderManager2.CreateWall(WallName.WallTileEast);
 
             _itemManager.Clear();
+            _enemyManager.Clear();
             //Create enemy list
             _enemyManager.GetEnemy("Darknut", enemyPosition);
             _enemyManager.GetEnemy("Darknut", new Vector2(enemyPosition.X + 30, enemyPosition.Y));

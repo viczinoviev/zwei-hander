@@ -124,7 +124,7 @@ public class EnemyManager(EnemySprites enemysprites, ItemManager projectileManag
 /// <summary>
 /// Clears the manager of all enemies
 /// </summary>
-    public void Clear(GameTime time)
+    public void Clear()
     {
         foreach (IEnemy _enemy in currentEnemies)
         {
