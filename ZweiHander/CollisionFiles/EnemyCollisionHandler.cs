@@ -11,7 +11,6 @@ namespace ZweiHander.CollisionFiles
         /// The enemy this handler manages
         /// </summary>
         public readonly IEnemy _enemy;
-
         public EnemyCollisionHandler(IEnemy enemy)
         {
             _enemy = enemy;
@@ -56,9 +55,8 @@ namespace ZweiHander.CollisionFiles
                         Dead = true;
                     }
                 }
-
             }
-            //Player collision
+            //Enemy collision
             if (other is EnemyCollisionHandler)
             {
                 //If enemy is running into another enemy, prevent enemy from going into the enemy

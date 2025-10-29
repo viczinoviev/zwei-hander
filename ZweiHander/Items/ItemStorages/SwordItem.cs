@@ -11,7 +11,8 @@ public class SwordItem : AbstractItem
         if (defaultProperties)
         {
             Properties = ItemProperty.CanDamageEnemy
-                | ItemProperty.DeleteOnBlock;
+                | ItemProperty.DeleteOnBlock
+                | ItemProperty.DeleteOnEnemy;
         }
         DeathTime = 0.1;
     }
