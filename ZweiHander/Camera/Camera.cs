@@ -36,6 +36,11 @@ namespace ZweiHander.Camera
         /// </summary>
         private Room _currentRoom;
 
+        /// <summary>
+		/// Flag to check if initial camera setup has been completed
+		/// </summary>
+        private bool initialSetUpCompleted = false;
+
         public Camera(Viewport viewport)
         {
             Viewport = viewport;
@@ -61,7 +66,7 @@ namespace ZweiHander.Camera
             _dungeon = dungeon;
         }
 
-        public void Update(Vector2 target)
+        public void Update(GameTime gameTime, Vector2 target)
         {
             // Smoothly interpolate camera position towards desired position
             Position += (DesiredPosition - Position) * SmoothSpeed;
@@ -87,7 +92,11 @@ namespace ZweiHander.Camera
 
             Vector2 roomCenter = _currentRoom.Position + _currentRoom.Size / 2f;
 
-            Position = roomCenter - new Vector2(Viewport.Width / 2f, Viewport.Height / 2f);
+            if(initialSetUpCompleted == false)
+            {
+                Position = roomCenter - new Vector2(Viewport.Width / 2f, Viewport.Height / 2f);
+                initialSetUpCompleted = true;
+            }
             DesiredPosition = roomCenter - new Vector2(Viewport.Width / 2f, Viewport.Height / 2f);
         }
 

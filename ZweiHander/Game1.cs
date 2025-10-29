@@ -198,7 +198,7 @@ namespace ZweiHander
             CollisionManager.Instance.Update(gameTime);
 
             // Update camera to follow player
-            _camera.Update(_gamePlayer.Position);
+            _camera.Update(gameTime, _gamePlayer.Position);
 
                 base.Update(gameTime);
         }
