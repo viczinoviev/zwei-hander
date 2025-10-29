@@ -14,7 +14,7 @@ public class EnemySprites : SpriteFactory
         _spriteBatch = spriteBatch;
     }
     public ISprite DarknutMoveDown() => new AnimatedSprite(_spriteBatch, _animations["darknut-move-animation-down"]);
-    public ISprite DarknutMoveUp() => new AnimatedSprite(_spriteBatch, _animations["darknut-move-animation-up"]);
+    public ISprite DarknutMoveUp() => new FlippingSprites(_regions["darknut-move-up-1"], _spriteBatch);
     public ISprite DarknutMoveRight() => new AnimatedSprite(_spriteBatch, _animations["darknut-move-animation-right"]);
     
     public ISprite DarknutMoveLeft()
