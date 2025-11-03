@@ -12,20 +12,20 @@
 		<Region name="brick-tile" x="984" y="45" width="16" height="16" />
 		<Region name="white-pattern-tile" x="1001" y="45" width="16" height="16" />
 
-		<Region name="wall-west-bottom" x="521" y="115" width="32" height="72" />
-		<Region name="wall-west-top" x="521" y="11" width="32" height="72" />
-		<Region name="wall-east-bottom" x="745" y="115" width="32" height="72" />
-		<Region name="wall-east-top" x="745" y="11" width="32" height="72" />
+		<Region name="wall-tile-north" x="1055" y="11" width="32" height="32" />
+		<Region name="wall-tile-west" x="1055" y="47" width="32" height="32" />
+		<Region name="wall-tile-east" x="1055" y="83" width="32" height="32" />
+		<Region name="wall-tile-south" x="1055" y="119" width="32" height="32" />
 
-		<Region name="wall-south-left" x="553" y="155" width="80" height="32" />
-		<Region name="wall-south-right" x="665" y="155" width="80" height="32" />
-		<Region name="wall-north-left" x="553" y="11" width="80" height="32" />
-		<Region name="wall-north-right" x="665" y="11" width="80" height="32" />
+		<Region name="inside-corner-tile-northeast" x="1091" y="11" width="32" height="32" />
+		<Region name="inside-corner-tile-southeast" x="1091" y="47" width="32" height="32" />
+		<Region name="inside-corner-tile-southwest" x="1091" y="83" width="32" height="32" />
+		<Region name="inside-corner-tile-northwest" x="1091" y="119" width="32" height="32" />
 
-		<Region name="wall-tile-north" x="815" y="11" width="32" height="32" />
-		<Region name="wall-tile-west" x="815" y="44" width="32" height="32" />
-		<Region name="wall-tile-east" x="815" y="77" width="32" height="32" />
-		<Region name="wall-tile-south" x="815" y="110" width="32" height="32" />
+		<Region name="outside-corner-tile-southwest" x="1127" y="11" width="32" height="32" />
+		<Region name="outside-corner-tile-northwest" x="1127" y="47" width="32" height="32" />
+		<Region name="outside-corner-tile-northeast" x="1127" y="83" width="32" height="32" />
+		<Region name="outside-corner-tile-southeast" x="1127" y="119" width="32" height="32" />
 
 		<Region name="enterance-tile-north" x="848" y="11" width="32" height="32" />
 		<Region name="enterance-tile-west" x="848" y="44" width="32" height="32" />
