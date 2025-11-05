@@ -10,11 +10,16 @@ namespace ZweiHander.HUD
     {
         private readonly List<IHUDComponent> _components;
         private readonly HealthDisplay _healthDisplay;
+        private readonly ItemSlots _itemSlots;
 
         // HUD layout constants
         private const float HUD_HEIGHT = 88f; // Height of HUD area at top of screen
+        
         private const float HEALTH_DISPLAY_X = 640f; // X position for health display
         private const float HEALTH_DISPLAY_Y = 64f; // Y position for health display
+        
+        private const float ITEM_SLOT_X = 320f;
+        private const float ITEM_SLOT_Y = 32f;
         
         public HUDManager(IPlayer player, HUDSprites hudSprites)
         {
@@ -27,7 +32,14 @@ namespace ZweiHander.HUD
                 new Vector2(HEALTH_DISPLAY_X, HEALTH_DISPLAY_Y)
             );
 
+            _itemSlots = new ItemSlots(
+                player,
+                hudSprites,
+                new Vector2(ITEM_SLOT_X, ITEM_SLOT_Y)
+            );
+
             _components.Add(_healthDisplay);
+            _components.Add(_itemSlots);
         }
         
         public void Update(GameTime gameTime)
