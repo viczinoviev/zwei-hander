@@ -1,62 +1,74 @@
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
+using ZweiHander.Environment;
+using ZweiHander.Enemy;
+using ZweiHander.Items;
 
 namespace ZweiHander.Map
 {
-    /// <summary>
-    /// Represents the room in the game's dungeon
-    /// </summary>
     public class Room
     {
-        /// <summary>
-        /// Standard width of a room
-        /// </summary>
-        public const int ROOM_WIDTH = 512;
-
-        /// <summary>
-        /// Standard height of a room
-        /// </summary>
-        public const int ROOM_HEIGHT = 320;
-
-        /// <summary>
-        /// top-left position of this room
-        /// </summary>
+        public int RoomNumber { get; }
         public Vector2 Position { get; }
-
-        /// <summary>
-        /// width and height of this room
-        /// </summary>
         public Vector2 Size { get; }
+        public bool IsLoaded { get; private set; }
 
-        /// <summary>
-        /// Bounding rectangle of this room
-        /// </summary>
+        public List<Block> Blocks { get; }
+        public List<IEnemy> Enemies { get; }
+        public List<IItem> Items { get; }
+        public List<IPortal> Portals { get; }
+
         private Rectangle Bounds;
 
-        /// <summary>
-        /// Creates a new Room
-        /// </summary>
-        /// <param name="position">Top-left position of the room</param>
-        /// <param name="size">width and height of the room</param>
-        public Room(Vector2 position, Vector2 size)
+        public Room(int roomNumber, Vector2 position, Vector2 size)
         {
+            RoomNumber = roomNumber;
             Position = position;
             Size = size;
-            Bounds = new Rectangle(
-                (int)position.X,
-                (int)position.Y,
-                (int)size.X,
-                (int)size.Y
-            );
+            Bounds = new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
+            Blocks = new List<Block>();
+            Enemies = new List<IEnemy>();
+            Items = new List<IItem>();
+            Portals = new List<IPortal>();
         }
 
-        /// <summary>
-        /// Checks if a given position is inside the room
-        /// </summary>
-        /// <param name="position">Position to check</param>
-        /// <returns>True if the position is within the room bounds</returns>
-        public bool Contains(Vector2 position)
+        public void AddBlock(Block block) => Blocks.Add(block);
+        public void AddEnemy(IEnemy enemy) => Enemies.Add(enemy);
+        public void AddItem(IItem item) => Items.Add(item);
+        public void AddPortal(IPortal portal) => Portals.Add(portal);
+
+        public void Load()
         {
-            return Bounds.Contains(position);
+            CleanupNullReferences();
+            IsLoaded = true;
         }
+
+        public void Unload()
+        {
+            CleanupNullReferences();
+            IsLoaded = false;
+        }
+
+        public void CleanupNullReferences()
+        {
+            Blocks.RemoveAll(b => b == null);
+            Enemies.RemoveAll(e => e == null || e.Hitpoints <= 0);
+            Items.RemoveAll(i => i == null);
+        }
+
+        public void Update(GameTime gameTime)
+        {
+            if (!IsLoaded) return;
+
+            foreach (var enemy in Enemies)
+                enemy?.Update(gameTime);
+
+            foreach (var item in Items)
+                item?.Update(gameTime);
+
+            CleanupNullReferences();
+        }
+
+        public bool Contains(Vector2 position) => Bounds.Contains(position);
     }
 }

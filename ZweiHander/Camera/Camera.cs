@@ -22,19 +22,9 @@ namespace ZweiHander.Camera
         public Viewport Viewport { get; private set; }
 
         /// <summary>
-        /// Reference to dungeon for room checking
-        /// </summary>
-        private Dungeon _dungeon;
-
-        /// <summary>
 		/// Speed of camera smoothing, between 0 and 1, where 1 is instant movement
 		/// </summary>
         private float SmoothSpeed = 0.1f;
-
-        /// <summary>
-        /// The room camera is currently looking at
-        /// </summary>
-        private Room _currentRoom;
 
         /// <summary>
 		/// Flag to check if initial camera setup has been completed
@@ -58,46 +48,11 @@ namespace ZweiHander.Camera
             SmoothSpeed = speed;
         }
 
-        /// <summary>
-        /// Sets the dungeon for camera to check room the player is in
-        /// </summary>
-        public void SetDungeon(Dungeon dungeon)
-        {
-            _dungeon = dungeon;
-        }
-
         public void Update(GameTime gameTime, Vector2 target)
         {
             // Smoothly interpolate camera position towards desired position
             Position += (DesiredPosition - Position) * SmoothSpeed;
 
-            if (_dungeon == null) return;
-
-            Room targetRoom = _dungeon.GetRoomAtPosition(target);
-
-            // change camera if player entered new room
-            if (targetRoom != null && targetRoom != _currentRoom)
-            {
-                _currentRoom = targetRoom;
-                CenterCameraOnRoom();
-            }
-        }
-
-        /// <summary>
-        /// Centers the camera on the current room
-        /// </summary>
-        private void CenterCameraOnRoom()
-        {
-            if (_currentRoom == null) return;
-
-            Vector2 roomCenter = _currentRoom.Position + _currentRoom.Size / 2f;
-
-            if(initialSetUpCompleted == false)
-            {
-                Position = roomCenter - new Vector2(Viewport.Width / 2f, Viewport.Height / 2f);
-                initialSetUpCompleted = true;
-            }
-            DesiredPosition = roomCenter - new Vector2(Viewport.Width / 2f, Viewport.Height / 2f);
         }
 
         /// <summary>
