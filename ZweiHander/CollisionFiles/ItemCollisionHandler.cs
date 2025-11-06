@@ -30,7 +30,7 @@ public class ItemCollisionHandler : CollisionHandlerAbstract
 
     public override void UpdateCollisionBox()
     {
-        CollisionBox = Item.GetHitBox();
+        collisionBox = Item.GetHitBox();
     }
 
     /// <summary>

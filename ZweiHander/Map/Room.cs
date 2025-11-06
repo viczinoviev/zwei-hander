@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using ZweiHander.Environment;
 using ZweiHander.Enemy;
 using ZweiHander.Items;
+using ZweiHander.CollisionFiles;
 
 namespace ZweiHander.Map
 {
@@ -41,12 +42,69 @@ namespace ZweiHander.Map
         {
             CleanupNullReferences();
             IsLoaded = true;
+            
+            // Re-register all collision handlers when room loads
+            foreach (var portal in Portals)
+            {
+                if (portal is RoomPortal roomPortal && roomPortal.CollisionHandler != null)
+                {
+                    CollisionManager.Instance.AddCollider(roomPortal.CollisionHandler);
+                }
+            }
+            
+            foreach (var block in Blocks)
+            {
+                if (block?.CollisionHandler != null)
+                {
+                    CollisionManager.Instance.AddCollider(block.CollisionHandler);
+                }
+            }
+            
+            foreach (var enemy in Enemies)
+            {
+                if (enemy?.CollisionHandler != null)
+                {
+                    CollisionManager.Instance.AddCollider(enemy.CollisionHandler);
+                }
+            }
+            
+            foreach (var item in Items)
+            {
+                if (item?.CollisionHandler != null)
+                {
+                    CollisionManager.Instance.AddCollider(item.CollisionHandler);
+                }
+            }
         }
 
         public void Unload()
         {
             CleanupNullReferences();
             IsLoaded = false;
+            
+            // Unsubscribe all collision handlers when room unloads
+            foreach (var portal in Portals)
+            {
+                if (portal is RoomPortal roomPortal)
+                {
+                    roomPortal.CollisionHandler?.Unsubscribe();
+                }
+            }
+            
+            foreach (var block in Blocks)
+            {
+                block?.CollisionHandler?.Unsubscribe();
+            }
+            
+            foreach (var enemy in Enemies)
+            {
+                enemy?.CollisionHandler?.Unsubscribe();
+            }
+            
+            foreach (var item in Items)
+            {
+                item?.CollisionHandler?.Unsubscribe();
+            }
         }
 
         public void CleanupNullReferences()
@@ -65,6 +123,12 @@ namespace ZweiHander.Map
 
             foreach (var item in Items)
                 item?.Update(gameTime);
+
+            foreach (var portal in Portals)
+            {
+                if (portal is RoomPortal roomPortal)
+                    roomPortal.CollisionHandler?.Update();
+            }
 
             CleanupNullReferences();
         }

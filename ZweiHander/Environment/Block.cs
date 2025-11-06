@@ -19,6 +19,7 @@ namespace ZweiHander.Environment
         public BlockType BlockType => _blockType;
         public int GridSize => _gridSize;
         public BlockName Name { get; private set; }
+        public BlockCollisionHandler CollisionHandler => _collisionHandler;
 
 
         // Constructor: creates a new block with given type, position, size, and sprite

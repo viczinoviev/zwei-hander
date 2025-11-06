@@ -14,7 +14,7 @@ namespace ZweiHander.Environment
     /// </summary>
     public class CsvAreaConstructor
     {
-        private const int CELL_SIZE = 16;
+        private const int CELL_SIZE = 32;
 
         private readonly BlockFactory _blockFactory;
         private readonly ItemManager _itemManager;
@@ -22,7 +22,9 @@ namespace ZweiHander.Environment
 
         private Room _currentRoom;
         private Area _currentArea;
+        private Universe _universe;
         private IPlayer _player;
+        private Camera.Camera _camera;
 
         public CsvAreaConstructor(BlockFactory blockFactory, ItemManager itemManager, EnemyManager enemyManager)
         {
@@ -31,9 +33,11 @@ namespace ZweiHander.Environment
             _enemyManager = enemyManager;
         }
 
-        public Area LoadArea(string filePath, IPlayer player, string areaName = null)
+        public Area LoadArea(string filePath, Universe universe, IPlayer player, Camera.Camera camera, string areaName = null)
         {
+            _universe = universe;
             _player = player;
+            _camera = camera;
 
             string[] lines = File.ReadAllLines(filePath);
             Area area = new Area(areaName);
@@ -82,7 +86,7 @@ namespace ZweiHander.Environment
 
             for (int y = roomStartLine; y < roomEndLine; y++)
             {
-                string[] cells = lines[y].Split(',');
+                string[] cells = ParseCsvLine(lines[y]);
                 
                 if (cells.Length > roomWidth)
                     roomWidth = cells.Length;
@@ -94,7 +98,7 @@ namespace ZweiHander.Environment
 
             for (int y = roomStartLine; y < roomEndLine; y++)
             {
-                string[] cells = lines[y].Split(',');
+                string[] cells = ParseCsvLine(lines[y]);
                 
                 if (cells.Length > roomWidth)
                     roomWidth = cells.Length;
@@ -122,6 +126,29 @@ namespace ZweiHander.Environment
             _currentRoom = null;
 
             return room;
+        }
+
+        private string[] ParseCsvLine(string line)
+        {
+            var result = new List<string>();
+            bool inQuotes = false;
+            int startIndex = 0;
+
+            for (int i = 0; i < line.Length; i++)
+            {
+                if (line[i] == '"')
+                {
+                    inQuotes = !inQuotes;
+                }
+                else if (line[i] == ',' && !inQuotes)
+                {
+                    result.Add(line.Substring(startIndex, i - startIndex).Trim('"').Trim());
+                    startIndex = i + 1;
+                }
+            }
+
+            result.Add(line.Substring(startIndex).Trim('"').Trim());
+            return result.ToArray();
         }
 
         private void CreateObject(string objectId, Vector2 position, Point gridPosition)
@@ -156,6 +183,7 @@ namespace ZweiHander.Environment
             BlockName blockName = AreaDictionaries.idToBlockName[id];
             Block block = _blockFactory.CreateBlock(blockName, gridPosition);
             _currentRoom.AddBlock(block);
+            block?.CollisionHandler?.Unsubscribe();
         }
 
         private void CreateEnemy(string enemyName, Vector2 position)
@@ -164,6 +192,7 @@ namespace ZweiHander.Environment
             {
                 IEnemy enemy = _enemyManager.GetEnemy(enemyName, position);
                 _currentRoom.AddEnemy(enemy);
+                enemy?.CollisionHandler?.Unsubscribe();
             }
         }
 
@@ -175,15 +204,18 @@ namespace ZweiHander.Environment
             {
                 IItem item = _itemManager.GetItem(itemType, position: position);
                 _currentRoom.AddItem(item);
+                item?.CollisionHandler?.Unsubscribe();
             }
         }
 
         private void CreatePortal(string portalId, Vector2 position)
         {
             int id = int.Parse(portalId);
-            RoomPortal portal = new RoomPortal(id, position, _currentRoom, _currentArea, _player);
+            Vector2 centeredPosition = new Vector2(position.X - CELL_SIZE / 2, position.Y - CELL_SIZE / 2);
+            RoomPortal portal = new RoomPortal(id, centeredPosition, _currentRoom, _currentArea, _universe, _player, _camera);
             _currentRoom.AddPortal(portal);
             _currentArea.RegisterPortal(portal);
+            portal.CollisionHandler?.Unsubscribe();
         }
     }
 }

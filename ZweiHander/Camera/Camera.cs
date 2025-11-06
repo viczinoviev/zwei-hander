@@ -48,11 +48,20 @@ namespace ZweiHander.Camera
             SmoothSpeed = speed;
         }
 
+        public void SetPositionImmediate(Vector2 playerPosition)
+        {
+            Vector2 cameraPosition = playerPosition - new Vector2(Viewport.Width / 2f, Viewport.Height / 2f);
+            Position = cameraPosition;
+            DesiredPosition = cameraPosition;
+        }
+
         public void Update(GameTime gameTime, Vector2 target)
         {
+            // Set desired position to center on player
+            DesiredPosition = target - new Vector2(Viewport.Width / 2f, Viewport.Height / 2f);
+            
             // Smoothly interpolate camera position towards desired position
             Position += (DesiredPosition - Position) * SmoothSpeed;
-
         }
 
         /// <summary>

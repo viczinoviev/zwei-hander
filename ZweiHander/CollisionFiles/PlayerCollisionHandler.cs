@@ -60,7 +60,7 @@ namespace ZweiHander.CollisionFiles
         {
 
             
-            CollisionBox = new Rectangle(
+            collisionBox = new Rectangle(
                 (int)(_player.Position.X - COLLISION_SIZE / 2),
                 (int)(_player.Position.Y - COLLISION_SIZE / 2),
                 COLLISION_SIZE,

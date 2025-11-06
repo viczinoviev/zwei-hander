@@ -16,7 +16,7 @@ namespace ZweiHander.Commands
 
         public void Execute()
         {
-            _player.Position = _targetPosition;
+            _player.Position = _targetPosition + new Vector2(16, 0);
         }
     }
 }

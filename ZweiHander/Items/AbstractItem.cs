@@ -63,7 +63,7 @@ public abstract class AbstractItem : IItem
     /// <summary>
     /// Handles the collisions for this item.
     /// </summary>
-    protected ItemCollisionHandler CollisionHandler { get; set; }
+    public ItemCollisionHandler CollisionHandler { get; set; }
 
     /// <summary>
     /// The properties this item has.

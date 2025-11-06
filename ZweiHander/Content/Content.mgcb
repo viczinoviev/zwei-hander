@@ -13,10 +13,14 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin Maps/map1.csv
+/copy:Maps/map1.csv
+
+#begin Maps/map2.csv
+/copy:Maps/map2.csv
+
 #begin Maps/newDungeon1.csv
-/importer:
-/processor:
-/build:Maps/newDungeon1.csv;newDungeon1.csv
+/copy:Maps/newDungeon1.csv
 
 #begin SpriteSheets/BlockDefinition.xml
 /copy:SpriteSheets/BlockDefinition.xml

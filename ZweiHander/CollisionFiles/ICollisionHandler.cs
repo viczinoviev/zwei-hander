@@ -11,12 +11,12 @@ namespace ZweiHander.CollisionFiles
         /// <summary>
         /// Where this thing can be hit
         /// </summary>
-        Rectangle CollisionBox { get; set; }
+        Rectangle collisionBox { get; set; }
 
         /// <summary>
         /// If this Handler is done and needs to be deleted.
         /// </summary>
-        public bool Dead { get; set; }
+        bool Dead { get; set; }
 
         /// <summary>
         /// What happens when this thing hits something else, action can depend on the type of the other collider as well as collision information

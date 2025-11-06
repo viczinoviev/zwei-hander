@@ -36,6 +36,22 @@ namespace ZweiHander.Map
             CurrentRoom.Load();
         }
 
+        public void LoadRoom(int roomNumber, Vector2 spawnPosition, Camera.Camera camera)
+        {
+            if (CurrentArea == null) return;
+
+            Room targetRoom = CurrentArea.GetRoom(roomNumber);
+            if (targetRoom == null) return;
+
+            int previousRoom = CurrentRoom?.RoomNumber ?? -1;
+            CurrentRoom?.Unload();
+            CurrentRoom = targetRoom;
+            CurrentRoom.Load();
+
+            new Commands.PlayerTeleportCommand(Player, spawnPosition + new Vector2(16, 16)).Execute();
+            new Commands.SetCameraCommand(camera, Player).Execute();
+        }
+
         public void Update(GameTime gameTime) => CurrentRoom?.Update(gameTime);
     }
 }

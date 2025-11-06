@@ -48,6 +48,8 @@ namespace ZweiHander
         private Universe _universe;
         private CsvAreaConstructor _areaConstructor;
 
+        private Texture2D _debugPixel;
+
         public Player GamePlayer => _gamePlayer;
 
         public Game1()
@@ -86,6 +88,9 @@ namespace ZweiHander
             _projectileManager = new ItemManager(_itemSprites, _treasureSprites, _bossSprites);
             _enemyManager = new EnemyManager(_enemySprites, _projectileManager, _bossSprites,_npcSprites);
 
+            _debugPixel = new Texture2D(GraphicsDevice, 1, 1);
+            _debugPixel.SetData(new[] { Color.White });
+
             GameSetUp();
         }
 
@@ -98,12 +103,13 @@ namespace ZweiHander
             _gamePlayer.Position = new Vector2(100, 100);
 
             _universe = new Universe();
+            _universe.SetPlayer(_gamePlayer);
             _areaConstructor = new CsvAreaConstructor(_blockFactory, _itemManager, _enemyManager);
 
-            Area testArea = _areaConstructor.LoadArea("Content/Maps/newDungeon1.csv", _gamePlayer, "TestDungeon");
+            string mapPath = Path.Combine(Content.RootDirectory, "Maps", "newDungeon1.csv"); // CSV location
+            Area testArea = _areaConstructor.LoadArea(mapPath, _universe, _gamePlayer, _camera, "TestDungeon");
 
             _universe.AddArea(testArea);
-            _universe.SetPlayer(_gamePlayer);
             _universe.SetCurrentLocation("TestDungeon", 1);
 
             _keyboardController = new KeyboardController(_gamePlayer);
@@ -142,6 +148,7 @@ namespace ZweiHander
                 transformMatrix: _camera.GetTransformMatrix()
             );
 
+
             if (_universe.CurrentRoom != null && _universe.CurrentRoom.IsLoaded)
             {
                 foreach (var block in _universe.CurrentRoom.Blocks)
@@ -152,15 +159,50 @@ namespace ZweiHander
 
                 foreach (var item in _universe.CurrentRoom.Items)
                     item?.Draw();
+
+                // Debug: Draw portals
+                foreach (var portal in _universe.CurrentRoom.Portals)
+                {
+                    DrawDebugRectangle(portal.TriggerArea, Color.Red * 0.5f);
+                }
             }
 
             _itemManager.Draw();
             _projectileManager.Draw();
             _gamePlayer.Draw(_spriteBatch);
 
+            DrawDebugGrid();
+
             base.Draw(gameTime);
 
             _spriteBatch.End();
+        }
+
+        private void DrawDebugGrid()
+        {
+            int gridSize = 32;
+            int dotSize = 2;
+            int gridRange = 20; 
+
+            for (int y = -gridRange; y <= gridRange; y++)
+            {
+                Rectangle dot = new Rectangle(0 - dotSize / 2, y * gridSize - dotSize / 2, dotSize, dotSize);
+                _spriteBatch.Draw(_debugPixel, dot, Color.Yellow);
+            }
+
+            for (int x = -gridRange; x <= gridRange; x++)
+            {
+                Rectangle dot = new Rectangle(x * gridSize - dotSize / 2, 0 - dotSize / 2, dotSize, dotSize);
+                _spriteBatch.Draw(_debugPixel, dot, Color.Yellow);
+            }
+
+            Rectangle origin = new Rectangle(-4, -4, 8, 8);
+            _spriteBatch.Draw(_debugPixel, origin, Color.Green);
+        }
+
+        private void DrawDebugRectangle(Rectangle rect, Color color)
+        {
+            _spriteBatch.Draw(_debugPixel, rect, color);
         }
     }
 }
