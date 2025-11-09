@@ -9,37 +9,39 @@ namespace ZweiHander.HUD
     public class HUDManager
     {
         private readonly List<IHUDComponent> _components;
-        private readonly HealthDisplay _healthDisplay;
-        private readonly ItemSlots _itemSlots;
+        private readonly IHUDComponent _headsUpHud;
+        private readonly IHUDComponent _healthDisplay;
+
 
         // HUD layout constants
-        private const float HUD_HEIGHT = 88f; // Height of HUD area at top of screen
+
+        public const int HEADS_UP_HUD_X = 256;
+        public const int HEADS_UP_HUD_Y = 56;
         
-        private const float HEALTH_DISPLAY_X = 640f; // X position for health display
-        private const float HEALTH_DISPLAY_Y = 64f; // Y position for health display
+
+        private const int HUD_HEIGHT = 112; // Height of HUD area at top of screen
         
-        private const float ITEM_SLOT_X = 320f;
-        private const float ITEM_SLOT_Y = 32f;
+        private const int HEALTH_DISPLAY_X_OFFSET = 104; // X position for health display
+        private const int HEALTH_DISPLAY_Y = 72; // Y position for health display
+        
+
         
         public HUDManager(IPlayer player, HUDSprites hudSprites)
         {
+            int screen_center_x = GraphicsDeviceManager.DefaultBackBufferWidth / 2;
             _components = new List<IHUDComponent>();
+            
+            _headsUpHud = new HeadsUpHUD(hudSprites, new Vector2(screen_center_x, HEADS_UP_HUD_Y));
+            _components.Add(_headsUpHud);
 
             // Create health display
             _healthDisplay = new HealthDisplay(
                 player,
                 hudSprites,
-                new Vector2(HEALTH_DISPLAY_X, HEALTH_DISPLAY_Y)
-            );
-
-            _itemSlots = new ItemSlots(
-                player,
-                hudSprites,
-                new Vector2(ITEM_SLOT_X, ITEM_SLOT_Y)
+                new Vector2(screen_center_x + HEALTH_DISPLAY_X_OFFSET, HEALTH_DISPLAY_Y)
             );
 
             _components.Add(_healthDisplay);
-            _components.Add(_itemSlots);
         }
         
         public void Update(GameTime gameTime)
