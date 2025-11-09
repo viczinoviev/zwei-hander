@@ -96,8 +96,9 @@ public abstract class AbstractItem : IItem
             {
                 Life = 0;
             }
-        } else
-        {
+        }
+
+        if (Life == 0){
             OnDeath(time);
             return;
         }
@@ -154,6 +155,14 @@ public abstract class AbstractItem : IItem
         if (IsDead())
         {
             CollisionHandler.Dead = true;
+        }
+    }
+
+    public void UnsubscribeFromCollisions()
+    {
+        if (CollisionHandler != null)
+        {
+            CollisionManager.Instance.RemoveCollider(CollisionHandler);
         }
     }
 

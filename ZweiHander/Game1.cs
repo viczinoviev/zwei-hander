@@ -80,13 +80,15 @@ namespace ZweiHander
             _blockSprites = new BlockSprites(Content, _spriteBatch);
             _treasureSprites = new TreasureSprites(Content, _spriteBatch);
             _itemSprites = new ItemSprites(Content, _spriteBatch);
-            _blockFactory = new BlockFactory(32, _blockSprites, _linkSprites);
             _enemySprites = new EnemySprites(Content, _spriteBatch);
             _bossSprites = new BossSprites(Content, _spriteBatch);
             _npcSprites = new NPCSprites(Content, _spriteBatch);
+            
+            // Create separate manager instances for Game1's own use
+            _blockFactory = new BlockFactory(32, _blockSprites, _linkSprites);
             _itemManager = new ItemManager(_itemSprites, _treasureSprites, _bossSprites);
             _projectileManager = new ItemManager(_itemSprites, _treasureSprites, _bossSprites);
-            _enemyManager = new EnemyManager(_enemySprites, _projectileManager, _bossSprites,_npcSprites);
+            _enemyManager = new EnemyManager(_enemySprites, _projectileManager, _bossSprites, _npcSprites);
 
             _debugPixel = new Texture2D(GraphicsDevice, 1, 1);
             _debugPixel.SetData(new[] { Color.White });
@@ -102,9 +104,18 @@ namespace ZweiHander
             _gamePlayer = new Player(_linkSprites, _itemSprites, _treasureSprites);
             _gamePlayer.Position = new Vector2(100, 100);
 
-            _universe = new Universe();
+            // Universe creates its own manager instances
+            _universe = new Universe(
+                _enemySprites,
+                _bossSprites,
+                _npcSprites,
+                _itemSprites,
+                _treasureSprites,
+                _blockSprites,
+                _linkSprites
+            );
             _universe.SetPlayer(_gamePlayer);
-            _areaConstructor = new CsvAreaConstructor(_blockFactory, _itemManager, _enemyManager);
+            _areaConstructor = new CsvAreaConstructor();
 
             string mapPath = Path.Combine(Content.RootDirectory, "Maps", "newDungeon1.csv"); // CSV location
             Area testArea = _areaConstructor.LoadArea(mapPath, _universe, _gamePlayer, _camera, "TestDungeon");
@@ -148,26 +159,7 @@ namespace ZweiHander
                 transformMatrix: _camera.GetTransformMatrix()
             );
 
-
-            if (_universe.CurrentRoom != null && _universe.CurrentRoom.IsLoaded)
-            {
-                foreach (var block in _universe.CurrentRoom.Blocks)
-                    block?.Draw();
-
-                foreach (var enemy in _universe.CurrentRoom.Enemies)
-                    enemy?.Draw();
-
-                foreach (var item in _universe.CurrentRoom.Items)
-                    item?.Draw();
-
-                // Debug: Draw portals
-                foreach (var portal in _universe.CurrentRoom.Portals)
-                {
-                    DrawDebugRectangle(portal.TriggerArea, Color.Red * 0.5f);
-                }
-            }
-
-            _itemManager.Draw();
+            _universe.Draw();
             _projectileManager.Draw();
             _gamePlayer.Draw(_spriteBatch);
 

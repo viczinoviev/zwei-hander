@@ -32,11 +32,19 @@ namespace ZweiHander.Environment
             _gridPosition = gridPosition;
             _gridSize = gridSize;
             _sprite = sprite;
-            
+
             // Only create collision handler for collidable blocks
             if (IsCollidable())
             {
                 _collisionHandler = new BlockCollisionHandler(this);
+            }
+        }
+
+        public void UnsubscribeFromCollisions()
+        {
+            if (_collisionHandler != null)
+            {
+                CollisionManager.Instance.RemoveCollider(_collisionHandler);
             }
         }
 

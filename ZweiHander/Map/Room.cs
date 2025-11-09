@@ -12,125 +12,93 @@ namespace ZweiHander.Map
         public int RoomNumber { get; }
         public Vector2 Position { get; }
         public Vector2 Size { get; }
-        public bool IsLoaded { get; private set; }
+        public bool IsLoaded { get; set; }
 
-        public List<Block> Blocks { get; }
-        public List<IEnemy> Enemies { get; }
-        public List<IItem> Items { get; }
+        // Portals persist across room loads
         public List<IPortal> Portals { get; }
 
+        // Stored data for recreation
+        private readonly List<(BlockName blockName, Point gridPosition)> _blockData;
+        private readonly List<(string enemyName, Vector2 position)> _enemyData;
+        private readonly List<(ItemType itemType, Vector2 position)> _itemData;
+        
+        private readonly Universe _universe;
         private Rectangle Bounds;
 
-        public Room(int roomNumber, Vector2 position, Vector2 size)
+        public Room(int roomNumber, Vector2 position, Vector2 size, Universe universe)
         {
             RoomNumber = roomNumber;
             Position = position;
             Size = size;
             Bounds = new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
-            Blocks = new List<Block>();
-            Enemies = new List<IEnemy>();
-            Items = new List<IItem>();
+            
+            _universe = universe;
+            
+            _blockData = new List<(BlockName, Point)>();
+            _enemyData = new List<(string, Vector2)>();
+            _itemData = new List<(ItemType, Vector2)>();
+            
             Portals = new List<IPortal>();
         }
 
-        public void AddBlock(Block block) => Blocks.Add(block);
-        public void AddEnemy(IEnemy enemy) => Enemies.Add(enemy);
-        public void AddItem(IItem item) => Items.Add(item);
+        public void AddBlock(BlockName blockName, Point gridPosition)
+        {
+            _blockData.Add((blockName, gridPosition));
+        }
+        
+        public void AddEnemy(string enemyName, Vector2 position)
+        {
+            _enemyData.Add((enemyName, position));
+        }
+        
+        public void AddItem(ItemType itemType, Vector2 position)
+        {
+            _itemData.Add((itemType, position));
+        }
+        
         public void AddPortal(IPortal portal) => Portals.Add(portal);
 
         public void Load()
         {
-            CleanupNullReferences();
             IsLoaded = true;
             
-            // Re-register all collision handlers when room loads
-            foreach (var portal in Portals)
+            // Create fresh instances - collision handlers auto-register in their constructors
+            foreach (var (blockName, gridPosition) in _blockData)
             {
-                if (portal is RoomPortal roomPortal && roomPortal.CollisionHandler != null)
-                {
-                    CollisionManager.Instance.AddCollider(roomPortal.CollisionHandler);
-                }
+                _universe.BlockFactory.CreateBlock(blockName, gridPosition);
             }
             
-            foreach (var block in Blocks)
+            foreach (var (enemyName, position) in _enemyData)
             {
-                if (block?.CollisionHandler != null)
-                {
-                    CollisionManager.Instance.AddCollider(block.CollisionHandler);
-                }
+                _universe.EnemyManager.GetEnemy(enemyName, position);
             }
             
-            foreach (var enemy in Enemies)
+            foreach (var (itemType, position) in _itemData)
             {
-                if (enemy?.CollisionHandler != null)
-                {
-                    CollisionManager.Instance.AddCollider(enemy.CollisionHandler);
-                }
+                _universe.ItemManager.GetItem(itemType, position: position);
             }
             
-            foreach (var item in Items)
-            {
-                if (item?.CollisionHandler != null)
-                {
-                    CollisionManager.Instance.AddCollider(item.CollisionHandler);
-                }
-            }
-        }
-
-        public void Unload()
-        {
-            CleanupNullReferences();
-            IsLoaded = false;
-            
-            // Unsubscribe all collision handlers when room unloads
+            // Register portals
             foreach (var portal in Portals)
             {
                 if (portal is RoomPortal roomPortal)
                 {
-                    roomPortal.CollisionHandler?.Unsubscribe();
+                    roomPortal.OnRoomLoad();
                 }
             }
-            
-            foreach (var block in Blocks)
-            {
-                block?.CollisionHandler?.Unsubscribe();
-            }
-            
-            foreach (var enemy in Enemies)
-            {
-                enemy?.CollisionHandler?.Unsubscribe();
-            }
-            
-            foreach (var item in Items)
-            {
-                item?.CollisionHandler?.Unsubscribe();
-            }
-        }
-
-        public void CleanupNullReferences()
-        {
-            Blocks.RemoveAll(b => b == null);
-            Enemies.RemoveAll(e => e == null || e.Hitpoints <= 0);
-            Items.RemoveAll(i => i == null);
         }
 
         public void Update(GameTime gameTime)
         {
             if (!IsLoaded) return;
 
-            foreach (var enemy in Enemies)
-                enemy?.Update(gameTime);
-
-            foreach (var item in Items)
-                item?.Update(gameTime);
-
             foreach (var portal in Portals)
             {
                 if (portal is RoomPortal roomPortal)
-                    roomPortal.CollisionHandler?.Update();
+                {
+                    roomPortal.Update(gameTime);
+                }
             }
-
-            CleanupNullReferences();
         }
 
         public bool Contains(Vector2 position) => Bounds.Contains(position);

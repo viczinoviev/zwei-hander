@@ -133,6 +133,11 @@ namespace ZweiHander.CollisionFiles
 			}
 		}
 
+		public void ClearAllColliders()
+		{
+			colliders.Clear();
+		}
+
 	}
 
 }

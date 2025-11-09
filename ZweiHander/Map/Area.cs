@@ -10,7 +10,6 @@ namespace ZweiHander.Map
     {
         private readonly Dictionary<int, Room> _rooms;
         private readonly Dictionary<int, List<IPortal>> _portalRegistry;
-        private Room _currentRoom;
 
         public string Name { get; }
 
@@ -46,22 +45,6 @@ namespace ZweiHander.Map
                     return portal;
             }
             return null;
-        }
-
-        public void LoadRoom(int roomNumber, Vector2 spawnPosition, IPlayer player, Camera.Camera camera)
-        {
-            int previousRoom = _currentRoom?.RoomNumber ?? -1;
-            _currentRoom?.Unload();
-
-            var targetRoom = GetRoom(roomNumber);
-            if (targetRoom != null)
-            {
-                targetRoom.Load();
-                _currentRoom = targetRoom;
-                Console.WriteLine($"[Room Change] {Name}: Room {previousRoom} -> Room {roomNumber} | Player teleported to {spawnPosition}");
-                new PlayerTeleportCommand(player, spawnPosition + new Vector2(16, 16)).Execute();
-                new SetCameraCommand(camera, player).Execute();
-            }
         }
     }
 }

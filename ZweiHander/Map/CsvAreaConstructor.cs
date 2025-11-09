@@ -9,29 +9,15 @@ using ZweiHander.PlayerFiles;
 
 namespace ZweiHander.Environment
 {
-    /// <summary>
-    /// Constructs areas (dungeons) from CSV files
-    /// </summary>
     public class CsvAreaConstructor
     {
         private const int CELL_SIZE = 32;
-
-        private readonly BlockFactory _blockFactory;
-        private readonly ItemManager _itemManager;
-        private readonly EnemyManager _enemyManager;
 
         private Room _currentRoom;
         private Area _currentArea;
         private Universe _universe;
         private IPlayer _player;
         private Camera.Camera _camera;
-
-        public CsvAreaConstructor(BlockFactory blockFactory, ItemManager itemManager, EnemyManager enemyManager)
-        {
-            _blockFactory = blockFactory;
-            _itemManager = itemManager;
-            _enemyManager = enemyManager;
-        }
 
         public Area LoadArea(string filePath, Universe universe, IPlayer player, Camera.Camera camera, string areaName = null)
         {
@@ -93,7 +79,7 @@ namespace ZweiHander.Environment
             }
 
             Vector2 roomSize = new Vector2((roomWidth - 1) * CELL_SIZE, roomHeight * CELL_SIZE);
-            Room room = new Room(roomNumber, Vector2.Zero, roomSize);
+            Room room = new Room(roomNumber, Vector2.Zero, roomSize, _universe);
             _currentRoom = room;
 
             for (int y = roomStartLine; y < roomEndLine; y++)
@@ -181,18 +167,14 @@ namespace ZweiHander.Environment
         {
             int id = int.Parse(blockId);
             BlockName blockName = AreaDictionaries.idToBlockName[id];
-            Block block = _blockFactory.CreateBlock(blockName, gridPosition);
-            _currentRoom.AddBlock(block);
-            block?.CollisionHandler?.Unsubscribe();
+            _currentRoom.AddBlock(blockName, gridPosition);
         }
 
         private void CreateEnemy(string enemyName, Vector2 position)
         {
             if (AreaDictionaries.enemyNameToEnemyName.ContainsKey(enemyName))
             {
-                IEnemy enemy = _enemyManager.GetEnemy(enemyName, position);
-                _currentRoom.AddEnemy(enemy);
-                enemy?.CollisionHandler?.Unsubscribe();
+                _currentRoom.AddEnemy(enemyName, position);
             }
         }
 
@@ -202,20 +184,17 @@ namespace ZweiHander.Environment
 
             if (AreaDictionaries.itemNameToItemType.TryGetValue(cleanName, out ItemType itemType))
             {
-                IItem item = _itemManager.GetItem(itemType, position: position);
-                _currentRoom.AddItem(item);
-                item?.CollisionHandler?.Unsubscribe();
+                _currentRoom.AddItem(itemType, position);
             }
         }
 
         private void CreatePortal(string portalId, Vector2 position)
         {
             int id = int.Parse(portalId);
-            Vector2 centeredPosition = new Vector2(position.X - CELL_SIZE / 2, position.Y - CELL_SIZE / 2);
+            Vector2 centeredPosition = new Vector2(position.X, position.Y);
             RoomPortal portal = new RoomPortal(id, centeredPosition, _currentRoom, _currentArea, _universe, _player, _camera);
             _currentRoom.AddPortal(portal);
             _currentArea.RegisterPortal(portal);
-            portal.CollisionHandler?.Unsubscribe();
         }
     }
 }

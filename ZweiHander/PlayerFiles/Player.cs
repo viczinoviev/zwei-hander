@@ -26,7 +26,6 @@ namespace ZweiHander.PlayerFiles
             set
             {
                 _position = value;
-                _handler?.UpdateCollisionBox();
             }
         }
 
@@ -53,6 +52,7 @@ namespace ZweiHander.PlayerFiles
         public void Update(GameTime gameTime)
         {
             // Update damage state timer
+            _handler?.UpdateCollisionBox();
             if (_isDamaged)
             {
                 _damageTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
