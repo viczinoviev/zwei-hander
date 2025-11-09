@@ -1,15 +1,21 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ZweiHander.Graphics;
 
 namespace ZweiHander.Items.ItemStorages;
+/// <summary>
+/// DeleteOnBlock, 3s life, use ItemHelper.BoomerangTrajectory
+/// </summary>
 public class BoomerangItem : AbstractItem
 {
-    public BoomerangItem(ItemConstructor itemConstructor, bool defaultProperties)
+    protected override ItemProperty Properties { get; set; } = ItemProperty.DeleteOnBlock;
+
+    protected override double Life { get; set; } = 3f;
+
+    public BoomerangItem(ItemConstructor itemConstructor)
         : base(itemConstructor)
     {
-        if (defaultProperties)
-        {
-            Properties = ItemProperty.DeleteOnBlock;
-        }
+        Sprites = [itemConstructor.ItemSprites.Boomerang()];
+        Setup(itemConstructor);
     }
 }

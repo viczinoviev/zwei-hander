@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ZweiHander.Graphics;
@@ -18,7 +19,7 @@ namespace ZweiHander.PlayerFiles
         private float _damageTimer;
         private const float DAMAGE_DURATION = 1.0f; // How long the damage state lasts
 
-        public Dictionary<ItemType, int> Inventory { get; private set; } = new Dictionary<ItemType, int>();
+        public Dictionary<Type, int> Inventory { get; private set; } = new Dictionary<Type, int>();
 
         public Vector2 Position
         {
@@ -78,7 +79,7 @@ namespace ZweiHander.PlayerFiles
             InputBuffer.Clear();
         }
 
-        public void addItemToInventory(ItemType itemType)
+        public void addItemToInventory(Type itemType)
         {
             if (Inventory.ContainsKey(itemType))
             {
@@ -90,7 +91,7 @@ namespace ZweiHander.PlayerFiles
             }
         }
 
-        public void removeItemFromInventory(ItemType itemType)
+        public void removeItemFromInventory(Type itemType)
         {
             if (Inventory.ContainsKey(itemType) && Inventory[itemType] > 0)
             {

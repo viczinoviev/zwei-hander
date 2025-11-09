@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using ZweiHander.CollisionFiles;
 using ZweiHander.Graphics;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
@@ -15,17 +16,17 @@ public abstract class AbstractItem : IItem
     /// <summary>
     /// The sprites associated with this item.
     /// </summary>
-    protected List<ISprite> _sprites;
+    protected List<ISprite> Sprites { get; set; }
 
     /// <summary>
     /// Current sprite index.
     /// </summary>
-    protected int _spriteIndex = 0;
+    protected int SpriteIndex { get; set; } = 0;
 
     /// <summary>
     /// Number of sprites this item has.
     /// </summary>
-    protected int SpriteCount { get => _sprites.Count; }
+    protected int SpriteCount { get => Sprites.Count; }
 
     /// <summary>
     /// The manager this item is stored in.
@@ -33,32 +34,30 @@ public abstract class AbstractItem : IItem
     protected ItemManager _manager;
 
     /// <summary>
-    /// What type of item this is.
+    /// The type of item this is.
     /// </summary>
-    protected ItemType _itemType;
-
-    public ItemType ItemType { get => _itemType; }
+    public Type ItemType { get => this.GetType(); }
 
     /// <summary>
     /// The current sprite.
     /// </summary>
-    protected ISprite Sprite { get => _sprites[_spriteIndex]; }
+    protected ISprite Sprite { get => Sprites[SpriteIndex]; }
 
-    public Vector2 Position { get; set; } = default;
+    public Vector2 Position { get; set; }= Vector2.Zero;
 
-    public Vector2 Velocity { get; set; } = default;
+    public Vector2 Velocity { get; set; }
 
-    public Vector2 Acceleration { get; set; } = default;
+    public Vector2 Acceleration { get; set; }
 
     /// <summary>
     /// The lifetime (in seconds) left for item; negative means infinite.
     /// </summary>
-    protected double Life { get; set; }
+    protected virtual double Life { get; set; } = -1f;
 
     /// <summary>
     /// The time (in seconds) to spend dying.
     /// </summary>
-    protected double DeathTime { get; set; } = 0.00001;
+    protected virtual double DeathTime { get; set; } = 0.01;
 
     /// <summary>
     /// Handles the collisions for this item.
@@ -68,7 +67,7 @@ public abstract class AbstractItem : IItem
     /// <summary>
     /// The properties this item has.
     /// </summary>
-    protected ItemProperty Properties { get; set; } = 0x0;
+    protected virtual ItemProperty Properties { get; set; } = 0x0;
 
     /// <summary>
     /// How to damage different object types.
@@ -77,10 +76,22 @@ public abstract class AbstractItem : IItem
 
     public AbstractItem(ItemConstructor itemConstructor)
     {
-        _sprites = itemConstructor.Sprites;
         _manager = itemConstructor.Manager;
-        _itemType = itemConstructor.ItemType;
-        Life = itemConstructor.Life;
+        if (itemConstructor.Life != 0) Life = itemConstructor.Life;
+        if (itemConstructor.DeathTime != 0) DeathTime = itemConstructor.DeathTime;
+        Position = itemConstructor.Position;
+        Velocity = itemConstructor.Velocity;
+        Acceleration = itemConstructor.Acceleration;
+        if (itemConstructor.UseDefaultProperties) Properties |= itemConstructor.AdditionalProperties;
+        else Properties = itemConstructor.AdditionalProperties;
+    }
+
+    /// <summary>
+    /// Final step in each item's constructor.
+    /// </summary>
+    /// <param name="itemConstructor"></param>
+    protected void Setup(ItemConstructor itemConstructor)
+    {
         CollisionHandler = new ItemCollisionHandler(this);
     }
 

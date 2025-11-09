@@ -2,14 +2,18 @@
 using ZweiHander.Graphics;
 
 namespace ZweiHander.Items.ItemStorages;
+
+/// <summary>
+/// Collectable, infinite life
+/// </summary>
 public class KeyItem : AbstractItem
 {
-    public KeyItem(ItemConstructor itemConstructor, bool defaultProperties)
+    protected override ItemProperty Properties { get; set; } = ItemProperty.Collectable;
+
+    public KeyItem(ItemConstructor itemConstructor)
         : base(itemConstructor)
     {
-        if (defaultProperties)
-        {
-            Properties = ItemProperty.Collectable;
-        }
+        Sprites = [itemConstructor.TreasureSprites.Key()];
+        Setup(itemConstructor);
     }
 }

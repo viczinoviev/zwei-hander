@@ -7,6 +7,7 @@ using ZweiHander.Graphics.SpriteStorages;
 using ZweiHander.CollisionFiles;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using ZweiHander.Items.ItemStorages;
 
 namespace ZweiHander.Enemy.EnemyStorage;
 
@@ -84,7 +85,7 @@ private int Thrower = 1;
         if (attack == 5 && Thrower != 2)
         {
             //Create a projectile
-            _currentProjectile = _projectileManager.GetItem(ItemType.Boomerang, position: Position);
+            _currentProjectile = _projectileManager.GetItem<BoomerangItem>(position: Position);
             Thrower = 2;
             //Set up the projectiles behavior
             (float v, float a) = ItemHelper.BoomerangTrajectory(50, 3);

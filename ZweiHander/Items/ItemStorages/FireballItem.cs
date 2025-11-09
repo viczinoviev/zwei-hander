@@ -1,16 +1,22 @@
 ﻿using System.Collections.Generic;
 using ZweiHander.Graphics;
+using ZweiHander.Graphics.SpriteStorages;
 
 namespace ZweiHander.Items.ItemStorages;
+
+/// <summary>
+/// 2s life, animation, EnemyProjectile
+/// </summary>
 public class FireballItem : AbstractItem
 {
-    public FireballItem(ItemConstructor itemConstructor, bool defaultProperties)
+    protected override ItemProperty Properties { get; set; } = ItemProperty.EnemyProjectile;
+
+    protected override double Life { get; set; } = 2f;
+
+    public FireballItem(ItemConstructor itemConstructor)
         : base(itemConstructor)
     {
-        if (defaultProperties)
-        {
-            Properties = ItemProperty.DeleteOnPlayer
-                | ItemProperty.CanDamagePlayer;
-        }
+        Sprites = [itemConstructor.BossSprites.AquamentusProjectile()];
+        Setup(itemConstructor);
     }
 }

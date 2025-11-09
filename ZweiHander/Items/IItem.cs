@@ -27,7 +27,7 @@ public interface IItem
     /// <summary>
     /// What type of item this is.
     /// </summary>
-    public ItemType ItemType { get; }
+    public Type ItemType { get; }
 
     /// <summary>
     /// Draws this item on screen.

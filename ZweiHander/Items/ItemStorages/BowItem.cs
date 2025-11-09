@@ -1,15 +1,20 @@
 ﻿using System.Collections.Generic;
 using ZweiHander.Graphics;
+using ZweiHander.Graphics.SpriteStorages;
 
 namespace ZweiHander.Items.ItemStorages;
+
+/// <summary>
+/// Infinite life, collectable
+/// </summary>
 public class BowItem : AbstractItem
 {
-    public BowItem(ItemConstructor itemConstructor, bool defaultProperties)
+    protected override ItemProperty Properties { get; set; } = ItemProperty.Collectable;
+
+    public BowItem(ItemConstructor itemConstructor)
         : base(itemConstructor)
     {
-        if (defaultProperties)
-        {
-            Properties = ItemProperty.Collectable;
-        }
+        Sprites = [itemConstructor.TreasureSprites.Bow()];
+        Setup(itemConstructor);
     }
 }

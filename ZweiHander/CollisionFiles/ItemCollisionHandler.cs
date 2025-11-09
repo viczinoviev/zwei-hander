@@ -1,4 +1,5 @@
-﻿using ZweiHander.Items;
+﻿using System;
+using ZweiHander.Items;
 
 namespace ZweiHander.CollisionFiles;
 
@@ -15,7 +16,7 @@ public class ItemCollisionHandler : CollisionHandlerAbstract
     /// <summary>
     /// The type of item this is handling.
     /// </summary>
-    public ItemType ItemType { get => Item.ItemType; }
+    public Type ItemType { get => Item.ItemType; }
 
     public ItemCollisionHandler(IItem item)
     {

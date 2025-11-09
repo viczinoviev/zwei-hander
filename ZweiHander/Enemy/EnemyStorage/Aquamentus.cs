@@ -7,6 +7,7 @@ using ZweiHander.Graphics.SpriteStorages;
 using System.Collections.Generic;
 using System.Linq;
 using ZweiHander.CollisionFiles;
+using ZweiHander.Items.ItemStorages;
 
 namespace ZweiHander.Enemy.EnemyStorage;
 
@@ -71,11 +72,11 @@ public class Aquamentus : IEnemy
         if (attack == 5 && Thrower != 2)
         {
             //Create projectiles and Set up the projectiles behavior
-            IItem _currentProjectile1 = _projectileManager.GetItem(ItemType.Fireball, 3, position: new Vector2(Position.X - 20, Position.Y - 20));
+            IItem _currentProjectile1 = _projectileManager.GetItem<FireballItem>(3, position: new Vector2(Position.X - 20, Position.Y - 20));
             _currentProjectile1.Velocity = new Vector2(-100, 0);
-            IItem _currentProjectile2 = _projectileManager.GetItem(ItemType.Fireball, 3, position: new Vector2(Position.X - 20, Position.Y - 20));
+            IItem _currentProjectile2 = _projectileManager.GetItem<FireballItem>(3, position: new Vector2(Position.X - 20, Position.Y - 20));
             _currentProjectile2.Velocity = new Vector2(-100, 30);
-            IItem _currentProjectile3 = _projectileManager.GetItem(ItemType.Fireball, 3, position: new Vector2(Position.X - 20, Position.Y - 20));
+            IItem _currentProjectile3 = _projectileManager.GetItem<FireballItem>(3, position: new Vector2(Position.X - 20, Position.Y - 20));
             _currentProjectile3.Velocity = new Vector2(-100, -30);
             _projectiles.Add(_currentProjectile1);
             _projectiles.Add(_currentProjectile2);
