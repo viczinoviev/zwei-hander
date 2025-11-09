@@ -15,6 +15,7 @@ using ZweiHander.Graphics.SpriteStorages;
 using ZweiHander.Items;
 using ZweiHander.Map;
 using ZweiHander.PlayerFiles;
+using ZweiHander.HUD;
 
 namespace ZweiHander
 {
@@ -25,6 +26,7 @@ namespace ZweiHander
         readonly private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private Camera.Camera _camera;
+        private HUDManager _hudManager;
 
         private Player _gamePlayer;
         private KeyboardController _keyboardController;
@@ -34,6 +36,7 @@ namespace ZweiHander
 
         //Sprites and factories
         private PlayerSprites _linkSprites;
+        private HUDSprites _hudSprites;
         private BlockSprites _blockSprites;
         private TreasureSprites _treasureSprites;
         private EnemySprites _enemySprites;
@@ -82,6 +85,7 @@ namespace ZweiHander
 
             // This line will load all of the sprites into the program through an xml file
             _linkSprites = new PlayerSprites(Content, _spriteBatch);
+            _hudSprites = new HUDSprites(Content, _spriteBatch);
             _blockSprites = new BlockSprites(Content, _spriteBatch);
             _treasureSprites = new TreasureSprites(Content, _spriteBatch);
             _itemSprites = new ItemSprites(Content, _spriteBatch);
@@ -171,6 +175,9 @@ namespace ZweiHander
              _keyboardController.BindKey(Keys.R, new ResetCommand(this));
              _keyboardController.BindKey(Keys.Q, new QuitCommand(this));
             _keyboardController.BindKey(Keys.E, _hurtPlayerCommand);
+
+            // Initialize HUD Manager
+            _hudManager = new HUDManager(_gamePlayer, _hudSprites);
         }
 
         protected override void Update(GameTime gameTime)
@@ -200,6 +207,9 @@ namespace ZweiHander
             // Update camera to follow player
             _camera.Update(gameTime, _gamePlayer.Position);
 
+            // Update HUD
+            _hudManager.Update(gameTime);
+
                 base.Update(gameTime);
         }
 
@@ -207,11 +217,11 @@ namespace ZweiHander
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
+            // Draw world with camera transform
             _spriteBatch.Begin(
                 samplerState: SamplerState.PointClamp,
                 transformMatrix: _camera.GetTransformMatrix() //matrix used to change rendering position based on camera position
             );
-
 
             //Draws the map
             _blockFactory.Draw();
@@ -220,18 +230,24 @@ namespace ZweiHander
 
             _enemyManager.Draw();
 
-
             _itemManager.Draw();
 
             _projectileManager.Draw();
 
-
-
             _gamePlayer.Draw(_spriteBatch);
 
-            base.Draw(gameTime);
+            _spriteBatch.End();
+
+            // Draw HUD without camera transform (fixed to screen)
+            _spriteBatch.Begin(
+                samplerState: SamplerState.PointClamp
+            );
+
+            _hudManager.Draw(_spriteBatch);
 
             _spriteBatch.End();
+
+            base.Draw(gameTime);
         }
     }
 }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas>
+    <Texture>SpriteSheets/HUD</Texture>
+    <Regions>
+        <Region name="inventory-display" x="0" y="0" width="256" height="88"/>
+        <Region name="map-display" x="0" y="96" width="256" height="88"/>
+        <Region name="heads-up-hud" x="0" y="192" width="256" height="56"/>
+        <Region name="heart-full" x="18" y="256" width="8" height="8" />
+        <Region name="heart-half" x="9" y="256" width="8" height="8" />
+        <Region name="heart-empty" x="0" y="256" width="8" height="8" />
+        <Region name="blue-frame" x="0" y="288" width="16" height="16"/>
+    </Regions>
+    <Animations>
+    </Animations>
+</TextureAtlas>
