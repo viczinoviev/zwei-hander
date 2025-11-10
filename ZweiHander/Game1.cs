@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -10,22 +12,24 @@ using ZweiHander.Commands;
 using ZweiHander.Enemy;
 using ZweiHander.Enemy.EnemyStorage;
 using ZweiHander.Environment;
+using ZweiHander.GameStates;
 using ZweiHander.Graphics;
 using ZweiHander.Graphics.SpriteStorages;
+using ZweiHander.HUD;
 using ZweiHander.Items;
+using ZweiHander.Items.ItemStorages;
 using ZweiHander.Map;
 using ZweiHander.PlayerFiles;
-using ZweiHander.HUD;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Media;
-using ZweiHander.Items.ItemStorages;
 
 namespace ZweiHander
 {
     public class Game1 : Game
     {
-    //Hey team!
-    // Hey hows it going?
+        //Hey team!
+        // Hey hows it going?
+        private IGameState _gameState;
+        public bool gamePaused = false;
+        public HUDManager HUDManager => _hudManager;
         readonly private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private Camera.Camera _camera;
@@ -35,6 +39,7 @@ namespace ZweiHander
         private KeyboardController _keyboardController;
 
         private HurtPlayerCommand _hurtPlayerCommand;
+
 
 
         //Sprites and factories
@@ -81,6 +86,13 @@ namespace ZweiHander
 
         protected override void LoadContent()
         {
+            _gameState = new GameState();
+            Services.AddService<IGameState>(_gameState);
+
+            // if HUD needs to mirror pause state:
+            _gameState.PausedChanged += p => _hudManager.SetPaused(p);
+
+
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // Initialize camera
@@ -189,9 +201,9 @@ namespace ZweiHander
              _keyboardController.BindKey(Keys.R, new ResetCommand(this));
              _keyboardController.BindKey(Keys.Q, new QuitCommand(this));
             _keyboardController.BindKey(Keys.E, _hurtPlayerCommand);
-
+            _keyboardController.BindKey(Keys.I, new InventoryCommand(this));
             // Initialize HUD Manager
-            _hudManager = new HUDManager(_gamePlayer, _hudSprites);
+            _hudManager = new HUDManager(_gamePlayer, _hudSprites, gamePaused);
         }
 
         protected override void Update(GameTime gameTime)
