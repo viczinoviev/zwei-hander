@@ -11,7 +11,9 @@ public class ArrowItem : AbstractItem
 {
     protected override ItemProperty Properties { get; set; } = ItemProperty.DeleteOnBlock;
 
-    protected override double Life { get; set; } = 2f;
+    protected override double Life { get; set; } = 1.1;
+
+    protected override List<double> Phases { get; set; } = [0.1];
 
     public ArrowItem(ItemConstructor itemConstructor)
         : base(itemConstructor)
@@ -20,9 +22,23 @@ public class ArrowItem : AbstractItem
         Setup(itemConstructor);
     }
 
-    public override void OnDeath(GameTime gameTime)
+    public override void Update(GameTime gameTime)
     {
-        base.OnDeath(gameTime);
-        SpriteIndex = 1;
+        if (Phase == 0)
+        {
+            base.Update(gameTime);
+        } 
+        else
+        {
+            ProgressLife((float)gameTime.ElapsedGameTime.TotalSeconds);
+        }
+    }
+
+    public override void OnPhaseChange()
+    {
+        if (Phase == 1)
+        {
+            SpriteIndex = 1;
+        }
     }
 }

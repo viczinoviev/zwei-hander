@@ -10,9 +10,9 @@ namespace ZweiHander.Items.ItemStorages;
 /// </summary>
 public class BombItem : AbstractItem
 {
-    protected override double Life { get; set; } = 2f;
+    protected override double Life { get; set; } = 2.3f;
 
-    protected override double DeathTime { get; set; } = 0.3;
+    protected override List<double> Phases { get; set; } = [0.3];
 
     public BombItem(ItemConstructor itemConstructor)
         : base(itemConstructor)
@@ -21,10 +21,24 @@ public class BombItem : AbstractItem
         Setup(itemConstructor);
     }
 
-    public override void OnDeath(GameTime gameTime)
+    public override void Update(GameTime gameTime)
     {
-        base.OnDeath(gameTime);
-        SpriteIndex = 1;
-        Sprite.Update(gameTime);
+        if (Phase == 0)
+        {
+            base.Update(gameTime);
+        }
+        else
+        {
+            ProgressLife((float)gameTime.ElapsedGameTime.TotalSeconds);
+            Sprite.Update(gameTime);
+        }
+    }
+
+    public override void OnPhaseChange()
+    {
+        if (Phase == 1)
+        {
+            SpriteIndex = 1;
+        }
     }
 }

@@ -62,7 +62,7 @@ public class ItemManager
     /// <param name="acceleration">The item's starting acceleration.</param>
     /// <param name="properties">Additional Properties attached to this instance.</param>
     /// <param name="useDefaultProperties">Whether to use the default properties for this item.</param>
-    /// <param name="deathTime">The time (in seconds) to spend dying.</param>
+    /// <param name="phases">Thresholds for switching phases; excludes spawn and death.</param>
     /// <returns>The desired item.</returns>
     public ItemType GetItem<ItemType> (
         double life = 0f,
@@ -71,7 +71,7 @@ public class ItemManager
         Vector2 acceleration = default,
         ICollection<ItemProperty> properties = null,
         bool useDefaultProperties = true,
-        double deathTime = 0f
+        List<double> phases = null
     ) where ItemType : IItem
     {
         ItemProperty Properties = 0x0;
@@ -94,7 +94,7 @@ public class ItemManager
             BossSprites = _bossSprites,
             ItemSprites = _itemSprites,
             TreasureSprites = _treasureSprites,
-            DeathTime = deathTime
+            Phases = phases ?? []
         };
 
         Type type = typeof(ItemType);
@@ -145,7 +145,7 @@ public class ItemManager
     /// <param name="acceleration">The item's starting acceleration.</param>
     /// <param name="properties">Additional Properties attached to this instance.</param>
     /// <param name="useDefaultProperties">Whether to use the default properties for this item.</param>
-    /// <param name="deathTime">The time (in seconds) to spend dying.</param>
+    /// <param name="phases">Thresholds for switching phases; excludes spawn and death.</param>
     public void MassProduce<ItemType>(
         int count,
         double life = 0f,
@@ -154,7 +154,7 @@ public class ItemManager
         Vector2 acceleration = default,
         ICollection<ItemProperty> properties = null,
         bool useDefaultProperties = true,
-        double deathTime = 0f
+        List<double> phases = default
     ) where ItemType : IItem
     {
         if(count >= 0)
@@ -162,7 +162,7 @@ public class ItemManager
             for (int i = 0; i < count; i++)
             {
                 // TODO: Figure out better way to do this using deepcopying
-                GetItem<ItemType>(life, position, velocity, acceleration, properties, useDefaultProperties, deathTime);
+                GetItem<ItemType>(life, position, velocity, acceleration, properties, useDefaultProperties, phases);
             }
         }
         else

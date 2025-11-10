@@ -184,7 +184,7 @@ namespace ZweiHander.PlayerFiles
             Vector2 swordVelocity = _stateMachine.LastDirection * 400f;
 
             _player.ItemManager.GetItem<SwordItem>(
-                life: 1.0,
+                life: 1.1,
                 position: swordPosition,
                 velocity: swordVelocity
             );
@@ -197,7 +197,7 @@ namespace ZweiHander.PlayerFiles
             if (itemInput == PlayerInput.UsingItem1)
             {
                 _player.ItemManager.GetItem<ArrowItem>(
-                    life: 2.0,
+                    life: 1.1,
                     position: itemPosition,
                     velocity: itemVelocity,
                     properties: [ItemProperty.DeleteOnEnemy,

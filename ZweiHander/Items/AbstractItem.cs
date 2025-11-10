@@ -55,9 +55,14 @@ public abstract class AbstractItem : IItem
     protected virtual double Life { get; set; } = -1f;
 
     /// <summary>
-    /// The time (in seconds) to spend dying.
+    /// Thresholds for switching phases; excludes spawn and death.
     /// </summary>
-    protected virtual double DeathTime { get; set; } = 0.01;
+    protected virtual List<double> Phases { get; set; } = [];
+
+    /// <summary>
+    /// Current phase, starting from 0.
+    /// </summary>
+    protected int Phase { get; set; } = 0;
 
     /// <summary>
     /// Handles the collisions for this item.
@@ -78,7 +83,7 @@ public abstract class AbstractItem : IItem
     {
         _manager = itemConstructor.Manager;
         if (itemConstructor.Life != 0) Life = itemConstructor.Life;
-        if (itemConstructor.DeathTime != 0) DeathTime = itemConstructor.DeathTime;
+        if (itemConstructor.Phases.Count != 0) Phases = itemConstructor.Phases;
         Position = itemConstructor.Position;
         Velocity = itemConstructor.Velocity;
         Acceleration = itemConstructor.Acceleration;
@@ -100,18 +105,8 @@ public abstract class AbstractItem : IItem
         float dt = (float)time.ElapsedGameTime.TotalSeconds;
 
         // Life progression
-        if (Life > 0)
-        {
-            Life -= dt;
-            if (Life < 0)
-            {
-                Life = 0;
-            }
-        } else
-        {
-            OnDeath(time);
-            return;
-        }
+        ProgressLife(dt);
+        if(IsDead()) return;  
 
         // Movement
         if (!HasProperty(ItemProperty.Stationary))
@@ -134,9 +129,34 @@ public abstract class AbstractItem : IItem
         Sprite.Draw(Position);
     }
 
+    /// <summary>
+    /// Progresses this item's life.
+    /// </summary>
+    /// <param name="dt">Time that has passed.</param>
+    protected void ProgressLife(float dt)
+    {
+        if (Life > 0)
+        {
+            Life -= dt;
+            if (Life < 0)
+            {
+                Life = 0;
+            }
+            if (Phase < Phases.Count && Life <= Phases[Phase])
+            {
+                Phase++;
+                OnPhaseChange();
+            }
+        }
+    }
+
+    public virtual void OnPhaseChange()
+    {
+    }
+
     public void RemoveProperty(ItemProperty property)
     {
-        Properties |= property;
+        Properties &= ~property;
     }
 
     public void AddProperty(ItemProperty property)
@@ -159,24 +179,14 @@ public abstract class AbstractItem : IItem
         return Damage[damaged];
     }
 
-    public virtual void OnDeath(GameTime gameTime)
-    {
-        DeathTime -= gameTime.ElapsedGameTime.TotalSeconds;
-        if (IsDead())
-        {
-            CollisionHandler.Dead = true;
-        }
-    }
-
     public bool IsDead()
     {
-        return DeathTime <= 0;
+        return Life <= 0;
     }
 
     public void Kill()
     {
         Life = 0;
-        DeathTime = 0;
     }
 
     public Rectangle GetHitBox()

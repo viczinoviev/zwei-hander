@@ -63,7 +63,7 @@ public class ItemConstructor
     public ItemProperty AdditionalProperties { get; set; }
 
     /// <summary>
-    /// The time (in seconds) to spend dying.
+    /// Thresholds for switching phases; excludes spawn and death
     /// </summary>
-    public double DeathTime { get; set; }
+    public List<double> Phases { get; set; }
 }
