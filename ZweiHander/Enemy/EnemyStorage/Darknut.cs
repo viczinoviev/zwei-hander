@@ -5,6 +5,7 @@ using System;
 using ZweiHander.Graphics.SpriteStorages;
 using ZweiHander.CollisionFiles;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework.Content;
 
 namespace ZweiHander.Enemy.EnemyStorage;
 
@@ -34,7 +35,7 @@ public class Darknut : IEnemy
     readonly Random rnd = new();
 
 
-    public Darknut(EnemySprites enemySprites)
+    public Darknut(EnemySprites enemySprites,ContentManager sfxPlayer)
     {
         _enemySprites = enemySprites;
         //create list of all sprites associated with the enemy to swap with
@@ -43,7 +44,7 @@ public class Darknut : IEnemy
         _sprites.Add(_enemySprites.DarknutMoveDown());
         _sprites.Add(_enemySprites.DarknutMoveLeft());
         Sprite = _sprites[0];
-        CollisionHandler = new EnemyCollisionHandler(this);
+        CollisionHandler = new EnemyCollisionHandler(this,sfxPlayer);
     }
     public virtual void Update(GameTime time)
     {

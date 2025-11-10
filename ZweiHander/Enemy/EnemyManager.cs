@@ -6,6 +6,7 @@ using ZweiHander.Items;
 using ZweiHander.Enemy.EnemyStorage;
 using ZweiHander.CollisionFiles;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 
 namespace ZweiHander.Enemy;
 
@@ -13,7 +14,7 @@ namespace ZweiHander.Enemy;
 /// <summary>
 /// Manages creations of Enemies.
 /// </summary>
-public class EnemyManager(EnemySprites enemysprites, ItemManager projectileManager, BossSprites bossSprites, NPCSprites npcSprites)
+public class EnemyManager(EnemySprites enemysprites, ItemManager projectileManager, BossSprites bossSprites, NPCSprites npcSprites,ContentManager sfx)
 {
     /// <summary>
     /// Sprites for enemies
@@ -36,6 +37,8 @@ public class EnemyManager(EnemySprites enemysprites, ItemManager projectileManag
     /// </summary>
     readonly List<IEnemy> currentEnemies = [];
 
+    private ContentManager sfxPlayer = sfx;
+
 
     /// <summary>
     /// Creates a new Enemy.
@@ -51,37 +54,37 @@ public class EnemyManager(EnemySprites enemysprites, ItemManager projectileManag
         switch (enemyName)
         {
             case "Darknut":
-                enemy = new Darknut(_enemySprites);
+                enemy = new Darknut(_enemySprites,sfxPlayer);
                 break;
             case "Gel":
-                enemy = new Gel(_enemySprites);
+                enemy = new Gel(_enemySprites,sfxPlayer);
                 break;
             case "Goriya":
-                enemy = new Goriya(_enemySprites, _projectileManager);
+                enemy = new Goriya(_enemySprites, _projectileManager,sfxPlayer);
                 break;
             case "Keese":
-                enemy = new Keese(_enemySprites);
+                enemy = new Keese(_enemySprites,sfxPlayer);
                 break;
             case "Stalfos":
-                enemy = new Stalfos(_enemySprites);
+                enemy = new Stalfos(_enemySprites,sfxPlayer);
                 break;
             case "Aquamentus":
-                enemy = new Aquamentus(_bossSprites, _projectileManager);
+                enemy = new Aquamentus(_bossSprites, _projectileManager,sfxPlayer);
                 break;
             case "Rope":
-                enemy = new Rope(_enemySprites);
+                enemy = new Rope(_enemySprites,sfxPlayer);
                 break;
             case "Wallmaster":
-                enemy = new Wallmaster(_enemySprites);
+                enemy = new Wallmaster(_enemySprites,sfxPlayer);
                 break;
             case "Zol":
-                enemy = new Zol(_enemySprites);
+                enemy = new Zol(_enemySprites,sfxPlayer);
                 break;
             case "Dodongo":
-                enemy = new Dodongo(_bossSprites);
+                enemy = new Dodongo(_bossSprites,sfxPlayer);
                 break;
             case "BladeTrap":
-                enemy = new BladeTrap(_enemySprites);
+                enemy = new BladeTrap(_enemySprites,sfxPlayer);
                 break;
             case "OldMan":
                 enemy = new OldMan(_npcSprites);
