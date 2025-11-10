@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TextureAtlas>
-	<Texture>SpriteSheets/Dungeon-Tileset</Texture>
+	<Texture>SpriteSheets/Dungeon-Tileset-v2</Texture>
 	<Regions>
 		<Region name="solid-cyan" x="984" y="11" width="16" height="16" />
 		<Region name="block-tile" x="1001" y="11" width="16" height="16" />

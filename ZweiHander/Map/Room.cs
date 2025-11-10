@@ -16,6 +16,7 @@ namespace ZweiHander.Map
 
         // Stored data for recreation
         private readonly List<(BlockName blockName, Point gridPosition)> _blockData;
+        private readonly List<(BorderName borderName, Vector2 position)> _borderData;
         private readonly List<(string enemyName, Vector2 position)> _enemyData;
         private readonly List<(ItemType itemType, Vector2 position)> _itemData;
         private readonly List<(int portalId, Vector2 position)> _portalData;
@@ -33,6 +34,7 @@ namespace ZweiHander.Map
             _universe = universe;
             
             _blockData = new List<(BlockName, Point)>();
+            _borderData = new List<(BorderName, Vector2)>();
             _enemyData = new List<(string, Vector2)>();
             _itemData = new List<(ItemType, Vector2)>();
             _portalData = new List<(int, Vector2)>();
@@ -41,6 +43,11 @@ namespace ZweiHander.Map
         public void AddBlock(BlockName blockName, Point gridPosition)
         {
             _blockData.Add((blockName, gridPosition));
+        }
+        
+        public void AddBorder(BorderName borderName, Vector2 position)
+        {
+            _borderData.Add((borderName, position));
         }
         
         public void AddEnemy(string enemyName, Vector2 position)
@@ -68,6 +75,11 @@ namespace ZweiHander.Map
             foreach (var (blockName, gridPosition) in _blockData)
             {
                 _universe.BlockFactory.CreateBlock(blockName, gridPosition);
+            }
+            
+            foreach (var (borderName, position) in _borderData)
+            {
+                _universe.BorderFactory.CreateBorder(borderName, position);
             }
             
             foreach (var (enemyName, position) in _enemyData)

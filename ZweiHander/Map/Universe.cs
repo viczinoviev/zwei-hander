@@ -19,6 +19,7 @@ namespace ZweiHander.Map
         public EnemyManager EnemyManager { get; private set; }
         public ItemManager ItemManager { get; private set; }
         public BlockFactory BlockFactory { get; private set; }
+        public BorderFactory BorderFactory { get; private set; }
         public PortalManager PortalManager { get; private set; }
 
         public Universe(
@@ -38,6 +39,7 @@ namespace ZweiHander.Map
             ItemManager = new ItemManager(itemSprites, treasureSprites, bossSprites);
             EnemyManager = new EnemyManager(enemySprites, projectileManager, bossSprites, npcSprites);
             BlockFactory = new BlockFactory(tileSize, blockSprites, playerSprites);
+            BorderFactory = new BorderFactory(tileSize, blockSprites);
         }
 
         public void AddArea(Area area) => _areas[area.Name] = area;
@@ -85,6 +87,7 @@ namespace ZweiHander.Map
             
             // Clear managers/factory/portals - each marks its collision handlers as Dead
             BlockFactory.Clear();
+            BorderFactory.Clear();
             EnemyManager.Clear();
             ItemManager.Clear();
             PortalManager.Clear();
@@ -109,6 +112,7 @@ namespace ZweiHander.Map
             if (CurrentRoom == null || !CurrentRoom.IsLoaded) return;
 
             BlockFactory.Draw();
+            BorderFactory.Draw();
             EnemyManager.Draw();
             ItemManager.Draw();
         }

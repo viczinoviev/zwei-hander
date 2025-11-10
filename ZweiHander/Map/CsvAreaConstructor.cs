@@ -149,6 +149,10 @@ namespace ZweiHander.Environment
                     CreateBlock(name, gridPosition);
                     break;
 
+                case "w":
+                    CreateBorder(name, position);
+                    break;
+
                 case "e":
                     CreateEnemy(name, position);
                     break;
@@ -168,6 +172,12 @@ namespace ZweiHander.Environment
             int id = int.Parse(blockId);
             BlockName blockName = AreaDictionaries.idToBlockName[id];
             _currentRoom.AddBlock(blockName, gridPosition);
+        }
+
+        private void CreateBorder(string borderTag, Vector2 position)
+        {
+            BorderName borderName = AreaDictionaries.tagToBorderName[borderTag];
+            _currentRoom.AddBorder(borderName, position);
         }
 
         private void CreateEnemy(string enemyName, Vector2 position)

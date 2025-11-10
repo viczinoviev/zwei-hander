@@ -60,6 +60,17 @@ public class BlockSprites : SpriteFactory
     public ISprite HoleInWallWest() => new IdleSprite(_regions["hole-in-wall-west"], _spriteBatch);
     public ISprite HoleInWallEast() => new IdleSprite(_regions["hole-in-wall-east"], _spriteBatch);
     public ISprite HoleInWallSouth() => new IdleSprite(_regions["hole-in-wall-south"], _spriteBatch);
-}
 
+    // Inside corner tiles
+    public ISprite InsideCornerNortheast() => new IdleSprite(_regions["inside-corner-tile-northeast"], _spriteBatch);
+    public ISprite InsideCornerSoutheast() => new IdleSprite(_regions["inside-corner-tile-southeast"], _spriteBatch);
+    public ISprite InsideCornerSouthwest() => new IdleSprite(_regions["inside-corner-tile-southwest"], _spriteBatch);
+    public ISprite InsideCornerNorthwest() => new IdleSprite(_regions["inside-corner-tile-northwest"], _spriteBatch);
+
+    // Outside corner tiles
+    public ISprite OutsideCornerSouthwest() => new IdleSprite(_regions["outside-corner-tile-southwest"], _spriteBatch);
+    public ISprite OutsideCornerNorthwest() => new IdleSprite(_regions["outside-corner-tile-northwest"], _spriteBatch);
+    public ISprite OutsideCornerNortheast() => new IdleSprite(_regions["outside-corner-tile-northeast"], _spriteBatch);
+    public ISprite OutsideCornerSoutheast() => new IdleSprite(_regions["outside-corner-tile-southeast"], _spriteBatch);
+}
 
