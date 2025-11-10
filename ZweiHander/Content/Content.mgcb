@@ -13,11 +13,11 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin Audio/Dungeon Theme.mp3
+#begin Audio/Great Awesome Majestic Epic Music.mp3
 /importer:Mp3Importer
 /processor:SongProcessor
 /processorParam:Quality=Best
-/build:Audio/Dungeon Theme.mp3;Audio/DungeonTheme.mp3
+/build:Audio/Great Awesome Majestic Epic Music.mp3;Audio/DungeonTheme.mp3
 
 #begin Audio/Sound Effect (1).wav
 /importer:WavImporter
