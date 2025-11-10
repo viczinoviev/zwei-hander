@@ -16,6 +16,7 @@ using ZweiHander.Items;
 using ZweiHander.Map;
 using ZweiHander.PlayerFiles;
 using ZweiHander.HUD;
+using ZweiHander.Items.ItemStorages;
 
 namespace ZweiHander
 {
@@ -165,6 +166,8 @@ namespace ZweiHander
             _enemyManager.GetEnemy("Gel", new Vector2(enemyPosition.X - 420, enemyPosition.Y + 60));
             _enemyManager.GetEnemy("Gel", new Vector2(enemyPosition.X - 440, enemyPosition.Y + 30));
             //END TEST
+
+            _itemManager.GetItem<HeartItem>(position: new(300, 400));
 
             _gamePlayer = new (_linkSprites, _itemSprites, _treasureSprites);
             _gamePlayer.Position = new Vector2(450, 350);
