@@ -112,7 +112,7 @@ namespace ZweiHander
             _npcSprites = new NPCSprites(Content, _spriteBatch);
             _itemManager = new ItemManager(_itemSprites, _treasureSprites, _bossSprites);
             _projectileManager = new ItemManager(_itemSprites, _treasureSprites, _bossSprites);
-            _enemyManager = new EnemyManager(_enemySprites, _projectileManager, _bossSprites,_npcSprites);
+            _enemyManager = new EnemyManager(_enemySprites, _projectileManager, _bossSprites,_npcSprites,Content);
             _borderManager = new BorderManager(_blockSprites,new Vector2(47,175));
             _borderManager2 = new BorderManager(_blockSprites, new Vector2(559, 175));
             bgm = Content.Load<Song>("Audio/DungeonTheme");

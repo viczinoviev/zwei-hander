@@ -5,6 +5,7 @@ using System;
 using ZweiHander.Graphics.SpriteStorages;
 using ZweiHander.CollisionFiles;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework.Content;
 
 namespace ZweiHander.Enemy.EnemyStorage;
 
@@ -37,13 +38,13 @@ public class Wallmaster : IEnemy
     readonly Random rnd = new();
 
 
-    public Wallmaster(EnemySprites enemySprites)
+    public Wallmaster(EnemySprites enemySprites,ContentManager sfxPlayer)
     {
         _enemySprites = enemySprites;
         _sprites.Add(_enemySprites.WallmasterUp());
         _sprites.Add(_enemySprites.WallmasterDown());
         Sprite = _sprites[0];
-        CollisionHandler = new EnemyCollisionHandler(this);
+        CollisionHandler = new EnemyCollisionHandler(this,sfxPlayer);
     }
     public virtual void Update(GameTime time)
     {
