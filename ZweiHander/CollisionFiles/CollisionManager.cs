@@ -138,6 +138,28 @@ namespace ZweiHander.CollisionFiles
 			colliders.Clear();
 		}
 
+		public void RemoveDeadColliders()
+		{
+			// Remove null or dead colliders
+			for (int i = colliders.Count - 1; i >= 0; i--)
+			{
+				if (colliders[i] == null || colliders[i].Dead)
+				{
+					colliders.RemoveAt(i);
+				}
+			}
+		}
+
+		public void PrintAllColliders()
+		{
+			System.Console.WriteLine($"=== CollisionManager has {colliders.Count} colliders ===");
+			foreach (var collider in colliders)
+			{
+				string type = collider.GetType().Name;
+				System.Console.WriteLine($"  - {type} at {collider.collisionBox}");
+			}
+		}
+
 	}
 
 }

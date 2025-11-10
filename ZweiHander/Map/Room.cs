@@ -14,13 +14,11 @@ namespace ZweiHander.Map
         public Vector2 Size { get; }
         public bool IsLoaded { get; set; }
 
-        // Portals persist across room loads
-        public List<IPortal> Portals { get; }
-
         // Stored data for recreation
         private readonly List<(BlockName blockName, Point gridPosition)> _blockData;
         private readonly List<(string enemyName, Vector2 position)> _enemyData;
         private readonly List<(ItemType itemType, Vector2 position)> _itemData;
+        private readonly List<(int portalId, Vector2 position)> _portalData;
         
         private readonly Universe _universe;
         private Rectangle Bounds;
@@ -37,8 +35,7 @@ namespace ZweiHander.Map
             _blockData = new List<(BlockName, Point)>();
             _enemyData = new List<(string, Vector2)>();
             _itemData = new List<(ItemType, Vector2)>();
-            
-            Portals = new List<IPortal>();
+            _portalData = new List<(int, Vector2)>();
         }
 
         public void AddBlock(BlockName blockName, Point gridPosition)
@@ -56,7 +53,12 @@ namespace ZweiHander.Map
             _itemData.Add((itemType, position));
         }
         
-        public void AddPortal(IPortal portal) => Portals.Add(portal);
+        public void AddPortal(int portalId, Vector2 position)
+        {
+            _portalData.Add((portalId, position));
+        }
+
+        public IEnumerable<(int portalId, Vector2 position)> GetPortalData() => _portalData;
 
         public void Load()
         {
@@ -78,27 +80,16 @@ namespace ZweiHander.Map
                 _universe.ItemManager.GetItem(itemType, position: position);
             }
             
-            // Register portals
-            foreach (var portal in Portals)
+            // Create portals from data
+            foreach (var (portalId, position) in _portalData)
             {
-                if (portal is RoomPortal roomPortal)
-                {
-                    roomPortal.OnRoomLoad();
-                }
+                RoomPortal portal = _universe.PortalManager.CreatePortal(portalId, position, this, _universe.CurrentArea);
+                portal.OnRoomLoad();
             }
-        }
-
-        public void Update(GameTime gameTime)
-        {
-            if (!IsLoaded) return;
-
-            foreach (var portal in Portals)
-            {
-                if (portal is RoomPortal roomPortal)
-                {
-                    roomPortal.Update(gameTime);
-                }
-            }
+            
+            // Debug: Print all colliders after room loads
+            System.Console.WriteLine($"Room {RoomNumber} loaded:");
+            CollisionManager.Instance.PrintAllColliders();
         }
 
         public bool Contains(Vector2 position) => Bounds.Contains(position);

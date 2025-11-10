@@ -192,9 +192,8 @@ namespace ZweiHander.Environment
         {
             int id = int.Parse(portalId);
             Vector2 centeredPosition = new Vector2(position.X, position.Y);
-            RoomPortal portal = new RoomPortal(id, centeredPosition, _currentRoom, _currentArea, _universe, _player, _camera);
-            _currentRoom.AddPortal(portal);
-            _currentArea.RegisterPortal(portal);
+            _currentRoom.AddPortal(id, centeredPosition);
+            _currentArea.RegisterPortalData(id, _currentRoom.RoomNumber, centeredPosition);
         }
     }
 }

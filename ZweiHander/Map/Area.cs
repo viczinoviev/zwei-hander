@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using ZweiHander.Commands;
 using ZweiHander.PlayerFiles;
 
@@ -9,7 +10,8 @@ namespace ZweiHander.Map
     public class Area
     {
         private readonly Dictionary<int, Room> _rooms;
-        private readonly Dictionary<int, List<IPortal>> _portalRegistry;
+        // Store portal connection data: portalId -> list of (roomNumber, position)
+        private readonly Dictionary<int, List<(int roomNumber, Vector2 position)>> _portalData;
 
         public string Name { get; }
 
@@ -17,7 +19,7 @@ namespace ZweiHander.Map
         {
             Name = name;
             _rooms = new Dictionary<int, Room>();
-            _portalRegistry = new Dictionary<int, List<IPortal>>();
+            _portalData = new Dictionary<int, List<(int, Vector2)>>();
         }
 
         public void AddRoom(int roomNumber, Room room) => _rooms[roomNumber] = room;
@@ -26,24 +28,25 @@ namespace ZweiHander.Map
 
         public IEnumerable<Room> GetAllRooms() => _rooms.Values;
 
-        public void RegisterPortal(IPortal portal)
+        public void RegisterPortalData(int portalId, int roomNumber, Vector2 position)
         {
-            if (!_portalRegistry.ContainsKey(portal.PortalId))
-                _portalRegistry[portal.PortalId] = new List<IPortal>();
+            if (!_portalData.ContainsKey(portalId))
+                _portalData[portalId] = new List<(int, Vector2)>();
             
-            _portalRegistry[portal.PortalId].Add(portal);
+            _portalData[portalId].Add((roomNumber, position));
         }
 
-        public IPortal FindConnectedPortal(RoomPortal sourcePortal)
+        public (int roomNumber, Vector2 position)? FindConnectedPortalData(int portalId, int sourceRoomNumber)
         {
-            if (!_portalRegistry.ContainsKey(sourcePortal.PortalId))
+            if (!_portalData.ContainsKey(portalId))
                 return null;
 
-            foreach (var portal in _portalRegistry[sourcePortal.PortalId])
-            {
-                if (portal != sourcePortal)
-                    return portal;
-            }
+            // Find the OTHER portal with this ID (not in the source room)
+            var connectedPortal = _portalData[portalId].FirstOrDefault(p => p.roomNumber != sourceRoomNumber);
+            
+            if (connectedPortal != default)
+                return connectedPortal;
+            
             return null;
         }
     }

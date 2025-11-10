@@ -37,12 +37,11 @@ namespace ZweiHander.Map
         public void OnRoomLoad()
         {
             _cooldownTimer = COOLDOWN_TIME;
-            CollisionManager.Instance.AddCollider(_collisionHandler);
         }
 
         public void OnRoomUnload()
         {
-            _collisionHandler.Unsubscribe();
+            _collisionHandler.Dead = true;
         }
 
         public void Update(GameTime gameTime)
@@ -60,11 +59,11 @@ namespace ZweiHander.Map
 
         public void Teleport()
         {
-            IPortal targetPortal = ParentArea.FindConnectedPortal(this);
-            if (targetPortal != null)
+            var connectedPortalData = ParentArea.FindConnectedPortalData(PortalId, ParentRoom.RoomNumber);
+            if (connectedPortalData.HasValue)
             {
-                Vector2 spawnPosition = targetPortal.Position - new Vector2(16, 16);
-                _universe.LoadRoom(targetPortal.ParentRoom.RoomNumber, spawnPosition, _camera);
+                Vector2 spawnPosition = connectedPortalData.Value.position - new Vector2(16, 16);
+                _universe.LoadRoom(connectedPortalData.Value.roomNumber, spawnPosition, _camera);
             }
         }
     }

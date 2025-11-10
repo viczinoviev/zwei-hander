@@ -115,6 +115,7 @@ namespace ZweiHander
                 _linkSprites
             );
             _universe.SetPlayer(_gamePlayer);
+            _universe.SetupPortalManager(_camera);
             _areaConstructor = new CsvAreaConstructor();
 
             string mapPath = Path.Combine(Content.RootDirectory, "Maps", "newDungeon1.csv"); // CSV location

@@ -19,6 +19,7 @@ namespace ZweiHander.Map
         public EnemyManager EnemyManager { get; private set; }
         public ItemManager ItemManager { get; private set; }
         public BlockFactory BlockFactory { get; private set; }
+        public PortalManager PortalManager { get; private set; }
 
         public Universe(
             EnemySprites enemySprites,
@@ -44,6 +45,11 @@ namespace ZweiHander.Map
         public Area GetArea(string areaName) => _areas.TryGetValue(areaName, out Area area) ? area : null;
 
         public void SetPlayer(IPlayer player) => Player = player;
+
+        public void SetupPortalManager(Camera.Camera camera)
+        {
+            PortalManager = new PortalManager(this, Player, camera);
+        }
 
         public void SetCurrentLocation(string areaName, int roomNumber)
         {
@@ -77,19 +83,14 @@ namespace ZweiHander.Map
         {
             if (CurrentRoom == null) return;
             
-            // Unsubscribe portal collision handlers
-            foreach (var portal in CurrentRoom.Portals)
-            {
-                if (portal is RoomPortal roomPortal)
-                {
-                    roomPortal.OnRoomUnload();
-                }
-            }
-            
-            // Clear managers/factory - each handles its own collision cleanup
+            // Clear managers/factory/portals - each marks its collision handlers as Dead
             BlockFactory.Clear();
             EnemyManager.Clear();
             ItemManager.Clear();
+            PortalManager.Clear();
+            
+            // Remove dead/null colliders immediately before loading next room
+            CollisionManager.Instance.RemoveDeadColliders();
             
             CurrentRoom.IsLoaded = false;
         }
@@ -98,9 +99,9 @@ namespace ZweiHander.Map
         {
             if (CurrentRoom == null || !CurrentRoom.IsLoaded) return;
             
-            CurrentRoom.Update(gameTime);
             EnemyManager.Update(gameTime);
             ItemManager.Update(gameTime);
+            PortalManager.Update(gameTime);
         }
 
         public void Draw()
@@ -110,13 +111,6 @@ namespace ZweiHander.Map
             BlockFactory.Draw();
             EnemyManager.Draw();
             ItemManager.Draw();
-            
-            // Draw portals (if needed for debug visualization)
-            foreach (var portal in CurrentRoom.Portals)
-            {
-                // Portals don't have a Draw method currently, just trigger areas
-                // Add portal drawing logic here if needed in the future
-            }
         }
     }
 }
