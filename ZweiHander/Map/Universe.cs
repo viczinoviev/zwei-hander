@@ -77,7 +77,7 @@ namespace ZweiHander.Map
             CurrentRoom = targetRoom;
             CurrentRoom.Load();
 
-            new Commands.PlayerTeleportCommand(Player, spawnPosition + new Vector2(16, 16)).Execute();
+            new Commands.PlayerTeleportCommand(Player, spawnPosition + new Vector2(32, 32)).Execute();
             new Commands.SetCameraCommand(camera, Player).Execute();
         }
         

@@ -17,6 +17,7 @@ namespace ZweiHander.Commands
         public void Execute()
         {
             _player.Position = _targetPosition;
+            _player.ForceUpdateCollisionBox();
         }
     }
 }

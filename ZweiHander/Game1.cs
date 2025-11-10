@@ -93,6 +93,9 @@ namespace ZweiHander
             _debugPixel = new Texture2D(GraphicsDevice, 1, 1);
             _debugPixel.SetData(new[] { Color.White });
 
+            // Initialize debug texture for collision manager
+            CollisionManager.Instance.InitializeDebugTexture(GraphicsDevice);
+
             GameSetUp();
         }
 
@@ -165,6 +168,9 @@ namespace ZweiHander
             _gamePlayer.Draw(_spriteBatch);
 
             DrawDebugGrid();
+            
+            // Draw debug collision boxes if enabled
+            CollisionManager.Instance.DrawDebugCollisionBoxes(_spriteBatch);
 
             base.Draw(gameTime);
 

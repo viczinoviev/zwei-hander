@@ -17,6 +17,9 @@ namespace ZweiHander.CollisionFiles
 		/// </summary>
 		readonly private List<ICollisionHandler> colliders = [];
 
+		public bool ShowDebugCollisionBoxes { get; set; } = false;
+		private Texture2D _debugTexture;
+
 		private CollisionManager() { }
 
 		// Gets the one and only collision manager
@@ -60,6 +63,7 @@ namespace ZweiHander.CollisionFiles
 			{
 				for (int j = i + 1; j < colliders.Count; j++)
 				{
+				
 					if (colliders[i].collisionBox.Intersects(colliders[j].collisionBox))
 					{
 						CollisionInfo collisionInfoI = CalculateCollisionInfo(colliders[i].collisionBox, colliders[j].collisionBox);
@@ -157,6 +161,32 @@ namespace ZweiHander.CollisionFiles
 			{
 				string type = collider.GetType().Name;
 				System.Console.WriteLine($"  - {type} at {collider.collisionBox}");
+			}
+		}
+
+		public void InitializeDebugTexture(GraphicsDevice graphicsDevice)
+		{
+			if (_debugTexture == null)
+			{
+				_debugTexture = new Texture2D(graphicsDevice, 1, 1);
+				_debugTexture.SetData(new[] { Color.White });
+			}
+		}
+
+
+		public void DrawDebugCollisionBoxes(SpriteBatch spriteBatch)
+		{
+			if (!ShowDebugCollisionBoxes || _debugTexture == null)
+				return;
+
+			Color debugColor = Color.Red * 0.5f;
+
+			foreach (var collider in colliders)
+			{
+				if (collider == null || collider.Dead)
+					continue;
+
+				spriteBatch.Draw(_debugTexture, collider.collisionBox, debugColor);
 			}
 		}
 

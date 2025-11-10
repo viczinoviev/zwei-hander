@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using ZweiHander.CollisionFiles;
 using ZweiHander.Graphics;
 
@@ -14,32 +15,69 @@ namespace ZweiHander.Environment
         private bool collision = true;
 
         private ISprite _sprite;
-        private readonly BorderCollisionHandler _collisionHandler;
+        private readonly List<BlockCollisionHandler> _collisionHandlers;
 
         public BorderType BorderType => _borderType;
         public BorderName Name { get; private set; }
-        public BorderCollisionHandler CollisionHandler => _collisionHandler;
+        
         public Border(BorderName name, BorderType borderType, Vector2 position, int tileSize, ISprite sprite)
         {
-
             Name = name;
             _borderType = borderType;
             _position = position;
             _tileSize = tileSize;
             _sprite = sprite;
+            _collisionHandlers = new List<BlockCollisionHandler>();
 
-            // Only create collision handler for collidable borders
+            // Create collision handlers based on border type
             if (IsCollidable())
             {
-                _collisionHandler = new BorderCollisionHandler(this);
+                CreateCollisionHandlers();
+            }
+        }
+
+        private void CreateCollisionHandlers()
+        {
+            int x = (int)_position.X;
+            int y = (int)_position.Y;
+
+            switch (_borderType)
+            {
+                case BorderType.Solid:
+                    _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x-32, y-32, 64, 64)));
+                    break;
+
+                case BorderType.EntranceLeft:
+                    _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x-32, y-32, 64, 16)));      // Top-left corner
+                    _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x-32, y + 16, 64, 16))); // Bottom-left corner
+                    _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x, y-16, 32, 32))); // Right side
+                    break;
+
+                case BorderType.EntranceRight:
+                    _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x - 32, y - 32, 64, 16))); 
+                    _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x - 32, y + 16, 64, 16)));
+                    _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x - 32, y - 16, 32, 32))); 
+                    break;
+
+                case BorderType.EntranceUp:
+                    _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x - 32, y -32, 16, 64)));
+                    _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x+16, y -32, 16, 64)));
+                    _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x -16, y - 32, 32, 32)));
+                    break;
+
+                case BorderType.EntranceDown:
+                    _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x - 32, y -32, 16, 64)));
+                    _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x+16, y -32, 16, 64)));
+                    _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x -16, y, 32, 32)));
+                    break;
             }
         }
 
         public void UnsubscribeFromCollisions()
         {
-            if (_collisionHandler != null)
+            foreach (var handler in _collisionHandlers)
             {
-                CollisionManager.Instance.RemoveCollider(_collisionHandler);
+                CollisionManager.Instance.RemoveCollider(handler);
             }
         }
 
@@ -59,17 +97,6 @@ namespace ZweiHander.Environment
             _sprite.Update(gameTime);
         }
 
-        // Returns the hitbox rectangle for collision detection (full 32x32)
-        public Rectangle GetBorderHitbox()
-        {
-            return new Rectangle(
-                (int)_position.X,
-                (int)_position.Y,
-                _tileSize,
-                _tileSize
-            );
-        }
-
         // Determines if the border should be collidable
         public bool IsCollidable()
         {
@@ -79,3 +106,4 @@ namespace ZweiHander.Environment
         }
     }
 }
+

@@ -170,6 +170,10 @@ namespace ZweiHander.PlayerFiles
             _itemManager.Draw();
         }
 
+        public void ForceUpdateCollisionBox()
+        {
+            _handler?.UpdateCollisionBox();
+        }
 
     }
 }

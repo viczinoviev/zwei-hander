@@ -13,7 +13,7 @@ namespace ZweiHander.Environment
         public List<Border> BorderMap { get; private set; } // Stores all borders
 
         /// <summary>
-        /// Maps border names to their logic type (all Solid for now)
+        /// Maps border names to their logic type
         /// </summary>
         private static readonly Dictionary<BorderName, BorderType> BorderNameToType = new()
         {
@@ -35,11 +35,11 @@ namespace ZweiHander.Environment
             { BorderName.OutsideCornerNortheast, BorderType.Solid },
             { BorderName.OutsideCornerSoutheast, BorderType.Solid },
             
-            // Entrance tiles - decorative (passable)
-            { BorderName.EntranceTileNorth, BorderType.Decorative },
-            { BorderName.EntranceTileWest, BorderType.Decorative },
-            { BorderName.EntranceTileEast, BorderType.Decorative },
-            { BorderName.EntranceTileSouth, BorderType.Decorative },
+            // Entrance tiles - with 24x24 cut-outs
+            { BorderName.EntranceTileNorth, BorderType.EntranceUp },
+            { BorderName.EntranceTileWest, BorderType.EntranceRight },
+            { BorderName.EntranceTileEast, BorderType.EntranceLeft },
+            { BorderName.EntranceTileSouth, BorderType.EntranceDown },
             
             // Locked doors - solid (until unlocked in future)
             { BorderName.LockedDoorTileNorth, BorderType.Solid },

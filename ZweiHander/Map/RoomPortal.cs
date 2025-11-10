@@ -26,7 +26,7 @@ namespace ZweiHander.Map
             Position = position;
             ParentRoom = parentRoom;
             ParentArea = parentArea;
-            TriggerArea = new Rectangle((int)position.X-4, (int)position.Y-4, 8, 8);
+            TriggerArea = new Rectangle((int)position.X+12, (int)position.Y+12, 8, 8);
             
             _universe = universe;
             _player = player;
