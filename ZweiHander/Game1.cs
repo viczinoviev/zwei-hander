@@ -16,6 +16,8 @@ using ZweiHander.Items;
 using ZweiHander.Map;
 using ZweiHander.PlayerFiles;
 using ZweiHander.HUD;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
 
 namespace ZweiHander
 {
@@ -57,6 +59,8 @@ namespace ZweiHander
         //dummy position for treasure, item, block, and enemy
         Vector2 enemyPosition;
 
+        //Backround Song
+        private Song bgm;
 
         public Player GamePlayer => _gamePlayer;
 
@@ -98,6 +102,13 @@ namespace ZweiHander
             _enemyManager = new EnemyManager(_enemySprites, _projectileManager, _bossSprites,_npcSprites);
             _borderManager = new BorderManager(_blockSprites,new Vector2(47,175));
             _borderManager2 = new BorderManager(_blockSprites, new Vector2(559, 175));
+            bgm = Content.Load<Song>("Audio/DungeonTheme");
+            if (MediaPlayer.State == MediaState.Playing)
+            {
+                MediaPlayer.Stop();
+            }
+            MediaPlayer.Play(bgm);
+            MediaPlayer.IsRepeating = true;
 
             GameSetUp();
         }
