@@ -66,4 +66,9 @@ public class ItemConstructor
     /// Thresholds for switching phases; excludes spawn and death
     /// </summary>
     public List<double> Phases { get; set; }
+
+    /// <summary>
+    /// Any extra parameters needed for that item; use class summary as reference
+    /// </summary>
+    public List<object> Extras { get; set; }
 }

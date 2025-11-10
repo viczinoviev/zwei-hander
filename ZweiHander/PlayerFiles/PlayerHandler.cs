@@ -208,12 +208,13 @@ namespace ZweiHander.PlayerFiles
             else if (itemInput == PlayerInput.UsingItem2)
             {
                 _player.ItemManager.GetItem<BoomerangItem>(
-                    life: 2.15f,
+                    life: -1f,
                     position: itemPosition,
                     velocity: itemVelocity,
                     acceleration: -itemVelocity * 0.9f,
                     properties: [ItemProperty.DeleteOnBlock,
-                         ItemProperty.CanDamageEnemy]
+                         ItemProperty.CanDamageEnemy],
+                    extras: [() => _player.Position, _collisionHandler]
                 );
             }
             else if (itemInput == PlayerInput.UsingItem3)

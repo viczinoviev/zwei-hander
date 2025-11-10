@@ -3,50 +3,48 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-
-<title>CSE 3902 Sprint 3</title>
+<title>CSE 3902 Sprint 4</title>
 </head>
 <body>
-<h1>Sprint 3 - Level loading and segmentation and collision handling</h1>
-
+<h1>Sprint 4 - Completed first level</h1>
 <p><strong>Due dates:</strong></p>
 <ul>
-  <li>Initial task planning: Tues. 10/7 before midnight
-  <li>Functionality check-in (on Carmen): Mon. 10/20 before midnight
-  <li>Due (on Carmen): Mon. 10/27 before midnight
-  <li>Team evaluation on CATME: Tues. 10/28 before midnight
+  <li>Initial task planning: Tues. 10/28 before midnight
+  <li>Functionality check-in (on Carmen): Mon. 11/10 before midnight
+  <li>Due (on Carmen): Mon. 11/17 before midnight
+  <li>Team evaluation on CATME: Tues. 11/18 before midnight
 </ul>
-
-<p><strong>Objectives:</strong></p>
+<p><strong>Objectives (short-form):</strong></p>
 <ul>
-  <li>Continue to develop more core features of your 2D game framework.
-  <li>Implement collision handling for all types of collisions that can occur, causing state transitions or position changes when necessary.</li>
-  <li>Instead of placing all objects on screen at once, create the individual "rooms" (or "screens" if you prefer) of the dungeon each with its own subset of objects. 
-  Store this information in one or more files (recommendation: csv or xml) and write code to initialize objects based on the contents of the file(s).</li>
-  <li>Create an artificial level that contains an instance of Link and all types of objects that are found in your first dungeon.
-	  For testing purposes, include a way for the user to quickly switch to any room in the dungeon instead of having to walk through multiple rooms to reach it.</li>
+  <li>Implement everything else needed for the first level of your game.
 </ul>
-
-Note: you should base the behavior of your game's objects off of the original game in order to complete a comparable amount of work to that of previous teams in this course,
-but you do not need to replicate everything with 100% accuracy.
-You should document any major deviations to avoid it getting marked as a bug. 
-Also note that you do not need a fully finished game by the end of this sprint, some elements such as sound, smooth camera transitions, etc. are not required until the next sprint.
-
-<p align="left"><strong>Controls and UI</strong></p>
+<p><strong>Objectives (long-form):</strong></p>
 <ul>
-	<li>Use the arrow keys and WASD for player movement</li>
-    <li>This sprint is a good time to create a gamepad class, but this is not a hard requirement</li>
-	<li>Continue to allow the use of different items via numeric keys 1, 2, 3, etc.
-	<li>Recommendation: have all of the item pickups in the starting room, or start the player with an infinite amount of each item</li>
-	<li>Use the mouse controller as a way to transition between rooms. How you do this is entirely up to you, but consider doing so by clicking on a map. 
-	Alternatively, treat the rooms as in an ordered collection, with left click moving to the previous room and right click moving to the next room.</li>
+	<li>Keep the mouse controls to teleport between rooms for testing purposes.</li>
+	<li>Keep a room with an assortment of items for testing purposes.</li>
+	<li>Add sound effects and background music. Include a way to mute the background music for testing purposes.</li>
+	<li>Update your level file(s) and loading to include the layout of the dungeon.</li>
+	<li>Implement resetting the level upon the player character's death.</li>
+	<li>Add the Heads Up Display (the font does not need to match the one used in the original game).</li>
+	<li>Implement game state transitions:</li>
+	<ul>
+		<li>The item selection screen/state and transitions to and from it to the gameplay screen/state</li>
+		<li>A game over screen</li>
+		<li>Pausing</li>
+		<li>The winning game state on grabbing the triforce piece</li>
+		<li>Transitioning between rooms</li>
+	</ul>
+	<li>Implement any other features you deem necessary for the first dungeon. Implementing a few additional items, enemies, or NPCs is encouraged.</li>
+	<li>Remove magic numbers and strings by making local constants and/or moving them to a utility class (or multiple ones). 
+	    Consider making it possible to load these from a file as well as user input options for changing some during runtime (such as player movement speed). </li>
+	<li>Begin research on feature ideas for Sprint 5.</li>
 </ul>
 
-<br><center><img src="Sprint3(loz).png"></img></center><br>
+<img src="Sprint4(loz).png"></img>
 
 <hr>
 
-<h3>Sprint 3 Work Expectations (the following information is largely the same as Sprint 2, and will be repeated for all future sprints):</h3>
+<h3>Sprint 4 Work Expectations (the same as in previous sprints, repeated for convenience):</h3>
 <ul>
   <li>Planning:
     <ul>

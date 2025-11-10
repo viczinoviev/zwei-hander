@@ -50,7 +50,7 @@ public enum ItemProperty : Int16
     /// <summary>
     /// Player can pick this item up
     /// </summary>
-    CanBePickedUp = 0x400,
+    CanBePickedUp = 0x400 | DeleteOnPlayer,
     /// <summary>
     /// Item meant to be collected by player
     /// </summary>

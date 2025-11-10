@@ -103,7 +103,6 @@ public abstract class AbstractItem : IItem
     public virtual void Update(GameTime time)
     {
         float dt = (float)time.ElapsedGameTime.TotalSeconds;
-
         // Life progression
         ProgressLife(dt);
         if(IsDead()) return;  
@@ -181,7 +180,7 @@ public abstract class AbstractItem : IItem
 
     public bool IsDead()
     {
-        return Life <= 0;
+        return Life == 0;
     }
 
     public void Kill()
@@ -191,9 +190,10 @@ public abstract class AbstractItem : IItem
 
     public Rectangle GetHitBox()
     {
+        // I will be honest, I do not know why using this as the topleft works
         return new Rectangle(
-                (int) Position.X,
-                (int)Position.Y,
+                (int) Position.X - Sprite.Width / 2,
+                (int)Position.Y - Sprite.Height / 2,
                 Sprite.Width,
                 Sprite.Height
             );
