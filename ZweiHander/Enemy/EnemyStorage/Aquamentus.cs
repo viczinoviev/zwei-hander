@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ZweiHander.CollisionFiles;
 using ZweiHander.Items.ItemStorages;
+using Microsoft.Xna.Framework.Content;
 
 namespace ZweiHander.Enemy.EnemyStorage;
 
@@ -43,12 +44,12 @@ public class Aquamentus : IEnemy
     readonly Random rnd = new();
 
 
-    public Aquamentus(BossSprites bossSprites, ItemManager projectileManager)
+    public Aquamentus(BossSprites bossSprites, ItemManager projectileManager,ContentManager sfxPlayer)
     {
         _projectileManager = projectileManager;
         _bossSprites = bossSprites;
         Sprite = _bossSprites.Aquamentus();
-        CollisionHandler = new EnemyCollisionHandler(this);
+        CollisionHandler = new EnemyCollisionHandler(this,sfxPlayer);
     }
     public virtual void Update(GameTime time)
     {

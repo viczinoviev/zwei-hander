@@ -149,7 +149,7 @@
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/Sound Effect (3).wav
+/build:Audio/Sound Effect (3).wav;Audio/Hurt.wav
 
 #begin Audio/Sound Effect (4).wav
 /importer:WavImporter
@@ -167,7 +167,7 @@
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/Sound Effect (6).wav
+/build:Audio/Sound Effect (6).wav;Audio/SwordAttack.wav
 
 #begin Audio/Sound Effect (7).wav
 /importer:WavImporter

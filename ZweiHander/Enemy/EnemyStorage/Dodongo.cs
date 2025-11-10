@@ -5,6 +5,7 @@ using System;
 using ZweiHander.Graphics.SpriteStorages;
 using ZweiHander.CollisionFiles;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework.Content;
 
 namespace ZweiHander.Enemy.EnemyStorage;
 
@@ -37,7 +38,7 @@ public class Dodongo : IEnemy
     readonly Random rnd = new();
 
 
-    public Dodongo(BossSprites bossSprites)
+    public Dodongo(BossSprites bossSprites,ContentManager sfxPlayer)
     {
         _bossSprites = bossSprites;
         _sprites.Add(_bossSprites.DodongoUp());
@@ -45,7 +46,7 @@ public class Dodongo : IEnemy
         _sprites.Add(_bossSprites.DodongoDown());
         _sprites.Add(_bossSprites.DodongoLeft());
         Sprite = _sprites[0];
-        CollisionHandler = new EnemyCollisionHandler(this);
+        CollisionHandler = new EnemyCollisionHandler(this,sfxPlayer);
     }
     public virtual void Update(GameTime time)
     {

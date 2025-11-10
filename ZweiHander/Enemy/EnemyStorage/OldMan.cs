@@ -30,7 +30,7 @@ public class OldMan : IEnemy
     {
         _npcSprites = npcSprites;
         Sprite = _npcSprites.OldMan();
-        CollisionHandler = new EnemyCollisionHandler(this);
+        //CollisionHandler = new EnemyCollisionHandler(this);
     }
     public virtual void Update(GameTime time)
     {
