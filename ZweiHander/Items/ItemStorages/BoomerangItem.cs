@@ -9,6 +9,8 @@ namespace ZweiHander.Items.ItemStorages;
 /// <summary>
 /// DeleteOnBlock, infinite life<br></br>
 /// use ItemHelper.BoomerangTrajectory<br></br>
+/// Phase 0: Move out at given acceleration until velocity switches direction<br></br>
+/// Phase 1: Return to thrower at increasing speeds<br></br>
 /// EXTRAS: (Func&lt;Vector2&gt; throwerPosition, ICollisionHandler thrower, double ReturnAcceleration = |Acceleration|)
 /// </summary>
 public class BoomerangItem : AbstractItem
