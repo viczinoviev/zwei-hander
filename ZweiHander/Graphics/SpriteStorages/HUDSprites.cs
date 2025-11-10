@@ -21,4 +21,5 @@ public class HUDSprites : SpriteFactory
     public ISprite HeartHalf() => new IdleSprite(_regions["heart-half"], _spriteBatch);
     public ISprite HeartEmpty() => new IdleSprite(_regions["heart-empty"], _spriteBatch);
     public ISprite BlueFrame() => new IdleSprite(_regions["blue-frame"], _spriteBatch);
+    public ISprite NormalSword() => new IdleSprite(_regions["normal-sword"], _spriteBatch);
 }
