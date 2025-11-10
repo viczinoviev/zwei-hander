@@ -105,7 +105,11 @@ public abstract class AbstractItem : IItem
         float dt = (float)time.ElapsedGameTime.TotalSeconds;
         // Life progression
         ProgressLife(dt);
-        if(IsDead()) return;  
+        if (IsDead())
+        {
+            CollisionHandler.Dead = true;
+            return;
+        } 
 
         // Movement
         if (!HasProperty(ItemProperty.Stationary))
