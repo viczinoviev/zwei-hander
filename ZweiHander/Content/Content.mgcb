@@ -187,6 +187,9 @@
 /processorParam:Quality=Best
 /build:Audio/Sound Effect (9).wav
 
+#begin Maps/testDungeon1.csv
+/copy:Maps/testDungeon1.csv
+
 #begin SpriteSheets/BlockDefinition.xml
 /copy:SpriteSheets/BlockDefinition.xml
 
