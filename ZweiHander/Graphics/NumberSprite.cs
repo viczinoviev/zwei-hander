@@ -16,13 +16,19 @@ public class NumberSprite : AbstractSprite
     public NumberSprite(int number, SpriteBatch spriteBatch, HUDSprites hudSprites, bool centered = true)
     {
         _spriteBatch = spriteBatch;
-        _number = number.ToString();
         _sprites = [];
         for (int i = 0; i < 10; i++)
         {
             _sprites[i.ToString()[0]] = hudSprites.Digit(i);
         }
-        foreach(char c in _number)
+        SetNumber(number);
+    }
+
+    public void SetNumber(int number, bool centered = true)
+    {
+        _number = number.ToString();
+        CumWidth = 0;
+        foreach (char c in _number)
         {
             CumWidth += _sprites[c].Width;
         }
