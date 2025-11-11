@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using ZweiHander.Items;
+using ZweiHander.Items.ItemStorages;
 
 namespace ZweiHander.Environment
 {
@@ -84,20 +85,20 @@ namespace ZweiHander.Environment
 			{ "MovingBlock", "MovingBlock" }
 		};
 
-		public static readonly Dictionary<String, ItemType> itemNameToItemType = new()
+		public static readonly Dictionary<string, Type> itemNameToItemType = new()
 		{
-			{ "Heart", ItemType.Heart },
-			{ "Bomb", ItemType.Bomb },
-			{ "Arrow", ItemType.Arrow },
-			{ "Key", ItemType.Key },
-			{ "Compass", ItemType.Compass },
-			{ "Map", ItemType.Map },
-			{ "HeartContainer", ItemType.HeartContainer },
-			{ "TriforcePiece", ItemType.TriforcePiece },
-			{ "Boomerang", ItemType.Boomerang },
-			{ "Bow", ItemType.Bow },
-			{ "Clock", ItemType.Clock },
-			{ "Fairy", ItemType.Fairy }
+			{ "Heart", typeof(HeartItem) },
+			{ "Bomb", typeof(BombItem) },
+			{ "Arrow", typeof(ArrowItem) },
+			{ "Key", typeof(KeyItem) },
+			{ "Compass", typeof(CompassItem) },
+			{ "Map", typeof(MapItem) },
+			{ "HeartContainer", typeof(HeartContainerItem) },
+			{ "TriforcePiece", typeof(TriforceItem) },
+			{ "Boomerang", typeof(BoomerangItem) },
+			{ "Bow", typeof(BowItem) },
+			{ "Clock", typeof(ClockItem) },
+			{ "Fairy", typeof(FairyItem) }
 		};
 	}
 }

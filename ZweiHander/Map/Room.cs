@@ -4,6 +4,7 @@ using ZweiHander.Environment;
 using ZweiHander.Enemy;
 using ZweiHander.Items;
 using ZweiHander.CollisionFiles;
+using System;
 
 namespace ZweiHander.Map
 {
@@ -18,7 +19,7 @@ namespace ZweiHander.Map
         private readonly List<(BlockName blockName, Point gridPosition)> _blockData;
         private readonly List<(BorderName borderName, Vector2 position)> _borderData;
         private readonly List<(string enemyName, Vector2 position)> _enemyData;
-        private readonly List<(ItemType itemType, Vector2 position)> _itemData;
+        private readonly List<(Type itemType, Vector2 position)> _itemData;
         private readonly List<(int portalId, Vector2 position)> _portalData;
         
         private readonly Universe _universe;
@@ -36,7 +37,7 @@ namespace ZweiHander.Map
             _blockData = new List<(BlockName, Point)>();
             _borderData = new List<(BorderName, Vector2)>();
             _enemyData = new List<(string, Vector2)>();
-            _itemData = new List<(ItemType, Vector2)>();
+            _itemData = new List<(Type, Vector2)>();
             _portalData = new List<(int, Vector2)>();
         }
 
@@ -55,7 +56,7 @@ namespace ZweiHander.Map
             _enemyData.Add((enemyName, position));
         }
         
-        public void AddItem(ItemType itemType, Vector2 position)
+        public void AddItem(Type itemType, Vector2 position)
         {
             _itemData.Add((itemType, position));
         }
@@ -89,7 +90,8 @@ namespace ZweiHander.Map
             
             foreach (var (itemType, position) in _itemData)
             {
-                _universe.ItemManager.GetItem(itemType, position: position);
+                var getItemMethod = typeof(ItemManager).GetMethod("GetItem").MakeGenericMethod(itemType);
+                getItemMethod.Invoke(_universe.ItemManager, new object[] { 0.0, position, default(Vector2), default(Vector2), null, true, null, null });
             }
             
             // Create portals from data
@@ -99,9 +101,6 @@ namespace ZweiHander.Map
                 portal.OnRoomLoad();
             }
             
-            // Debug: Print all colliders after room loads
-            System.Console.WriteLine($"Room {RoomNumber} loaded:");
-            CollisionManager.Instance.PrintAllColliders();
         }
 
         public bool Contains(Vector2 position) => Bounds.Contains(position);

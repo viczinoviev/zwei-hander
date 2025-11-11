@@ -196,11 +196,19 @@ public abstract class AbstractItem : IItem
     {
         // I will be honest, I do not know why using this as the topleft works
         return new Rectangle(
-                (int) Position.X - Sprite.Width / 2,
+                (int)Position.X - Sprite.Width / 2,
                 (int)Position.Y - Sprite.Height / 2,
                 Sprite.Width,
                 Sprite.Height
             );
+    }
+    
+    public void UnsubscribeFromCollisions()
+    {
+        if (CollisionHandler != null)
+        {
+            CollisionManager.Instance.RemoveCollider(CollisionHandler);
+        }
     }
 
     public virtual void HandleCollision(ICollisionHandler other, CollisionInfo collisionInfo)

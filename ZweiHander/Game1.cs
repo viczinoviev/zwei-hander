@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
@@ -109,7 +110,7 @@ namespace ZweiHander
             _blockFactory = new BlockFactory(32, _blockSprites, _linkSprites);
             _itemManager = new ItemManager(_itemSprites, _treasureSprites, _bossSprites);
             _projectileManager = new ItemManager(_itemSprites, _treasureSprites, _bossSprites);
-            _enemyManager = new EnemyManager(_enemySprites, _projectileManager, _bossSprites, _npcSprites);
+            _enemyManager = new EnemyManager(_enemySprites, _projectileManager, _bossSprites, _npcSprites, Content);
 
             _debugPixel = new Texture2D(GraphicsDevice, 1, 1);
             _debugPixel.SetData(new[] { Color.White });
@@ -143,7 +144,9 @@ namespace ZweiHander
                 _itemSprites,
                 _treasureSprites,
                 _blockSprites,
-                _linkSprites
+                _linkSprites,
+
+                Content
             );
             _universe.SetPlayer(_gamePlayer);
             _universe.SetupPortalManager(_camera);

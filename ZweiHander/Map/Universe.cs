@@ -6,6 +6,11 @@ using ZweiHander.Items;
 using ZweiHander.Environment;
 using ZweiHander.CollisionFiles;
 using ZweiHander.Graphics.SpriteStorages;
+using Microsoft.Xna.Framework.Audio;
+using System.Net.Mime;
+using Microsoft.Xna.Framework.Content;
+using System;
+
 
 namespace ZweiHander.Map
 {
@@ -30,6 +35,7 @@ namespace ZweiHander.Map
             TreasureSprites treasureSprites,
             BlockSprites blockSprites,
             PlayerSprites playerSprites,
+            ContentManager Content,
             int tileSize = 32)
         {
             _areas = new Dictionary<string, Area>();
@@ -37,7 +43,7 @@ namespace ZweiHander.Map
             // Create separate instances for Universe's use
             ItemManager projectileManager = new ItemManager(itemSprites, treasureSprites, bossSprites);
             ItemManager = new ItemManager(itemSprites, treasureSprites, bossSprites);
-            EnemyManager = new EnemyManager(enemySprites, projectileManager, bossSprites, npcSprites);
+            EnemyManager = new EnemyManager(enemySprites, projectileManager, bossSprites, npcSprites, Content);
             BlockFactory = new BlockFactory(tileSize, blockSprites, playerSprites);
             BorderFactory = new BorderFactory(tileSize, blockSprites);
         }
