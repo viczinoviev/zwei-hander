@@ -9,7 +9,8 @@
         <Region name="heart-half" x="9" y="256" width="8" height="8" />
         <Region name="heart-empty" x="0" y="256" width="8" height="8" />
         <Region name="blue-frame" x="0" y="288" width="16" height="16"/>
-		<Region name="normal-sword" x="36" y="288" width="6" height="15"/>
+		<Region name="normal-sword" x="36" y="288" width="8" height="16"/>
+		<Region name="bow" x="114" y="288" width="8" height="16"/>
     </Regions>
     <Animations>
     </Animations>

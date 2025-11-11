@@ -62,7 +62,7 @@ namespace ZweiHander.HUD
             }
             else//paused game state
             {
-                _inventoryHUD = new InventoryHUD(_hudSprites, new Vector2(screen_center_x, HEADS_UP_HUD_Y));
+                _inventoryHUD = new InventoryHUD(_hudSprites, new Vector2(screen_center_x, HEADS_UP_HUD_Y), _player);
                 _mapHUD = new MapHUD(_hudSprites, new Vector2(screen_center_x, 245));
                 _headsUpHud = new HeadsUpHUD(_hudSprites, new Vector2(screen_center_x, 380));
                 HEALTH_DISPLAY_Y = 396;
