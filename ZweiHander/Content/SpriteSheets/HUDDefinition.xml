@@ -11,6 +11,16 @@
         <Region name="blue-frame" x="0" y="288" width="16" height="16"/>
 		<Region name="normal-sword" x="36" y="288" width="8" height="16"/>
 		<Region name="bow" x="114" y="288" width="8" height="16"/>
+		<Region name="0" x="0" y="272" width="8" height="8"/>
+		<Region name="1" x="9" y="272" width="8" height="8"/>
+		<Region name="2" x="18" y="272" width="8" height="8"/>
+		<Region name="3" x="27" y="272" width="8" height="8"/>
+		<Region name="4" x="36" y="272" width="8" height="8"/>
+		<Region name="5" x="45" y="272" width="8" height="8"/>
+		<Region name="6" x="54" y="272" width="8" height="8"/>
+		<Region name="7" x="63" y="272" width="8" height="8"/>
+		<Region name="8" x="72" y="272" width="8" height="8"/>
+		<Region name="9" x="81" y="272" width="8" height="8"/>
     </Regions>
     <Animations>
     </Animations>
