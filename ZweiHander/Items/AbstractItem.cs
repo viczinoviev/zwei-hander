@@ -189,6 +189,7 @@ public abstract class AbstractItem : IItem
 
     public void Kill()
     {
+        CollisionHandler.Dead = true;
         Life = 0;
     }
 
@@ -201,14 +202,6 @@ public abstract class AbstractItem : IItem
                 Sprite.Width,
                 Sprite.Height
             );
-    }
-    
-    public void UnsubscribeFromCollisions()
-    {
-        if (CollisionHandler != null)
-        {
-            CollisionManager.Instance.RemoveCollider(CollisionHandler);
-        }
     }
 
     public virtual void HandleCollision(ICollisionHandler other, CollisionInfo collisionInfo)

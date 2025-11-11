@@ -183,10 +183,7 @@ public class ItemManager
     {
         foreach (IItem item in _items)
         {
-            if (item is AbstractItem abstractItem)
-            {
-                abstractItem.UnsubscribeFromCollisions();
-            }
+            item.Kill();
         }
         _items.Clear();
         ItemTypeCount.Clear();
