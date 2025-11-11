@@ -135,6 +135,8 @@ namespace ZweiHander
         {
             _gamePlayer = new Player(_linkSprites, _itemSprites, _treasureSprites);
             _gamePlayer.Position = new Vector2(100, 100);
+            SetCameraCommand moveCameraToPlayer = new SetCameraCommand(_camera, _gamePlayer);
+            moveCameraToPlayer.Execute();
 
             // Universe creates its own manager instances
             _universe = new Universe(
