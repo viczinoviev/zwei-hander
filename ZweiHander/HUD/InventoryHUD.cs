@@ -53,12 +53,12 @@ namespace ZweiHander.HUD
         {
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, Vector2 offset)
         {
-            _inventoryDisplayHUD.Draw(_position);
+            _inventoryDisplayHUD.Draw(_position + offset);
             for (int i = 0; i < _orderedUsableCount; i++)
             {
-                if (_acquiredUsables[i]) _usableSprites[i].Draw(_usablePositions[i] + _relativePosition);
+                if (_acquiredUsables[i]) _usableSprites[i].Draw(_usablePositions[i] + _relativePosition + offset);
             }
         }
     }

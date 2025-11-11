@@ -175,23 +175,26 @@ namespace ZweiHander
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            _universe.Update(gameTime);
-            _itemManager.Update(gameTime);
-            _projectileManager.Update(gameTime);
-
+            // Always update keyboard and HUD
             _keyboardController.Update();
-            _gamePlayer.Update(gameTime);
-            _hurtPlayerCommand.Update(gameTime);
-
-            CollisionManager.Instance.Update(gameTime);
-
-            _camera.Update(gameTime, _gamePlayer.Position);
-
-            base.Update(gameTime);
-            // Update HUD
             _hudManager.Update(gameTime);
 
-                base.Update(gameTime);
+            // Update stuff when game is running
+            if (!gamePaused)
+            {
+                _universe.Update(gameTime);
+                _itemManager.Update(gameTime);
+                _projectileManager.Update(gameTime);
+
+                _gamePlayer.Update(gameTime);
+                _hurtPlayerCommand.Update(gameTime);
+
+                CollisionManager.Instance.Update(gameTime);
+
+                _camera.Update(gameTime, _gamePlayer.Position);
+            }
+
+            base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)

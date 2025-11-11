@@ -26,9 +26,9 @@ namespace ZweiHander.HUD
         {
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, Vector2 offset)
         {
-            _mapDisplayHUD.Draw(_position);
+            _mapDisplayHUD.Draw(_position + offset);
         }
     }
 }

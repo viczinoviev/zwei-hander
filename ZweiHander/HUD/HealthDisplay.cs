@@ -16,7 +16,7 @@ namespace ZweiHander.HUD
         private readonly HUDSprites _hudSprites;
         private readonly Vector2 _position;
         private const int HEART_SPACING = 16; // Space between hearts, not gaps!
-        
+
         public HealthDisplay(IPlayer player, HUDSprites hudSprites, Vector2 position)
         {
             _player = player ?? throw new ArgumentNullException(nameof(player));
@@ -28,7 +28,7 @@ namespace ZweiHander.HUD
         {
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, Vector2 offset)
         {
             if (_player == null) return;
 
@@ -37,7 +37,7 @@ namespace ZweiHander.HUD
 
             for (int heartNum = 0; heartNum < heartsToDisplay; heartNum++)
             {
-                Vector2 heartPosition = _position + new Vector2(heartNum * HEART_SPACING, 0);
+                Vector2 heartPosition = _position + new Vector2(heartNum * HEART_SPACING, 0) + offset;
                 ISprite heartSprite;
 
                 if (remainingHalfHearts >= 2)

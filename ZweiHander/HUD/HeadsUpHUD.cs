@@ -17,7 +17,7 @@ namespace ZweiHander.HUD
         private readonly NumberSprite _bombs;
         private readonly Vector2 _position;
         private readonly Player _player;
-        
+
         public HeadsUpHUD(HUDSprites hudSprites, Vector2 position, IPlayer player)
         {
             hudSprites = hudSprites ?? throw new ArgumentNullException(nameof(hudSprites));
@@ -32,10 +32,10 @@ namespace ZweiHander.HUD
             _bombs.SetNumber(_player.Inventory[typeof(BombItem)]);
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, Vector2 offset)
         {
-            _headsUpDisplayHUD.Draw(_position);
-            _bombs.Draw(_position + new Vector2(-22, 35));
+            _headsUpDisplayHUD.Draw(_position + offset);
+            _bombs.Draw(_position + new Vector2(-22, 35) + offset);
         }
     }
 }
