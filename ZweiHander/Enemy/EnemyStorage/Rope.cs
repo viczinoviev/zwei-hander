@@ -5,6 +5,7 @@ using System;
 using ZweiHander.Graphics.SpriteStorages;
 using ZweiHander.CollisionFiles;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework.Content;
 
 namespace ZweiHander.Enemy.EnemyStorage;
 
@@ -36,14 +37,14 @@ public class Rope : IEnemy
     readonly Random rnd = new();
 
 
-    public Rope(EnemySprites enemySprites)
+    public Rope(EnemySprites enemySprites,ContentManager sfxPlayer)
     {
         _enemySprites = enemySprites;
         _sprites.Add(_enemySprites.RopeRight());
         _sprites.Add(_enemySprites.RopeLeft());
         Sprite = _sprites[0];
         Face = 1;
-        CollisionHandler = new EnemyCollisionHandler(this);
+        CollisionHandler = new EnemyCollisionHandler(this,sfxPlayer);
     }
     public virtual void Update(GameTime time)
     {

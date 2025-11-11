@@ -1,15 +1,20 @@
 ﻿using System.Collections.Generic;
 using ZweiHander.Graphics;
+using ZweiHander.Graphics.SpriteStorages;
 
 namespace ZweiHander.Items.ItemStorages;
+
+/// <summary>
+/// Infinite life, collectable
+/// </summary>
 public class ClockItem : AbstractItem
 {
-    public ClockItem(ItemConstructor itemConstructor, bool defaultProperties)
+    protected override ItemProperty Properties { get; set; } = ItemProperty.Collectable;
+
+    public ClockItem(ItemConstructor itemConstructor)
         : base(itemConstructor)
     {
-        if (defaultProperties)
-        {
-            Properties = ItemProperty.Collectable;
-        }
+        Sprites = [itemConstructor.TreasureSprites.Clock()];
+        Setup(itemConstructor);
     }
 }

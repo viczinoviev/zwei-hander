@@ -54,5 +54,13 @@ public enum ItemProperty : Int16
     /// <summary>
     /// Item meant to be collected by player
     /// </summary>
-    Collectable = Stationary | CanBePickedUp
+    Collectable = Stationary | CanBePickedUp,
+    /// <summary>
+    /// Projectile that hurts enemies
+    /// </summary>
+    FriendlyProjectile = CanDamageEnemy | DeleteOnBlock | DeleteOnEnemy,
+    /// <summary>
+    /// Projectile that hurts player
+    /// </summary>
+    EnemyProjectile = CanDamagePlayer | DeleteOnBlock | DeleteOnPlayer
 }

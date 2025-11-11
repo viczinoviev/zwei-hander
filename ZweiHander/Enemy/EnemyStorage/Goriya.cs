@@ -7,6 +7,8 @@ using ZweiHander.Graphics.SpriteStorages;
 using ZweiHander.CollisionFiles;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using ZweiHander.Items.ItemStorages;
+using Microsoft.Xna.Framework.Content;
 
 namespace ZweiHander.Enemy.EnemyStorage;
 
@@ -47,7 +49,7 @@ private int Thrower = 1;
     readonly Random rnd = new();
 
 
-    public Goriya(EnemySprites enemySprites, ItemManager projectileManager)
+    public Goriya(EnemySprites enemySprites, ItemManager projectileManager,ContentManager sfxPlayer)
     {
         _projectileManager = projectileManager;
         _enemySprites = enemySprites;
@@ -57,7 +59,7 @@ private int Thrower = 1;
         _sprites.Add(_enemySprites.GoriyaDown());
         _sprites.Add(_enemySprites.GoriyaLeft());
         Sprite = _sprites[0];
-        CollisionHandler = new EnemyCollisionHandler(this);
+        CollisionHandler = new EnemyCollisionHandler(this,sfxPlayer);
     }
     public virtual void Update(GameTime time)
     {
@@ -84,7 +86,8 @@ private int Thrower = 1;
         if (attack == 5 && Thrower != 2)
         {
             //Create a projectile
-            _currentProjectile = _projectileManager.GetItem(ItemType.Boomerang, position: Position);
+            _currentProjectile = _projectileManager.GetItem<BoomerangItem>(position: Position,
+                extras: [() => this.Position, CollisionHandler]);
             Thrower = 2;
             //Set up the projectiles behavior
             (float v, float a) = ItemHelper.BoomerangTrajectory(50, 3);

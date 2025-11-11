@@ -5,6 +5,7 @@ using ZweiHander.CollisionFiles;
 using ZweiHander.Graphics;
 using ZweiHander.Graphics.SpriteStorages;
 using ZweiHander.Items;
+using ZweiHander.Items.ItemStorages;
 
 namespace ZweiHander.PlayerFiles
 {
@@ -182,9 +183,8 @@ namespace ZweiHander.PlayerFiles
             Vector2 swordPosition = _player.Position + _stateMachine.LastDirection * 10f;
             Vector2 swordVelocity = _stateMachine.LastDirection * 400f;
 
-            _player.ItemManager.GetItem(
-                ItemType.Sword,
-                life: 1.0,
+            _player.ItemManager.GetItem<SwordItem>(
+                life: 1.1,
                 position: swordPosition,
                 velocity: swordVelocity
             );
@@ -194,14 +194,10 @@ namespace ZweiHander.PlayerFiles
         {
             Vector2 itemPosition = _player.Position;
             Vector2 itemVelocity = _stateMachine.LastDirection * 300f;
-
-            ItemType itemType;
             if (itemInput == PlayerInput.UsingItem1)
             {
-                itemType = ItemType.Arrow;
-                _player.ItemManager.GetItem(
-                    itemType,
-                    life: 2.0,
+                _player.ItemManager.GetItem<ArrowItem>(
+                    life: 1.1,
                     position: itemPosition,
                     velocity: itemVelocity,
                     properties: [ItemProperty.DeleteOnEnemy,
@@ -211,22 +207,19 @@ namespace ZweiHander.PlayerFiles
             }
             else if (itemInput == PlayerInput.UsingItem2)
             {
-                itemType = ItemType.Boomerang;
-                _player.ItemManager.GetItem(
-                    itemType,
-                    life: 2.15f,
+                _player.ItemManager.GetItem<BoomerangItem>(
+                    life: -1f,
                     position: itemPosition,
                     velocity: itemVelocity,
                     acceleration: -itemVelocity * 0.9f,
                     properties: [ItemProperty.DeleteOnBlock,
-                         ItemProperty.CanDamageEnemy]
+                         ItemProperty.CanDamageEnemy],
+                    extras: [() => _player.Position, _collisionHandler]
                 );
             }
             else if (itemInput == PlayerInput.UsingItem3)
             {
-                itemType = ItemType.Bomb;
-                _player.ItemManager.GetItem(
-                    itemType,
+                _player.ItemManager.GetItem<BombItem>(
                     life: 1.5f,
                     position: itemPosition + _stateMachine.LastDirection * 30f,
                     velocity: Vector2.Zero,

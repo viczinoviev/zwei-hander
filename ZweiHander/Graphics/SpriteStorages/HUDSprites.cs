@@ -14,12 +14,15 @@ public class HUDSprites : SpriteFactory
         _spriteBatch = spriteBatch;
     }
 
+    public ISprite InventoryDisplay() => new IdleSprite(_regions["inventory-display"], _spriteBatch);
+    public ISprite MapDisplay() => new IdleSprite(_regions["map-display"], _spriteBatch);
+    public ISprite HeadsUpHUD() => new IdleSprite(_regions["heads-up-hud"], _spriteBatch);
     public ISprite HeartFull() => new IdleSprite(_regions["heart-full"], _spriteBatch);
     public ISprite HeartHalf() => new IdleSprite(_regions["heart-half"], _spriteBatch);
-    public ISprite Map() => new IdleSprite(_regions["map"], _spriteBatch);
-    public ISprite ItemSlotA() => new IdleSprite(_regions["item-slot-a"], _spriteBatch);
-    public ISprite ItemSlotB() => new IdleSprite(_regions["item-slot-b"], _spriteBatch);
-    public ISprite Rupy() => new IdleSprite(_regions["rupy"], _spriteBatch);
-    public ISprite Key() => new IdleSprite(_regions["key"], _spriteBatch);
-    public ISprite Bomb() => new IdleSprite(_regions["bomb"], _spriteBatch);
+    public ISprite HeartEmpty() => new IdleSprite(_regions["heart-empty"], _spriteBatch);
+    public ISprite BlueFrame() => new IdleSprite(_regions["blue-frame"], _spriteBatch);
+    public ISprite NormalSword() => new IdleSprite(_regions["normal-sword"], _spriteBatch);
+    public ISprite Bow() => new IdleSprite(_regions["bow"], _spriteBatch);
+    public ISprite Digit(int digit) => new IdleSprite(_regions[digit.ToString()], _spriteBatch);
+    public ISprite Number(int number) => new NumberSprite(number, _spriteBatch, this);
 }

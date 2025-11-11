@@ -4,6 +4,7 @@ using ZweiHander.Graphics;
 using System;
 using ZweiHander.Graphics.SpriteStorages;
 using ZweiHander.CollisionFiles;
+using Microsoft.Xna.Framework.Content;
 
 namespace ZweiHander.Enemy.EnemyStorage;
 
@@ -41,11 +42,11 @@ public class BladeTrap : IEnemy
     readonly Random rnd = new();
 
 
-    public BladeTrap(EnemySprites enemySprites)
+    public BladeTrap(EnemySprites enemySprites,ContentManager sfxPlayer)
     {
         _enemySprites = enemySprites;
         Sprite = _enemySprites.Trap();
-        CollisionHandler = new EnemyCollisionHandler(this);
+        CollisionHandler = new EnemyCollisionHandler(this,sfxPlayer);
     }
     public virtual void Update(GameTime time)
     {

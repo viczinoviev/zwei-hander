@@ -2,14 +2,25 @@
 <TextureAtlas>
     <Texture>SpriteSheets/HUD</Texture>
     <Regions>
-        <Region name="heart-full" x="0" y="0" width="7" height="8" />
-        <Region name="heart-half" x="9" y="0" width="7" height="8" />
-        <Region name="map" x="0" y="48" width="128" height="80" />
-        <Region name="item-slot-a" x="64" y="0" width="18" height="29" />
-        <Region name="item-slot-b" x="32" y="0" width="18" height="29" />
-        <Region name="rupy" x="0" y="16" width="8" height="8" />
-        <Region name="key" x="0" y="32" width="8" height="8" />
-        <Region name="bomb" x="16" y="32" width="8" height="8" />
+        <Region name="inventory-display" x="0" y="0" width="256" height="88"/>
+        <Region name="map-display" x="0" y="96" width="256" height="88"/>
+        <Region name="heads-up-hud" x="0" y="192" width="256" height="56"/>
+        <Region name="heart-full" x="18" y="256" width="8" height="8" />
+        <Region name="heart-half" x="9" y="256" width="8" height="8" />
+        <Region name="heart-empty" x="0" y="256" width="8" height="8" />
+        <Region name="blue-frame" x="0" y="288" width="16" height="16"/>
+		<Region name="normal-sword" x="36" y="288" width="8" height="16"/>
+		<Region name="bow" x="114" y="288" width="8" height="16"/>
+		<Region name="0" x="0" y="272" width="8" height="8"/>
+		<Region name="1" x="9" y="272" width="8" height="8"/>
+		<Region name="2" x="18" y="272" width="8" height="8"/>
+		<Region name="3" x="27" y="272" width="8" height="8"/>
+		<Region name="4" x="36" y="272" width="8" height="8"/>
+		<Region name="5" x="45" y="272" width="8" height="8"/>
+		<Region name="6" x="54" y="272" width="8" height="8"/>
+		<Region name="7" x="63" y="272" width="8" height="8"/>
+		<Region name="8" x="72" y="272" width="8" height="8"/>
+		<Region name="9" x="81" y="272" width="8" height="8"/>
     </Regions>
     <Animations>
     </Animations>
