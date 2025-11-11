@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -10,9 +12,12 @@ using ZweiHander.Commands;
 using ZweiHander.Enemy;
 using ZweiHander.Enemy.EnemyStorage;
 using ZweiHander.Environment;
+using ZweiHander.GameStates;
 using ZweiHander.Graphics;
 using ZweiHander.Graphics.SpriteStorages;
+using ZweiHander.HUD;
 using ZweiHander.Items;
+using ZweiHander.Items.ItemStorages;
 using ZweiHander.Map;
 using ZweiHander.PlayerFiles;
 
@@ -20,11 +25,15 @@ namespace ZweiHander
 {
     public class Game1 : Game
     {
-    //Hey team!
-    // Hey hows it going?
+        //Hey team!
+        // Hey hows it going?
+        private IGameState _gameState;
+        public bool gamePaused = false;
+        public HUDManager HUDManager => _hudManager;
         readonly private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private Camera.Camera _camera;
+        private HUDManager _hudManager;
 
         private Player _gamePlayer;
         private KeyboardController _keyboardController;
@@ -32,8 +41,10 @@ namespace ZweiHander
         private HurtPlayerCommand _hurtPlayerCommand;
 
 
+
         //Sprites and factories
         private PlayerSprites _linkSprites;
+        private HUDSprites _hudSprites;
         private BlockSprites _blockSprites;
         private TreasureSprites _treasureSprites;
         private EnemySprites _enemySprites;
@@ -49,6 +60,8 @@ namespace ZweiHander
         private CsvAreaConstructor _areaConstructor;
 
         private Texture2D _debugPixel;
+        //Backround Song
+        private Song bgm;
 
         public Player GamePlayer => _gamePlayer;
 
@@ -68,6 +81,13 @@ namespace ZweiHander
 
         protected override void LoadContent()
         {
+            _gameState = new GameState();
+            Services.AddService<IGameState>(_gameState);
+
+            // if HUD needs to mirror pause state:
+            _gameState.PausedChanged += p => _hudManager.SetPaused(p);
+
+
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // Initialize camera
@@ -77,6 +97,7 @@ namespace ZweiHander
 
             // This line will load all of the sprites into the program through an xml file
             _linkSprites = new PlayerSprites(Content, _spriteBatch);
+            _hudSprites = new HUDSprites(Content, _spriteBatch);
             _blockSprites = new BlockSprites(Content, _spriteBatch);
             _treasureSprites = new TreasureSprites(Content, _spriteBatch);
             _itemSprites = new ItemSprites(Content, _spriteBatch);
@@ -84,7 +105,7 @@ namespace ZweiHander
             _bossSprites = new BossSprites(Content, _spriteBatch);
             _npcSprites = new NPCSprites(Content, _spriteBatch);
             
-            // Create separate manager instances for Game1's own use
+            // Create separate manager instances for Game1 use
             _blockFactory = new BlockFactory(32, _blockSprites, _linkSprites);
             _itemManager = new ItemManager(_itemSprites, _treasureSprites, _bossSprites);
             _projectileManager = new ItemManager(_itemSprites, _treasureSprites, _bossSprites);
@@ -95,6 +116,13 @@ namespace ZweiHander
 
             // Initialize debug texture for collision manager
             CollisionManager.Instance.InitializeDebugTexture(GraphicsDevice);
+            bgm = Content.Load<Song>("Audio/DungeonTheme");
+            if (MediaPlayer.State == MediaState.Playing)
+            {
+                MediaPlayer.Stop();
+            }
+            MediaPlayer.Play(bgm);
+            MediaPlayer.IsRepeating = true;
 
             GameSetUp();
         }
@@ -132,6 +160,9 @@ namespace ZweiHander
             _keyboardController.BindKey(Keys.R, new ResetCommand(this));
             _keyboardController.BindKey(Keys.Q, new QuitCommand(this));
             _keyboardController.BindKey(Keys.E, _hurtPlayerCommand);
+            _keyboardController.BindKey(Keys.I, new InventoryCommand(this));
+            // Initialize HUD Manager
+            _hudManager = new HUDManager(_gamePlayer, _hudSprites, gamePaused);
         }
 
         protected override void Update(GameTime gameTime)
@@ -152,12 +183,17 @@ namespace ZweiHander
             _camera.Update(gameTime, _gamePlayer.Position);
 
             base.Update(gameTime);
+            // Update HUD
+            _hudManager.Update(gameTime);
+
+                base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
+            // Draw world with camera transform
             _spriteBatch.Begin(
                 samplerState: SamplerState.PointClamp,
                 transformMatrix: _camera.GetTransformMatrix()

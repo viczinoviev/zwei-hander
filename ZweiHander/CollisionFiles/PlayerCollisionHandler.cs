@@ -54,6 +54,11 @@ namespace ZweiHander.CollisionFiles
                     itemHandler.Kill();
                 }
             }
+
+            if (other is EnemyCollisionHandler enemy)
+            {
+                _player.TakeDamage();
+            }
         }
 
         public override void UpdateCollisionBox()

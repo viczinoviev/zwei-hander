@@ -27,7 +27,7 @@ public interface IItem
     /// <summary>
     /// What type of item this is.
     /// </summary>
-    public ItemType ItemType { get; }
+    public Type ItemType { get; }
 
     /// <summary>
     /// Draws this item on screen.
@@ -40,6 +40,11 @@ public interface IItem
     /// </summary>
     /// <param name="gameTime">A snapshot of the game timing values provided by the framework.</param>
     public void Update(GameTime gameTime);
+
+    /// <summary>
+    /// What to do when phase changes; excludes death and Spawn. Uses new phase number.
+    /// </summary>
+    public void OnPhaseChange();
 
     /// <summary>
     /// Removes a property from the item, if it has it.
@@ -73,13 +78,6 @@ public interface IItem
     /// <param name="damaged">What is getting damaged.</param>
     /// <returns>How to damage what is being damaged.</returns>
     public DamageObject GetDamage(Type damaged);
-
-    /// <summary>
-    /// What to do when life reaches 0.
-    /// <para>WARNING: Should not be called itself; let ItemManager call this.</para>
-    /// </summary>
-    /// <param name="gameTime">A snapshot of the game timing values provided by the framework.</param>
-    public void OnDeath(GameTime gameTime);
 
     /// <summary>
     /// Whether this item needs to be deleted.

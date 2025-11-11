@@ -1,14 +1,20 @@
 ﻿using System.Collections.Generic;
 using ZweiHander.Graphics;
+using ZweiHander.Graphics.SpriteStorages;
 
 namespace ZweiHander.Items.ItemStorages;
+
+/// <summary>
+/// 2.5s life, animation
+/// </summary>
 public class FireItem : AbstractItem
 {
-    public FireItem(ItemConstructor itemConstructor, bool defaultProperties)
+    protected override double Life { get; set; } = 2.5;
+
+    public FireItem(ItemConstructor itemConstructor)
         : base(itemConstructor)
     {
-        if (defaultProperties)
-        {
-        }
+        Sprites = [itemConstructor.ItemSprites.FireProjectile()];
+        Setup(itemConstructor);
     }
 }

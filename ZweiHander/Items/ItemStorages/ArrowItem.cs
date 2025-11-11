@@ -1,24 +1,44 @@
 ﻿using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using ZweiHander.Graphics;
+using ZweiHander.Graphics.SpriteStorages;
 
 namespace ZweiHander.Items.ItemStorages;
+/// <summary>
+/// 2s life, spawns facing velocity, DeleteOnBlock, death sprite
+/// </summary>
 public class ArrowItem : AbstractItem
 {
-    public ArrowItem(ItemConstructor itemConstructor, bool defaultProperties)
+    protected override ItemProperty Properties { get; set; } = ItemProperty.DeleteOnBlock;
+
+    protected override double Life { get; set; } = 1.1;
+
+    protected override List<double> Phases { get; set; } = [0.1];
+
+    public ArrowItem(ItemConstructor itemConstructor)
         : base(itemConstructor)
     {
-        if (defaultProperties)
-        {
-            Properties = ItemProperty.DeleteOnBlock
-                | ItemProperty.DeleteOnEnemy;
-        }
-        DeathTime = 0.1;
+        Sprites = [itemConstructor.ItemSprites.Arrow(Velocity), itemConstructor.ItemSprites.ProjectileOnHit()];
+        Setup(itemConstructor);
     }
 
-    public override void OnDeath(GameTime gameTime)
+    public override void Update(GameTime gameTime)
     {
-        base.OnDeath(gameTime);
-        _spriteIndex = 1;
+        if (Phase == 0)
+        {
+            base.Update(gameTime);
+        } 
+        else
+        {
+            ProgressLife((float)gameTime.ElapsedGameTime.TotalSeconds);
+        }
+    }
+
+    public override void OnPhaseChange()
+    {
+        if (Phase == 1)
+        {
+            SpriteIndex = 1;
+        }
     }
 }

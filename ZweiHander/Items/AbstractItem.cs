@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using ZweiHander.CollisionFiles;
 using ZweiHander.Graphics;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
@@ -15,17 +16,17 @@ public abstract class AbstractItem : IItem
     /// <summary>
     /// The sprites associated with this item.
     /// </summary>
-    protected List<ISprite> _sprites;
+    protected List<ISprite> Sprites { get; set; }
 
     /// <summary>
     /// Current sprite index.
     /// </summary>
-    protected int _spriteIndex = 0;
+    protected int SpriteIndex { get; set; } = 0;
 
     /// <summary>
     /// Number of sprites this item has.
     /// </summary>
-    protected int SpriteCount { get => _sprites.Count; }
+    protected int SpriteCount { get => Sprites.Count; }
 
     /// <summary>
     /// The manager this item is stored in.
@@ -33,32 +34,35 @@ public abstract class AbstractItem : IItem
     protected ItemManager _manager;
 
     /// <summary>
-    /// What type of item this is.
+    /// The type of item this is.
     /// </summary>
-    protected ItemType _itemType;
-
-    public ItemType ItemType { get => _itemType; }
+    public Type ItemType { get => this.GetType(); }
 
     /// <summary>
     /// The current sprite.
     /// </summary>
-    protected ISprite Sprite { get => _sprites[_spriteIndex]; }
+    protected ISprite Sprite { get => Sprites[SpriteIndex]; }
 
-    public Vector2 Position { get; set; } = default;
+    public Vector2 Position { get; set; }= Vector2.Zero;
 
-    public Vector2 Velocity { get; set; } = default;
+    public Vector2 Velocity { get; set; }
 
-    public Vector2 Acceleration { get; set; } = default;
+    public Vector2 Acceleration { get; set; }
 
     /// <summary>
     /// The lifetime (in seconds) left for item; negative means infinite.
     /// </summary>
-    protected double Life { get; set; }
+    protected virtual double Life { get; set; } = -1f;
 
     /// <summary>
-    /// The time (in seconds) to spend dying.
+    /// Thresholds for switching phases; excludes spawn and death.
     /// </summary>
-    protected double DeathTime { get; set; } = 0.00001;
+    protected virtual List<double> Phases { get; set; } = [];
+
+    /// <summary>
+    /// Current phase, starting from 0.
+    /// </summary>
+    protected int Phase { get; set; } = 0;
 
     /// <summary>
     /// Handles the collisions for this item.
@@ -68,7 +72,7 @@ public abstract class AbstractItem : IItem
     /// <summary>
     /// The properties this item has.
     /// </summary>
-    protected ItemProperty Properties { get; set; } = 0x0;
+    protected virtual ItemProperty Properties { get; set; } = 0x0;
 
     /// <summary>
     /// How to damage different object types.
@@ -77,31 +81,35 @@ public abstract class AbstractItem : IItem
 
     public AbstractItem(ItemConstructor itemConstructor)
     {
-        _sprites = itemConstructor.Sprites;
         _manager = itemConstructor.Manager;
-        _itemType = itemConstructor.ItemType;
-        Life = itemConstructor.Life;
+        if (itemConstructor.Life != 0) Life = itemConstructor.Life;
+        if (itemConstructor.Phases.Count != 0) Phases = itemConstructor.Phases;
+        Position = itemConstructor.Position;
+        Velocity = itemConstructor.Velocity;
+        Acceleration = itemConstructor.Acceleration;
+        if (itemConstructor.UseDefaultProperties) Properties |= itemConstructor.AdditionalProperties;
+        else Properties = itemConstructor.AdditionalProperties;
+    }
+
+    /// <summary>
+    /// Final step in each item's constructor.
+    /// </summary>
+    /// <param name="itemConstructor"></param>
+    protected void Setup(ItemConstructor itemConstructor)
+    {
         CollisionHandler = new ItemCollisionHandler(this);
     }
 
     public virtual void Update(GameTime time)
     {
         float dt = (float)time.ElapsedGameTime.TotalSeconds;
-
         // Life progression
-        if (Life > 0)
+        ProgressLife(dt);
+        if (IsDead())
         {
-            Life -= dt;
-            if (Life < 0)
-            {
-                Life = 0;
-            }
-        }
-
-        if (Life == 0){
-            OnDeath(time);
+            CollisionHandler.Dead = true;
             return;
-        }
+        } 
 
         // Movement
         if (!HasProperty(ItemProperty.Stationary))
@@ -124,9 +132,34 @@ public abstract class AbstractItem : IItem
         Sprite.Draw(Position);
     }
 
+    /// <summary>
+    /// Progresses this item's life.
+    /// </summary>
+    /// <param name="dt">Time that has passed.</param>
+    protected void ProgressLife(float dt)
+    {
+        if (Life > 0)
+        {
+            Life -= dt;
+            if (Life < 0)
+            {
+                Life = 0;
+            }
+            if (Phase < Phases.Count && Life <= Phases[Phase])
+            {
+                Phase++;
+                OnPhaseChange();
+            }
+        }
+    }
+
+    public virtual void OnPhaseChange()
+    {
+    }
+
     public void RemoveProperty(ItemProperty property)
     {
-        Properties |= property;
+        Properties &= ~property;
     }
 
     public void AddProperty(ItemProperty property)
@@ -149,39 +182,22 @@ public abstract class AbstractItem : IItem
         return Damage[damaged];
     }
 
-    public virtual void OnDeath(GameTime gameTime)
-    {
-        DeathTime -= gameTime.ElapsedGameTime.TotalSeconds;
-        if (IsDead())
-        {
-            CollisionHandler.Dead = true;
-        }
-    }
-
-    public void UnsubscribeFromCollisions()
-    {
-        if (CollisionHandler != null)
-        {
-            CollisionManager.Instance.RemoveCollider(CollisionHandler);
-        }
-    }
-
     public bool IsDead()
     {
-        return DeathTime <= 0;
+        return Life == 0;
     }
 
     public void Kill()
     {
         Life = 0;
-        DeathTime = 0;
     }
 
     public Rectangle GetHitBox()
     {
+        // I will be honest, I do not know why using this as the topleft works
         return new Rectangle(
-                (int) Position.X,
-                (int)Position.Y,
+                (int) Position.X - Sprite.Width / 2,
+                (int)Position.Y - Sprite.Height / 2,
                 Sprite.Width,
                 Sprite.Height
             );

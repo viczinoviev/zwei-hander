@@ -13,14 +13,179 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin Maps/map1.csv
-/copy:Maps/map1.csv
+#begin Audio/Great Awesome Majestic Epic Music.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Great Awesome Majestic Epic Music.mp3;Audio/DungeonTheme.mp3
 
-#begin Maps/map2.csv
-/copy:Maps/map2.csv
+#begin Audio/Sound Effect (1).wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound Effect (1).wav
 
-#begin Maps/newDungeon1.csv
-/copy:Maps/newDungeon1.csv
+#begin Audio/Sound Effect (10).wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound Effect (10).wav
+
+#begin Audio/Sound Effect (11).wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound Effect (11).wav
+
+#begin Audio/Sound Effect (12).wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound Effect (12).wav
+
+#begin Audio/Sound Effect (13).wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound Effect (13).wav
+
+#begin Audio/Sound Effect (14).wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound Effect (14).wav
+
+#begin Audio/Sound Effect (15).wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound Effect (15).wav
+
+#begin Audio/Sound Effect (16).wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound Effect (16).wav
+
+#begin Audio/Sound Effect (17).wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound Effect (17).wav
+
+#begin Audio/Sound Effect (18).wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound Effect (18).wav
+
+#begin Audio/Sound Effect (19).wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound Effect (19).wav
+
+#begin Audio/Sound Effect (2).wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound Effect (2).wav
+
+#begin Audio/Sound Effect (20).wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound Effect (20).wav
+
+#begin Audio/Sound Effect (21).wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound Effect (21).wav
+
+#begin Audio/Sound Effect (22).wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound Effect (22).wav
+
+#begin Audio/Sound Effect (23).wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound Effect (23).wav
+
+#begin Audio/Sound Effect (24).wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound Effect (24).wav
+
+#begin Audio/Sound Effect (25).wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound Effect (25).wav
+
+#begin Audio/Sound Effect (26).wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound Effect (26).wav
+
+#begin Audio/Sound Effect (27).wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound Effect (27).wav
+
+#begin Audio/Sound Effect (28).wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound Effect (28).wav
+
+#begin Audio/Sound Effect (3).wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound Effect (3).wav;Audio/Hurt.wav
+
+#begin Audio/Sound Effect (4).wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound Effect (4).wav
+
+#begin Audio/Sound Effect (5).wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound Effect (5).wav
+
+#begin Audio/Sound Effect (6).wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound Effect (6).wav;Audio/SwordAttack.wav
+
+#begin Audio/Sound Effect (7).wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound Effect (7).wav
+
+#begin Audio/Sound Effect (8).wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound Effect (8).wav
+
+#begin Audio/Sound Effect (9).wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound Effect (9).wav
 
 #begin SpriteSheets/BlockDefinition.xml
 /copy:SpriteSheets/BlockDefinition.xml
@@ -78,6 +243,21 @@
 
 #begin SpriteSheets/EnemyDefinition.xml
 /copy:SpriteSheets/EnemyDefinition.xml
+
+#begin SpriteSheets/HUD.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:SpriteSheets/HUD.png
+
+#begin SpriteSheets/HUDDefinition.xml
+/copy:SpriteSheets/HUDDefinition.xml
 
 #begin SpriteSheets/Link.png
 /importer:TextureImporter

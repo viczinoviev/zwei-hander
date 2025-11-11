@@ -2,6 +2,10 @@ using Microsoft.Xna.Framework;
 using ZweiHander.Enemy;
 using ZweiHander.PlayerFiles;
 using ZweiHander.Items;
+using Microsoft.Xna.Framework.Audio;
+using System.Net.Mime;
+using Microsoft.Xna.Framework.Content;
+using System;
 
 namespace ZweiHander.CollisionFiles
 {
@@ -11,9 +15,12 @@ namespace ZweiHander.CollisionFiles
         /// The enemy this handler manages
         /// </summary>
         public readonly IEnemy _enemy;
-        public EnemyCollisionHandler(IEnemy enemy)
+
+        private SoundEffect enemyHurt;
+        public EnemyCollisionHandler(IEnemy enemy,ContentManager sfxPlayer)
         {
             _enemy = enemy;
+            enemyHurt = sfxPlayer.Load<SoundEffect>("Audio/Hurt");
             UpdateCollisionBox();
         }
 
@@ -34,7 +41,9 @@ namespace ZweiHander.CollisionFiles
                 //If the item can hurt enemies, hurt the enemy.
                 if (itemCollisionHandler.HasProperty(ItemProperty.CanDamageEnemy))
                 {
+                    enemyHurt.Play();
                     _enemy.Hitpoints -= 5;
+                    
                     //if the enemy has died, set this handler to be removed
                     if (_enemy.Hitpoints <= 0)
                     {
@@ -49,6 +58,7 @@ namespace ZweiHander.CollisionFiles
                 if (playerCollisionHandler._player.CurrentState == PlayerState.Attacking)
                 {
                     _enemy.Hitpoints -= 5;
+                    enemyHurt.Play();
                     //if the enemy has died, set this handler to be removed
                     if (_enemy.Hitpoints <= 0)
                     {

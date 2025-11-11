@@ -1,15 +1,20 @@
 ﻿using System.Collections.Generic;
 using ZweiHander.Graphics;
+using ZweiHander.Graphics.SpriteStorages;
 
 namespace ZweiHander.Items.ItemStorages;
+
+/// <summary>
+/// Infinite life, collectable
+/// </summary>
 public class BluePotionItem : AbstractItem
 {
-    public BluePotionItem(ItemConstructor itemConstructor, bool defaultProperties)
+    protected override ItemProperty Properties { get; set; } = ItemProperty.Collectable;
+
+    public BluePotionItem(ItemConstructor itemConstructor)
         : base(itemConstructor)
     {
-        if (defaultProperties)
-        {
-            Properties = ItemProperty.Collectable;
-        }
+        Sprites = [itemConstructor.TreasureSprites.PotionBlue()];
+        Setup(itemConstructor);
     }
 }

@@ -4,6 +4,7 @@ using ZweiHander.Graphics;
 using System;
 using ZweiHander.Graphics.SpriteStorages;
 using ZweiHander.CollisionFiles;
+using Microsoft.Xna.Framework.Content;
 
 namespace ZweiHander.Enemy.EnemyStorage;
 
@@ -32,11 +33,11 @@ public class Stalfos : IEnemy
     readonly Random rnd = new();
 
 
-    public Stalfos(EnemySprites enemySprites)
+    public Stalfos(EnemySprites enemySprites,ContentManager sfxPlayer)
     {
         _enemySprites = enemySprites;
         Sprite = _enemySprites.Stalfos();
-        CollisionHandler = new EnemyCollisionHandler(this);
+        CollisionHandler = new EnemyCollisionHandler(this,sfxPlayer);
     }
     public virtual void Update(GameTime time)
     {

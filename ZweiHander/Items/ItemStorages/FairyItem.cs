@@ -1,25 +1,31 @@
 ﻿using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using ZweiHander.Graphics;
+using ZweiHander.Graphics.SpriteStorages;
 
 namespace ZweiHander.Items.ItemStorages;
+
+/// <summary>
+/// Infinite life, animation, CanBePickedUp, hovers
+/// </summary>
 public class FairyItem : AbstractItem
 {
-    private Vector2 _startingPosition;
-    public FairyItem(ItemConstructor itemConstructor, bool defaultProperties, Vector2 startingPosition)
+    protected Vector2 StartingPosition {  get; set; }
+
+    protected override ItemProperty Properties { get; set; } = ItemProperty.CanBePickedUp;
+
+    public FairyItem(ItemConstructor itemConstructor)
         : base(itemConstructor)
     {
-        if (defaultProperties)
-        {
-            Properties = ItemProperty.CanBePickedUp;
-        }
-        _startingPosition = startingPosition;
+        Sprites = [itemConstructor.TreasureSprites.Fairy()];
+        StartingPosition = Position;
+        Setup(itemConstructor);
     }
 
     public override void Update(GameTime gameTime)
     {
         // Hard coded frequency for now
-        Acceleration = 5.0f * (_startingPosition - Position);
+        Acceleration = 5.0f * (StartingPosition - Position);
         base.Update(gameTime);
     }
 }

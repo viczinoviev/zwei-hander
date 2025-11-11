@@ -1,10 +1,12 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ZweiHander.Graphics;
 using ZweiHander.Graphics.SpriteStorages;
 using ZweiHander.Items;
+using ZweiHander.Items.ItemStorages;
 
 namespace ZweiHander.PlayerFiles
 {
@@ -18,7 +20,12 @@ namespace ZweiHander.PlayerFiles
         private float _damageTimer;
         private const float DAMAGE_DURATION = 1.0f; // How long the damage state lasts
 
-        public Dictionary<ItemType, int> Inventory { get; private set; } = new Dictionary<ItemType, int>();
+        // Health system (measured in half-hearts: 1 = half heart, 2 = full heart)
+        private int _currentHealth;
+        private int _maxHealth;
+        private const int STARTING_HEARTS = 3; // 3 hearts = 6 half-hearts
+
+        public Dictionary<Type, int> Inventory { get; private set; } = new Dictionary<Type, int>();
 
         public Vector2 Position
         {
@@ -29,6 +36,15 @@ namespace ZweiHander.PlayerFiles
             }
         }
 
+        /// <summary>
+        /// Current health in # of half-hearts (1 = half heart, 2 = full heart)
+        /// </summary>
+        public int CurrentHealth => _currentHealth;
+
+        /// <summary>
+        /// Maximum health in # of half-hearts
+        /// </summary>
+        public int MaxHealth => _maxHealth;
 
         public HashSet<PlayerInput> InputBuffer { get; private set; } = [];
         public PlayerState CurrentState => _stateMachine.CurrentState;
@@ -47,6 +63,11 @@ namespace ZweiHander.PlayerFiles
             _handler = new PlayerHandler(playerSprites, this, _stateMachine);
             _stateMachine.SetPlayerHandler(_handler);
             Position = Vector2.Zero;
+
+            // Initialize health (3 hearts = 6 half-hearts)
+            _maxHealth = STARTING_HEARTS * 2;
+            _currentHealth = _maxHealth;
+            Inventory[typeof(BombItem)] = 10;
         }
 
         public void Update(GameTime gameTime)
@@ -78,7 +99,7 @@ namespace ZweiHander.PlayerFiles
             InputBuffer.Clear();
         }
 
-        public void addItemToInventory(ItemType itemType)
+        public void addItemToInventory(Type itemType)
         {
             if (Inventory.ContainsKey(itemType))
             {
@@ -90,7 +111,7 @@ namespace ZweiHander.PlayerFiles
             }
         }
 
-        public void removeItemFromInventory(ItemType itemType)
+        public void removeItemFromInventory(Type itemType)
         {
             if (Inventory.ContainsKey(itemType) && Inventory[itemType] > 0)
             {
@@ -101,7 +122,7 @@ namespace ZweiHander.PlayerFiles
         /// <summary>
         /// Attempts to damage the player. Returns true if damage was applied, false if player is already in damaged state.
         /// </summary>
-        public bool TakeDamage()
+        public bool TakeDamage(int damage = 1)
         {
             // Player is invulnerable while already damaged
             if (_isDamaged)
@@ -109,9 +130,27 @@ namespace ZweiHander.PlayerFiles
                 return false;
             }
 
+            _currentHealth = System.Math.Max(0, _currentHealth - damage);
             _isDamaged = true;
             _damageTimer = DAMAGE_DURATION;
             return true;
+        }
+
+        /// <summary>
+        /// Heals the player by the specified amount
+        /// </summary>
+        public void Heal(int amount)
+        {
+            _currentHealth = System.Math.Min(_maxHealth, _currentHealth + amount);
+        }
+
+        /// <summary>
+        /// Increases maximum health (e.g., from heart containers)
+        /// </summary>
+        public void IncreaseMaxHealth(int amount)
+        {
+            _maxHealth += amount;
+            _currentHealth += amount; // Also heal when getting heart container
         }
 
         public void SetPositionFromCollision(Vector2 newPosition)
