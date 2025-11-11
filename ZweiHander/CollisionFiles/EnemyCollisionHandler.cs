@@ -81,7 +81,7 @@ namespace ZweiHander.CollisionFiles
         public override void UpdateCollisionBox()
         {
             //Get the collision box for the specific enemy
-            CollisionBox = _enemy.GetCollisionBox();
+            collisionBox = _enemy.GetCollisionBox();
         }
     }
 }

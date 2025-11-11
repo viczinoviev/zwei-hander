@@ -102,4 +102,9 @@ public interface IItem
     /// <param name="other">What is being collided with.</param>
     /// <param name="collisionInfo">Info related to the collision.</param>
     public void HandleCollision(ICollisionHandler other, CollisionInfo collisionInfo);
+
+    /// <summary>
+    /// Collision handler for this item.
+    /// </summary>
+    public ItemCollisionHandler CollisionHandler { get; set; }
 }

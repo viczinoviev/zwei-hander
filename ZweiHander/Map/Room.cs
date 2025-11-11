@@ -1,62 +1,109 @@
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
+using ZweiHander.Environment;
+using ZweiHander.Enemy;
+using ZweiHander.Items;
+using ZweiHander.CollisionFiles;
 
 namespace ZweiHander.Map
 {
-    /// <summary>
-    /// Represents the room in the game's dungeon
-    /// </summary>
     public class Room
     {
-        /// <summary>
-        /// Standard width of a room
-        /// </summary>
-        public const int ROOM_WIDTH = 512;
-
-        /// <summary>
-        /// Standard height of a room
-        /// </summary>
-        public const int ROOM_HEIGHT = 320;
-
-        /// <summary>
-        /// top-left position of this room
-        /// </summary>
+        public int RoomNumber { get; }
         public Vector2 Position { get; }
-
-        /// <summary>
-        /// width and height of this room
-        /// </summary>
         public Vector2 Size { get; }
+        public bool IsLoaded { get; set; }
 
-        /// <summary>
-        /// Bounding rectangle of this room
-        /// </summary>
+        // Stored data for recreation
+        private readonly List<(BlockName blockName, Point gridPosition)> _blockData;
+        private readonly List<(BorderName borderName, Vector2 position)> _borderData;
+        private readonly List<(string enemyName, Vector2 position)> _enemyData;
+        private readonly List<(ItemType itemType, Vector2 position)> _itemData;
+        private readonly List<(int portalId, Vector2 position)> _portalData;
+        
+        private readonly Universe _universe;
         private Rectangle Bounds;
 
-        /// <summary>
-        /// Creates a new Room
-        /// </summary>
-        /// <param name="position">Top-left position of the room</param>
-        /// <param name="size">width and height of the room</param>
-        public Room(Vector2 position, Vector2 size)
+        public Room(int roomNumber, Vector2 position, Vector2 size, Universe universe)
         {
+            RoomNumber = roomNumber;
             Position = position;
             Size = size;
-            Bounds = new Rectangle(
-                (int)position.X,
-                (int)position.Y,
-                (int)size.X,
-                (int)size.Y
-            );
+            Bounds = new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
+            
+            _universe = universe;
+            
+            _blockData = new List<(BlockName, Point)>();
+            _borderData = new List<(BorderName, Vector2)>();
+            _enemyData = new List<(string, Vector2)>();
+            _itemData = new List<(ItemType, Vector2)>();
+            _portalData = new List<(int, Vector2)>();
         }
 
-        /// <summary>
-        /// Checks if a given position is inside the room
-        /// </summary>
-        /// <param name="position">Position to check</param>
-        /// <returns>True if the position is within the room bounds</returns>
-        public bool Contains(Vector2 position)
+        public void AddBlock(BlockName blockName, Point gridPosition)
         {
-            return Bounds.Contains(position);
+            _blockData.Add((blockName, gridPosition));
         }
+        
+        public void AddBorder(BorderName borderName, Vector2 position)
+        {
+            _borderData.Add((borderName, position));
+        }
+        
+        public void AddEnemy(string enemyName, Vector2 position)
+        {
+            _enemyData.Add((enemyName, position));
+        }
+        
+        public void AddItem(ItemType itemType, Vector2 position)
+        {
+            _itemData.Add((itemType, position));
+        }
+        
+        public void AddPortal(int portalId, Vector2 position)
+        {
+            _portalData.Add((portalId, position));
+        }
+
+        public IEnumerable<(int portalId, Vector2 position)> GetPortalData() => _portalData;
+
+        public void Load()
+        {
+            IsLoaded = true;
+            
+            // Create fresh instances - collision handlers auto-register in their constructors
+            foreach (var (blockName, gridPosition) in _blockData)
+            {
+                _universe.BlockFactory.CreateBlock(blockName, gridPosition);
+            }
+            
+            foreach (var (borderName, position) in _borderData)
+            {
+                _universe.BorderFactory.CreateBorder(borderName, position);
+            }
+            
+            foreach (var (enemyName, position) in _enemyData)
+            {
+                _universe.EnemyManager.GetEnemy(enemyName, position);
+            }
+            
+            foreach (var (itemType, position) in _itemData)
+            {
+                _universe.ItemManager.GetItem(itemType, position: position);
+            }
+            
+            // Create portals from data
+            foreach (var (portalId, position) in _portalData)
+            {
+                RoomPortal portal = _universe.PortalManager.CreatePortal(portalId, position, this, _universe.CurrentArea);
+                portal.OnRoomLoad();
+            }
+            
+            // Debug: Print all colliders after room loads
+            System.Console.WriteLine($"Room {RoomNumber} loaded:");
+            CollisionManager.Instance.PrintAllColliders();
+        }
+
+        public bool Contains(Vector2 position) => Bounds.Contains(position);
     }
 }

@@ -25,5 +25,7 @@ namespace ZweiHander.PlayerFiles
         void Attack();
         void Idle();
         void Draw(SpriteBatch spriteBatch);
+
+        void ForceUpdateCollisionBox();
     }
 }

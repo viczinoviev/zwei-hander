@@ -17,6 +17,9 @@ namespace ZweiHander.CollisionFiles
 		/// </summary>
 		readonly private List<ICollisionHandler> colliders = [];
 
+		public bool ShowDebugCollisionBoxes { get; set; } = false;
+		private Texture2D _debugTexture;
+
 		private CollisionManager() { }
 
 		// Gets the one and only collision manager
@@ -49,7 +52,7 @@ namespace ZweiHander.CollisionFiles
 			// Remove empty colliders
 			for (int i = colliders.Count - 1; i >= 0; i--)
 			{
-				if (colliders[i].Dead == true)
+				if (colliders[i].Dead == true || colliders[i] == null)
 				{
 					colliders.RemoveAt(i);
 				}
@@ -60,10 +63,12 @@ namespace ZweiHander.CollisionFiles
 			{
 				for (int j = i + 1; j < colliders.Count; j++)
 				{
-					if (colliders[i].CollisionBox.Intersects(colliders[j].CollisionBox))
+				
+					if (colliders[i].collisionBox.Intersects(colliders[j].collisionBox))
 					{
-						CollisionInfo collisionInfoI = CalculateCollisionInfo(colliders[i].CollisionBox, colliders[j].CollisionBox);
-						CollisionInfo collisionInfoJ = CalculateCollisionInfo(colliders[j].CollisionBox, colliders[i].CollisionBox);
+						CollisionInfo collisionInfoI = CalculateCollisionInfo(colliders[i].collisionBox, colliders[j].collisionBox);
+						CollisionInfo collisionInfoJ = CalculateCollisionInfo(colliders[j].collisionBox, colliders[i].collisionBox);
+
 						colliders[i].OnCollision(colliders[j], collisionInfoI);
 						colliders[j].OnCollision(colliders[i], collisionInfoJ);
 					}
@@ -71,13 +76,8 @@ namespace ZweiHander.CollisionFiles
 			}
 		}
 
-		/// <summary>
-		/// Figures out collision details like which direction to push things
-		/// </summary>
-		/// <param name="movingRect">What is causing the collision</param>
-		/// <param name="staticRect">What is being collided with</param>
-		/// <returns>The information about this collision</returns>
-		private static CollisionInfo CalculateCollisionInfo(Rectangle movingRect, Rectangle staticRect)
+		// Figures out collision details like which direction to push things
+		private CollisionInfo CalculateCollisionInfo(Rectangle movingRect, Rectangle staticRect)
 		{
 			Rectangle intersection = Rectangle.Intersect(movingRect, staticRect);
 			Vector2 intersectionCenter = new (
@@ -134,6 +134,59 @@ namespace ZweiHander.CollisionFiles
 			if (collider != null && colliders.Contains(collider))
 			{
 				colliders.Remove(collider);
+			}
+		}
+
+		public void ClearAllColliders()
+		{
+			colliders.Clear();
+		}
+
+		public void RemoveDeadColliders()
+		{
+			// Remove null or dead colliders
+			for (int i = colliders.Count - 1; i >= 0; i--)
+			{
+				if (colliders[i] == null || colliders[i].Dead)
+				{
+					colliders.RemoveAt(i);
+				}
+			}
+		}
+
+		public void PrintAllColliders()
+		{
+			System.Console.WriteLine($"=== CollisionManager has {colliders.Count} colliders ===");
+			foreach (var collider in colliders)
+			{
+				string type = collider.GetType().Name;
+				System.Console.WriteLine($"  - {type} at {collider.collisionBox}");
+			}
+		}
+
+		public void InitializeDebugTexture(GraphicsDevice graphicsDevice)
+		{
+			if (_debugTexture == null)
+			{
+				_debugTexture = new Texture2D(graphicsDevice, 1, 1);
+				_debugTexture.SetData(new[] { Color.White });
+			}
+		}
+
+
+		public void DrawDebugCollisionBoxes(SpriteBatch spriteBatch)
+		{
+			if (!ShowDebugCollisionBoxes || _debugTexture == null)
+				return;
+
+			Color debugColor = Color.Red * 0.5f;
+
+			foreach (var collider in colliders)
+			{
+				if (collider == null || collider.Dead)
+					continue;
+
+				spriteBatch.Draw(_debugTexture, collider.collisionBox, debugColor);
 			}
 		}
 

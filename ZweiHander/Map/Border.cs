@@ -1,35 +1,109 @@
-﻿using Microsoft.VisualBasic;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.IO;
+using ZweiHander.CollisionFiles;
 using ZweiHander.Graphics;
 
-namespace ZweiHander.Map
+namespace ZweiHander.Environment
 {
     public class Border
     {
-        private WallName _name;
-        WallType _wallType;
-        private Vector2 _position;
-        private ISprite _sprite;
+        private BorderType _borderType;
+        private readonly Vector2 _position; // Upper-left corner position (covers 2x2 grid cells)
+        private readonly int _tileSize; // 32 pixels
         private bool collision = true;
-        public Border(WallName name, WallType type, Vector2 position, ISprite sprite)
+
+        private ISprite _sprite;
+        private readonly List<BlockCollisionHandler> _collisionHandlers;
+
+        public BorderType BorderType => _borderType;
+        public BorderName Name { get; private set; }
+        
+        public Border(BorderName name, BorderType borderType, Vector2 position, int tileSize, ISprite sprite)
         {
-            _name = name;
-            _wallType = type;
-            _position = position;  
+            Name = name;
+            _borderType = borderType;
+            _position = position;
+            _tileSize = tileSize;
             _sprite = sprite;
+            _collisionHandlers = new List<BlockCollisionHandler>();
+
+            // Create collision handlers based on border type
+            if (IsCollidable())
+            {
+                CreateCollisionHandlers();
+            }
         }
+
+        private void CreateCollisionHandlers()
+        {
+            int x = (int)_position.X;
+            int y = (int)_position.Y;
+
+            switch (_borderType)
+            {
+                case BorderType.Solid:
+                    _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x-32, y-32, 64, 64)));
+                    break;
+
+                case BorderType.EntranceLeft:
+                    _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x-32, y-32, 64, 16)));      // Top-left corner
+                    _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x-32, y + 16, 64, 16))); // Bottom-left corner
+                    _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x, y-16, 32, 32))); // Right side
+                    break;
+
+                case BorderType.EntranceRight:
+                    _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x - 32, y - 32, 64, 16))); 
+                    _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x - 32, y + 16, 64, 16)));
+                    _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x - 32, y - 16, 32, 32))); 
+                    break;
+
+                case BorderType.EntranceUp:
+                    _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x - 32, y -32, 16, 64)));
+                    _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x+16, y -32, 16, 64)));
+                    _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x -16, y - 32, 32, 32)));
+                    break;
+
+                case BorderType.EntranceDown:
+                    _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x - 32, y -32, 16, 64)));
+                    _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x+16, y -32, 16, 64)));
+                    _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x -16, y, 32, 32)));
+                    break;
+            }
+        }
+
+        public void UnsubscribeFromCollisions()
+        {
+            foreach (var handler in _collisionHandlers)
+            {
+                CollisionManager.Instance.RemoveCollider(handler);
+            }
+        }
+
+        // Returns the position for drawing (upper-left corner)
+        public Vector2 GetPosition()
+        {
+            return _position;
+        }
+
         public void Draw()
         {
             _sprite.Draw(_position);
         }
+
+        public void Update(GameTime gameTime)
+        {
+            _sprite.Update(gameTime);
+        }
+
+        // Determines if the border should be collidable
         public bool IsCollidable()
         {
-            // Decorative blocks do not collide
-            if (_wallType == WallType.Decorative) { collision = false; }
+            // Decorative borders do not collide
+            if (_borderType == BorderType.Decorative) { collision = false; }
             return collision;
         }
     }
 }
+

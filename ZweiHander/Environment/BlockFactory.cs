@@ -122,5 +122,14 @@ namespace ZweiHander.Environment
                 _block.Draw();
             }
         }
+
+        public void Clear()
+        {
+            foreach (Block block in BlockMap)
+            {
+                block.UnsubscribeFromCollisions();
+            }
+            BlockMap.Clear();
+        }
     }
 }
