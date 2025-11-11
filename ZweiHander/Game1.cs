@@ -205,6 +205,13 @@ namespace ZweiHander
             _universe.Draw();
             _projectileManager.Draw();
             _gamePlayer.Draw(_spriteBatch);
+            _spriteBatch.End();
+
+            // Draw HUD without camera transform (fixed to screen)
+            _spriteBatch.Begin(
+                samplerState: SamplerState.PointClamp
+            );
+            _hudManager.Draw(_spriteBatch);
 
             DrawDebugGrid();
             
