@@ -56,7 +56,7 @@ public abstract class AbstractSprite : ISprite
         // Default implementation: No op
     }
 
-    public void Draw(Vector2 position)
+    public virtual void Draw(Vector2 position)
     {
         _region.Draw(_spriteBatch, position, Color, Rotation, Origin, Scale, Effects, LayerDepth);
     }

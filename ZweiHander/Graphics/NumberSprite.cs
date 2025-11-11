@@ -26,15 +26,16 @@ public class NumberSprite : AbstractSprite
         {
             CumWidth += _sprites[c].Width;
         }
-        int startWidth = centered ? (_sprites['0'].Width - CumWidth) / 2 : 0;
+        int startWidth = centered ? (_sprites['0'].Width - CumWidth) : 0;
+        _relativePositions = [];
         foreach (char c in _number)
         {
             _relativePositions.Add(new(startWidth, 0));
-            startWidth += _sprites['0'].Width;
+            startWidth += _sprites['0'].Width * 2;
         }
     }
 
-    public new void Draw(Vector2 position)
+    public override void Draw(Vector2 position)
     {
         for (int i = 0; i < _number.Length; i++)
         {
