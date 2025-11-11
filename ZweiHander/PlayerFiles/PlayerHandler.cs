@@ -219,12 +219,17 @@ namespace ZweiHander.PlayerFiles
             }
             else if (itemInput == PlayerInput.UsingItem3)
             {
-                _player.ItemManager.GetItem<BombItem>(
-                    life: 1.5f,
-                    position: itemPosition + _stateMachine.LastDirection * 30f,
-                    velocity: Vector2.Zero,
-                    acceleration: Vector2.Zero
-                );
+                if (_player.Inventory[typeof(BombItem)] > 0)
+                {
+                    _player.ItemManager.GetItem<BombItem>(
+                        life: 1.5f,
+                        position: itemPosition + _stateMachine.LastDirection * 30f,
+                        velocity: Vector2.Zero,
+                        acceleration: Vector2.Zero
+                    );
+                    _player.Inventory[typeof(BombItem)]--;
+                }
+                
             }
             else
             {

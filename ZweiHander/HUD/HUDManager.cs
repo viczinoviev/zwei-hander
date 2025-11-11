@@ -56,15 +56,15 @@ namespace ZweiHander.HUD
 
             if (!_paused)//normal game state
             {
-                _headsUpHud = new HeadsUpHUD(_hudSprites, new Vector2(screen_center_x, HEADS_UP_HUD_Y));
+                _headsUpHud = new HeadsUpHUD(_hudSprites, new Vector2(screen_center_x, HEADS_UP_HUD_Y), _player);
                 HUD_HEIGHT = 112;
                 HEALTH_DISPLAY_Y = 72;
             }
             else//paused game state
             {
-                _inventoryHUD = new InventoryHUD(_hudSprites, new Vector2(screen_center_x, HEADS_UP_HUD_Y), _player);
+                _inventoryHUD = new InventoryHUD(_hudSprites, new Vector2(screen_center_x, HEADS_UP_HUD_Y), (Player) _player);
                 _mapHUD = new MapHUD(_hudSprites, new Vector2(screen_center_x, 245));
-                _headsUpHud = new HeadsUpHUD(_hudSprites, new Vector2(screen_center_x, 380));
+                _headsUpHud = new HeadsUpHUD(_hudSprites, new Vector2(screen_center_x, 380), _player);
                 HEALTH_DISPLAY_Y = 396;
                 HUD_HEIGHT = 1000;
                 _components.Add(_inventoryHUD);

@@ -13,10 +13,12 @@ public class NumberSprite : AbstractSprite
     private List<Vector2> _relativePositions;
     public int CumWidth;
     public int CumHeight { get => _sprites['0'].Height; }
-    public NumberSprite(int number, SpriteBatch spriteBatch, HUDSprites hudSprites, bool centered = true)
+    private int Digits;
+    public NumberSprite(int number, SpriteBatch spriteBatch, HUDSprites hudSprites, int digits = -1, bool centered = true)
     {
         _spriteBatch = spriteBatch;
         _sprites = [];
+        Digits = digits;
         for (int i = 0; i < 10; i++)
         {
             _sprites[i.ToString()[0]] = hudSprites.Digit(i);
@@ -27,6 +29,10 @@ public class NumberSprite : AbstractSprite
     public void SetNumber(int number, bool centered = true)
     {
         _number = number.ToString();
+        if(_number.Length < Digits)
+        {
+            _number = _number.PadLeft(Digits, '0');
+        }
         CumWidth = 0;
         foreach (char c in _number)
         {
