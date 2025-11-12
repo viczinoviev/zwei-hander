@@ -52,8 +52,11 @@ namespace ZweiHander.CollisionFiles
                 {
                     switch (itemHandler.Item)
                     {
-                        case HeartContainer Item:
+                        case HeartContainer:
                             _player.IncreaseMaxHealth(2);
+                            break;
+                        case Heart:
+                            _player.Heal(2);
                             break;
                         default:
                             _player.addItemToInventory(itemHandler.Item.ItemType);

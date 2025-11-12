@@ -8,10 +8,6 @@ namespace ZweiHander.Items;
 public enum ItemProperty : Int16
 {
     /// <summary>
-    /// On collision with anything, this is deleted
-    /// </summary>
-    DeleteOnCollision = 0x1,
-    /// <summary>
     /// Damages the player on collision with it
     /// </summary>
     CanDamagePlayer = 0x2,
@@ -62,5 +58,9 @@ public enum ItemProperty : Int16
     /// <summary>
     /// Projectile that hurts player
     /// </summary>
-    EnemyProjectile = CanDamagePlayer | DeleteOnBlock | DeleteOnPlayer
+    EnemyProjectile = CanDamagePlayer | DeleteOnBlock | DeleteOnPlayer,
+    /// <summary>
+    /// On collision with anything, this is deleted
+    /// </summary>
+    DeleteOnCollision = DeleteOnBlock | DeleteOnEnemy | DeleteOnPlayer
 }
