@@ -37,7 +37,7 @@ public class ItemManager
     private readonly BossSprites _bossSprites;
 
     /// <summary>
-    /// Count of each item type in this; -1 is infinite.
+    /// Count of each item type in this
     /// </summary>
     private Dictionary<Type, int> ItemTypeCount { get; } = [];
 
@@ -79,10 +79,7 @@ public class ItemManager
         ItemProperty Properties = 0x0;
         if (properties != null)
         {
-            foreach (ItemProperty property in properties)
-            {
-                Properties |= property;
-            }
+            foreach (ItemProperty property in properties) Properties |= property; //Add each property
         }
         ItemConstructor itemConstructor = new()
         {
@@ -101,12 +98,13 @@ public class ItemManager
         };
 
         Type type = typeof(ItemType);
-        ItemType item = (ItemType) Activator.CreateInstance(type, itemConstructor);
+        ItemType item = (ItemType) Activator.CreateInstance(type, itemConstructor); //Create item of desired type
         
         _items.Add(item);
+        // If this item already in ItemTypeCount, increase value by one, else add it
         if (ItemTypeCount.TryGetValue(type, out int value)) ItemTypeCount[type] = ++value;
         else ItemTypeCount[type] = 1;
-            return item;
+        return item;
     }
 
     /// <summary>
@@ -115,12 +113,9 @@ public class ItemManager
     /// <param name="gameTime">A snapshot of the game timing values provided by the framework.</param>
     public void Update(GameTime gameTime)
     {
-        foreach (IItem item in _items)
-        {
-            item.Update(gameTime); // Do each item's update
-        }
-        IEnumerable<IItem> DeadItems = _items.Where(item => item.IsDead());
-        foreach (IItem item in DeadItems)
+        foreach (IItem item in _items) item.Update(gameTime); // Do each item's update
+        IEnumerable<IItem> DeadItems = _items.Where(item => item.IsDead()); //Get all dead items
+        foreach (IItem item in DeadItems) //For each dead item, subtract it from count and remove it
         {
             ItemTypeCount[item.ItemType]--;
             _items.Remove(item);
@@ -132,48 +127,7 @@ public class ItemManager
     /// </summary>
     public void Draw()
     {
-        foreach (IItem item in _items)
-        {
-            item.Draw();
-        }
-    }
-
-    /// <summary>
-    /// Creates multiple copies of a new item.
-    /// </summary>
-    /// <param name="count">Number of copies to make. If infinite, given by -1, does not make any.</param>
-    /// <param name="life">Lifetime (in seconds) for item; 0 will use default for type; -1 is infinite.</param>
-    /// <param name="position">The item's starting position.</param>
-    /// <param name="velocity">The item's starting velocity.</param>
-    /// <param name="acceleration">The item's starting acceleration.</param>
-    /// <param name="properties">Additional Properties attached to this instance.</param>
-    /// <param name="useDefaultProperties">Whether to use the default properties for this item.</param>
-    /// <param name="phases">Thresholds for switching phases; excludes spawn and death.</param>
-    /// <param name="extras">Any extra parameters needed for that item; use class summary as reference.</param>
-    public void MassProduce<ItemType>(
-        int count,
-        double life = 0f,
-        Vector2 position = default,
-        Vector2 velocity = default,
-        Vector2 acceleration = default,
-        ICollection<ItemProperty> properties = null,
-        bool useDefaultProperties = true,
-        List<double> phases = null,
-        List<object> extras = null
-    ) where ItemType : IItem
-    {
-        if(count >= 0)
-        {
-            for (int i = 0; i < count; i++)
-            {
-                // TODO: Figure out better way to do this using deepcopying
-                GetItem<ItemType>(life, position, velocity, acceleration, properties, useDefaultProperties, phases, extras);
-            }
-        }
-        else
-        {
-            ItemTypeCount[typeof(ItemType)] = -1;
-        }
+        foreach (IItem item in _items) item.Draw();
     }
 
     /// <summary>
@@ -181,21 +135,19 @@ public class ItemManager
     /// </summary>
     public void Clear()
     {
-        foreach (IItem item in _items)
-        {
-            item.Kill();
-        }
+        foreach (IItem item in _items) item.Kill();
         _items.Clear();
         ItemTypeCount.Clear();
     }
 
     /// <summary>
-    /// Provides the amount of an item. -1 is inifinite.
+    /// Provides the amount of an item
     /// </summary>
     /// <param name="itemType">Type of desired item to get count of.</param>
     /// <returns>Amount of desired item.</returns>
     public int CountOf(Type itemType)
     {
+        // If item is in ItemTypeCount, return its count, else there is 0 of this item
         return ItemTypeCount.TryGetValue(itemType, out int value) ? value : 0;
     }
 }

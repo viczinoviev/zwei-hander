@@ -31,6 +31,7 @@ public interface IItem
 
     /// <summary>
     /// Draws this item on screen.
+    /// <para>WARNING: Should not be called itself; let ItemManager call this.</para>
     /// </summary>
     public void Draw();
 
