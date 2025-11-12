@@ -25,4 +25,5 @@ public class HUDSprites : SpriteFactory
     public ISprite Bow() => new IdleSprite(_regions["bow"], _spriteBatch);
     public ISprite Digit(int digit) => new IdleSprite(_regions[digit.ToString()], _spriteBatch);
     public ISprite Number(int number, int digits = -1) => new NumberSprite(number, _spriteBatch, this, digits);
+    public ISprite Map() => new IdleSprite(_regions["map"], _spriteBatch);
 }
