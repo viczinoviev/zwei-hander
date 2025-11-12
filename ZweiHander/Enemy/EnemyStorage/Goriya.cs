@@ -87,7 +87,7 @@ private int Thrower = 1;
         {
             //Create a projectile
             _currentProjectile = _projectileManager.GetItem("Boomerang", position: Position,
-                extras: [() => this.Position, CollisionHandler]);
+                extras: [() => this.Position, CollisionHandler], properties: [ItemProperty.EnemyProjectile]);
             Thrower = 2;
             //Set up the projectiles behavior
             (float v, float a) = ItemHelper.BoomerangTrajectory(50, 3);
