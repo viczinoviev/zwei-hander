@@ -105,11 +105,7 @@ public abstract class AbstractItem : IItem
         float dt = (float)time.ElapsedGameTime.TotalSeconds;
         // Life progression
         ProgressLife(dt);
-        if (IsDead())
-        {
-            CollisionHandler.Dead = true;
-            return;
-        } 
+        if (IsDead()) return;
 
         // Movement
         if (!HasProperty(ItemProperty.Stationary))
@@ -142,7 +138,11 @@ public abstract class AbstractItem : IItem
         if (Life > 0) //Life can only progress if it is alive
         {
             Life -= dt;
-            if (Life < 0) Life = 0; //Negative life is infinite, which we do not want
+            if (Life < 0)
+            {
+                Life = 0; //Negative life is infinite, which we do not want
+                CollisionHandler.Dead = true;
+            }
             // If there is threshold for this phase, and we are past that threshold, then progress the phase
             if (Phase < Phases.Count && Life <= Phases[Phase])
             {

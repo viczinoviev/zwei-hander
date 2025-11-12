@@ -58,6 +58,9 @@ namespace ZweiHander.CollisionFiles
                         case Heart:
                             _player.Heal(2);
                             break;
+                        case Bomb:
+                            _player.AddItemToInventory(itemHandler.Item.ItemType, 10);
+                            break;
                         default:
                             _player.AddItemToInventory(itemHandler.Item.ItemType);
                             break;

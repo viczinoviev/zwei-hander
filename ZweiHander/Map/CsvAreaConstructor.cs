@@ -192,7 +192,7 @@ namespace ZweiHander.Environment
         {
             string cleanName = itemName.EndsWith("Item") ? itemName.Substring(0, itemName.Length - 4) : itemName;
 
-            if (AreaDictionaries.itemNameToItemType.TryGetValue(cleanName, out Type itemType))
+            if (AreaDictionaries.itemNameToItemType.TryGetValue(cleanName, out string itemType))
             {
                 _currentRoom.AddItem(itemType, position);
             }

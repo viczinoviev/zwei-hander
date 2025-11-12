@@ -56,6 +56,7 @@ public class ItemManager
     /// <summary>
     /// Creates a new item.
     /// </summary>
+    /// <param name="itemType">Type of item to get.</param>
     /// <param name="life">Lifetime (in seconds) for item; 0 will use default for type; -1 is infinite.</param>
     /// <param name="position">The item's starting position.</param>
     /// <param name="velocity">The item's starting velocity.</param>
@@ -65,7 +66,8 @@ public class ItemManager
     /// <param name="phases">Thresholds for switching phases; excludes spawn and death.</param>
     /// <param name="extras">Any extra parameters needed for that item; use class summary as reference.</param>
     /// <returns>The desired item.</returns>
-    public ItemType GetItem<ItemType> (
+    public IItem GetItem (
+        string itemType,
         double life = 0f,
         Vector2 position = default,
         Vector2 velocity = default,
@@ -74,7 +76,7 @@ public class ItemManager
         bool useDefaultProperties = true,
         List<double> phases = null,
         List<object> extras = null
-    ) where ItemType : IItem
+    )
     {
         ItemProperty Properties = 0x0;
         if (properties != null)
@@ -97,8 +99,8 @@ public class ItemManager
             Extras = extras ?? []
         };
 
-        Type type = typeof(ItemType);
-        ItemType item = (ItemType) Activator.CreateInstance(type, itemConstructor); //Create item of desired type
+        Type type = Type.GetType("ZweiHander.Items.ItemStorages." + itemType);
+        IItem item = (IItem) Activator.CreateInstance(type, itemConstructor); //Create item of desired type
         
         _items.Add(item);
         // If this item already in ItemTypeCount, increase value by one, else add it

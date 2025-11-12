@@ -65,9 +65,7 @@ namespace ZweiHander.PlayerFiles
             // Initialize health (3 hearts = 6 half-hearts)
             _maxHealth = STARTING_HEARTS * 2;
             _currentHealth = _maxHealth;
-            Inventory[typeof(Bomb)] = 10;
             Inventory[typeof(Sword)] = 1;
-            Inventory[typeof(Bow)] = 1;
         }
 
         public void Update(GameTime gameTime)
@@ -99,10 +97,10 @@ namespace ZweiHander.PlayerFiles
             InputBuffer.Clear();
         }
 
-        public void AddItemToInventory(Type itemType)
+        public void AddItemToInventory(Type itemType, int count = 1)
         {
-            if (Inventory.TryGetValue(itemType, out int value)) Inventory[itemType] = ++value;
-            else Inventory[itemType] = 1;
+            if (Inventory.TryGetValue(itemType, out int value)) Inventory[itemType] = value + count;
+            else Inventory[itemType] = count;
 
         }
 

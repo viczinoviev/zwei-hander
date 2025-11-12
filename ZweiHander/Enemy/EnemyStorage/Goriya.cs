@@ -86,7 +86,7 @@ private int Thrower = 1;
         if (attack == 5 && Thrower != 2)
         {
             //Create a projectile
-            _currentProjectile = _projectileManager.GetItem<Boomerang>(position: Position,
+            _currentProjectile = _projectileManager.GetItem("Boomerang", position: Position,
                 extras: [() => this.Position, CollisionHandler]);
             Thrower = 2;
             //Set up the projectiles behavior

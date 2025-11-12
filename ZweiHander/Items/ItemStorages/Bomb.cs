@@ -24,6 +24,7 @@ public class Bomb : AbstractItem
     {
         Sprites = [itemConstructor.ItemSprites.Bomb(), itemConstructor.ItemSprites.Explosion()];
         Setup(itemConstructor);
+        if (Life < 0) AddProperty(ItemProperty.CanBePickedUp);
     }
 
     public override void Update(GameTime gameTime)
