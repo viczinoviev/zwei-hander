@@ -59,7 +59,7 @@ namespace ZweiHander.CollisionFiles
                             _player.Heal(2);
                             break;
                         default:
-                            _player.addItemToInventory(itemHandler.Item.ItemType);
+                            _player.AddItemToInventory(itemHandler.Item.ItemType);
                             break;
                     }                   
                     itemHandler.Item.Kill();

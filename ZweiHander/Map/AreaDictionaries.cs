@@ -92,7 +92,7 @@ namespace ZweiHander.Environment
 			{ "Arrow", typeof(Arrow) },
 			{ "Key", typeof(Key) },
 			{ "Compass", typeof(Compass) },
-			{ "Map", typeof(Items.ItemStorages.Map) },
+			{ "Map", typeof(MapItem) },
 			{ "HeartContainer", typeof(HeartContainer) },
 			{ "TriforcePiece", typeof(Triforce) },
 			{ "Boomerang", typeof(Boomerang) },

@@ -2,9 +2,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using ZweiHander.Commands;
-using ZweiHander.Graphics;
 using ZweiHander.Graphics.SpriteStorages;
 using ZweiHander.Items;
 using ZweiHander.Items.ItemStorages;
@@ -69,6 +66,8 @@ namespace ZweiHander.PlayerFiles
             _maxHealth = STARTING_HEARTS * 2;
             _currentHealth = _maxHealth;
             Inventory[typeof(Bomb)] = 10;
+            Inventory[typeof(Sword)] = 1;
+            Inventory[typeof(Bow)] = 1;
         }
 
         public void Update(GameTime gameTime)
@@ -100,24 +99,22 @@ namespace ZweiHander.PlayerFiles
             InputBuffer.Clear();
         }
 
-        public void addItemToInventory(Type itemType)
+        public void AddItemToInventory(Type itemType)
         {
-            if (Inventory.ContainsKey(itemType))
-            {
-                Inventory[itemType]++;
-            }
-            else
-            {
-                Inventory[itemType] = 1;
-            }
+            if (Inventory.TryGetValue(itemType, out int value)) Inventory[itemType] = ++value;
+            else Inventory[itemType] = 1;
+
         }
 
-        public void removeItemFromInventory(Type itemType)
+        public void RemoveItemFromInventory(Type itemType)
         {
-            if (Inventory.ContainsKey(itemType) && Inventory[itemType] > 0)
-            {
-                Inventory[itemType]--;
-            }
+            if (Inventory.TryGetValue(itemType, out int value)) Inventory[itemType] = Math.Max(--value, 0);
+        }
+
+        public int InventoryCount(Type itemType)
+        {
+            // If item is in Inventory, return its count, else there is 0 of this item
+            return Inventory.TryGetValue(itemType, out int value) ? value : 0;
         }
 
         /// <summary>
@@ -131,7 +128,7 @@ namespace ZweiHander.PlayerFiles
                 return false;
             }
 
-            _currentHealth = System.Math.Max(0, _currentHealth - damage);
+            _currentHealth = Math.Max(0, _currentHealth - damage);
             _isDamaged = true;
             _damageTimer = DAMAGE_DURATION;
             return true;
