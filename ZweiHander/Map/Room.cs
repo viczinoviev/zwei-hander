@@ -70,6 +70,7 @@ namespace ZweiHander.Map
 
         public void Load()
         {
+
             IsLoaded = true;
             
             // Create fresh instances - collision handlers auto-register in their constructors
