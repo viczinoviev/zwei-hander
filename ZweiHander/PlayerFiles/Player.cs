@@ -68,7 +68,7 @@ namespace ZweiHander.PlayerFiles
             // Initialize health (3 hearts = 6 half-hearts)
             _maxHealth = STARTING_HEARTS * 2;
             _currentHealth = _maxHealth;
-            Inventory[typeof(BombItem)] = 10;
+            Inventory[typeof(Bomb)] = 10;
         }
 
         public void Update(GameTime gameTime)

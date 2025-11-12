@@ -7,7 +7,7 @@ namespace ZweiHander.Items.ItemStorages;
 /// <summary>
 /// 2s life, long death sprite, FriendlyProjectile, spawns facing velocity
 /// </summary>
-public class SwordItem : AbstractItem
+public class Sword : AbstractItem
 {
     protected override ItemProperty Properties { get; set; } = ItemProperty.FriendlyProjectile;
 
@@ -15,7 +15,7 @@ public class SwordItem : AbstractItem
 
     protected override List<double> Phases { get; set; } = [0.1];
 
-    public SwordItem(ItemConstructor itemConstructor)
+    public Sword(ItemConstructor itemConstructor)
         : base(itemConstructor)
     {
         Sprites = [itemConstructor.ItemSprites.SwordProjectile(Velocity), 

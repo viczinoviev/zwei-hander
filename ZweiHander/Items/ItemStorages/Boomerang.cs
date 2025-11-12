@@ -13,7 +13,7 @@ namespace ZweiHander.Items.ItemStorages;
 /// Phase 1: Return to thrower at increasing speeds<br></br>
 /// EXTRAS: (Func&lt;Vector2&gt; throwerPosition, ICollisionHandler thrower, double ReturnAcceleration = |Acceleration|)
 /// </summary>
-public class BoomerangItem : AbstractItem
+public class Boomerang : AbstractItem
 {
     protected override ItemProperty Properties { get; set; } = ItemProperty.DeleteOnBlock;
 
@@ -44,7 +44,7 @@ public class BoomerangItem : AbstractItem
     /// </summary>
     protected ICollisionHandler Thrower { get; set; }
 
-    public BoomerangItem(ItemConstructor itemConstructor)
+    public Boomerang(ItemConstructor itemConstructor)
         : base(itemConstructor)
     {
         Sprites = [itemConstructor.ItemSprites.Boomerang()];

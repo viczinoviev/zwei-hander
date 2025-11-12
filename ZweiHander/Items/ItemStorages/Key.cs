@@ -1,20 +1,19 @@
 ﻿using System.Collections.Generic;
 using ZweiHander.Graphics;
-using ZweiHander.Graphics.SpriteStorages;
 
 namespace ZweiHander.Items.ItemStorages;
 
 /// <summary>
-/// Infinite life, collectable
+/// Collectable, infinite life
 /// </summary>
-public class TriforceItem : AbstractItem
+public class Key : AbstractItem
 {
     protected override ItemProperty Properties { get; set; } = ItemProperty.Collectable;
 
-    public TriforceItem(ItemConstructor itemConstructor)
+    public Key(ItemConstructor itemConstructor)
         : base(itemConstructor)
     {
-        Sprites = [itemConstructor.TreasureSprites.Triforce()];
+        Sprites = [itemConstructor.TreasureSprites.Key()];
         Setup(itemConstructor);
     }
 }

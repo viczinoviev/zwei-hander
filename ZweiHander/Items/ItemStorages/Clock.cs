@@ -1,19 +1,20 @@
 ﻿using System.Collections.Generic;
 using ZweiHander.Graphics;
+using ZweiHander.Graphics.SpriteStorages;
 
 namespace ZweiHander.Items.ItemStorages;
 
 /// <summary>
-/// Collectable, infinite life
+/// Infinite life, collectable
 /// </summary>
-public class MapItem : AbstractItem
+public class Clock : AbstractItem
 {
     protected override ItemProperty Properties { get; set; } = ItemProperty.Collectable;
 
-    public MapItem(ItemConstructor itemConstructor)
+    public Clock(ItemConstructor itemConstructor)
         : base(itemConstructor)
     {
-        Sprites = [itemConstructor.TreasureSprites.Map()];
+        Sprites = [itemConstructor.TreasureSprites.Clock()];
         Setup(itemConstructor);
     }
 }

@@ -87,18 +87,18 @@ namespace ZweiHander.Environment
 
 		public static readonly Dictionary<string, Type> itemNameToItemType = new()
 		{
-			{ "Heart", typeof(HeartItem) },
-			{ "Bomb", typeof(BombItem) },
-			{ "Arrow", typeof(ArrowItem) },
-			{ "Key", typeof(KeyItem) },
-			{ "Compass", typeof(CompassItem) },
-			{ "Map", typeof(MapItem) },
-			{ "HeartContainer", typeof(HeartContainerItem) },
-			{ "TriforcePiece", typeof(TriforceItem) },
-			{ "Boomerang", typeof(BoomerangItem) },
-			{ "Bow", typeof(BowItem) },
-			{ "Clock", typeof(ClockItem) },
-			{ "Fairy", typeof(FairyItem) }
+			{ "Heart", typeof(Heart) },
+			{ "Bomb", typeof(Bomb) },
+			{ "Arrow", typeof(Arrow) },
+			{ "Key", typeof(Key) },
+			{ "Compass", typeof(Compass) },
+			{ "Map", typeof(Items.ItemStorages.Map) },
+			{ "HeartContainer", typeof(HeartContainer) },
+			{ "TriforcePiece", typeof(Triforce) },
+			{ "Boomerang", typeof(Boomerang) },
+			{ "Bow", typeof(Bow) },
+			{ "Clock", typeof(Clock) },
+			{ "Fairy", typeof(Fairy) }
 		};
 	}
 }

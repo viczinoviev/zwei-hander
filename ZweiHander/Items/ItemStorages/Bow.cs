@@ -5,16 +5,16 @@ using ZweiHander.Graphics.SpriteStorages;
 namespace ZweiHander.Items.ItemStorages;
 
 /// <summary>
-/// 2.5s life, animation
+/// Infinite life, collectable
 /// </summary>
-public class FireItem : AbstractItem
+public class Bow : AbstractItem
 {
-    protected override double Life { get; set; } = 2.5;
+    protected override ItemProperty Properties { get; set; } = ItemProperty.Collectable;
 
-    public FireItem(ItemConstructor itemConstructor)
+    public Bow(ItemConstructor itemConstructor)
         : base(itemConstructor)
     {
-        Sprites = [itemConstructor.ItemSprites.FireProjectile()];
+        Sprites = [itemConstructor.TreasureSprites.Bow()];
         Setup(itemConstructor);
     }
 }

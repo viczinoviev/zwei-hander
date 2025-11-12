@@ -11,7 +11,7 @@ namespace ZweiHander.Items.ItemStorages;
 /// Phase 1: Switches to exploding sprite, damages enemies and player
 /// Phase 2: Can no longer damage enemy and player
 /// </summary>
-public class BombItem : AbstractItem
+public class Bomb : AbstractItem
 {
     protected override double Life { get; set; } = 2.3f;
 
@@ -19,7 +19,7 @@ public class BombItem : AbstractItem
 
     protected override ItemProperty Properties { get; set; } = ItemProperty.Stationary;
 
-    public BombItem(ItemConstructor itemConstructor)
+    public Bomb(ItemConstructor itemConstructor)
         : base(itemConstructor)
     {
         Sprites = [itemConstructor.ItemSprites.Bomb(), itemConstructor.ItemSprites.Explosion()];

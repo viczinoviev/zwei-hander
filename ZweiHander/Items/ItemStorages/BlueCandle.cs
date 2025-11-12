@@ -1,19 +1,20 @@
 ﻿using System.Collections.Generic;
 using ZweiHander.Graphics;
+using ZweiHander.Graphics.SpriteStorages;
 
 namespace ZweiHander.Items.ItemStorages;
 
 /// <summary>
-/// Collectable, infinite life
+/// Infinite life, collectable
 /// </summary>
-public class KeyItem : AbstractItem
+public class BlueCandle : AbstractItem
 {
     protected override ItemProperty Properties { get; set; } = ItemProperty.Collectable;
 
-    public KeyItem(ItemConstructor itemConstructor)
+    public BlueCandle(ItemConstructor itemConstructor)
         : base(itemConstructor)
     {
-        Sprites = [itemConstructor.TreasureSprites.Key()];
+        Sprites = [itemConstructor.TreasureSprites.CandleBlue()];
         Setup(itemConstructor);
     }
 }

@@ -29,7 +29,7 @@ namespace ZweiHander.HUD
 
         public void Update(GameTime gameTime)
         {
-            _bombs.SetNumber(_player.Inventory[typeof(BombItem)]);
+            _bombs.SetNumber(_player.Inventory[typeof(Bomb)]);
         }
 
         public void Draw(SpriteBatch spriteBatch, Vector2 offset)

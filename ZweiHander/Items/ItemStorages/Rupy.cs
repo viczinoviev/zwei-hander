@@ -7,14 +7,14 @@ namespace ZweiHander.Items.ItemStorages;
 /// <summary>
 /// Infinite life, collectable
 /// </summary>
-public class HeartContainerItem : AbstractItem
+public class Rupy : AbstractItem
 {
     protected override ItemProperty Properties { get; set; } = ItemProperty.Collectable;
 
-    public HeartContainerItem(ItemConstructor itemConstructor)
+    public Rupy(ItemConstructor itemConstructor)
         : base(itemConstructor)
     {
-        Sprites = [itemConstructor.TreasureSprites.HeartContainer()];
+        Sprites = [itemConstructor.TreasureSprites.Rupy()];
         Setup(itemConstructor);
     }
 }

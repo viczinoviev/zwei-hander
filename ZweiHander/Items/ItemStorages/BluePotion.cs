@@ -7,14 +7,14 @@ namespace ZweiHander.Items.ItemStorages;
 /// <summary>
 /// Infinite life, collectable
 /// </summary>
-public class BlueCandleItem : AbstractItem
+public class BluePotion : AbstractItem
 {
     protected override ItemProperty Properties { get; set; } = ItemProperty.Collectable;
 
-    public BlueCandleItem(ItemConstructor itemConstructor)
+    public BluePotion(ItemConstructor itemConstructor)
         : base(itemConstructor)
     {
-        Sprites = [itemConstructor.TreasureSprites.CandleBlue()];
+        Sprites = [itemConstructor.TreasureSprites.PotionBlue()];
         Setup(itemConstructor);
     }
 }

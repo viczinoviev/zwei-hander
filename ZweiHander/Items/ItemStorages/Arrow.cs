@@ -7,7 +7,7 @@ namespace ZweiHander.Items.ItemStorages;
 /// <summary>
 /// 2s life, spawns facing velocity, DeleteOnBlock, death sprite
 /// </summary>
-public class ArrowItem : AbstractItem
+public class Arrow : AbstractItem
 {
     protected override ItemProperty Properties { get; set; } = ItemProperty.DeleteOnBlock;
 
@@ -15,7 +15,7 @@ public class ArrowItem : AbstractItem
 
     protected override List<double> Phases { get; set; } = [0.1];
 
-    public ArrowItem(ItemConstructor itemConstructor)
+    public Arrow(ItemConstructor itemConstructor)
         : base(itemConstructor)
     {
         Sprites = [itemConstructor.ItemSprites.Arrow(Velocity), itemConstructor.ItemSprites.ProjectileOnHit()];
