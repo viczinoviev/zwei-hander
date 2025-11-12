@@ -27,6 +27,12 @@ namespace ZweiHander.Map
         public BorderFactory BorderFactory { get; private set; }
         public PortalManager PortalManager { get; private set; }
 
+        public Camera.Camera camera { get; private set; }
+
+        public float TransitionTime = 0.5f;
+
+        public int TileSize { get; private set; }
+
         public Universe(
             EnemySprites enemySprites,
             BossSprites bossSprites,
@@ -36,8 +42,10 @@ namespace ZweiHander.Map
             BlockSprites blockSprites,
             PlayerSprites playerSprites,
             ContentManager Content,
+            Camera.Camera camera,
             int tileSize = 32)
         {
+            TileSize = tileSize;
             _areas = new Dictionary<string, Area>();
             
             // Create separate instances for Universe's use
@@ -46,6 +54,8 @@ namespace ZweiHander.Map
             EnemyManager = new EnemyManager(enemySprites, projectileManager, bossSprites, npcSprites, Content);
             BlockFactory = new BlockFactory(tileSize, blockSprites, playerSprites);
             BorderFactory = new BorderFactory(tileSize, blockSprites);
+
+            this.camera = camera;
         }
 
         public void AddArea(Area area) => _areas[area.Name] = area;
@@ -72,25 +82,36 @@ namespace ZweiHander.Map
             CurrentRoom.Load();
         }
 
-        public void LoadRoom(int roomNumber, Vector2 spawnPosition, Camera.Camera camera)
+        public void LoadRoom(int roomNumber, Vector2 spawnPosition, Camera.Camera camera, Vector2 oldPortalPos, Vector2 newPortalPos, Direction portalDirection)
         {
             if (CurrentArea == null) return;
 
             Room targetRoom = CurrentArea.GetRoom(roomNumber);
             if (targetRoom == null) return;
 
+            Vector2 roomSpawnTransitionOffset = calculateRoomSpawnOffset(CurrentRoom.Size, targetRoom.Size, oldPortalPos, newPortalPos, portalDirection);
+
             UnloadCurrentRoom();
             CurrentRoom = targetRoom;
+
             CurrentRoom.Load();
 
             new Commands.PlayerTeleportCommand(Player, spawnPosition + new Vector2(32, 32)).Execute();
             new Commands.SetCameraCommand(camera, Player).Execute();
         }
         
+        private Vector2 calculateRoomSpawnOffset(Vector2 oldRoomBound, Vector2 newRoomBound, Vector2 oldPortalPos, Vector2 newPortalPos, Direction portalDirection)
+        {
+            // TODO
+
+
+            return Vector2.Zero;
+        }
+        
         private void UnloadCurrentRoom()
         {
             if (CurrentRoom == null) return;
-            
+
             // Clear managers/factory/portals - each marks its collision handlers as Dead
             BlockFactory.Clear();
             BorderFactory.Clear();

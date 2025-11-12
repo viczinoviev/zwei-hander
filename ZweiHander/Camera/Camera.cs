@@ -59,7 +59,7 @@ namespace ZweiHander.Camera
         {
             // Set desired position to center on player
             DesiredPosition = target - new Vector2(Viewport.Width / 2f, Viewport.Height / 2f);
-            
+
             // Smoothly interpolate camera position towards desired position
             Position += (DesiredPosition - Position) * SmoothSpeed;
         }

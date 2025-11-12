@@ -68,33 +68,38 @@ namespace ZweiHander.Environment
             }
 
             int roomHeight = roomEndLine - roomStartLine;
-            int roomWidth = 0;
+            int maxCellX = 0;
 
             for (int y = roomStartLine; y < roomEndLine; y++)
             {
                 string[] cells = ParseCsvLine(lines[y]);
-                
-                if (cells.Length > roomWidth)
-                    roomWidth = cells.Length;
+                for (int x = 1; x < cells.Length; x++)
+                {
+                    string cell = cells[x].Trim();
+                    if (!string.IsNullOrEmpty(cell))
+                    {
+                        int cellX = x - 1;
+                        if (cellX > maxCellX)
+                            maxCellX = cellX;
+                    }
+                }
             }
 
-            Vector2 roomSize = new Vector2((roomWidth - 1) * CELL_SIZE, roomHeight * CELL_SIZE);
+            int roomWidth = maxCellX + 1;
+            Vector2 roomSize = new Vector2(roomWidth * CELL_SIZE, (roomHeight-1) * CELL_SIZE);
             Room room = new Room(roomNumber, Vector2.Zero, roomSize, _universe);
             _currentRoom = room;
 
             for (int y = roomStartLine; y < roomEndLine; y++)
             {
                 string[] cells = ParseCsvLine(lines[y]);
-                
-                if (cells.Length > roomWidth)
-                    roomWidth = cells.Length;
 
                 for (int x = 1; x < cells.Length; x++)
                 {
                     string cell = cells[x].Trim();
                     if (string.IsNullOrEmpty(cell)) continue;
 
-                    int cellX = x - 1;
+                    int cellX = x-1;
                     int cellY = y - roomStartLine;
                     Vector2 position = new Vector2(cellX * CELL_SIZE, cellY * CELL_SIZE);
 

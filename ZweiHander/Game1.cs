@@ -54,14 +54,13 @@ namespace ZweiHander
         private NPCSprites _npcSprites;
         private ItemSprites _itemSprites;
         private BlockFactory _blockFactory;
-        private ItemManager _itemManager; //The item that is rotated through
-        private ItemManager _projectileManager; //Any projectiles from enemies or player
+        private ItemManager _itemManager;
+        private ItemManager _projectileManager;
         
         private Universe _universe;
         private CsvAreaConstructor _areaConstructor;
 
-        private Texture2D _debugPixel;
-        //Backround Song
+        private DebugRenderer _debugRenderer;
         private Song bgm;
 
         public Player GamePlayer => _gamePlayer;
@@ -112,11 +111,9 @@ namespace ZweiHander
             _projectileManager = new ItemManager(_itemSprites, _treasureSprites, _bossSprites);
             _enemyManager = new EnemyManager(_enemySprites, _projectileManager, _bossSprites, _npcSprites, Content);
 
-            _debugPixel = new Texture2D(GraphicsDevice, 1, 1);
-            _debugPixel.SetData(new[] { Color.White });
-
-            // Initialize debug texture for collision manager
-            CollisionManager.Instance.InitializeDebugTexture(GraphicsDevice);
+            _debugRenderer = new DebugRenderer();
+            _debugRenderer.Initialize(GraphicsDevice);
+            
             bgm = Content.Load<Song>("Audio/DungeonTheme");
             if (MediaPlayer.State == MediaState.Playing)
             {
@@ -137,7 +134,7 @@ namespace ZweiHander
             CollisionManager.Instance.ClearAllColliders();
 
             _gamePlayer = new Player(_linkSprites, _itemSprites, _treasureSprites);
-            _gamePlayer.Position = new Vector2(100, 100);
+            _gamePlayer.Position = new Vector2(100, 200);
             SetCameraCommand moveCameraToPlayer = new SetCameraCommand(_camera, _gamePlayer);
             moveCameraToPlayer.Execute();
 
@@ -151,7 +148,9 @@ namespace ZweiHander
                 _blockSprites,
                 _linkSprites,
 
-                Content
+                Content,
+
+                _camera
             );
             _universe.SetPlayer(_gamePlayer);
             _universe.SetupPortalManager(_camera);
@@ -213,49 +212,21 @@ namespace ZweiHander
             _universe.Draw();
             _projectileManager.Draw();
             _gamePlayer.Draw(_spriteBatch);
+            
+            _debugRenderer.DrawWorldDebug(_spriteBatch, _universe);
+            
             _spriteBatch.End();
 
-            // Draw HUD without camera transform (fixed to screen)
             _spriteBatch.Begin(
                 samplerState: SamplerState.PointClamp
             );
             _hudManager.Draw(_spriteBatch);
 
-            DrawDebugGrid();
-            
-            // Draw debug collision boxes if enabled
-            CollisionManager.Instance.DrawDebugCollisionBoxes(_spriteBatch);
+            _debugRenderer.DrawScreenDebug(_spriteBatch);
 
             base.Draw(gameTime);
 
             _spriteBatch.End();
-        }
-
-        private void DrawDebugGrid()
-        {
-            int gridSize = 32;
-            int dotSize = 2;
-            int gridRange = 20; 
-
-            for (int y = -gridRange; y <= gridRange; y++)
-            {
-                Rectangle dot = new Rectangle(0 - dotSize / 2, y * gridSize - dotSize / 2, dotSize, dotSize);
-                _spriteBatch.Draw(_debugPixel, dot, Color.Yellow);
-            }
-
-            for (int x = -gridRange; x <= gridRange; x++)
-            {
-                Rectangle dot = new Rectangle(x * gridSize - dotSize / 2, 0 - dotSize / 2, dotSize, dotSize);
-                _spriteBatch.Draw(_debugPixel, dot, Color.Yellow);
-            }
-
-            Rectangle origin = new Rectangle(-4, -4, 8, 8);
-            _spriteBatch.Draw(_debugPixel, origin, Color.Green);
-        }
-
-        private void DrawDebugRectangle(Rectangle rect, Color color)
-        {
-            _spriteBatch.Draw(_debugPixel, rect, color);
         }
     }
 }
