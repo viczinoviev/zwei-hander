@@ -56,6 +56,7 @@ namespace ZweiHander
         private BlockFactory _blockFactory;
         private ItemManager _itemManager;
         private ItemManager _projectileManager;
+        private TitleSprites _titleSprites;
         
         private Universe _universe;
         private CsvAreaConstructor _areaConstructor;
@@ -93,7 +94,8 @@ namespace ZweiHander
             // Initialize camera
             _camera = new Camera.Camera(GraphicsDevice.Viewport);
 
-            //TEST: Link Sprites, Should be part of link initialization
+            //TODO: Delete this
+            _titleSprites = new TitleSprites(Content, _spriteBatch);
 
             // This line will load all of the sprites into the program through an xml file
             _linkSprites = new PlayerSprites(Content, _spriteBatch);
