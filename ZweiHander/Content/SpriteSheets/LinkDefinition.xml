@@ -26,7 +26,7 @@
 		<Region name="link-use-item-up" x="141" y="11" width="16" height="16" />
 		<!-- Item Sprites -->
 		<Region name="arrow-up" x="1" y="185" width="8" height="16" />
-		<Region name="arrow-right" x="10" y="185" width="5" height="16" />
+		<Region name="arrow-right" x="10" y="190" width="16" height="5" />
 		<Region name="boomerang-1" x="65" y="189" width="8" height="8" />
 		<Region name="boomerang-2" x="73" y="189" width="8" height="8" />
 		<Region name="boomerang-3" x="82" y="189" width="8" height="8" />
