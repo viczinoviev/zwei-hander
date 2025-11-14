@@ -15,6 +15,8 @@ namespace ZweiHander.Map
         private readonly int _tileSize;
         private readonly Universe _universe;
 
+		private int tilePadding = 1;
+
         public RoomTransition(Universe universe, int tileSize)
         {
             _universe = universe;
@@ -84,19 +86,19 @@ namespace ZweiHander.Map
         {
             if (portalDirection == Direction.Up)
             {
-                return new Vector2(oldPortalPos.X - newPortalPos.X, -newRoomBound.Y - _tileSize);
+                return new Vector2(oldPortalPos.X - newPortalPos.X, -newRoomBound.Y - _tileSize - tilePadding*_tileSize);
             }
             else if (portalDirection == Direction.Down)
             {
-                return new Vector2(oldPortalPos.X - newPortalPos.X, oldRoomBound.Y + _tileSize);
+                return new Vector2(oldPortalPos.X - newPortalPos.X, oldRoomBound.Y + _tileSize + tilePadding*_tileSize);
             }
             else if (portalDirection == Direction.Left)
             {
-                return new Vector2(-newRoomBound.X - _tileSize, oldPortalPos.Y - newPortalPos.Y);
+                return new Vector2(-newRoomBound.X - _tileSize - tilePadding*_tileSize, oldPortalPos.Y - newPortalPos.Y);
             }
             else if (portalDirection == Direction.Right)
             {
-                return new Vector2(oldRoomBound.X + _tileSize, oldPortalPos.Y - newPortalPos.Y);
+                return new Vector2(oldRoomBound.X + _tileSize + tilePadding*_tileSize, oldPortalPos.Y - newPortalPos.Y);
             }
 
             return Vector2.Zero;
