@@ -204,6 +204,13 @@ namespace ZweiHander.HUD
                 Color.Black
             );
 
+            // Draw 2px white separator line at the bottom of the HUD
+            spriteBatch.Draw(
+                pixel,
+                new Rectangle(0, (int)_currentBackgroundHeight, spriteBatch.GraphicsDevice.Viewport.Width, 2),
+                Color.White
+            );
+
             // Draw all HUD components
             Vector2 hudOffset = new Vector2(0, _currentHUDYOffset);
             foreach (var component in _components)
