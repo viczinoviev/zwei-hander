@@ -26,7 +26,7 @@ public class Goriya : IEnemy
     /// List of Sprites for this enemy
     /// <summary>
     public List<ISprite> _sprites = [];
-    IItem _currentProjectile;
+    public IItem _currentProjectile;
     /// <summary>
     /// Holds all sprites for this enemy
     /// </summary>
@@ -42,11 +42,11 @@ public class Goriya : IEnemy
 
     public EnemyCollisionHandler CollisionHandler { get; } = default;
 
-    private int Thrower = 1;
+public int Thrower = 1;
     /// <summary>
     /// Random number generator to randomize enemy behavior
     /// </summary>
-    readonly Random rnd = new();
+    public readonly Random rnd = new();
 
 
     public Goriya(EnemySprites enemySprites, ItemManager projectileManager, ContentManager sfxPlayer)
@@ -80,32 +80,9 @@ public class Goriya : IEnemy
                 Face = mov;
             }
         }
-        //Randomize attacking (projectile throwing)
-        int attack = rnd.Next(300);
-        //attack, as long as not already attacking
-        if (attack == 5 && Thrower != 2)
-        {
-            //Create a projectile
-            _currentProjectile = _projectileManager.GetItem("Boomerang", position: Position,
-                extras: [() => this.Position, CollisionHandler], properties: [ItemProperty.EnemyProjectile]);
-            Thrower = 2;
-            //Set up the projectiles behavior
-            (float v, float a) = ItemHelper.BoomerangTrajectory(50, 3);
-            _currentProjectile.Velocity = EnemyHelper.BehaveFromFace(this, v, 1);
-            _currentProjectile.Acceleration = EnemyHelper.BehaveFromFace(this, a, 1);
-        }
-        else
-        {
-            //If currently throwing and projectile is dead, set back to not throwing
-            if (Thrower == 2)
-            {
-
-                if (_currentProjectile.IsDead())
-                {
-                    Thrower = 1;
-                }
-            }
-        }
+        //projectile handling
+        EnemyHelper.goriyaAttack(this,_projectileManager);
+        //updates
         CollisionHandler.UpdateCollisionBox();
         Sprite.Update(time);
         _projectileManager.Update(time);

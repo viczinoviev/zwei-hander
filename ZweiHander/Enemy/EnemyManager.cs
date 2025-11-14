@@ -48,7 +48,7 @@ public class EnemyManager(EnemySprites enemysprites, ItemManager projectileManag
     /// <param name="face">The enemies intial facing direction</param>
     /// <param name="throw">Whether or not the enemy shoots projectiles/is shooting</param> 
     /// <returns>The desired item.</returns>
-    public IEnemy GetEnemy(String enemyName, Vector2 position = default, int face = default)
+    public IEnemy GetEnemy(String enemyName, Vector2 position, int face = default)
     {
         IEnemy enemy = null;
         switch (enemyName)
@@ -84,7 +84,7 @@ public class EnemyManager(EnemySprites enemysprites, ItemManager projectileManag
                 enemy = new Dodongo(_bossSprites,sfxPlayer);
                 break;
             case "BladeTrap":
-                enemy = new BladeTrap(_enemySprites,sfxPlayer);
+                enemy = new BladeTrap(_enemySprites,sfxPlayer,position);
                 break;
             case "OldMan":
                 enemy = new OldMan(_npcSprites);
@@ -97,7 +97,7 @@ public class EnemyManager(EnemySprites enemysprites, ItemManager projectileManag
                 break;
         }
         enemy.Position = position;
-        enemy.Face = face;
+        enemy.Face = 2;
         currentEnemies.Add(enemy);
         return enemy;
     }
