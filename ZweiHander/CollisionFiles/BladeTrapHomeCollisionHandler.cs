@@ -31,17 +31,23 @@ namespace ZweiHander.CollisionFiles
         public override void OnCollision(ICollisionHandler other, CollisionInfo collisionInfo)
         {
 
-            Console.WriteLine(other);
             //Player collision
-            if (other is PlayerCollisionHandler)
+            if (other is PlayerCollisionHandler playerCollisionHandler)
             {
-                Console.WriteLine("howdy!");
                 if (_enemy.Thrower == 0)
                 {
                     _enemy.attackTime = 1;
                     _enemy.Thrower = 1;
-                    //_enemy.Face = (int)collisionInfo.Normal;
-                    _enemy.Face = 2;
+                    float yDiff = Math.Abs(playerCollisionHandler._player.Position.Y - _enemy.Position.Y);
+                    float xDiff = Math.Abs(playerCollisionHandler._player.Position.X - _enemy.Position.X);
+                    if (yDiff > xDiff)
+                    {
+                        _enemy.Face = 2;
+                    }
+                    else
+                    {
+                        _enemy.Face = 1;
+                    }
                 }
             }
         }

@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Audio;
 using System.Net.Mime;
 using Microsoft.Xna.Framework.Content;
 using System;
+using ZweiHander.Enemy.EnemyStorage;
 
 namespace ZweiHander.CollisionFiles
 {
@@ -48,6 +49,11 @@ namespace ZweiHander.CollisionFiles
                     if (_enemy.Hitpoints <= 0)
                     {
                         Dead = true;
+                        if (_enemy is BladeTrap bladeTrap)
+                        {
+                            bladeTrap.home1CollisionHandler.Dead = true;
+                            bladeTrap.home2CollisionHandler.Dead = true;
+                        }
                     }
                 }
             }
