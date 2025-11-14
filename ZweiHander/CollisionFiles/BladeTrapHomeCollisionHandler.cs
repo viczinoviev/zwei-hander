@@ -20,11 +20,11 @@ namespace ZweiHander.CollisionFiles
             Rectangle colbox = _enemy.GetCollisionBox();
             if (_axis == 'y')
             {
-                collisionBox = new Rectangle(colbox.X, colbox.Y, colbox.Width, 100);
+                collisionBox = new Rectangle(colbox.X, colbox.Y - 100, colbox.Width, 200 + colbox.Height);
             }
             else
             {
-                collisionBox = new Rectangle(colbox.X, colbox.Y, 100, colbox.Height);
+                collisionBox = new Rectangle(colbox.X - 100, colbox.Y, 200 + colbox.Width, colbox.Height);
             }
         }
 
@@ -38,15 +38,29 @@ namespace ZweiHander.CollisionFiles
                 {
                     _enemy.attackTime = 1;
                     _enemy.Thrower = 1;
-                    float yDiff = Math.Abs(playerCollisionHandler._player.Position.Y - _enemy.Position.Y);
-                    float xDiff = Math.Abs(playerCollisionHandler._player.Position.X - _enemy.Position.X);
-                    if (yDiff > xDiff)
+                    float yDiff = playerCollisionHandler._player.Position.Y - _enemy.Position.Y;
+                    float xDiff = playerCollisionHandler._player.Position.X - _enemy.Position.X;
+                    if (Math.Abs(yDiff) > Math.Abs(xDiff))
                     {
-                        _enemy.Face = 2;
+                        if (yDiff > 0)
+                        {
+                            _enemy.Face = 2;
+                        }
+                        else
+                        {
+                            _enemy.Face = 0;
+                        }
                     }
                     else
                     {
-                        _enemy.Face = 1;
+                        if (xDiff > 0)
+                        {
+                            _enemy.Face = 1;
+                        }
+                        else
+                        {
+                            _enemy.Face = 3;
+                        }
                     }
                 }
             }

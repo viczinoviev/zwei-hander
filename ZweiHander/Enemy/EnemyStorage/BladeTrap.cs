@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 using ZweiHander.Graphics;
-using System;
 using ZweiHander.Graphics.SpriteStorages;
 using ZweiHander.CollisionFiles;
 using Microsoft.Xna.Framework.Content;
@@ -21,7 +20,7 @@ public class BladeTrap : IEnemy
     /// <summary>
     /// position for the trap to return to
     /// </summary>
-    private Vector2 originalPosition;
+    public Vector2 originalPosition;
 
     public Vector2 Position { get; set; } = default;
 
@@ -48,30 +47,14 @@ public class BladeTrap : IEnemy
     }
     public virtual void Update(GameTime time)
     {
-        float dt = (float)time.ElapsedGameTime.TotalSeconds;
         if (Thrower == 1)
         {
-            if (attackTime >= 0)
-            {
-                Position = EnemyHelper.BehaveFromFace(this, 2, 0);
-                attackTime -= dt;
-            }
-            else
-            {
-                Thrower = 2;
-                Face = (Face + 2) % 4;
-            }
+            float dt = (float)time.ElapsedGameTime.TotalSeconds;
+            EnemyHelper.bladeTrapAttack(this, dt);
         }
         else if (Thrower == 2)
         {
-            if (Math.Abs(originalPosition.X - Position.X) >= 2 || Math.Abs(originalPosition.Y - Position.Y) >= 2)
-            {
-                Position = EnemyHelper.BehaveFromFace(this, 1, 0);
-            }
-            else
-            {
-                Thrower = 0;
-            }
+            EnemyHelper.bladeTrapReturn(this);
         }
         CollisionHandler.UpdateCollisionBox();
         Sprite.Update(time);

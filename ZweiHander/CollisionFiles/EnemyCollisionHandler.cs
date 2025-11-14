@@ -18,10 +18,13 @@ namespace ZweiHander.CollisionFiles
         public readonly IEnemy _enemy;
 
         private SoundEffect enemyHurt;
+
+        private SoundEffectInstance currentSFX;
         public EnemyCollisionHandler(IEnemy enemy,ContentManager sfxPlayer)
         {
             _enemy = enemy;
-            enemyHurt = sfxPlayer.Load<SoundEffect>("Audio/Hurt");
+            enemyHurt = sfxPlayer.Load<SoundEffect>("Audio/EnemyHurt");
+            currentSFX = enemyHurt.CreateInstance();
             UpdateCollisionBox();
         }
 
@@ -33,6 +36,7 @@ namespace ZweiHander.CollisionFiles
                 //If enemy is running into a block, prevent enemy from going into the block
                 Vector2 newPosition = _enemy.Position + collisionInfo.ResolutionOffset;
                 _enemy.Position = newPosition;
+                _enemy.Face = (int)collisionInfo.Normal;
 
                 UpdateCollisionBox();
             }
@@ -49,11 +53,6 @@ namespace ZweiHander.CollisionFiles
                     if (_enemy.Hitpoints <= 0)
                     {
                         Dead = true;
-                        if (_enemy is BladeTrap bladeTrap)
-                        {
-                            bladeTrap.home1CollisionHandler.Dead = true;
-                            bladeTrap.home2CollisionHandler.Dead = true;
-                        }
                     }
                 }
             }
@@ -64,7 +63,10 @@ namespace ZweiHander.CollisionFiles
                 if (playerCollisionHandler._player.CurrentState == PlayerState.Attacking)
                 {
                     _enemy.Hitpoints -= 5;
-                    enemyHurt.Play();
+                    if (currentSFX.State == SoundState.Stopped)
+                    {
+                        currentSFX.Play();
+                    }
                     //if the enemy has died, set this handler to be removed
                     if (_enemy.Hitpoints <= 0)
                     {
@@ -75,12 +77,14 @@ namespace ZweiHander.CollisionFiles
             //Enemy collision
             if (other is EnemyCollisionHandler)
             {
-                //If enemy is running into another enemy, prevent enemy from going into the enemy
-                Vector2 newPosition = _enemy.Position + collisionInfo.ResolutionOffset;
-                _enemy.Position = newPosition;
+                //If enemy is running into another enemy, prevent enemy from going into the enemy, unless this is a bladetrap(unmoving)
+                if (_enemy is not BladeTrap)
+                {
+                    Vector2 newPosition = _enemy.Position + collisionInfo.ResolutionOffset;
+                    _enemy.Position = newPosition;
 
-                UpdateCollisionBox();
-                
+                    UpdateCollisionBox();
+                }
             }
         }
 

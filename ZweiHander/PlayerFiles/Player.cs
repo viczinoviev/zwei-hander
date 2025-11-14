@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -56,11 +57,11 @@ namespace ZweiHander.PlayerFiles
             get => _handler.Color;
             set => _handler.Color = value;
         }
-        public Player(PlayerSprites playerSprites, ItemSprites itemSprites, TreasureSprites treasureSprites)
+        public Player(PlayerSprites playerSprites, ItemSprites itemSprites, TreasureSprites treasureSprites,ContentManager content)
         {
             _itemManager = new ItemManager(itemSprites, treasureSprites);
             _stateMachine = new PlayerStateMachine(this);
-            _handler = new PlayerHandler(playerSprites, this, _stateMachine);
+            _handler = new PlayerHandler(playerSprites, this, _stateMachine,content);
             _stateMachine.SetPlayerHandler(_handler);
             Position = Vector2.Zero;
 

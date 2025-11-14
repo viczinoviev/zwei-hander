@@ -4,6 +4,8 @@ using ZweiHander.Environment;
 using ZweiHander.PlayerFiles;
 using ZweiHander.Items;
 using ZweiHander.Items.ItemStorages;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Audio;
 
 namespace ZweiHander.CollisionFiles
 {
@@ -17,14 +19,22 @@ namespace ZweiHander.CollisionFiles
         /// </summary>
         public readonly Player _player;
 
+        private SoundEffect PlayerHurt;
+        private SoundEffect ItemPickup;
+
+        private SoundEffectInstance currentSFX;
+
         /// <summary>
         /// How big the player's collision box is (for now a rectangle 24 by 24 px)
         /// </summary>
         private const int COLLISION_SIZE = 24;
 
-        public PlayerCollisionHandler(Player player)
+        public PlayerCollisionHandler(Player player,ContentManager sfxPlayer)
         {
             _player = player;
+            PlayerHurt = sfxPlayer.Load<SoundEffect>("Audio/PlayerHurt");
+            ItemPickup = sfxPlayer.Load<SoundEffect>("Audio/ItemPickup");
+            currentSFX = PlayerHurt.CreateInstance();
             UpdateCollisionBox();
         }
 
@@ -46,10 +56,15 @@ namespace ZweiHander.CollisionFiles
                 if (itemHandler.Item.HasProperty(ItemProperty.CanDamagePlayer))
                 {
                     _player.TakeDamage();
+                    if (currentSFX.State == SoundState.Stopped)
+                    {
+                        currentSFX.Play();
+                    }
                 }
 
                 if (itemHandler.Item.HasProperty(ItemProperty.CanBePickedUp))
                 {
+                    ItemPickup.Play();
                     switch (itemHandler.Item)
                     {
                         case HeartContainer:
@@ -72,6 +87,10 @@ namespace ZweiHander.CollisionFiles
             if (other is EnemyCollisionHandler enemy)
             {
                 _player.TakeDamage();
+                if (currentSFX.State == SoundState.Stopped)
+                    {
+                        currentSFX.Play();
+                    }
             }
         }
 

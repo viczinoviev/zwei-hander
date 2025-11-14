@@ -1,5 +1,6 @@
 using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using ZweiHander.CollisionFiles;
 using ZweiHander.Graphics;
@@ -30,7 +31,7 @@ namespace ZweiHander.PlayerFiles
 
         public Color Color { get; set; } = Color.White;
 
-        public PlayerHandler(PlayerSprites playerSprites, Player player, PlayerStateMachine stateMachine)
+        public PlayerHandler(PlayerSprites playerSprites, Player player, PlayerStateMachine stateMachine,ContentManager content)
         {
             _playerSprites = playerSprites;
             _player = player;
@@ -38,7 +39,7 @@ namespace ZweiHander.PlayerFiles
             _currentSprite = _playerSprites.PlayerIdle();
             _lastState = _stateMachine.CurrentState;
             _lastDirectionVector = _stateMachine.LastDirection;
-            _collisionHandler = new PlayerCollisionHandler(_player);
+            _collisionHandler = new PlayerCollisionHandler(_player,content);
         }
 
         private void UpdateSprite(PlayerState state, Vector2 directionVector)

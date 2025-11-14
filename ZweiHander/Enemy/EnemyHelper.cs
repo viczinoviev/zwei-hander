@@ -107,8 +107,28 @@ class EnemyHelper
         }
     }
 
-    public static void bladeTrapAttack(BladeTrap enemy)
+    public static void bladeTrapAttack(BladeTrap enemy, float dt)
     {
-        
+        if (enemy.attackTime >= 0)
+        {
+            enemy.Position = EnemyHelper.BehaveFromFace(enemy, 2, 0);
+            enemy.attackTime -= dt;
+        }
+        else
+        {
+            enemy.Thrower = 2;
+            enemy.Face = (enemy.Face + 2) % 4;
+        }
+    }
+    public static void bladeTrapReturn(BladeTrap enemy)
+    {
+        if (Math.Abs(enemy.originalPosition.X - enemy.Position.X) >= 2 || Math.Abs(enemy.originalPosition.Y - enemy.Position.Y) >= 2)
+            {
+                enemy.Position = EnemyHelper.BehaveFromFace(enemy, 1, 0);
+            }
+            else
+            {
+                enemy.Thrower = 0;
+            }
     }
 }
