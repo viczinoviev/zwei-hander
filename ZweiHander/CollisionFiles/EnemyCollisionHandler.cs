@@ -18,10 +18,13 @@ namespace ZweiHander.CollisionFiles
         public readonly IEnemy _enemy;
 
         private SoundEffect enemyHurt;
+
+        private SoundEffectInstance currentSFX;
         public EnemyCollisionHandler(IEnemy enemy,ContentManager sfxPlayer)
         {
             _enemy = enemy;
             enemyHurt = sfxPlayer.Load<SoundEffect>("Audio/Hurt");
+            currentSFX = enemyHurt.CreateInstance();
             UpdateCollisionBox();
         }
 
@@ -60,7 +63,10 @@ namespace ZweiHander.CollisionFiles
                 if (playerCollisionHandler._player.CurrentState == PlayerState.Attacking)
                 {
                     _enemy.Hitpoints -= 5;
-                    enemyHurt.Play();
+                    if (currentSFX.State == SoundState.Stopped)
+                    {
+                        currentSFX.Play();
+                    }
                     //if the enemy has died, set this handler to be removed
                     if (_enemy.Hitpoints <= 0)
                     {
