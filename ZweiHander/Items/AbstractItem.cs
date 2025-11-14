@@ -49,6 +49,8 @@ public abstract class AbstractItem : IItem
 
     public Vector2 Acceleration { get; set; }
 
+    public Vector2 SpriteOffset { get; set; } = Vector2.Zero;
+
     /// <summary>
     /// The lifetime (in seconds) left for item; negative means infinite.
     /// </summary>
@@ -126,7 +128,7 @@ public abstract class AbstractItem : IItem
 
     public void Draw()
     {
-        Sprite.Draw(Position);
+        Sprite.Draw(Position + SpriteOffset);
     }
 
     /// <summary>

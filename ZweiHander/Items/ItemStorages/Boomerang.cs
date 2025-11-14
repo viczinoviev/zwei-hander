@@ -68,12 +68,10 @@ public class Boomerang : AbstractItem
         {
             if (Signs == Vector2.Zero)
             {
-                Debug.WriteLine("WARNING: Boomerang had no initial velocity");
                 Signs = new(Math.Sign(Velocity.X), Math.Sign(Velocity.Y));
             }
             if (ReturnAcceleration <= 0)
             {
-                Debug.WriteLine("WARNING: Boomerang had no initial acceleration");
                 ReturnAcceleration = Acceleration.Length();
             }
             if (Math.Sign(Velocity.X) != Signs.X || Math.Sign(Velocity.Y) != Signs.Y)

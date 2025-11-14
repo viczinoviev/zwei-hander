@@ -25,6 +25,11 @@ public interface IItem
     public Vector2 Acceleration { get; set; }
 
     /// <summary>
+    /// How much Sprite is offset from actual location
+    /// </summary>
+    public Vector2 SpriteOffset { get; set; }
+
+    /// <summary>
     /// What type of item this is.
     /// </summary>
     public Type ItemType { get; }

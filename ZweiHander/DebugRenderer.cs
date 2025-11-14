@@ -9,7 +9,7 @@ namespace ZweiHander
     {
         private Texture2D _debugTexture;
         
-        public bool ShowCollisionBoxes { get; set; } = true;
+        public bool ShowCollisionBoxes { get; set; } = false;
         public bool ShowRoomBounds { get; set; } = false;
         public bool ShowGrid { get; set; } = false;
         
