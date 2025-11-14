@@ -112,12 +112,13 @@ public class Aquamentus : IEnemy
     }
     public Rectangle GetCollisionBox()
     {
+        // Sprites are centered
         return new Rectangle(
-                (int)(Position.X - Sprite.Width),
-                (int)(Position.Y - Sprite.Height),
-                Sprite.Width + 25,
-                Sprite.Height + 15
-            );
+                (int)Position.X - Sprite.Width / 2,
+                (int)Position.Y - Sprite.Height / 2,
+                Sprite.Width,
+                Sprite.Height
+        );
     }
 }
 

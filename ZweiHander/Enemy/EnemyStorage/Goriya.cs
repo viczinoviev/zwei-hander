@@ -21,7 +21,7 @@ public class Goriya : IEnemy
     /// <summary>
     /// Projectile for this enemy
     /// </summary>
-    
+
     /// <summary>
     /// List of Sprites for this enemy
     /// <summary>
@@ -42,14 +42,14 @@ public class Goriya : IEnemy
 
     public EnemyCollisionHandler CollisionHandler { get; } = default;
 
-private int Thrower = 1;
+    private int Thrower = 1;
     /// <summary>
     /// Random number generator to randomize enemy behavior
     /// </summary>
     readonly Random rnd = new();
 
 
-    public Goriya(EnemySprites enemySprites, ItemManager projectileManager,ContentManager sfxPlayer)
+    public Goriya(EnemySprites enemySprites, ItemManager projectileManager, ContentManager sfxPlayer)
     {
         _projectileManager = projectileManager;
         _enemySprites = enemySprites;
@@ -59,7 +59,7 @@ private int Thrower = 1;
         _sprites.Add(_enemySprites.GoriyaDown());
         _sprites.Add(_enemySprites.GoriyaLeft());
         Sprite = _sprites[0];
-        CollisionHandler = new EnemyCollisionHandler(this,sfxPlayer);
+        CollisionHandler = new EnemyCollisionHandler(this, sfxPlayer);
     }
     public virtual void Update(GameTime time)
     {
@@ -91,8 +91,8 @@ private int Thrower = 1;
             Thrower = 2;
             //Set up the projectiles behavior
             (float v, float a) = ItemHelper.BoomerangTrajectory(50, 3);
-            _currentProjectile.Velocity = EnemyHelper.BehaveFromFace(this, v,1);
-            _currentProjectile.Acceleration = EnemyHelper.BehaveFromFace(this, a,1);
+            _currentProjectile.Velocity = EnemyHelper.BehaveFromFace(this, v, 1);
+            _currentProjectile.Acceleration = EnemyHelper.BehaveFromFace(this, a, 1);
         }
         else
         {
@@ -109,7 +109,7 @@ private int Thrower = 1;
         CollisionHandler.UpdateCollisionBox();
         Sprite.Update(time);
         _projectileManager.Update(time);
-        }
+    }
 
 
 
@@ -120,12 +120,13 @@ private int Thrower = 1;
     }
     public Rectangle GetCollisionBox()
     {
+        // Sprites are centered
         return new Rectangle(
-                (int)(Position.X - Sprite.Width),
-                (int)(Position.Y - Sprite.Height),
-                Sprite.Width + 15,
-                Sprite.Height + 15
-            );
+                (int)Position.X - Sprite.Width / 2,
+                (int)Position.Y - Sprite.Height / 2,
+                Sprite.Width,
+                Sprite.Height
+        );
     }
 }
 

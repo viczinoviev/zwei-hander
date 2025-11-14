@@ -9,8 +9,8 @@
 		<Region name="darknut-move-right-1" x="52" y="90" width="16" height="16" />
 		<Region name="darknut-move-right-2" x="69" y="90" width="16" height="16" />
 		<!-- Gel -->
-		<Region name="gel-1" x="1" y="11" width="8" height="16" />
-		<Region name="gel-2" x="10" y="11" width="8" height="16" />
+		<Region name="gel-1" x="1" y="15" width="8" height="9" />
+		<Region name="gel-2" x="10" y="15" width="8" height="9" />
 		<!-- Goriya -->
 		<Region name="goriya-down" x="222" y="11" width="16" height="16" />
 		<Region name="goriya-up" x="239" y="11" width="16" height="16" />
