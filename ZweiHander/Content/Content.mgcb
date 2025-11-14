@@ -292,6 +292,9 @@
 /processorParam:TextureFormat=Color
 /build:SpriteSheets/NPCs.png
 
+#begin SpriteSheets/TitleDefinition.xml
+/copy:SpriteSheets/TitleDefinition.xml
+
 #begin SpriteSheets/TreasureDefinition.xml
 /copy:SpriteSheets/TreasureDefinition.xml
 

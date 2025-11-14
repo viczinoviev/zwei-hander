@@ -39,7 +39,7 @@ namespace ZweiHander.CollisionFiles
             if (other is ItemCollisionHandler itemCollisionHandler)
             {
                 //If the item can hurt enemies, hurt the enemy.
-                if (itemCollisionHandler.HasProperty(ItemProperty.CanDamageEnemy))
+                if (itemCollisionHandler.Item.HasProperty(ItemProperty.CanDamageEnemy))
                 {
                     enemyHurt.Play();
                     _enemy.Hitpoints -= 5;

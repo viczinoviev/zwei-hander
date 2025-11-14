@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using ZweiHander.Environment;
 using ZweiHander.PlayerFiles;
 using ZweiHander.Items;
+using ZweiHander.Items.ItemStorages;
 
 namespace ZweiHander.CollisionFiles
 {
@@ -42,16 +43,29 @@ namespace ZweiHander.CollisionFiles
             // If the player hit a damaging item, apply damage
             if (other is ItemCollisionHandler itemHandler)
             {
-                if (itemHandler.HasProperty(ItemProperty.CanDamagePlayer))
+                if (itemHandler.Item.HasProperty(ItemProperty.CanDamagePlayer))
                 {
                     _player.TakeDamage();
                 }
 
-                if (itemHandler.HasProperty(ItemProperty.CanBePickedUp))
+                if (itemHandler.Item.HasProperty(ItemProperty.CanBePickedUp))
                 {
-
-                    _player.addItemToInventory(itemHandler.ItemType);
-                    itemHandler.Kill();
+                    switch (itemHandler.Item)
+                    {
+                        case HeartContainer:
+                            _player.IncreaseMaxHealth(2);
+                            break;
+                        case Heart:
+                            _player.Heal(2);
+                            break;
+                        case Bomb:
+                            _player.AddItemToInventory(itemHandler.Item.ItemType, 10);
+                            break;
+                        default:
+                            _player.AddItemToInventory(itemHandler.Item.ItemType);
+                            break;
+                    }                   
+                    itemHandler.Item.Kill();
                 }
             }
 

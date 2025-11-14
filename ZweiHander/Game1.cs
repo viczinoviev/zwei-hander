@@ -38,6 +38,7 @@ namespace ZweiHander
 
         private Player _gamePlayer;
         private KeyboardController _keyboardController;
+        private TitleScreenController _titleScreenController;
 
         private HurtPlayerCommand _hurtPlayerCommand;
 
@@ -54,14 +55,14 @@ namespace ZweiHander
         private NPCSprites _npcSprites;
         private ItemSprites _itemSprites;
         private BlockFactory _blockFactory;
-        private ItemManager _itemManager; //The item that is rotated through
-        private ItemManager _projectileManager; //Any projectiles from enemies or player
+        private ItemManager _itemManager;
+        private ItemManager _projectileManager;
+        private TitleSprites _titleSprites;
         
         private Universe _universe;
         private CsvAreaConstructor _areaConstructor;
 
-        private Texture2D _debugPixel;
-        //Backround Song
+        private DebugRenderer _debugRenderer;
         private Song bgm;
 
         public Player GamePlayer => _gamePlayer;
@@ -85,16 +86,16 @@ namespace ZweiHander
             _gameState = new GameState();
             Services.AddService<IGameState>(_gameState);
 
-            // if HUD needs to mirror pause state:
-            _gameState.PausedChanged += p => _hudManager.SetPaused(p);
-
+            _gameState.PausedChanged += p => _hudManager?.SetPaused(p);
+            _gameState.ModeChanged += OnGameModeChanged;
 
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // Initialize camera
             _camera = new Camera.Camera(GraphicsDevice.Viewport);
 
-            //TEST: Link Sprites, Should be part of link initialization
+            _titleSprites = new TitleSprites(Content, _spriteBatch);
+            _titleScreenController = new TitleScreenController();
 
             // This line will load all of the sprites into the program through an xml file
             _linkSprites = new PlayerSprites(Content, _spriteBatch);
@@ -105,18 +106,16 @@ namespace ZweiHander
             _enemySprites = new EnemySprites(Content, _spriteBatch);
             _bossSprites = new BossSprites(Content, _spriteBatch);
             _npcSprites = new NPCSprites(Content, _spriteBatch);
-            
+
             // Create separate manager instances for Game1 use
             _blockFactory = new BlockFactory(32, _blockSprites, _linkSprites);
             _itemManager = new ItemManager(_itemSprites, _treasureSprites, _bossSprites);
             _projectileManager = new ItemManager(_itemSprites, _treasureSprites, _bossSprites);
             _enemyManager = new EnemyManager(_enemySprites, _projectileManager, _bossSprites, _npcSprites, Content);
 
-            _debugPixel = new Texture2D(GraphicsDevice, 1, 1);
-            _debugPixel.SetData(new[] { Color.White });
+            _debugRenderer = new DebugRenderer();
+            _debugRenderer.Initialize(GraphicsDevice);
 
-            // Initialize debug texture for collision manager
-            CollisionManager.Instance.InitializeDebugTexture(GraphicsDevice);
             bgm = Content.Load<Song>("Audio/DungeonTheme");
             if (MediaPlayer.State == MediaState.Playing)
             {
@@ -124,8 +123,14 @@ namespace ZweiHander
             }
             MediaPlayer.Play(bgm);
             MediaPlayer.IsRepeating = true;
+        }
 
-            GameSetUp();
+        private void OnGameModeChanged(GameMode newMode)
+        {
+            if (newMode == GameMode.Playing)
+            {
+                GameSetUp();
+            }
         }
 
         /// <summary>
@@ -137,7 +142,7 @@ namespace ZweiHander
             CollisionManager.Instance.ClearAllColliders();
 
             _gamePlayer = new Player(_linkSprites, _itemSprites, _treasureSprites);
-            _gamePlayer.Position = new Vector2(100, 100);
+            _gamePlayer.Position = new Vector2(100, 200);
             SetCameraCommand moveCameraToPlayer = new SetCameraCommand(_camera, _gamePlayer);
             moveCameraToPlayer.Execute();
 
@@ -151,7 +156,9 @@ namespace ZweiHander
                 _blockSprites,
                 _linkSprites,
 
-                Content
+                Content,
+
+                _camera
             );
             _universe.SetPlayer(_gamePlayer);
             _universe.SetupPortalManager(_camera);
@@ -178,23 +185,33 @@ namespace ZweiHander
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // Always update keyboard and HUD
-            _keyboardController.Update();
-            _hudManager.Update(gameTime);
-
-            // Update stuff when game is running
-            if (!gamePaused)
+            if (_gameState.CurrentMode == GameMode.TitleScreen)
             {
-                _universe.Update(gameTime);
-                _itemManager.Update(gameTime);
-                _projectileManager.Update(gameTime);
+                if (_titleScreenController.ShouldStartGame())
+                {
+                    _gameState.SetMode(GameMode.Playing);
+                }
+            }
+            else if (_gameState.CurrentMode == GameMode.Playing)
+            {
+                // Always update keyboard and HUD
+                _keyboardController.Update();
+                _hudManager.Update(gameTime);
 
-                _gamePlayer.Update(gameTime);
-                _hurtPlayerCommand.Update(gameTime);
+                // Update stuff when game is running
+                if (!gamePaused)
+                {
+                    _universe.Update(gameTime);
+                    _itemManager.Update(gameTime);
+                    _projectileManager.Update(gameTime);
 
-                CollisionManager.Instance.Update(gameTime);
+                    _gamePlayer.Update(gameTime);
+                    _hurtPlayerCommand.Update(gameTime);
 
-                _camera.Update(gameTime, _gamePlayer.Position);
+                    CollisionManager.Instance.Update(gameTime);
+
+                    _camera.Update(gameTime, _gamePlayer.Position);
+                }
             }
 
             base.Update(gameTime);
@@ -202,60 +219,44 @@ namespace ZweiHander
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
-            // Draw world with camera transform
-            _spriteBatch.Begin(
-                samplerState: SamplerState.PointClamp,
-                transformMatrix: _camera.GetTransformMatrix()
-            );
+            if (_gameState.CurrentMode == GameMode.TitleScreen)
+            {
+                _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+                _titleSprites.Title().Draw(new Vector2(
+                    GraphicsDevice.Viewport.Width / 2.0f,
+                    GraphicsDevice.Viewport.Height / 2.0f
+                    ));
+                _spriteBatch.End();
+            }
+            else if (_gameState.CurrentMode == GameMode.Playing)
+            {
+                // Draw world with camera transform
+                _spriteBatch.Begin(
+                    samplerState: SamplerState.PointClamp,
+                    transformMatrix: _camera.GetTransformMatrix()
+                );
 
-            _universe.Draw();
-            _projectileManager.Draw();
-            _gamePlayer.Draw(_spriteBatch);
-            _spriteBatch.End();
+                _universe.Draw();
+                _projectileManager.Draw();
+                _gamePlayer.Draw(_spriteBatch);
 
-            // Draw HUD without camera transform (fixed to screen)
-            _spriteBatch.Begin(
-                samplerState: SamplerState.PointClamp
-            );
-            _hudManager.Draw(_spriteBatch);
+                _debugRenderer.DrawWorldDebug(_spriteBatch, _universe);
 
-            DrawDebugGrid();
-            
-            // Draw debug collision boxes if enabled
-            CollisionManager.Instance.DrawDebugCollisionBoxes(_spriteBatch);
+                _spriteBatch.End();
+
+                _spriteBatch.Begin(
+                    samplerState: SamplerState.PointClamp
+                );
+                _hudManager.Draw(_spriteBatch);
+
+                _debugRenderer.DrawScreenDebug(_spriteBatch);
+
+                _spriteBatch.End();
+            }
 
             base.Draw(gameTime);
-
-            _spriteBatch.End();
-        }
-
-        private void DrawDebugGrid()
-        {
-            int gridSize = 32;
-            int dotSize = 2;
-            int gridRange = 20; 
-
-            for (int y = -gridRange; y <= gridRange; y++)
-            {
-                Rectangle dot = new Rectangle(0 - dotSize / 2, y * gridSize - dotSize / 2, dotSize, dotSize);
-                _spriteBatch.Draw(_debugPixel, dot, Color.Yellow);
-            }
-
-            for (int x = -gridRange; x <= gridRange; x++)
-            {
-                Rectangle dot = new Rectangle(x * gridSize - dotSize / 2, 0 - dotSize / 2, dotSize, dotSize);
-                _spriteBatch.Draw(_debugPixel, dot, Color.Yellow);
-            }
-
-            Rectangle origin = new Rectangle(-4, -4, 8, 8);
-            _spriteBatch.Draw(_debugPixel, origin, Color.Green);
-        }
-
-        private void DrawDebugRectangle(Rectangle rect, Color color)
-        {
-            _spriteBatch.Draw(_debugPixel, rect, color);
         }
     }
 }

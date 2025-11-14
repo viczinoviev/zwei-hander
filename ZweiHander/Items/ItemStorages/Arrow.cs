@@ -5,7 +5,7 @@ using ZweiHander.Graphics.SpriteStorages;
 
 namespace ZweiHander.Items.ItemStorages;
 /// <summary>
-/// 2s life, spawns facing velocity, DeleteOnBlock, death sprite
+/// 1.1s life, spawns facing velocity, DeleteOnBlock, death sprite
 /// </summary>
 public class Arrow : AbstractItem
 {

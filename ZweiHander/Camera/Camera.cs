@@ -26,18 +26,18 @@ namespace ZweiHander.Camera
 		/// </summary>
         private float SmoothSpeed = 0.1f;
 
-        /// <summary>
-		/// Flag to check if initial camera setup has been completed
-		/// </summary>
-        private bool initialSetUpCompleted = false;
+        private bool _isOverridden;
+        private Vector2 _overrideStartPosition;
+        private Vector2 _overrideTargetPosition;
+        private float _overrideElapsedTime;
+        private float _overrideDuration;
 
         public Camera(Viewport viewport)
         {
             Viewport = viewport;
             Position = Vector2.Zero;
             DesiredPosition = Vector2.Zero;
-
-
+            _isOverridden = false;
         }
 
         /// <summary>
@@ -53,15 +53,47 @@ namespace ZweiHander.Camera
             Vector2 cameraPosition = playerPosition - new Vector2(Viewport.Width / 2f, Viewport.Height / 2f);
             Position = cameraPosition;
             DesiredPosition = cameraPosition;
+            _isOverridden = false;
         }
+
+        public void OverrideMotion(Vector2 targetWorldPosition, float duration)
+        {
+            _isOverridden = true;
+            _overrideStartPosition = Position;
+            _overrideTargetPosition = targetWorldPosition - new Vector2(Viewport.Width / 2f, Viewport.Height / 2f);
+            _overrideElapsedTime = 0f;
+            _overrideDuration = duration;
+        }
+
+        public void CancelOverride()
+        {
+            _isOverridden = false;
+        }
+
+        public bool IsOverridden => _isOverridden;
 
         public void Update(GameTime gameTime, Vector2 target)
         {
-            // Set desired position to center on player
-            DesiredPosition = target - new Vector2(Viewport.Width / 2f, Viewport.Height / 2f);
-            
-            // Smoothly interpolate camera position towards desired position
-            Position += (DesiredPosition - Position) * SmoothSpeed;
+            if (_isOverridden)
+            {
+                _overrideElapsedTime += (float)gameTime.ElapsedGameTime.TotalMilliseconds / 1000f;
+                float t = MathHelper.Clamp(_overrideElapsedTime / _overrideDuration, 0f, 1f);
+                
+                t = t * t * (3f - 2f * t);
+                
+                Position = Vector2.Lerp(_overrideStartPosition, _overrideTargetPosition, t);
+                DesiredPosition = Position;
+
+                if (_overrideElapsedTime >= _overrideDuration)
+                {
+                    _isOverridden = false;
+                }
+            }
+            else
+            {
+                DesiredPosition = target - new Vector2(Viewport.Width / 2f, Viewport.Height / 2f);
+                Position += (DesiredPosition - Position) * SmoothSpeed;
+            }
         }
 
         /// <summary>

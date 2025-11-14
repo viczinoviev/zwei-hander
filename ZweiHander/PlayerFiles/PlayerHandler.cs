@@ -183,7 +183,8 @@ namespace ZweiHander.PlayerFiles
             Vector2 swordPosition = _player.Position + _stateMachine.LastDirection * 10f;
             Vector2 swordVelocity = _stateMachine.LastDirection * 400f;
 
-            _player.ItemManager.GetItem<Sword>(
+            _player.ItemManager.GetItem(
+                "Sword",
                 life: 1.1,
                 position: swordPosition,
                 velocity: swordVelocity
@@ -194,9 +195,10 @@ namespace ZweiHander.PlayerFiles
         {
             Vector2 itemPosition = _player.Position;
             Vector2 itemVelocity = _stateMachine.LastDirection * 300f;
-            if (itemInput == PlayerInput.UsingItem1)
+            if (itemInput == PlayerInput.UsingItem1 && _player.InventoryCount(typeof(Bow)) > 0)
             {
-                _player.ItemManager.GetItem<Arrow>(
+                _player.ItemManager.GetItem(
+                    "Arrow",
                     life: 1.1,
                     position: itemPosition,
                     velocity: itemVelocity,
@@ -207,7 +209,8 @@ namespace ZweiHander.PlayerFiles
             }
             else if (itemInput == PlayerInput.UsingItem2)
             {
-                _player.ItemManager.GetItem<Boomerang>(
+                _player.ItemManager.GetItem(
+                    "Boomerang",
                     life: -1f,
                     position: itemPosition,
                     velocity: itemVelocity,
@@ -219,9 +222,10 @@ namespace ZweiHander.PlayerFiles
             }
             else if (itemInput == PlayerInput.UsingItem3)
             {
-                if (_player.Inventory[typeof(Bomb)] > 0)
+                if (_player.InventoryCount(typeof(Bomb)) > 0)
                 {
-                    _player.ItemManager.GetItem<Bomb>(
+                    _player.ItemManager.GetItem(
+                        "Bomb",
                         life: 1.5f,
                         position: itemPosition + _stateMachine.LastDirection * 30f,
                         velocity: Vector2.Zero,

@@ -5,6 +5,7 @@ namespace ZweiHander.CollisionFiles
         Up,
         Down,
         Left,
-        Right
+        Right,
+        None
     }
 }

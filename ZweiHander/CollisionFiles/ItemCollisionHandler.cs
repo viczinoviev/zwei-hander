@@ -11,12 +11,7 @@ public class ItemCollisionHandler : CollisionHandlerAbstract
     /// <summary>
     /// The actual item this handles.
     /// </summary>
-    protected IItem Item { get; set; }
-    
-    /// <summary>
-    /// The type of item this is handling.
-    /// </summary>
-    public Type ItemType { get => Item.ItemType; }
+    public readonly IItem Item;
 
     public ItemCollisionHandler(IItem item)
     {
@@ -32,23 +27,5 @@ public class ItemCollisionHandler : CollisionHandlerAbstract
     public override void UpdateCollisionBox()
     {
         collisionBox = Item.GetHitBox();
-    }
-
-    /// <summary>
-    /// Whether the item this handles has this property or not.
-    /// </summary>
-    /// <param name="itemProperty">Property to check for.</param>
-    /// <returns>If the item has this property.</returns>
-    public bool HasProperty(ItemProperty itemProperty)
-    {
-        return Item.HasProperty(itemProperty);
-    }
-
-    /// <summary>
-    ///  Kills the item this handler is for.
-    /// </summary>
-    public void Kill()
-    {
-        Item.Kill();
     }
 }

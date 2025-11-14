@@ -19,7 +19,7 @@ namespace ZweiHander.Map
         private readonly List<(BlockName blockName, Point gridPosition)> _blockData;
         private readonly List<(BorderName borderName, Vector2 position)> _borderData;
         private readonly List<(string enemyName, Vector2 position)> _enemyData;
-        private readonly List<(Type itemType, Vector2 position)> _itemData;
+        private readonly List<(string itemType, Vector2 position)> _itemData;
         private readonly List<(int portalId, Vector2 position)> _portalData;
         
         private readonly Universe _universe;
@@ -37,7 +37,7 @@ namespace ZweiHander.Map
             _blockData = new List<(BlockName, Point)>();
             _borderData = new List<(BorderName, Vector2)>();
             _enemyData = new List<(string, Vector2)>();
-            _itemData = new List<(Type, Vector2)>();
+            _itemData = new List<(string, Vector2)>();
             _portalData = new List<(int, Vector2)>();
         }
 
@@ -56,7 +56,7 @@ namespace ZweiHander.Map
             _enemyData.Add((enemyName, position));
         }
         
-        public void AddItem(Type itemType, Vector2 position)
+        public void AddItem(string itemType, Vector2 position)
         {
             _itemData.Add((itemType, position));
         }
@@ -68,36 +68,41 @@ namespace ZweiHander.Map
 
         public IEnumerable<(int portalId, Vector2 position)> GetPortalData() => _portalData;
 
-        public void Load()
+        public void Load(bool excludePortals = false, Vector2 offsetInTiles = default)
         {
+
             IsLoaded = true;
             
             // Create fresh instances - collision handlers auto-register in their constructors
             foreach (var (blockName, gridPosition) in _blockData)
             {
-                _universe.BlockFactory.CreateBlock(blockName, gridPosition);
+                Point adjustedGridPosition = new Point(gridPosition.X + (int)offsetInTiles.X, gridPosition.Y + (int)offsetInTiles.Y);
+                _universe.BlockFactory.CreateBlock(blockName, adjustedGridPosition);
             }
             
             foreach (var (borderName, position) in _borderData)
             {
-                _universe.BorderFactory.CreateBorder(borderName, position);
+                Vector2 adjustedPosition = position + new Vector2(offsetInTiles.X * _universe.TileSize, offsetInTiles.Y * _universe.TileSize);
+                _universe.BorderFactory.CreateBorder(borderName, adjustedPosition);
             }
             
             foreach (var (enemyName, position) in _enemyData)
             {
-                _universe.EnemyManager.GetEnemy(enemyName, position);
+                Vector2 adjustedPosition = position + new Vector2(offsetInTiles.X * _universe.TileSize, offsetInTiles.Y * _universe.TileSize);
+                _universe.EnemyManager.GetEnemy(enemyName, adjustedPosition);
             }
             
             foreach (var (itemType, position) in _itemData)
             {
-                var getItemMethod = typeof(ItemManager).GetMethod("GetItem").MakeGenericMethod(itemType);
-                getItemMethod.Invoke(_universe.ItemManager, new object[] { 0.0, position, default(Vector2), default(Vector2), null, true, null, null });
+                Vector2 adjustedPosition = position + new Vector2(offsetInTiles.X * _universe.TileSize, offsetInTiles.Y * _universe.TileSize);
+                _universe.ItemManager.GetItem(itemType, -1, adjustedPosition);
             }
             
-            // Create portals from data
+            if (excludePortals) return;
             foreach (var (portalId, position) in _portalData)
             {
-                RoomPortal portal = _universe.PortalManager.CreatePortal(portalId, position, this, _universe.CurrentArea);
+                Vector2 adjustedPosition = position + new Vector2(offsetInTiles.X * _universe.TileSize, offsetInTiles.Y * _universe.TileSize);
+                RoomPortal portal = _universe.PortalManager.CreatePortal(portalId, adjustedPosition, this, _universe.CurrentArea);
                 portal.OnRoomLoad();
             }
             

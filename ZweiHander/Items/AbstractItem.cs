@@ -43,7 +43,7 @@ public abstract class AbstractItem : IItem
     /// </summary>
     protected ISprite Sprite { get => Sprites[SpriteIndex]; }
 
-    public Vector2 Position { get; set; }= Vector2.Zero;
+    public Vector2 Position { get; set; } = Vector2.Zero;
 
     public Vector2 Velocity { get; set; }
 
@@ -105,11 +105,7 @@ public abstract class AbstractItem : IItem
         float dt = (float)time.ElapsedGameTime.TotalSeconds;
         // Life progression
         ProgressLife(dt);
-        if (IsDead())
-        {
-            CollisionHandler.Dead = true;
-            return;
-        } 
+        if (IsDead()) return;
 
         // Movement
         if (!HasProperty(ItemProperty.Stationary))
@@ -123,6 +119,7 @@ public abstract class AbstractItem : IItem
         {
             Sprite.Rotation = (float)Math.Atan2(Velocity.Y, Velocity.X);
         }
+
         Sprite.Update(time);
         CollisionHandler.UpdateCollisionBox();
     }
@@ -138,13 +135,15 @@ public abstract class AbstractItem : IItem
     /// <param name="dt">Time that has passed.</param>
     protected void ProgressLife(float dt)
     {
-        if (Life > 0)
+        if (Life > 0) //Life can only progress if it is alive
         {
             Life -= dt;
             if (Life < 0)
             {
-                Life = 0;
+                Life = 0; //Negative life is infinite, which we do not want
+                CollisionHandler.Dead = true;
             }
+            // If there is threshold for this phase, and we are past that threshold, then progress the phase
             if (Phase < Phases.Count && Life <= Phases[Phase])
             {
                 Phase++;
@@ -195,7 +194,7 @@ public abstract class AbstractItem : IItem
 
     public Rectangle GetHitBox()
     {
-        // I will be honest, I do not know why using this as the topleft works
+        // Sprites are centered
         return new Rectangle(
                 (int)Position.X - Sprite.Width / 2,
                 (int)Position.Y - Sprite.Height / 2,
@@ -209,23 +208,11 @@ public abstract class AbstractItem : IItem
         switch (other)
         {
             case PlayerCollisionHandler:
-                if (HasProperty(ItemProperty.CanBePickedUp))
-                {
-                }
-                if (HasProperty(ItemProperty.DeleteOnPlayer))
-                {
-                    Kill();
-                }
+                if (HasProperty(ItemProperty.DeleteOnPlayer)) Kill();
                 break;
             case BlockCollisionHandler:
-                if (HasProperty(ItemProperty.DeleteOnBlock))
-                {
-                    Kill();
-                }
-                if (HasProperty(ItemProperty.BounceOnBlock))
-                {
-                    Velocity *= -1;
-                }
+                if (HasProperty(ItemProperty.DeleteOnBlock)) Kill();
+                if (HasProperty(ItemProperty.BounceOnBlock)) Velocity *= -1;
                 if (HasProperty(ItemProperty.StopOnBlock))
                 {
                     Velocity = Vector2.Zero;
@@ -235,10 +222,7 @@ public abstract class AbstractItem : IItem
             case ItemCollisionHandler:
                 break;
             case EnemyCollisionHandler:
-                if (HasProperty(ItemProperty.DeleteOnEnemy))
-                {
-                    Kill();
-                }
+                if (HasProperty(ItemProperty.DeleteOnEnemy)) Kill();
                 break;
         }
     }

@@ -6,23 +6,13 @@ namespace ZweiHander.CollisionFiles
 {
 	public class CollisionManager : ICollisionManager
 	{
-		/// <summary>
-		/// Singleton pattern for one global collision manager
-		/// </summary>
 		private static CollisionManager _instance;
 		private static readonly object _lock = new();
 
-		/// <summary>
-		/// All the things that can collide with each other
-		/// </summary>
 		readonly private List<ICollisionHandler> colliders = [];
-
-		public bool ShowDebugCollisionBoxes { get; set; } = false;
-		private Texture2D _debugTexture;
 
 		private CollisionManager() { }
 
-		// Gets the one and only collision manager
 		public static CollisionManager Instance
 		{
 			get
@@ -38,10 +28,6 @@ namespace ZweiHander.CollisionFiles
 			}
 		}
 
-        /// <summary>
-        /// Called every frame to check for collisions
-        /// </summary>
-        /// <param name="gameTime">A snapshot of the game timing values provided by the framework.</param>
         public void Update(GameTime gameTime)
 		{
 			CheckCollisions(gameTime);
@@ -49,7 +35,6 @@ namespace ZweiHander.CollisionFiles
 
         public void CheckCollisions(GameTime gameTime)
 		{
-			// Remove empty colliders
 			for (int i = colliders.Count - 1; i >= 0; i--)
 			{
 				if (colliders[i].Dead == true || colliders[i] == null)
@@ -58,7 +43,6 @@ namespace ZweiHander.CollisionFiles
 				}
 			}
 
-			// Check for any collisions
 			for (int i = 0; i < colliders.Count; i++)
 			{
 				for (int j = i + 1; j < colliders.Count; j++)
@@ -76,7 +60,6 @@ namespace ZweiHander.CollisionFiles
 			}
 		}
 
-		// Figures out collision details like which direction to push things
 		private CollisionInfo CalculateCollisionInfo(Rectangle movingRect, Rectangle staticRect)
 		{
 			Rectangle intersection = Rectangle.Intersect(movingRect, staticRect);
@@ -88,7 +71,6 @@ namespace ZweiHander.CollisionFiles
 			Direction normal;
 			Vector2 resolutionOffset;
 
-			// How much the rectangles overlap in each direction
 			int leftOverlap = (movingRect.Right) - staticRect.Left;
 			int rightOverlap = staticRect.Right - movingRect.Left;
 			int topOverlap = movingRect.Bottom - staticRect.Top;
@@ -144,7 +126,6 @@ namespace ZweiHander.CollisionFiles
 
 		public void RemoveDeadColliders()
 		{
-			// Remove null or dead colliders
 			for (int i = colliders.Count - 1; i >= 0; i--)
 			{
 				if (colliders[i] == null || colliders[i].Dead)
@@ -152,6 +133,11 @@ namespace ZweiHander.CollisionFiles
 					colliders.RemoveAt(i);
 				}
 			}
+		}
+
+		public IEnumerable<ICollisionHandler> GetAllColliders()
+		{
+			return colliders;
 		}
 
 		public void PrintAllColliders()
@@ -166,28 +152,10 @@ namespace ZweiHander.CollisionFiles
 
 		public void InitializeDebugTexture(GraphicsDevice graphicsDevice)
 		{
-			if (_debugTexture == null)
-			{
-				_debugTexture = new Texture2D(graphicsDevice, 1, 1);
-				_debugTexture.SetData(new[] { Color.White });
-			}
 		}
-
 
 		public void DrawDebugCollisionBoxes(SpriteBatch spriteBatch)
 		{
-			if (!ShowDebugCollisionBoxes || _debugTexture == null)
-				return;
-
-			Color debugColor = Color.Red * 0.5f;
-
-			foreach (var collider in colliders)
-			{
-				if (collider == null || collider.Dead)
-					continue;
-
-				spriteBatch.Draw(_debugTexture, collider.collisionBox, debugColor);
-			}
 		}
 
 	}

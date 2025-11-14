@@ -17,7 +17,7 @@ namespace ZweiHander.CollisionFiles
         {
             if (other is PlayerCollisionHandler && _portal.CanTeleport())
             {
-                _portal.Teleport();
+                _portal.Teleport(collisionInfo.Normal);
             }
         }
 

@@ -12,8 +12,8 @@ public abstract class AbstractSprite : ISprite
     /// </summary>
     protected TextureRegion _region;
 
-    public int Height { get => _region.Height; }
-    public int Width { get => _region.Width; }
+    public int Height { get => (int) ((float) _region.Height * Scale.Y); }
+    public int Width { get => (int)((float)_region.Width * Scale.X); }
     /// <summary>
     /// The SpriteBatch to draw to
     /// </summary>
