@@ -65,12 +65,13 @@ public class Gel : IEnemy
     }
     public Rectangle GetCollisionBox()
     {
+        // Sprites are centered
         return new Rectangle(
-                (int)(Position.X - Sprite.Width/2),
-                (int)(Position.Y - Sprite.Height/2),
+                (int)Position.X - Sprite.Width / 2,
+                (int)Position.Y - Sprite.Height / 2,
                 Sprite.Width,
                 Sprite.Height
-            );
+        );
     }
 }
 

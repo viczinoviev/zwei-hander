@@ -74,14 +74,15 @@ public class Dodongo : IEnemy
     {
         Sprite.Draw(Position);
     }
-public Rectangle GetCollisionBox()
+    public Rectangle GetCollisionBox()
     {
+        // Sprites are centered
         return new Rectangle(
-                (int)(Position.X - Sprite.Width),
-                (int)(Position.Y - Sprite.Height),
-                Sprite.Width + 15,
-                Sprite.Height + 15
-            );
+                (int)Position.X - Sprite.Width / 2,
+                (int)Position.Y - Sprite.Height / 2,
+                Sprite.Width,
+                Sprite.Height
+        );
     }
 
 }

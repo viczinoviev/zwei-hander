@@ -21,7 +21,7 @@ public class Goriya : IEnemy
     /// <summary>
     /// Projectile for this enemy
     /// </summary>
-    
+
     /// <summary>
     /// List of Sprites for this enemy
     /// <summary>
@@ -49,7 +49,7 @@ public int Thrower = 1;
     public readonly Random rnd = new();
 
 
-    public Goriya(EnemySprites enemySprites, ItemManager projectileManager,ContentManager sfxPlayer)
+    public Goriya(EnemySprites enemySprites, ItemManager projectileManager, ContentManager sfxPlayer)
     {
         _projectileManager = projectileManager;
         _enemySprites = enemySprites;
@@ -59,7 +59,7 @@ public int Thrower = 1;
         _sprites.Add(_enemySprites.GoriyaDown());
         _sprites.Add(_enemySprites.GoriyaLeft());
         Sprite = _sprites[0];
-        CollisionHandler = new EnemyCollisionHandler(this,sfxPlayer);
+        CollisionHandler = new EnemyCollisionHandler(this, sfxPlayer);
     }
     public virtual void Update(GameTime time)
     {
@@ -86,7 +86,7 @@ public int Thrower = 1;
         CollisionHandler.UpdateCollisionBox();
         Sprite.Update(time);
         _projectileManager.Update(time);
-        }
+    }
 
 
 
@@ -97,12 +97,13 @@ public int Thrower = 1;
     }
     public Rectangle GetCollisionBox()
     {
+        // Sprites are centered
         return new Rectangle(
-                (int)(Position.X - Sprite.Width),
-                (int)(Position.Y - Sprite.Height),
-                Sprite.Width + 15,
-                Sprite.Height + 15
-            );
+                (int)Position.X - Sprite.Width / 2,
+                (int)Position.Y - Sprite.Height / 2,
+                Sprite.Width,
+                Sprite.Height
+        );
     }
 }
 
