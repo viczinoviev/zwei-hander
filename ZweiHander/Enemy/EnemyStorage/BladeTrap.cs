@@ -19,73 +19,57 @@ public class BladeTrap : IEnemy
     /// </summary>
     private readonly EnemySprites _enemySprites;
     /// <summary>
-    /// Time to attack
+    /// position for the trap to return to
     /// </summary>
-    private float attackTime = 0;
-
-    /// <summary>
-    /// Time to return from attack
-    /// </summary>
-    private float returnTime = 0;
+    private Vector2 originalPosition;
 
     public Vector2 Position { get; set; } = default;
 
     public int Face { get; set; } = default;
-    public int Hitpoints { get; set; } = 5;
+    public int Hitpoints { get; set; } = 20000;
 
-    private int Thrower = 1;
+    public int Thrower = 1;
 
+    public float attackTime = 1;
+
+    private readonly BladeTrapHomeCollisionHandler home1CollisionHandler;
+    private readonly BladeTrapHomeCollisionHandler home2CollisionHandler;
     public EnemyCollisionHandler CollisionHandler { get; } = default;
-    /// <summary>
-    /// Random number generator to randomize enemy behavior
-    /// </summary>
-    readonly Random rnd = new();
 
-
-    public BladeTrap(EnemySprites enemySprites,ContentManager sfxPlayer)
+    public BladeTrap(EnemySprites enemySprites,ContentManager sfxPlayer,Vector2 pos)
     {
         _enemySprites = enemySprites;
         Sprite = _enemySprites.Trap();
-        CollisionHandler = new EnemyCollisionHandler(this,sfxPlayer);
+        CollisionHandler = new EnemyCollisionHandler(this, sfxPlayer);
+        home1CollisionHandler = new BladeTrapHomeCollisionHandler(this, 'x');
+        home2CollisionHandler = new BladeTrapHomeCollisionHandler(this, 'y');
+        originalPosition = pos;
     }
     public virtual void Update(GameTime time)
     {
         float dt = (float)time.ElapsedGameTime.TotalSeconds;
-        //Randomize  movement
-        if (Thrower != 2)
+        if (Thrower == 1)
         {
-            int mov = rnd.Next(200);
-            if (mov < 4)
+            if (attackTime >= 0)
             {
-                Face = mov;
-                Thrower = 2;
-                attackTime = 1;
-                returnTime = 3;
-            }
-        }
-        else
-        {
-            if (attackTime > 0)
-            {
+                Position = EnemyHelper.BehaveFromFace(this, 1, 0);
                 attackTime -= dt;
-                Vector2 currentPos = Position;
-                Position = EnemyHelper.BehaveFromFace(this, 3,0);
-                if (Math.Abs(currentPos.X - Position.X) <= .01 && Math.Abs(currentPos.Y - Position.Y) <= .01)
-                {
-                    returnTime -= dt * 3;
-                }  
             }
             else
             {
-                if (returnTime > 0)
-                {
-                    returnTime -= dt;
-                    Position = new Vector2(Position.X - ((-1 + 2 * Convert.ToInt32(!(Face == 3))) * (1 * Convert.ToInt32((Face == 3) || (Face == 1)))), Position.Y - ((-1 + 2 * Convert.ToInt32(!(Face == 0))) * (1 * Convert.ToInt32((Face == 0) || (Face == 2)))));
-                }
-                else
-                {
-                    Thrower = 1;
-                }
+                Thrower = 2;
+                Face = (Face + 2) % 4;
+            }
+        }
+        else if (Thrower == 2)
+        {
+            if (Math.Abs(originalPosition.X - Position.X) >= 2 || Math.Abs(originalPosition.Y - Position.Y) >= 2)
+            {
+                Position = EnemyHelper.BehaveFromFace(this, 1, 0);
+            }
+            else
+            {
+                Thrower = 0;
             }
         }
         CollisionHandler.UpdateCollisionBox();

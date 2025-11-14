@@ -66,30 +66,6 @@ public class Aquamentus : IEnemy
             {
             Face = mov;
             }
-        
-        //Randomize attacking (projectile throwing)
-        int attack = rnd.Next(300);
-        //attack, as long as not already attacking
-        if (attack == 5 && Thrower != 2)
-        {
-            //Create projectiles and Set up the projectiles behavior
-            IItem _currentProjectile1 = _projectileManager.GetItem("Fireball", 3, position: new Vector2(Position.X - 20, Position.Y - 20));
-            _currentProjectile1.Velocity = new Vector2(-100, 0);
-            IItem _currentProjectile2 = _projectileManager.GetItem("Fireball", 3, position: new Vector2(Position.X - 20, Position.Y - 20));
-            _currentProjectile2.Velocity = new Vector2(-100, 30);
-            IItem _currentProjectile3 = _projectileManager.GetItem("Fireball", 3, position: new Vector2(Position.X - 20, Position.Y - 20));
-            _currentProjectile3.Velocity = new Vector2(-100, -30);
-            _projectiles.Add(_currentProjectile1);
-            _projectiles.Add(_currentProjectile2);
-            _projectiles.Add(_currentProjectile3);
-            Thrower = 2;
-            //Set up the projectiles behavior
-        }
-        else
-        {
-            //If currently throwing and projectile is dead, set back to not throwing
-            if (Thrower == 2)
-            {
 
         //projectile attacking
         EnemyHelper.aquamentusAttack(this, _projectileManager);
