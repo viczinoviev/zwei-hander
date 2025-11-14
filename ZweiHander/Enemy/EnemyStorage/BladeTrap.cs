@@ -49,8 +49,8 @@ public class BladeTrap : IEnemy
     {
         if (Thrower == 1)
         {
-                float dt = (float)time.ElapsedGameTime.TotalSeconds;
-                EnemyHelper.bladeTrapAttack(this, dt);
+            float dt = (float)time.ElapsedGameTime.TotalSeconds;
+            EnemyHelper.bladeTrapAttack(this, dt);
         }
         else if (Thrower == 2)
         {

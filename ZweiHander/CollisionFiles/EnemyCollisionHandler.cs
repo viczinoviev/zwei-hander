@@ -33,6 +33,7 @@ namespace ZweiHander.CollisionFiles
                 //If enemy is running into a block, prevent enemy from going into the block
                 Vector2 newPosition = _enemy.Position + collisionInfo.ResolutionOffset;
                 _enemy.Position = newPosition;
+                _enemy.Face = (int)collisionInfo.Normal;
 
                 UpdateCollisionBox();
             }
@@ -49,11 +50,6 @@ namespace ZweiHander.CollisionFiles
                     if (_enemy.Hitpoints <= 0)
                     {
                         Dead = true;
-                        if (_enemy is BladeTrap bladeTrap)
-                        {
-                            bladeTrap.home1CollisionHandler.Dead = true;
-                            bladeTrap.home2CollisionHandler.Dead = true;
-                        }
                     }
                 }
             }
@@ -75,12 +71,14 @@ namespace ZweiHander.CollisionFiles
             //Enemy collision
             if (other is EnemyCollisionHandler)
             {
-                //If enemy is running into another enemy, prevent enemy from going into the enemy
-                Vector2 newPosition = _enemy.Position + collisionInfo.ResolutionOffset;
-                _enemy.Position = newPosition;
+                //If enemy is running into another enemy, prevent enemy from going into the enemy, unless this is a bladetrap(unmoving)
+                if (_enemy is not BladeTrap)
+                {
+                    Vector2 newPosition = _enemy.Position + collisionInfo.ResolutionOffset;
+                    _enemy.Position = newPosition;
 
-                UpdateCollisionBox();
-                
+                    UpdateCollisionBox();
+                }
             }
         }
 
