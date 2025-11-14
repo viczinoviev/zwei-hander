@@ -226,7 +226,7 @@ namespace ZweiHander.PlayerFiles
                 {
                     _player.ItemManager.GetItem(
                         "Bomb",
-                        life: 1.5f,
+                        life: 3.3f,
                         position: itemPosition + _stateMachine.LastDirection * 30f,
                         velocity: Vector2.Zero,
                         acceleration: Vector2.Zero

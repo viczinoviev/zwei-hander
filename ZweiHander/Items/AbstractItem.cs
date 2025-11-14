@@ -49,6 +49,8 @@ public abstract class AbstractItem : IItem
 
     public Vector2 Acceleration { get; set; }
 
+    public Vector2 SpriteOffset { get; set; } = Vector2.Zero;
+
     /// <summary>
     /// The lifetime (in seconds) left for item; negative means infinite.
     /// </summary>
@@ -126,7 +128,7 @@ public abstract class AbstractItem : IItem
 
     public void Draw()
     {
-        Sprite.Draw(Position);
+        Sprite.Draw(Position + SpriteOffset);
     }
 
     /// <summary>
@@ -219,11 +221,21 @@ public abstract class AbstractItem : IItem
                     Acceleration = Vector2.Zero;
                 }
                 break;
-            case ItemCollisionHandler:
+            case ItemCollisionHandler otherItem:
+                ItemInteract(otherItem, collisionInfo);
                 break;
             case EnemyCollisionHandler:
                 if (HasProperty(ItemProperty.DeleteOnEnemy)) Kill();
                 break;
         }
+    }
+
+    /// <summary>
+    /// How to interact with other items on collision.
+    /// </summary>
+    /// <param name="other">What is being collided with.</param>
+    /// <param name="collisionInfo">Info related to the collision.</param>
+    protected virtual void ItemInteract(ItemCollisionHandler other, CollisionInfo collisionInfo)
+    {
     }
 }
