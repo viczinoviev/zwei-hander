@@ -16,9 +16,6 @@ namespace ZweiHander.Map
         private readonly IPlayer _player;
         private readonly Camera.Camera _camera;
         private readonly RoomPortalCollisionHandler _collisionHandler;
-        
-        private float _cooldownTimer = 0f;
-        private float COOLDOWN_TIME = -1f;
 
         private Vector2 TRIGGER_AREA = new Vector2(16, 16);
 
@@ -36,12 +33,10 @@ namespace ZweiHander.Map
             _player = player;
             _camera = camera;
             _collisionHandler = new RoomPortalCollisionHandler(this);
-            COOLDOWN_TIME = universe.TransitionTime;
         }
 
         public void OnRoomLoad()
         {
-            _cooldownTimer = COOLDOWN_TIME;
         }
 
         public void OnRoomUnload()
@@ -51,15 +46,12 @@ namespace ZweiHander.Map
 
         public void Update(GameTime gameTime)
         {
-            if (_cooldownTimer > 0f)
-            {
-                _cooldownTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
-            }
+
         }
 
         public bool CanTeleport()
         {
-            return _cooldownTimer <= 0f && ParentRoom.IsLoaded;
+            return ParentRoom.IsLoaded;
         }
 
         public void Teleport(Direction direction = Direction.None)
