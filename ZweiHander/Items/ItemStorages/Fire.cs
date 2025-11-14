@@ -115,7 +115,7 @@ public class Fire : AbstractItem
     {
         if (Phase == 1)
         {
-            Hitbox = new(300, 300);
+            Hitbox = new(200, 200);
             RemoveProperty(ItemProperty.CanDamageEnemy);
             RemoveProperty(ItemProperty.DeleteOnBlock);
             Acceleration = Vector2.Zero;
