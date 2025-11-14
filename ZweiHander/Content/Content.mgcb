@@ -65,7 +65,7 @@
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/Sound Effect (16).wav
+/build:Audio/ItemPickup.wav
 
 #begin Audio/Sound Effect (17).wav
 /importer:WavImporter
@@ -149,7 +149,7 @@
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/Sound Effect (3).wav;Audio/Hurt.wav
+/build:Audio/EnemyHurt.wav
 
 #begin Audio/Sound Effect (4).wav
 /importer:WavImporter
@@ -167,7 +167,7 @@
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/Sound Effect (6).wav;Audio/SwordAttack.wav
+/build:Audio/SwordAttack.wav
 
 #begin Audio/Sound Effect (7).wav
 /importer:WavImporter
@@ -179,7 +179,7 @@
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/Sound Effect (8).wav
+/build:Audio/PlayerHurt.wav
 
 #begin Audio/Sound Effect (9).wav
 /importer:WavImporter

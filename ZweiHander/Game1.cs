@@ -141,7 +141,7 @@ namespace ZweiHander
             //Clears all the Colliders first
             CollisionManager.Instance.ClearAllColliders();
 
-            _gamePlayer = new Player(_linkSprites, _itemSprites, _treasureSprites);
+            _gamePlayer = new Player(_linkSprites, _itemSprites, _treasureSprites,Content);
             _gamePlayer.Position = new Vector2(100, 200);
             SetCameraCommand moveCameraToPlayer = new SetCameraCommand(_camera, _gamePlayer);
             moveCameraToPlayer.Execute();

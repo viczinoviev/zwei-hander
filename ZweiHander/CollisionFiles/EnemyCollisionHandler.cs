@@ -23,7 +23,7 @@ namespace ZweiHander.CollisionFiles
         public EnemyCollisionHandler(IEnemy enemy,ContentManager sfxPlayer)
         {
             _enemy = enemy;
-            enemyHurt = sfxPlayer.Load<SoundEffect>("Audio/Hurt");
+            enemyHurt = sfxPlayer.Load<SoundEffect>("Audio/EnemyHurt");
             currentSFX = enemyHurt.CreateInstance();
             UpdateCollisionBox();
         }
