@@ -1,20 +1,21 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using ZweiHander.CollisionFiles;
 using ZweiHander.Graphics;
 using ZweiHander.Graphics.SpriteStorages;
 
 namespace ZweiHander.Items.ItemStorages;
 
 /// <summary>
-/// 2.3s life, stationary<br></br>
+/// 4.3s life, stationary<br></br>
 /// Phase 0: Nothing
 /// Phase 1: Switches to exploding sprite, damages enemies and player
 /// Phase 2: Can no longer damage enemy and player
 /// </summary>
 public class Bomb : AbstractItem
 {
-    protected override double Life { get; set; } = 2.3f;
+    protected override double Life { get; set; } = 4.3f;
 
     protected override List<double> Phases { get; set; } = [0.3, 0.2];
 
@@ -52,7 +53,7 @@ public class Bomb : AbstractItem
             base.Update(gameTime);
             if(Life > 0)
             {
-                Sprites[0].Scale += new Vector2(dt, dt);
+                Sprites[0].Scale += new Vector2(dt, dt) / 2;
                 Wiggle -= dt;
                 if(Wiggle <= 0) {
                     SpriteOffset *= -1;
@@ -81,6 +82,16 @@ public class Bomb : AbstractItem
         {
             RemoveProperty(ItemProperty.CanDamagePlayer);
             RemoveProperty(ItemProperty.CanDamagePlayer);
+        }
+    }
+
+    protected override void ItemInteract(ItemCollisionHandler other, CollisionInfo collisionInfo)
+    {
+        if (other.Item is Bomb && other.Item.HasProperty(ItemProperty.CanDamagePlayer)) { 
+            if (Life > 0 && Phase == 0)
+            {
+                Life = Phases[Phase];
+            }
         }
     }
 }

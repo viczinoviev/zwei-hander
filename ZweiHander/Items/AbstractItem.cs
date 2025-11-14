@@ -221,11 +221,21 @@ public abstract class AbstractItem : IItem
                     Acceleration = Vector2.Zero;
                 }
                 break;
-            case ItemCollisionHandler:
+            case ItemCollisionHandler otherItem:
+                ItemInteract(otherItem, collisionInfo);
                 break;
             case EnemyCollisionHandler:
                 if (HasProperty(ItemProperty.DeleteOnEnemy)) Kill();
                 break;
         }
+    }
+
+    /// <summary>
+    /// How to interact with other items on collision.
+    /// </summary>
+    /// <param name="other">What is being collided with.</param>
+    /// <param name="collisionInfo">Info related to the collision.</param>
+    protected virtual void ItemInteract(ItemCollisionHandler other, CollisionInfo collisionInfo)
+    {
     }
 }
