@@ -5,9 +5,7 @@ using ZweiHander.Graphics;
 using System;
 using ZweiHander.Graphics.SpriteStorages;
 using System.Collections.Generic;
-using System.Linq;
 using ZweiHander.CollisionFiles;
-using ZweiHander.Items.ItemStorages;
 using Microsoft.Xna.Framework.Content;
 
 namespace ZweiHander.Enemy.EnemyStorage;
