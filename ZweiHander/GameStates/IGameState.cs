@@ -11,5 +11,9 @@ namespace ZweiHander.GameStates
         bool IsPaused { get; }
         void SetPaused(bool paused);
         event System.Action<bool> PausedChanged;
+
+        GameMode CurrentMode { get; }
+        void SetMode(GameMode mode);
+        event System.Action<GameMode> ModeChanged;
     }
 }

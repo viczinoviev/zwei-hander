@@ -38,6 +38,7 @@ namespace ZweiHander
 
         private Player _gamePlayer;
         private KeyboardController _keyboardController;
+        private TitleScreenController _titleScreenController;
 
         private HurtPlayerCommand _hurtPlayerCommand;
 
@@ -85,17 +86,16 @@ namespace ZweiHander
             _gameState = new GameState();
             Services.AddService<IGameState>(_gameState);
 
-            // if HUD needs to mirror pause state:
-            _gameState.PausedChanged += p => _hudManager.SetPaused(p);
-
+            _gameState.PausedChanged += p => _hudManager?.SetPaused(p);
+            _gameState.ModeChanged += OnGameModeChanged;
 
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // Initialize camera
             _camera = new Camera.Camera(GraphicsDevice.Viewport);
 
-            //TODO: Delete this
             _titleSprites = new TitleSprites(Content, _spriteBatch);
+            _titleScreenController = new TitleScreenController();
 
             // This line will load all of the sprites into the program through an xml file
             _linkSprites = new PlayerSprites(Content, _spriteBatch);
@@ -106,7 +106,7 @@ namespace ZweiHander
             _enemySprites = new EnemySprites(Content, _spriteBatch);
             _bossSprites = new BossSprites(Content, _spriteBatch);
             _npcSprites = new NPCSprites(Content, _spriteBatch);
-            
+
             // Create separate manager instances for Game1 use
             _blockFactory = new BlockFactory(32, _blockSprites, _linkSprites);
             _itemManager = new ItemManager(_itemSprites, _treasureSprites, _bossSprites);
@@ -115,7 +115,7 @@ namespace ZweiHander
 
             _debugRenderer = new DebugRenderer();
             _debugRenderer.Initialize(GraphicsDevice);
-            
+
             bgm = Content.Load<Song>("Audio/DungeonTheme");
             if (MediaPlayer.State == MediaState.Playing)
             {
@@ -123,8 +123,14 @@ namespace ZweiHander
             }
             MediaPlayer.Play(bgm);
             MediaPlayer.IsRepeating = true;
+        }
 
-            GameSetUp();
+        private void OnGameModeChanged(GameMode newMode)
+        {
+            if (newMode == GameMode.Playing)
+            {
+                GameSetUp();
+            }
         }
 
         /// <summary>
@@ -179,23 +185,33 @@ namespace ZweiHander
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // Always update keyboard and HUD
-            _keyboardController.Update();
-            _hudManager.Update(gameTime);
-
-            // Update stuff when game is running
-            if (!gamePaused)
+            if (_gameState.CurrentMode == GameMode.TitleScreen)
             {
-                _universe.Update(gameTime);
-                _itemManager.Update(gameTime);
-                _projectileManager.Update(gameTime);
+                if (_titleScreenController.ShouldStartGame())
+                {
+                    _gameState.SetMode(GameMode.Playing);
+                }
+            }
+            else if (_gameState.CurrentMode == GameMode.Playing)
+            {
+                // Always update keyboard and HUD
+                _keyboardController.Update();
+                _hudManager.Update(gameTime);
 
-                _gamePlayer.Update(gameTime);
-                _hurtPlayerCommand.Update(gameTime);
+                // Update stuff when game is running
+                if (!gamePaused)
+                {
+                    _universe.Update(gameTime);
+                    _itemManager.Update(gameTime);
+                    _projectileManager.Update(gameTime);
 
-                CollisionManager.Instance.Update(gameTime);
+                    _gamePlayer.Update(gameTime);
+                    _hurtPlayerCommand.Update(gameTime);
 
-                _camera.Update(gameTime, _gamePlayer.Position);
+                    CollisionManager.Instance.Update(gameTime);
+
+                    _camera.Update(gameTime, _gamePlayer.Position);
+                }
             }
 
             base.Update(gameTime);
@@ -203,32 +219,44 @@ namespace ZweiHander
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
-            // Draw world with camera transform
-            _spriteBatch.Begin(
-                samplerState: SamplerState.PointClamp,
-                transformMatrix: _camera.GetTransformMatrix()
-            );
+            if (_gameState.CurrentMode == GameMode.TitleScreen)
+            {
+                _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+                _titleSprites.Title().Draw(new Vector2(
+                    GraphicsDevice.Viewport.Width / 2.0f,
+                    GraphicsDevice.Viewport.Height / 2.0f
+                    ));
+                _spriteBatch.End();
+            }
+            else if (_gameState.CurrentMode == GameMode.Playing)
+            {
+                // Draw world with camera transform
+                _spriteBatch.Begin(
+                    samplerState: SamplerState.PointClamp,
+                    transformMatrix: _camera.GetTransformMatrix()
+                );
 
-            _universe.Draw();
-            _projectileManager.Draw();
-            _gamePlayer.Draw(_spriteBatch);
-            
-            _debugRenderer.DrawWorldDebug(_spriteBatch, _universe);
-            
-            _spriteBatch.End();
+                _universe.Draw();
+                _projectileManager.Draw();
+                _gamePlayer.Draw(_spriteBatch);
 
-            _spriteBatch.Begin(
-                samplerState: SamplerState.PointClamp
-            );
-            _hudManager.Draw(_spriteBatch);
+                _debugRenderer.DrawWorldDebug(_spriteBatch, _universe);
 
-            _debugRenderer.DrawScreenDebug(_spriteBatch);
+                _spriteBatch.End();
+
+                _spriteBatch.Begin(
+                    samplerState: SamplerState.PointClamp
+                );
+                _hudManager.Draw(_spriteBatch);
+
+                _debugRenderer.DrawScreenDebug(_spriteBatch);
+
+                _spriteBatch.End();
+            }
 
             base.Draw(gameTime);
-
-            _spriteBatch.End();
         }
     }
 }
