@@ -21,7 +21,7 @@ public class Aquamentus : IEnemy
     /// <summary>
     /// Projectiles for this enemy
     /// </summary>
-    List<IItem> _projectiles = [];
+    public List<IItem> _projectiles = [];
     /// <summary>
     /// Holds all sprites for this enemy
     /// </summary>
@@ -37,11 +37,11 @@ public class Aquamentus : IEnemy
     public int Hitpoints { get; set; } = 15;
 
     public EnemyCollisionHandler CollisionHandler { get; } = default;
-    private int Thrower = 1;
+    public int Thrower = 1;
     /// <summary>
     /// Random number generator to randomize enemy behavior
     /// </summary>
-    readonly Random rnd = new();
+    public readonly Random rnd = new();
 
 
     public Aquamentus(BossSprites bossSprites, ItemManager projectileManager,ContentManager sfxPlayer)
@@ -66,38 +66,9 @@ public class Aquamentus : IEnemy
             {
             Face = mov;
             }
-        
-        //Randomize attacking (projectile throwing)
-        int attack = rnd.Next(300);
-        //attack, as long as not already attacking
-        if (attack == 5 && Thrower != 2)
-        {
-            //Create projectiles and Set up the projectiles behavior
-            IItem _currentProjectile1 = _projectileManager.GetItem<Fireball>(3, position: new Vector2(Position.X - 20, Position.Y - 20));
-            _currentProjectile1.Velocity = new Vector2(-100, 0);
-            IItem _currentProjectile2 = _projectileManager.GetItem<Fireball>(3, position: new Vector2(Position.X - 20, Position.Y - 20));
-            _currentProjectile2.Velocity = new Vector2(-100, 30);
-            IItem _currentProjectile3 = _projectileManager.GetItem<Fireball>(3, position: new Vector2(Position.X - 20, Position.Y - 20));
-            _currentProjectile3.Velocity = new Vector2(-100, -30);
-            _projectiles.Add(_currentProjectile1);
-            _projectiles.Add(_currentProjectile2);
-            _projectiles.Add(_currentProjectile3);
-            Thrower = 2;
-            //Set up the projectiles behavior
-        }
-        else
-        {
-            //If currently throwing and projectile is dead, set back to not throwing
-            if (Thrower == 2)
-            {
 
-                if (_projectiles.First().IsDead())
-                {
-                    Thrower = 1;
-                    _projectiles = [];
-                }
-            }
-        }
+        //projectile attacking
+        EnemyHelper.aquamentusAttack(this, _projectileManager);
         CollisionHandler.UpdateCollisionBox();
         Sprite.Update(time);
         _projectileManager.Update(time);
