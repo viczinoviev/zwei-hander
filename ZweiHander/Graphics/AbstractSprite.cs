@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-
+using System;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace ZweiHander.Graphics;
@@ -12,8 +12,18 @@ public abstract class AbstractSprite : ISprite
     /// </summary>
     protected TextureRegion _region;
 
-    public int Height { get => (int) ((float) _region.Height * Scale.Y); }
-    public int Width { get => (int)((float)_region.Width * Scale.X); }
+    private int UnrotatedHeight { get => (int) ((float) _region.Height * Scale.Y); }
+    private int UnrotatedWidth { get => (int)((float)_region.Width * Scale.X); }
+
+    public int Height { get => _sideways ?
+            UnrotatedWidth : UnrotatedHeight;
+    }
+
+    public int Width
+    {
+        get => Math.Abs(Math.Cos(Rotation)) > Math.Abs(Math.Sin(Rotation)) ?
+            UnrotatedWidth : UnrotatedHeight;
+    }
     /// <summary>
     /// The SpriteBatch to draw to
     /// </summary>
@@ -26,10 +36,17 @@ public abstract class AbstractSprite : ISprite
     /// </summary>
     public Color Color { get; set; } = Color.White;
 
+    private float _rotation = 0f;
+
     /// <summary>
     /// The amount of rotation, in radians, to apply when drawing this sprite on screen
     /// </summary>
-    public float Rotation { get; set; } = 0.0f;
+    public float Rotation { get => _rotation; set {
+            _rotation = value;
+            _sideways = Math.Abs(Math.Cos(value)) < Math.Abs(Math.Sin(value));
+        } }
+
+    private bool _sideways = false;
 
     /// <summary>
     /// The center of rotation, scaling, and position when drawing this sprite on screen
