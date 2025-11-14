@@ -28,16 +28,17 @@ public class BladeTrap : IEnemy
     public int Face { get; set; } = default;
     public int Hitpoints { get; set; } = 20000;
 
-    public int Thrower = 1;
+    public int Thrower;
 
-    public float attackTime = 1;
+    public float attackTime;
 
-    private readonly BladeTrapHomeCollisionHandler home1CollisionHandler;
-    private readonly BladeTrapHomeCollisionHandler home2CollisionHandler;
+    public readonly BladeTrapHomeCollisionHandler home1CollisionHandler;
+    public readonly BladeTrapHomeCollisionHandler home2CollisionHandler;
     public EnemyCollisionHandler CollisionHandler { get; } = default;
 
     public BladeTrap(EnemySprites enemySprites,ContentManager sfxPlayer,Vector2 pos)
     {
+        Position = pos;
         _enemySprites = enemySprites;
         Sprite = _enemySprites.Trap();
         CollisionHandler = new EnemyCollisionHandler(this, sfxPlayer);
@@ -52,7 +53,7 @@ public class BladeTrap : IEnemy
         {
             if (attackTime >= 0)
             {
-                Position = EnemyHelper.BehaveFromFace(this, 1, 0);
+                Position = EnemyHelper.BehaveFromFace(this, 2, 0);
                 attackTime -= dt;
             }
             else

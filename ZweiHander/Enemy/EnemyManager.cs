@@ -132,6 +132,11 @@ public class EnemyManager(EnemySprites enemysprites, ItemManager projectileManag
         foreach (IEnemy _enemy in currentEnemies)
         {
             _enemy.CollisionHandler.Dead = true;
+            if (_enemy is BladeTrap bladeTrap)
+            {
+                bladeTrap.home1CollisionHandler.Dead = true;
+                bladeTrap.home2CollisionHandler.Dead = true;
+            }
         }
         currentEnemies.RemoveAll(enemy => enemy != null);
     }
