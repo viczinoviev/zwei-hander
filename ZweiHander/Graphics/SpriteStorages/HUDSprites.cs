@@ -26,4 +26,5 @@ public class HUDSprites : SpriteFactory
     public ISprite Digit(int digit) => new IdleSprite(_regions[digit.ToString()], _spriteBatch);
     public ISprite Number(int number, int digits = -1) => new NumberSprite(number, _spriteBatch, this, digits);
     public ISprite Map() => new IdleSprite(_regions["map"], _spriteBatch);
+    public ISprite OrangeCandle() => new IdleSprite(_regions["orange-candle"], _spriteBatch);
 }

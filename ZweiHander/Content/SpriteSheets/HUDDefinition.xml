@@ -12,6 +12,7 @@
 		<Region name="normal-sword" x="36" y="288" width="8" height="16"/>
 		<Region name="bow" x="114" y="288" width="8" height="16"/>
 		<Region name="map" x="82" y="320" width="8" height="16"/>
+		<Region name="orange-candle" x="134" y="288" width="8" height="16"/>
 		<Region name="0" x="0" y="272" width="8" height="8"/>
 		<Region name="1" x="9" y="272" width="8" height="8"/>
 		<Region name="2" x="18" y="272" width="8" height="8"/>

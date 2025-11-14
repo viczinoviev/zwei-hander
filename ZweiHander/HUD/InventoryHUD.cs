@@ -23,12 +23,13 @@ namespace ZweiHander.HUD
 
         private enum OrderedUsable
         {
-            Sword, Bow, Map
+            Sword, Bow, Map, Fire
         }
         private readonly List<Vector2> _usablePositions = [
-            new(144, 62),
-            new(193, 62),
-            new(242, 62)
+            new(272, 106),
+            new(320, 106),
+            new(368, 106),
+            new(416, 106)
         ];
         private readonly List<bool> _acquiredUsables;
         private readonly List<ISprite> _usableSprites;
@@ -47,6 +48,7 @@ namespace ZweiHander.HUD
             _usableSprites[(int)OrderedUsable.Sword] = hudSprites.NormalSword();
             _usableSprites[(int)OrderedUsable.Bow] = hudSprites.Bow();
             _usableSprites[(int)OrderedUsable.Map] = hudSprites.Map();
+            _usableSprites[(int)OrderedUsable.Fire] = hudSprites.OrangeCandle();
         }
 
         public void Update(GameTime gameTime)
@@ -54,6 +56,7 @@ namespace ZweiHander.HUD
             _acquiredUsables[(int)OrderedUsable.Sword] = _player.InventoryCount(typeof(Sword)) > 0;
             _acquiredUsables[(int)OrderedUsable.Bow] = _player.InventoryCount(typeof(Bow)) > 0;
             _acquiredUsables[(int)OrderedUsable.Map] = _player.InventoryCount(typeof(MapItem)) > 0;
+            _acquiredUsables[(int)OrderedUsable.Fire] = _player.InventoryCount(typeof(Fire)) > 0;
         }
 
         public void Draw(SpriteBatch spriteBatch, Vector2 offset)
