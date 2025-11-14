@@ -46,7 +46,7 @@ class EnemyHelper
         {
             //Create a projectile using ItemHelpers boomerang trajectory method
             (float v, float a) = ItemHelper.BoomerangTrajectory(50, 2);
-            enemy._currentProjectile = projectileManager.GetItem<Boomerang>(position: enemy.Position,
+            enemy._currentProjectile = projectileManager.GetItem("Boomerang",position: enemy.Position,
             velocity: EnemyHelper.BehaveFromFace(enemy, v, 1), acceleration: EnemyHelper.BehaveFromFace(enemy, a, 1),
                 extras: [() => enemy.Position, enemy.CollisionHandler]);
             enemy.Thrower = 2;
@@ -77,11 +77,11 @@ class EnemyHelper
         if (attack == 5 && enemy.Thrower != 2)
         {
             //Create projectiles and Set up the projectiles behavior
-            IItem _currentProjectile1 = projectileManager.GetItem<Fireball>(3, position: new Vector2(enemy.Position.X - 20, enemy.Position.Y - 20));
+            IItem _currentProjectile1 = projectileManager.GetItem("Fireball",3, position: new Vector2(enemy.Position.X - 20, enemy.Position.Y - 20));
             _currentProjectile1.Velocity = new Vector2(-100, 0);
-            IItem _currentProjectile2 = projectileManager.GetItem<Fireball>(3, position: new Vector2(enemy.Position.X - 20, enemy.Position.Y - 20));
+            IItem _currentProjectile2 = projectileManager.GetItem("Fireball",3, position: new Vector2(enemy.Position.X - 20, enemy.Position.Y - 20));
             _currentProjectile2.Velocity = new Vector2(-100, 30);
-            IItem _currentProjectile3 = projectileManager.GetItem<Fireball>(3, position: new Vector2(enemy.Position.X - 20, enemy.Position.Y - 20));
+            IItem _currentProjectile3 = projectileManager.GetItem("Fireball",3, position: new Vector2(enemy.Position.X - 20, enemy.Position.Y - 20));
             _currentProjectile3.Velocity = new Vector2(-100, -30);
             enemy._projectiles.Add(_currentProjectile1);
             enemy._projectiles.Add(_currentProjectile2);
