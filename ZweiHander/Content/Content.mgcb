@@ -29,7 +29,7 @@
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/Sound Effect (10).wav
+/build:Audio/Fireball.wav
 
 #begin Audio/Sound Effect (11).wav
 /importer:WavImporter
@@ -95,19 +95,19 @@
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/Sound Effect (20).wav
+/build:Audio/Success.wav
 
 #begin Audio/Sound Effect (21).wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/Sound Effect (21).wav
+/build:Audio/SecretFound.wav
 
 #begin Audio/Sound Effect (22).wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/Sound Effect (22).wav
+/build:Audio/GameOver.wav
 
 #begin Audio/Sound Effect (23).wav
 /importer:WavImporter
@@ -119,13 +119,13 @@
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/Sound Effect (24).wav
+/build:Audio/GameOver2.wav
 
 #begin Audio/Sound Effect (25).wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/Sound Effect (25).wav
+/build:Audio/SuperSuccess.wav
 
 #begin Audio/Sound Effect (26).wav
 /importer:WavImporter
