@@ -49,6 +49,8 @@ namespace ZweiHander.PlayerFiles
         public ItemManager ItemManager => _itemManager;
         public bool IsDamaged => _isDamaged;
 
+        public bool allowedToUpdate = true;
+
         public Color Color
         {
             get => _handler.Color;
@@ -70,6 +72,7 @@ namespace ZweiHander.PlayerFiles
 
         public void Update(GameTime gameTime)
         {
+            if (!allowedToUpdate) return;
             // Update damage state timer
             _handler?.UpdateCollisionBox();
             if (_isDamaged)
@@ -96,6 +99,12 @@ namespace ZweiHander.PlayerFiles
         {
             InputBuffer.Clear();
         }
+
+        public void SetUpdateEnabled(bool enabled)
+        {
+            allowedToUpdate = enabled;
+        }
+        
 
         public void AddItemToInventory(Type itemType, int count = 1)
         {
