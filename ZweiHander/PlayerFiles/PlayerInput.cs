@@ -10,6 +10,7 @@ namespace ZweiHander.PlayerFiles
         Attacking,
         UsingItem1,
         UsingItem2,
-        UsingItem3
+        UsingItem3,
+        UsingItem4
     }
 }

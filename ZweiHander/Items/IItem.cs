@@ -29,6 +29,12 @@ public interface IItem
     /// </summary>
     public Vector2 SpriteOffset { get; set; }
 
+
+    /// <summary>
+    /// Hitbox for this item. Set to 0 to use sprite
+    /// </summary>
+    public Vector2 Hitbox {  get; set; }
+
     /// <summary>
     /// What type of item this is.
     /// </summary>

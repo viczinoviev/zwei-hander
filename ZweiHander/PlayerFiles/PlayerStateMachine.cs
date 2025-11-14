@@ -75,7 +75,7 @@ namespace ZweiHander.PlayerFiles{
             {
                 return PlayerState.Attacking;
             }
-            else if (inputBuffer.Contains(PlayerInput.UsingItem1) || inputBuffer.Contains(PlayerInput.UsingItem2) || inputBuffer.Contains(PlayerInput.UsingItem3))
+            else if (inputBuffer.Contains(PlayerInput.UsingItem1) || inputBuffer.Contains(PlayerInput.UsingItem2) || inputBuffer.Contains(PlayerInput.UsingItem3) || inputBuffer.Contains(PlayerInput.UsingItem4))
             {
                 return PlayerState.UsingItem;
             }
@@ -137,6 +137,10 @@ namespace ZweiHander.PlayerFiles{
                 else if (_player.InputBuffer.Contains(PlayerInput.UsingItem3))
                 {
                     _playerHandler.HandleItemUse(PlayerInput.UsingItem3);
+                }
+                else if(_player.InputBuffer.Contains(PlayerInput.UsingItem4))
+                {
+                    _playerHandler.HandleItemUse(PlayerInput.UsingItem4);
                 }
             }
         }

@@ -51,6 +51,8 @@ public abstract class AbstractItem : IItem
 
     public Vector2 SpriteOffset { get; set; } = Vector2.Zero;
 
+    public Vector2 Hitbox { get; set; } = Vector2.Zero;
+
     /// <summary>
     /// The lifetime (in seconds) left for item; negative means infinite.
     /// </summary>
@@ -112,8 +114,7 @@ public abstract class AbstractItem : IItem
         // Movement
         if (!HasProperty(ItemProperty.Stationary))
         {
-            Velocity += dt * Acceleration;
-            Position += dt * Velocity + (dt * dt / 2) * Acceleration;
+            Move(dt);
         }
 
         // Face correct direction; UNTESTED
@@ -152,6 +153,16 @@ public abstract class AbstractItem : IItem
                 OnPhaseChange();
             }
         }
+    }
+
+    /// <summary>
+    /// Move this item.
+    /// </summary>
+    /// <param name="dt">Time that has passed.</param>
+    protected void Move(float dt)
+    {
+        Velocity += dt * Acceleration;
+        Position += dt * Velocity + (dt * dt / 2) * Acceleration;
     }
 
     public virtual void OnPhaseChange()
@@ -196,12 +207,23 @@ public abstract class AbstractItem : IItem
 
     public Rectangle GetHitBox()
     {
+        int width, height;
         // Sprites are centered
+        if (Hitbox != Vector2.Zero)
+        {
+            width = (int) Hitbox.X;
+            height = (int) Hitbox.Y;
+        }
+        else
+        {
+            width = Sprite.Width;
+            height = Sprite.Height;
+        }
         return new Rectangle(
-                (int)Position.X - Sprite.Width / 2,
-                (int)Position.Y - Sprite.Height / 2,
-                Sprite.Width,
-                Sprite.Height
+                (int)Position.X - width / 2,
+                (int)Position.Y - height / 2,
+                width,
+                height
             );
     }
 
@@ -224,8 +246,8 @@ public abstract class AbstractItem : IItem
             case ItemCollisionHandler otherItem:
                 ItemInteract(otherItem, collisionInfo);
                 break;
-            case EnemyCollisionHandler:
-                if (HasProperty(ItemProperty.DeleteOnEnemy)) Kill();
+            case EnemyCollisionHandler otherEnemy:
+                EnemyInteract(otherEnemy, collisionInfo);
                 break;
         }
     }
@@ -237,5 +259,10 @@ public abstract class AbstractItem : IItem
     /// <param name="collisionInfo">Info related to the collision.</param>
     protected virtual void ItemInteract(ItemCollisionHandler other, CollisionInfo collisionInfo)
     {
+    }
+
+    protected virtual void EnemyInteract(EnemyCollisionHandler other, CollisionInfo collisionInfo)
+    {
+        if (HasProperty(ItemProperty.DeleteOnEnemy)) Kill();
     }
 }

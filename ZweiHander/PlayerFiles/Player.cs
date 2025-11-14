@@ -203,6 +203,11 @@ namespace ZweiHander.PlayerFiles
             AddInput(PlayerInput.UsingItem3);
         }
 
+        public void UseItem4()
+        {
+            AddInput(PlayerInput.UsingItem4);
+        }
+
         public void Idle()
         {
 

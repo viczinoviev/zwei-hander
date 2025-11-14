@@ -235,6 +235,16 @@ namespace ZweiHander.PlayerFiles
                 }
                 
             }
+            else if (itemInput == PlayerInput.UsingItem4 && _player.InventoryCount(typeof(Fire)) > 0)
+            {
+                _player.ItemManager.GetItem(
+                    "Fire",
+                    life: 6f,
+                    position: itemPosition,
+                    velocity: itemVelocity * 0.11f,
+                    acceleration: -itemVelocity * 0.1f
+                );
+            }
             else
             {
                 return;

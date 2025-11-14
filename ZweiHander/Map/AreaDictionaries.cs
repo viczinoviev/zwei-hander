@@ -98,7 +98,8 @@ namespace ZweiHander.Environment
 			{ "Boomerang", "Boomerang" },
 			{ "Bow", "Bow" },
 			{ "Clock", "Clock" },
-			{ "Fairy", "Fairy" }
+			{ "Fairy", "Fairy" },
+			{ "Fire", "Fire" },
 		};
 	}
 }

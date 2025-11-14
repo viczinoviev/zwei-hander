@@ -8,6 +8,7 @@ using ZweiHander.Graphics.SpriteStorages;
 namespace ZweiHander.Items.ItemStorages;
 
 /// <summary>
+/// Give infinite life for collectable<br></br>
 /// 4.3s life, stationary<br></br>
 /// Phase 0: Nothing
 /// Phase 1: Switches to exploding sprite, damages enemies and player
@@ -87,11 +88,14 @@ public class Bomb : AbstractItem
 
     protected override void ItemInteract(ItemCollisionHandler other, CollisionInfo collisionInfo)
     {
-        if (other.Item is Bomb && other.Item.HasProperty(ItemProperty.CanDamagePlayer)) { 
-            if (Life > 0 && Phase == 0)
-            {
-                Life = Phases[Phase];
-            }
+        switch (other.Item)
+        {
+            case Bomb bomb:
+                if (bomb.HasProperty(ItemProperty.CanDamagePlayer) && Life > 0 && Phase == 0) Life = Phases[Phase];
+                break;
+            case Fire: //Yes, explode on *any* fire
+                if (Life > 0 && Phase == 0) Life = Phases[Phase];
+                break;
         }
     }
 }

@@ -6,6 +6,7 @@ using ZweiHander.Items;
 using ZweiHander.Enemy;
 using ZweiHander.Map;
 using ZweiHander.PlayerFiles;
+using System.Diagnostics;
 
 namespace ZweiHander.Environment
 {
@@ -200,6 +201,10 @@ namespace ZweiHander.Environment
             if (AreaDictionaries.itemNameToItemType.TryGetValue(cleanName, out string itemType))
             {
                 _currentRoom.AddItem(itemType, position);
+            } 
+            else
+            {
+                Debug.WriteLine("WARNING: No item with name " +  cleanName);
             }
         }
 
