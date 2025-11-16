@@ -69,6 +69,7 @@ namespace ZweiHander.PlayerFiles
             _maxHealth = STARTING_HEARTS * 2;
             _currentHealth = _maxHealth;
             Inventory[typeof(Sword)] = 1;
+            Inventory[typeof(Boomerang)] = 1;
         }
 
         public void Update(GameTime gameTime)
