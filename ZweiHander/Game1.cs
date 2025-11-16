@@ -4,21 +4,14 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using ZweiHander.Camera;
 using ZweiHander.CollisionFiles;
 using ZweiHander.Commands;
-using ZweiHander.Enemy;
-using ZweiHander.Enemy.EnemyStorage;
 using ZweiHander.Environment;
 using ZweiHander.GameStates;
-using ZweiHander.Graphics;
 using ZweiHander.Graphics.SpriteStorages;
 using ZweiHander.HUD;
 using ZweiHander.Items;
-using ZweiHander.Items.ItemStorages;
 using ZweiHander.Map;
 using ZweiHander.PlayerFiles;
 
@@ -40,23 +33,13 @@ namespace ZweiHander
         private KeyboardController _keyboardController;
         private TitleScreenController _titleScreenController;
 
-        private HurtPlayerCommand _hurtPlayerCommand;
-
 
 
         //Sprites and factories
         private PlayerSprites _linkSprites;
         private HUDSprites _hudSprites;
-        private BlockSprites _blockSprites;
         private TreasureSprites _treasureSprites;
-        private EnemySprites _enemySprites;
-        private EnemyManager _enemyManager;
-        private BossSprites _bossSprites;
-        private NPCSprites _npcSprites;
         private ItemSprites _itemSprites;
-        private BlockFactory _blockFactory;
-        private ItemManager _itemManager;
-        private ItemManager _projectileManager;
         private TitleSprites _titleSprites;
         
         private Universe _universe;
@@ -100,18 +83,8 @@ namespace ZweiHander
             // This line will load all of the sprites into the program through an xml file
             _linkSprites = new PlayerSprites(Content, _spriteBatch);
             _hudSprites = new HUDSprites(Content, _spriteBatch);
-            _blockSprites = new BlockSprites(Content, _spriteBatch);
             _treasureSprites = new TreasureSprites(Content, _spriteBatch);
             _itemSprites = new ItemSprites(Content, _spriteBatch);
-            _enemySprites = new EnemySprites(Content, _spriteBatch);
-            _bossSprites = new BossSprites(Content, _spriteBatch);
-            _npcSprites = new NPCSprites(Content, _spriteBatch);
-
-            // Create separate manager instances for Game1 use
-            _blockFactory = new BlockFactory(32, _blockSprites, _linkSprites);
-            _itemManager = new ItemManager(_itemSprites, _treasureSprites, _bossSprites);
-            _projectileManager = new ItemManager(_itemSprites, _treasureSprites, _bossSprites);
-            _enemyManager = new EnemyManager(_enemySprites, _projectileManager, _bossSprites, _npcSprites, Content);
 
             _debugRenderer = new DebugRenderer();
             _debugRenderer.Initialize(GraphicsDevice);
@@ -148,12 +121,12 @@ namespace ZweiHander
 
             // Universe creates its own manager instances
             _universe = new Universe(
-                _enemySprites,
-                _bossSprites,
-                _npcSprites,
+                new EnemySprites(Content, _spriteBatch),
+                new BossSprites(Content, _spriteBatch),
+                new NPCSprites(Content, _spriteBatch),
                 _itemSprites,
                 _treasureSprites,
-                _blockSprites,
+                new BlockSprites(Content, _spriteBatch),
                 _linkSprites,
 
                 Content,
@@ -171,10 +144,9 @@ namespace ZweiHander
             _universe.SetCurrentLocation("TestDungeon", 1);
 
             _keyboardController = new KeyboardController(_gamePlayer);
-            _hurtPlayerCommand = new HurtPlayerCommand(this);
             _keyboardController.BindKey(Keys.R, new ResetCommand(this));
             _keyboardController.BindKey(Keys.Q, new QuitCommand(this));
-            _keyboardController.BindKey(Keys.E, _hurtPlayerCommand);
+            _keyboardController.BindKey(Keys.E, new HurtPlayerCommand(this));
             _keyboardController.BindKey(Keys.I, new InventoryCommand(this));
             // Initialize HUD Manager
             _hudManager = new HUDManager(_gamePlayer, _hudSprites, gamePaused);
@@ -202,11 +174,8 @@ namespace ZweiHander
                 if (!gamePaused)
                 {
                     _universe.Update(gameTime);
-                    _itemManager.Update(gameTime);
-                    _projectileManager.Update(gameTime);
 
                     _gamePlayer.Update(gameTime);
-                    _hurtPlayerCommand.Update(gameTime);
 
                     CollisionManager.Instance.Update(gameTime);
 
@@ -239,7 +208,6 @@ namespace ZweiHander
                 );
 
                 _universe.Draw();
-                _projectileManager.Draw();
                 _gamePlayer.Draw(_spriteBatch);
 
                 _debugRenderer.DrawWorldDebug(_spriteBatch, _universe);

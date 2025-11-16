@@ -20,10 +20,5 @@ namespace ZweiHander.Commands
         {
             _game.GamePlayer.TakeDamage();
         }
-
-        public void Update(GameTime gameTime)
-        {
-            //Player handles TakeDamage logic
-        }
     }
 }
