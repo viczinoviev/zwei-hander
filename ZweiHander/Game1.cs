@@ -32,6 +32,7 @@ namespace ZweiHander
         private Player _gamePlayer;
         private KeyboardController _keyboardController;
         private TitleScreenController _titleScreenController;
+        private GameOverController _gameOverController;
 
 
 
@@ -41,6 +42,8 @@ namespace ZweiHander
         private TreasureSprites _treasureSprites;
         private ItemSprites _itemSprites;
         private TitleSprites _titleSprites;
+
+        private SpriteFont _gameOverFont;
         
         private Universe _universe;
         private CsvAreaConstructor _areaConstructor;
@@ -79,6 +82,8 @@ namespace ZweiHander
 
             _titleSprites = new TitleSprites(Content, _spriteBatch);
             _titleScreenController = new TitleScreenController();
+            _gameOverController = new GameOverController();
+            _gameOverFont = Content.Load<SpriteFont>("Fonts/GameOverFont");
 
             // This line will load all of the sprites into the program through an xml file
             _linkSprites = new PlayerSprites(Content, _spriteBatch);
@@ -103,6 +108,10 @@ namespace ZweiHander
             if (newMode == GameMode.Playing)
             {
                 GameSetUp();
+            }
+            else if (newMode == GameMode.GameOver)
+            {
+                _gameOverController.Reset();
             }
         }
 
@@ -164,6 +173,14 @@ namespace ZweiHander
                     _gameState.SetMode(GameMode.Playing);
                 }
             }
+            else if (_gameState.CurrentMode == GameMode.GameOver)
+            {
+                _gameOverController.Update(gameTime);
+                if (_gameOverController.ShouldReturnToTitle())
+                {
+                    _gameState.SetMode(GameMode.TitleScreen);
+                }
+            }
             else if (_gameState.CurrentMode == GameMode.Playing)
             {
                 // Always update keyboard and HUD
@@ -173,13 +190,11 @@ namespace ZweiHander
                 // Update stuff when game is running
                 if (!gamePaused)
                 {
-                    //Game over if player is dead
                     if(_gamePlayer.CurrentHealth <= 0)
                     {
                         SoundEffect gameOverSFX = Content.Load<SoundEffect>("Audio/GameOver");
                         gameOverSFX.Play();
-                        ResetCommand reset = new(this);
-                        reset.Execute();
+                        _gameState.SetMode(GameMode.GameOver);
                     }
                     _universe.Update(gameTime);
 
@@ -205,6 +220,18 @@ namespace ZweiHander
                     GraphicsDevice.Viewport.Width / 2.0f,
                     GraphicsDevice.Viewport.Height / 2.0f
                     ));
+                _spriteBatch.End();
+            }
+            else if (_gameState.CurrentMode == GameMode.GameOver)
+            {
+                _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+                string gameOverText = "GAMEOVER";
+                Vector2 textSize = _gameOverFont.MeasureString(gameOverText);
+                Vector2 textPosition = new Vector2(
+                    (GraphicsDevice.Viewport.Width - textSize.X) / 2.0f,
+                    (GraphicsDevice.Viewport.Height - textSize.Y) / 2.0f
+                );
+                _spriteBatch.DrawString(_gameOverFont, gameOverText, textPosition, Color.White);
                 _spriteBatch.End();
             }
             else if (_gameState.CurrentMode == GameMode.Playing)
