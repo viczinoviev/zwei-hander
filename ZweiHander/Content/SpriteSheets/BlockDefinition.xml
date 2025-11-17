@@ -11,6 +11,7 @@
 		<Region name="stair-tile" x="1035" y="28" width="16" height="16" />
 		<Region name="brick-tile" x="984" y="45" width="16" height="16" />
 		<Region name="white-pattern-tile" x="1001" y="45" width="16" height="16" />
+		<Region name="tunnel-tile" x="1018" y="45" width="16" height="16" />
 
 		<Region name="wall-tile-north" x="1055" y="11" width="32" height="32" />
 		<Region name="wall-tile-west" x="1055" y="47" width="32" height="32" />

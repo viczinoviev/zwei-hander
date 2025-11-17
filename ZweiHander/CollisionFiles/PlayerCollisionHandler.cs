@@ -6,6 +6,7 @@ using ZweiHander.Items;
 using ZweiHander.Items.ItemStorages;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Audio;
+using System;
 
 namespace ZweiHander.CollisionFiles
 {
@@ -104,6 +105,73 @@ namespace ZweiHander.CollisionFiles
                 COLLISION_SIZE,
                 COLLISION_SIZE
             );
+        }
+
+        /// <summary>
+        /// Given an intended movement vector, calculates a safe movement vector that preactively avoids clipping into blocks.
+        /// </summary>
+        public Vector2 CalculateSafeMovement(Vector2 intendedMovement)
+        {
+            if (intendedMovement.LengthSquared() < 0.0001f)
+                return Vector2.Zero;
+
+            Vector2 safeMovement = intendedMovement;
+
+            // Try moving on X axis first
+            if (Math.Abs(intendedMovement.X) > 0.0001f)
+            {
+                Vector2 xOnlyPosition = _player.Position + new Vector2(intendedMovement.X, 0);
+                Rectangle xTestBox = new Rectangle(
+                    (int)(xOnlyPosition.X - COLLISION_SIZE / 2),
+                    (int)(xOnlyPosition.Y - COLLISION_SIZE / 2),
+                    COLLISION_SIZE,
+                    COLLISION_SIZE
+                );
+
+                var xCollisions = CollisionManager.Instance.CheckCollisionsForOne(this, xTestBox);
+                
+                float maxXOffset = 0f;
+                foreach (var (handler, info) in xCollisions)
+                {
+                    if (handler is BlockCollisionHandler)
+                    {
+                        if (Math.Abs(info.ResolutionOffset.X) > Math.Abs(maxXOffset))
+                            maxXOffset = info.ResolutionOffset.X;
+                    }
+                }
+
+                if (Math.Abs(maxXOffset) > 0.001f)
+                    safeMovement.X += maxXOffset;
+            }
+
+            // Try moving on Y axis (with the X movement already applied)
+            if (Math.Abs(intendedMovement.Y) > 0.0001f)
+            {
+                Vector2 xyPosition = _player.Position + new Vector2(safeMovement.X, intendedMovement.Y);
+                Rectangle yTestBox = new Rectangle(
+                    (int)(xyPosition.X - COLLISION_SIZE / 2),
+                    (int)(xyPosition.Y - COLLISION_SIZE / 2),
+                    COLLISION_SIZE,
+                    COLLISION_SIZE
+                );
+
+                var yCollisions = CollisionManager.Instance.CheckCollisionsForOne(this, yTestBox);
+                
+                float maxYOffset = 0f;
+                foreach (var (handler, info) in yCollisions)
+                {
+                    if (handler is BlockCollisionHandler)
+                    {
+                        if (Math.Abs(info.ResolutionOffset.Y) > Math.Abs(maxYOffset))
+                            maxYOffset = info.ResolutionOffset.Y;
+                    }
+                }
+
+                if (Math.Abs(maxYOffset) > 0.001f)
+                    safeMovement.Y += maxYOffset;
+            }
+
+            return safeMovement;
         }
     }
 }

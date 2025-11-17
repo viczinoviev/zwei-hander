@@ -31,6 +31,7 @@ namespace ZweiHander.Environment
             { BlockName.WhitePatternTile, BlockType.Decorative },
             { BlockName.FireTile, BlockType.Decorative },
             { BlockName.LadderTile, BlockType.Decorative },
+            { BlockName.TunnelTile, BlockType.Decorative }
         };
         /// <summary>
         /// Constructor initializes the factory with a tile size and block sprite storage
@@ -100,6 +101,10 @@ namespace ZweiHander.Environment
 
                 case BlockName.LadderTile:
                     sprite = _playerSprites.Ladder();
+                    break;
+
+                case BlockName.TunnelTile:
+                    sprite = _blockSprites.TunnelTile();
                     break;
 
                 default: 
