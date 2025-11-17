@@ -1,5 +1,7 @@
+using System;
 using Microsoft.Xna.Framework;
 using ZweiHander.CollisionFiles;
+using ZweiHander.Environment;
 using ZweiHander.PlayerFiles;
 
 namespace ZweiHander.Map
@@ -48,12 +50,15 @@ namespace ZweiHander.Map
             {
                 Vector2 tiledOffset = roomSpawnTransitionOffset / _tileSize;
                 targetRoom.Load(true, tiledOffset);
+
             }
 
             player.SetUpdateEnabled(false);
+            player.clearSpawnedItems();
             _transitionTimer = TransitionTime;
             camera.OverrideMotion(roomSpawnTransitionOffset + _spawnPosition + new Vector2(_tileSize, _tileSize), TransitionTime);
         }
+        
 
         public void Update(GameTime gameTime, Room currentRoom, Camera.Camera camera, IPlayer player)
         {

@@ -152,4 +152,9 @@ public class ItemManager
         // If item is in ItemTypeCount, return its count, else there is 0 of this item
         return ItemTypeCount.TryGetValue(itemType, out int value) ? value : 0;
     }
+
+    public bool hasThisItemInstance(IItem item)
+    {
+        return _items.Contains(item);
+    }
 }

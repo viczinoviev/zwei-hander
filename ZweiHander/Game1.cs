@@ -4,21 +4,14 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using ZweiHander.Camera;
 using ZweiHander.CollisionFiles;
 using ZweiHander.Commands;
-using ZweiHander.Enemy;
-using ZweiHander.Enemy.EnemyStorage;
 using ZweiHander.Environment;
 using ZweiHander.GameStates;
-using ZweiHander.Graphics;
 using ZweiHander.Graphics.SpriteStorages;
 using ZweiHander.HUD;
 using ZweiHander.Items;
-using ZweiHander.Items.ItemStorages;
 using ZweiHander.Map;
 using ZweiHander.PlayerFiles;
 
@@ -39,25 +32,18 @@ namespace ZweiHander
         private Player _gamePlayer;
         private KeyboardController _keyboardController;
         private TitleScreenController _titleScreenController;
-
-        private HurtPlayerCommand _hurtPlayerCommand;
+        private GameOverController _gameOverController;
 
 
 
         //Sprites and factories
         private PlayerSprites _linkSprites;
         private HUDSprites _hudSprites;
-        private BlockSprites _blockSprites;
         private TreasureSprites _treasureSprites;
-        private EnemySprites _enemySprites;
-        private EnemyManager _enemyManager;
-        private BossSprites _bossSprites;
-        private NPCSprites _npcSprites;
         private ItemSprites _itemSprites;
-        private BlockFactory _blockFactory;
-        private ItemManager _itemManager;
-        private ItemManager _projectileManager;
         private TitleSprites _titleSprites;
+
+        private SpriteFont _gameOverFont;
         
         private Universe _universe;
         private CsvAreaConstructor _areaConstructor;
@@ -96,22 +82,14 @@ namespace ZweiHander
 
             _titleSprites = new TitleSprites(Content, _spriteBatch);
             _titleScreenController = new TitleScreenController();
+            _gameOverController = new GameOverController();
+            _gameOverFont = Content.Load<SpriteFont>("Fonts/GameOverFont");
 
             // This line will load all of the sprites into the program through an xml file
             _linkSprites = new PlayerSprites(Content, _spriteBatch);
             _hudSprites = new HUDSprites(Content, _spriteBatch);
-            _blockSprites = new BlockSprites(Content, _spriteBatch);
             _treasureSprites = new TreasureSprites(Content, _spriteBatch);
             _itemSprites = new ItemSprites(Content, _spriteBatch);
-            _enemySprites = new EnemySprites(Content, _spriteBatch);
-            _bossSprites = new BossSprites(Content, _spriteBatch);
-            _npcSprites = new NPCSprites(Content, _spriteBatch);
-
-            // Create separate manager instances for Game1 use
-            _blockFactory = new BlockFactory(32, _blockSprites, _linkSprites);
-            _itemManager = new ItemManager(_itemSprites, _treasureSprites, _bossSprites);
-            _projectileManager = new ItemManager(_itemSprites, _treasureSprites, _bossSprites);
-            _enemyManager = new EnemyManager(_enemySprites, _projectileManager, _bossSprites, _npcSprites, Content);
 
             _debugRenderer = new DebugRenderer();
             _debugRenderer.Initialize(GraphicsDevice);
@@ -131,6 +109,10 @@ namespace ZweiHander
             {
                 GameSetUp();
             }
+            else if (newMode == GameMode.GameOver)
+            {
+                _gameOverController.Reset();
+            }
         }
 
         /// <summary>
@@ -148,12 +130,12 @@ namespace ZweiHander
 
             // Universe creates its own manager instances
             _universe = new Universe(
-                _enemySprites,
-                _bossSprites,
-                _npcSprites,
+                new EnemySprites(Content, _spriteBatch),
+                new BossSprites(Content, _spriteBatch),
+                new NPCSprites(Content, _spriteBatch),
                 _itemSprites,
                 _treasureSprites,
-                _blockSprites,
+                new BlockSprites(Content, _spriteBatch),
                 _linkSprites,
 
                 Content,
@@ -171,10 +153,9 @@ namespace ZweiHander
             _universe.SetCurrentLocation("TestDungeon", 1);
 
             _keyboardController = new KeyboardController(_gamePlayer);
-            _hurtPlayerCommand = new HurtPlayerCommand(this);
             _keyboardController.BindKey(Keys.R, new ResetCommand(this));
             _keyboardController.BindKey(Keys.Q, new QuitCommand(this));
-            _keyboardController.BindKey(Keys.E, _hurtPlayerCommand);
+            _keyboardController.BindKey(Keys.E, new HurtPlayerCommand(this));
             _keyboardController.BindKey(Keys.I, new InventoryCommand(this));
             // Initialize HUD Manager
             _hudManager = new HUDManager(_gamePlayer, _hudSprites, gamePaused);
@@ -192,6 +173,14 @@ namespace ZweiHander
                     _gameState.SetMode(GameMode.Playing);
                 }
             }
+            else if (_gameState.CurrentMode == GameMode.GameOver)
+            {
+                _gameOverController.Update(gameTime);
+                if (_gameOverController.ShouldReturnToTitle())
+                {
+                    _gameState.SetMode(GameMode.TitleScreen);
+                }
+            }
             else if (_gameState.CurrentMode == GameMode.Playing)
             {
                 // Always update keyboard and HUD
@@ -201,12 +190,15 @@ namespace ZweiHander
                 // Update stuff when game is running
                 if (!gamePaused)
                 {
+                    if(_gamePlayer.CurrentHealth <= 0)
+                    {
+                        SoundEffect gameOverSFX = Content.Load<SoundEffect>("Audio/GameOver");
+                        gameOverSFX.Play();
+                        _gameState.SetMode(GameMode.GameOver);
+                    }
                     _universe.Update(gameTime);
-                    _itemManager.Update(gameTime);
-                    _projectileManager.Update(gameTime);
 
                     _gamePlayer.Update(gameTime);
-                    _hurtPlayerCommand.Update(gameTime);
 
                     CollisionManager.Instance.Update(gameTime);
 
@@ -230,6 +222,18 @@ namespace ZweiHander
                     ));
                 _spriteBatch.End();
             }
+            else if (_gameState.CurrentMode == GameMode.GameOver)
+            {
+                _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+                string gameOverText = "GAMEOVER";
+                Vector2 textSize = _gameOverFont.MeasureString(gameOverText);
+                Vector2 textPosition = new Vector2(
+                    (GraphicsDevice.Viewport.Width - textSize.X) / 2.0f,
+                    (GraphicsDevice.Viewport.Height - textSize.Y) / 2.0f
+                );
+                _spriteBatch.DrawString(_gameOverFont, gameOverText, textPosition, Color.White);
+                _spriteBatch.End();
+            }
             else if (_gameState.CurrentMode == GameMode.Playing)
             {
                 // Draw world with camera transform
@@ -239,7 +243,6 @@ namespace ZweiHander
                 );
 
                 _universe.Draw();
-                _projectileManager.Draw();
                 _gamePlayer.Draw(_spriteBatch);
 
                 _debugRenderer.DrawWorldDebug(_spriteBatch, _universe);

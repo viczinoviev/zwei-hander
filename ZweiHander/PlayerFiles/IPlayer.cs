@@ -29,5 +29,7 @@ namespace ZweiHander.PlayerFiles
         void ForceUpdateCollisionBox();
 
         void SetUpdateEnabled(bool enabled);
+
+        void clearSpawnedItems();
     }
 }

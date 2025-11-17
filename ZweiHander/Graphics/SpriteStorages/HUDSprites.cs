@@ -27,4 +27,6 @@ public class HUDSprites : SpriteFactory
     public ISprite Number(int number, int digits = -1) => new NumberSprite(number, _spriteBatch, this, digits);
     public ISprite Map() => new IdleSprite(_regions["map"], _spriteBatch);
     public ISprite OrangeCandle() => new IdleSprite(_regions["orange-candle"], _spriteBatch);
+    public ISprite BlueSelect() => new IdleSprite(_regions["blue-select"], _spriteBatch);
+    public ISprite NormalBoomerang() => new IdleSprite(_regions["normal-boomerang"], _spriteBatch);
 }

@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using ZweiHander.Graphics.SpriteStorages;
 using ZweiHander.Items;
 using ZweiHander.Items.ItemStorages;
@@ -69,6 +70,7 @@ namespace ZweiHander.PlayerFiles
             _maxHealth = STARTING_HEARTS * 2;
             _currentHealth = _maxHealth;
             Inventory[typeof(Sword)] = 1;
+            Inventory[typeof(Boomerang)] = 1;
         }
 
         public void Update(GameTime gameTime)
@@ -163,6 +165,11 @@ namespace ZweiHander.PlayerFiles
         {
             _position = newPosition;
         }
+
+        public void clearSpawnedItems()
+		{
+			_itemManager.Clear();
+		}
 
         public void MoveUp()
         {

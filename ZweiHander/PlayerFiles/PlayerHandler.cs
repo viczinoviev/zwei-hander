@@ -1,4 +1,5 @@
 using System;
+using System.CodeDom.Compiler;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -157,9 +158,12 @@ namespace ZweiHander.PlayerFiles
 
             // Get normalized movement vector from state machine
             Vector2 movementVector = _stateMachine.CurrentMovementVector;
-            movement = movementVector * currentSpeed * deltaTime;
+            Vector2 intendedMovement = movementVector * currentSpeed * deltaTime;
 
-            _player.Position += movement;
+            // Meant to stop wall clipping by preactively adjusting movement
+            Vector2 safeMovement = _collisionHandler.CalculateSafeMovement(intendedMovement);
+
+            _player.Position += safeMovement;
         }
 
         public void Draw()

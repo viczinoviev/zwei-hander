@@ -150,6 +150,25 @@ namespace ZweiHander.CollisionFiles
 			}
 		}
 
+		public List<(ICollisionHandler handler, CollisionInfo info)> CheckCollisionsForOne(ICollisionHandler sourceHandler, Rectangle testBox)
+		{
+			List<(ICollisionHandler, CollisionInfo)> collisions = new();
+
+			foreach (var collider in colliders)
+			{
+				if (collider == null || collider.Dead || collider == sourceHandler)
+					continue;
+
+				if (testBox.Intersects(collider.collisionBox))
+				{
+					CollisionInfo info = CalculateCollisionInfo(testBox, collider.collisionBox);
+					collisions.Add((collider, info));
+				}
+			}
+
+			return collisions;
+		}
+
 		public void InitializeDebugTexture(GraphicsDevice graphicsDevice)
 		{
 		}

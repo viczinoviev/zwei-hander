@@ -6,6 +6,7 @@ using ZweiHander.Items;
 using ZweiHander.Items.ItemStorages;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Audio;
+using System;
 
 namespace ZweiHander.CollisionFiles
 {
@@ -104,6 +105,45 @@ namespace ZweiHander.CollisionFiles
                 COLLISION_SIZE,
                 COLLISION_SIZE
             );
+        }
+
+        public Vector2 CalculateSafeMovement(Vector2 intendedMovement)
+        {
+            if (intendedMovement.LengthSquared() < 0.0001f)
+                return Vector2.Zero;
+
+            Vector2 intendedPosition = _player.Position + intendedMovement;
+            Rectangle testBox = new Rectangle(
+                (int)(intendedPosition.X - COLLISION_SIZE / 2),
+                (int)(intendedPosition.Y - COLLISION_SIZE / 2),
+                COLLISION_SIZE,
+                COLLISION_SIZE
+            );
+
+            var collisions = CollisionManager.Instance.CheckCollisionsForOne(this, testBox);
+
+            float maxXOffset = 0f;
+            float maxYOffset = 0f;
+
+            foreach (var (handler, info) in collisions)
+            {
+                if (handler is BlockCollisionHandler)
+                {
+                    if (Math.Abs(info.ResolutionOffset.X) > Math.Abs(maxXOffset))
+                        maxXOffset = info.ResolutionOffset.X;
+                    if (Math.Abs(info.ResolutionOffset.Y) > Math.Abs(maxYOffset))
+                        maxYOffset = info.ResolutionOffset.Y;
+                }
+            }
+
+            Vector2 safeMovement = intendedMovement;
+
+            if (Math.Abs(maxXOffset) > 0.001f)
+                safeMovement.X += maxXOffset;
+            if (Math.Abs(maxYOffset) > 0.001f)
+                safeMovement.Y += maxYOffset;
+
+            return safeMovement;
         }
     }
 }
