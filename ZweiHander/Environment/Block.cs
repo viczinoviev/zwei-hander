@@ -13,7 +13,7 @@ namespace ZweiHander.Environment
         private readonly int _gridSize;          // Size of the block in pixels
         private bool collision = true;  // Whether the block collides with other objects
 
-        private ISprite _sprite;        // Sprite for the block
+        public ISprite _sprite;        // Sprite for the block
         private readonly BlockCollisionHandler _collisionHandler;
 
         public BlockType BlockType => _blockType;

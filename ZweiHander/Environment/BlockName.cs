@@ -14,5 +14,6 @@ public enum BlockName
     BrickTile,
     WhitePatternTile,
     FireTile,
-    LadderTile
+    LadderTile,
+    TunnelTile
 }
