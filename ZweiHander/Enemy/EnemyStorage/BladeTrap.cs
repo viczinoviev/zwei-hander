@@ -31,8 +31,10 @@ public class BladeTrap : IEnemy
 
     public float attackTime;
 
-    public readonly BladeTrapHomeCollisionHandler home1CollisionHandler;
-    public readonly BladeTrapHomeCollisionHandler home2CollisionHandler;
+    public readonly BladeTrapHomeCollisionHandler homeRightCollisionHandler;
+    public readonly BladeTrapHomeCollisionHandler homeUpCollisionHandler;
+    public readonly BladeTrapHomeCollisionHandler homeLeftCollisionHandler;
+    public readonly BladeTrapHomeCollisionHandler homeDownCollisionHandler;
     public EnemyCollisionHandler CollisionHandler { get; } = default;
 
     public BladeTrap(EnemySprites enemySprites,ContentManager sfxPlayer,Vector2 pos)
@@ -41,8 +43,10 @@ public class BladeTrap : IEnemy
         _enemySprites = enemySprites;
         Sprite = _enemySprites.Trap();
         CollisionHandler = new EnemyCollisionHandler(this, sfxPlayer);
-        home1CollisionHandler = new BladeTrapHomeCollisionHandler(this, 'x');
-        home2CollisionHandler = new BladeTrapHomeCollisionHandler(this, 'y');
+        homeRightCollisionHandler = new BladeTrapHomeCollisionHandler(this, "xr");
+        homeUpCollisionHandler = new BladeTrapHomeCollisionHandler(this, "yu");
+        homeLeftCollisionHandler = new BladeTrapHomeCollisionHandler(this, "xl");
+        homeDownCollisionHandler = new BladeTrapHomeCollisionHandler(this, "yd");
         originalPosition = pos;
     }
     public virtual void Update(GameTime time)
