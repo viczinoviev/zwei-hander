@@ -15,6 +15,11 @@ namespace ZweiHander.Enemy.EnemyStorage;
 /// </summary>
 public class Goriya : IEnemy
 {
+    private const int EnemyStartHealth = 5;
+    private const int FaceChangeChance = 200;
+    private const int FaceChangeCase = 3;
+    private const int CollisionBoxOffset = 2;
+    private const int Attacking = 2;
     public ISprite Sprite { get; set; } = default;
     /// <summary>
     /// Projectile for this enemy
@@ -36,7 +41,7 @@ public class Goriya : IEnemy
     public Vector2 Position { get; set; } = default;
 
     public int Face { get; set; } = default;
-    public int Hitpoints { get; set; } = 5;
+    public int Hitpoints { get; set; } = EnemyStartHealth;
 
     public EnemyCollisionHandler CollisionHandler { get; } = default;
 
@@ -63,12 +68,12 @@ public int Thrower = 1;
     {
         Sprite = _sprites[Face];
         //Only move if not currrently throwing a projectile
-        if (Thrower != 2)
+        if (Thrower != Attacking)
         {
             //Randomize  movement
-            int mov = rnd.Next(200);
+            int mov = rnd.Next(FaceChangeChance);
             //Move according to current direction faced
-            if (mov > 3)
+            if (mov > FaceChangeCase)
             {
                 Position = EnemyHelper.BehaveFromFace(this, 1, 0);
             }
@@ -97,8 +102,8 @@ public int Thrower = 1;
     {
         // Sprites are centered
         return new Rectangle(
-                (int)Position.X - Sprite.Width / 2,
-                (int)Position.Y - Sprite.Height / 2,
+                (int)Position.X - Sprite.Width / CollisionBoxOffset,
+                (int)Position.Y - Sprite.Height / CollisionBoxOffset,
                 Sprite.Width,
                 Sprite.Height
         );

@@ -14,6 +14,13 @@ namespace ZweiHander.Enemy.EnemyStorage;
 /// </summary>
 public class Rope : IEnemy
 {
+    private const int EnemyStartHealth = 5;
+    private const int FaceLeft = 3;
+    private const int FaceChangeHelper1 = 2;
+    private const int FaceChangeHelper2 = 3;
+    private const int FaceChangeChance = 200;
+    private const int FaceChangeCase = 3;
+    private const int CollisionBoxOffset = 2;
     public ISprite Sprite { get; set; } = default;
     /// <summary>
     /// Holds all sprites for this enemy
@@ -27,7 +34,7 @@ public class Rope : IEnemy
     public Vector2 Position { get; set; } = default;
 
     public int Face { get; set; } = default;
-    public int Hitpoints { get; set; } = 5;
+    public int Hitpoints { get; set; } = EnemyStartHealth;
 
     public EnemyCollisionHandler CollisionHandler { get; } = default;
 
@@ -48,14 +55,14 @@ public class Rope : IEnemy
     }
     public virtual void Update(GameTime time)
     {
-        if (Face == 1 || Face == 3)
+        if (Face == 1 || Face == FaceLeft)
         {
-            Sprite = _sprites[(Face * 2 + 1) % 3];
+            Sprite = _sprites[(Face * FaceChangeHelper1 + 1) % FaceChangeHelper2];
         }
         //Randomize  movement
-        int mov = rnd.Next(200);
+        int mov = rnd.Next(FaceChangeChance);
         //Move according to current direction faced
-        if (mov > 3)
+        if (mov > FaceChangeCase)
         {
             Position = EnemyHelper.BehaveFromFace(this, 1,0);
         }
@@ -79,8 +86,8 @@ public class Rope : IEnemy
     {
         // Sprites are centered
         return new Rectangle(
-                (int)Position.X - Sprite.Width / 2,
-                (int)Position.Y - Sprite.Height / 2,
+                (int)Position.X - Sprite.Width / CollisionBoxOffset,
+                (int)Position.Y - Sprite.Height / CollisionBoxOffset,
                 Sprite.Width,
                 Sprite.Height
         );

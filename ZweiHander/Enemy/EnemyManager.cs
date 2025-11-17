@@ -4,7 +4,6 @@ using ZweiHander.Graphics.SpriteStorages;
 using System.Collections.Generic;
 using ZweiHander.Items;
 using ZweiHander.Enemy.EnemyStorage;
-using ZweiHander.CollisionFiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 

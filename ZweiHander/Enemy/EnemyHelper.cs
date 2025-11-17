@@ -1,7 +1,5 @@
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Reflection.Metadata;
 using Microsoft.Xna.Framework;
 using ZweiHander.Enemy.EnemyStorage;
 using ZweiHander.Items;

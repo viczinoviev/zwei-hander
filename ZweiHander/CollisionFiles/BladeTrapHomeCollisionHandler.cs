@@ -1,6 +1,4 @@
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections;
 using ZweiHander.Enemy.EnemyStorage;
 
 namespace ZweiHander.CollisionFiles
@@ -14,6 +12,10 @@ namespace ZweiHander.CollisionFiles
 
         private readonly string _axis;
 
+        private const int CollisionBoxOffset = 100;
+        private const int Down = 2;
+        private const int Left = 3;
+
         public BladeTrapHomeCollisionHandler(BladeTrap enemy, string axis)
         {
             _enemy = enemy;
@@ -21,19 +23,19 @@ namespace ZweiHander.CollisionFiles
             Rectangle colbox = _enemy.GetCollisionBox();
             if (_axis == "yu")
             {
-                collisionBox = new Rectangle(colbox.X, colbox.Y - 100, colbox.Width, 100);
+                collisionBox = new Rectangle(colbox.X, colbox.Y - CollisionBoxOffset, colbox.Width, CollisionBoxOffset);
             }
             else if(_axis == "yd")
             {
-                collisionBox = new Rectangle(colbox.X, colbox.Y + colbox.Height + 1, colbox.Width, colbox.Height + 100);
+                collisionBox = new Rectangle(colbox.X, colbox.Y + colbox.Height + 1, colbox.Width, CollisionBoxOffset);
             }
             else if(_axis == "xl")
             {
-                collisionBox = new Rectangle(colbox.X - 100, colbox.Y, 100, colbox.Height);
+                collisionBox = new Rectangle(colbox.X - CollisionBoxOffset, colbox.Y, CollisionBoxOffset, colbox.Height);
             }
             else
             {
-                collisionBox = new Rectangle(colbox.X + colbox.Width, colbox.Y, colbox.Width + 100, colbox.Height);
+                collisionBox = new Rectangle(colbox.X + colbox.Width, colbox.Y, CollisionBoxOffset, colbox.Height);
             }
         }
 
@@ -55,10 +57,10 @@ namespace ZweiHander.CollisionFiles
                         _enemy.Face = 1;
                         break;
                         case "yd":
-                        _enemy.Face = 2;
+                        _enemy.Face = Down;
                         break;
                         default:
-                        _enemy.Face = 3;
+                        _enemy.Face = Left;
                         break;
                     }
             }

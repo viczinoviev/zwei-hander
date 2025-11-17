@@ -7,7 +7,7 @@ using ZweiHander.CollisionFiles;
 namespace ZweiHander.Enemy.EnemyStorage;
 
 /// <summary>
-/// Not an enemy, but idk where to put for now. Old man.
+/// Not an enemy, but idk where to put for now. Old man. unused.
 /// </summary>
 public class OldMan : IEnemy
 {

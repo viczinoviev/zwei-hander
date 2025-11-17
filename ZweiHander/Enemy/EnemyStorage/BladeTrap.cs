@@ -12,6 +12,9 @@ namespace ZweiHander.Enemy.EnemyStorage;
 /// </summary>
 public class BladeTrap : IEnemy
 {
+    private const int EnemyStartHealth = 2000000;
+    private const int CollisionBoxOffset = 2;
+    private const int Attacking = 2;
     public ISprite Sprite { get; set; } = default;
     /// <summary>
     /// Holds all sprites for this enemy
@@ -25,7 +28,7 @@ public class BladeTrap : IEnemy
     public Vector2 Position { get; set; } = default;
 
     public int Face { get; set; } = default;
-    public int Hitpoints { get; set; } = 20000;
+    public int Hitpoints { get; set; } = EnemyStartHealth;
 
     public int Thrower;
 
@@ -56,7 +59,7 @@ public class BladeTrap : IEnemy
             float dt = (float)time.ElapsedGameTime.TotalSeconds;
             EnemyHelper.bladeTrapAttack(this, dt);
         }
-        else if (Thrower == 2)
+        else if (Thrower == Attacking)
         {
             EnemyHelper.bladeTrapReturn(this);
         }
@@ -75,8 +78,8 @@ public class BladeTrap : IEnemy
     {
         // Sprites are centered
         return new Rectangle(
-                (int)Position.X - Sprite.Width / 2,
-                (int)Position.Y - Sprite.Height / 2,
+                (int)Position.X - Sprite.Width / CollisionBoxOffset,
+                (int)Position.Y - Sprite.Height / CollisionBoxOffset,
                 Sprite.Width,
                 Sprite.Height
         );
