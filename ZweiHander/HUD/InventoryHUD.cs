@@ -45,18 +45,34 @@ namespace ZweiHander.HUD
             _selectedIndex = (_selectedIndex - 1 + _orderedItemCount) % _orderedItemCount;
         }
 
+        /// <summary>
+        /// The items in the inventory, ordered in this enum
+        /// </summary>
         private enum OrderedItem
         {
             Map,
             Sword, Boomerang, Bow, Fire
         }
-        private readonly List<Vector2> _usablePositions = [
+
+        /// <summary>
+        /// Position of each item relative to inventory sprite, ordered by enum
+        /// </summary>
+        private readonly List<Vector2> _itemPositions = [
             new(271, 63),
             new(272, 106), new(320, 106), new(368, 106), new(416, 106),
             new(272, 146), new(320, 146), new(368, 146), new(416, 146),
         ];
+        /// <summary>
+        /// Which of the items in the enum does the player have
+        /// </summary>
         private readonly List<bool> _acquiredItems;
+        /// <summary>
+        /// Sprites for drawing each item in the enum
+        /// </summary>
         private readonly List<ISprite> _itemSprites;
+        /// <summary>
+        /// Number of items that CAN be displayed
+        /// </summary>
         private readonly int _orderedItemCount = Enum.GetNames(typeof(OrderedItem)).Length;
 
         public InventoryHUD(HUDSprites hudSprites, Vector2 position, Player player)
@@ -91,7 +107,7 @@ namespace ZweiHander.HUD
             _inventoryDisplayHUD.Draw(_position + offset);
             for (int i = 0; i < _orderedItemCount; i++)
             {
-                if (_acquiredItems[i]) _itemSprites[i].Draw(_usablePositions[i] + _relativePosition + offset);
+                if (_acquiredItems[i]) _itemSprites[i].Draw(_itemPositions[i] + _relativePosition + offset);
             }
             if(_acquiredItems[_selectedIndex]) _blueFrameHUD.Draw(_usablePositions[_selectedIndex] + _relativePosition + offset);
         }
