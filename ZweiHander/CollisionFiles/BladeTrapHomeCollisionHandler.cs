@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using System;
+using System.Collections;
 using ZweiHander.Enemy.EnemyStorage;
 
 namespace ZweiHander.CollisionFiles
@@ -11,26 +12,34 @@ namespace ZweiHander.CollisionFiles
         /// </summary>
         private BladeTrap _enemy;
 
-        private readonly char _axis;
+        private readonly string _axis;
 
-        public BladeTrapHomeCollisionHandler(BladeTrap enemy, char axis)
+        public BladeTrapHomeCollisionHandler(BladeTrap enemy, string axis)
         {
             _enemy = enemy;
             _axis = axis;
             Rectangle colbox = _enemy.GetCollisionBox();
-            if (_axis == 'y')
+            if (_axis == "yu")
             {
-                collisionBox = new Rectangle(colbox.X, colbox.Y - 100, colbox.Width, 200 + colbox.Height);
+                collisionBox = new Rectangle(colbox.X, colbox.Y - 100, colbox.Width, 100);
+            }
+            else if(_axis == "yd")
+            {
+                collisionBox = new Rectangle(colbox.X, colbox.Y + colbox.Height + 1, colbox.Width, colbox.Height + 100);
+            }
+            else if(_axis == "xl")
+            {
+                collisionBox = new Rectangle(colbox.X - 100, colbox.Y, 100, colbox.Height);
             }
             else
             {
-                collisionBox = new Rectangle(colbox.X - 100, colbox.Y, 200 + colbox.Width, colbox.Height);
+                collisionBox = new Rectangle(colbox.X + colbox.Width, colbox.Y, colbox.Width + 100, colbox.Height);
             }
         }
 
         public override void OnCollision(ICollisionHandler other, CollisionInfo collisionInfo)
         {
-
+            Console.WriteLine(other);
             //Player collision
             if (other is PlayerCollisionHandler playerCollisionHandler)
             {
@@ -38,32 +47,23 @@ namespace ZweiHander.CollisionFiles
                 {
                     _enemy.attackTime = 1;
                     _enemy.Thrower = 1;
-                    float yDiff = playerCollisionHandler._player.Position.Y - _enemy.Position.Y;
-                    float xDiff = playerCollisionHandler._player.Position.X - _enemy.Position.X;
-                    if (Math.Abs(yDiff) > Math.Abs(xDiff))
+                    switch (_axis)
                     {
-                        if (yDiff > 0)
-                        {
-                            _enemy.Face = 2;
-                        }
-                        else
-                        {
-                            _enemy.Face = 0;
-                        }
+                        case "yu":
+                        _enemy.Face = 0;
+                        break;
+                        case "xr":
+                        _enemy.Face = 1;
+                        break;
+                        case "yd":
+                        _enemy.Face = 2;
+                        break;
+                        default:
+                        _enemy.Face = 3;
+                        break;
                     }
-                    else
-                    {
-                        if (xDiff > 0)
-                        {
-                            _enemy.Face = 1;
-                        }
-                        else
-                        {
-                            _enemy.Face = 3;
-                        }
-                    }
-                }
             }
+        }
         }
 
         public override void UpdateCollisionBox()
