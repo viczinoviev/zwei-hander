@@ -51,64 +51,14 @@ namespace ZweiHander.Map
                 Vector2 tiledOffset = roomSpawnTransitionOffset / _tileSize;
                 targetRoom.Load(true, tiledOffset);
 
-				//CreateTunnelBlocks(oldPortalPos, roomSpawnTransitionOffset, portalDirection);
             }
 
             player.SetUpdateEnabled(false);
+            player.clearSpawnedItems();
             _transitionTimer = TransitionTime;
             camera.OverrideMotion(roomSpawnTransitionOffset + _spawnPosition + new Vector2(_tileSize, _tileSize), TransitionTime);
         }
-
-        // private void CreateTunnelBlocks(Vector2 oldPortalPos, Vector2 transitionOffset, Direction tunnelDirection)
-		// {
-
-        //     if (tunnelDirection == Direction.Right) // Moving Right
-        //     {
-        //         for (int i = 0; i <= (transitionOffset.X - oldPortalPos.X) / _tileSize; i++)
-        //         {
-        //             Block tunnel = _universe.BlockFactory.CreateBlock(
-        //                 BlockName.TunnelTile,
-        //                 new Point((int)(oldPortalPos.X / _tileSize) + i, (int)(oldPortalPos.Y / _tileSize)));
-
-        //             //tunnel._sprite.Rotation = (float)(Math.PI / 2);
-        //             //tunnel._sprite.Origin += new Vector2(_tileSize/2f, _tileSize/2f);
-        //         }
-        //     }
-        //     if (tunnelDirection == Direction.Left) // Moving Left
-        //     {
-        //         for (int i = 0; i <= (-transitionOffset.X + oldPortalPos.X) / _tileSize; i++)
-        //         {
-        //             Block tunnel = _universe.BlockFactory.CreateBlock(
-        //                 BlockName.TunnelTile,
-        //                 new Point((int)(oldPortalPos.X / _tileSize) - i, (int)(oldPortalPos.Y / _tileSize)));
-
-        //             //tunnel._sprite.Rotation = (float)(-Math.PI / 2);
-        //             //tunnel._sprite.Origin += new Vector2(_tileSize/2f, _tileSize/2f);
-        //         }
-        //     }
-        //     // TO FIX UP AND LEFT
-        //     if (tunnelDirection == Direction.Down) // Moving Down
-        //     {
-        //         for (int i = 0; i <= (transitionOffset.Y - oldPortalPos.Y) / _tileSize; i++)
-        //         {
-        //             Block tunnel =_universe.BlockFactory.CreateBlock(
-        //                 BlockName.TunnelTile,
-        //                 new Point((int)(oldPortalPos.X / _tileSize), (int)(oldPortalPos.Y / _tileSize) + i));
-        //             //tunnel._sprite.Rotation = (float)(Math.PI);
-        //             //tunnel._sprite.Origin += new Vector2(_tileSize/2f, _tileSize/2f);
-        //         }
-        //     }
-        //     if (tunnelDirection == Direction.Up) // Moving Up
-        //     {
-        //         for (int i = 0; i <= (-transitionOffset.Y + oldPortalPos.Y) / _tileSize; i++)
-        //         {
-        //             Block tunnel = _universe.BlockFactory.CreateBlock(
-        //                 BlockName.TunnelTile,
-        //                 new Point((int)(oldPortalPos.X / _tileSize), (int)(oldPortalPos.Y / _tileSize) - i));
-        //             //tunnel._sprite.Origin += new Vector2(_tileSize/2f, _tileSize/2f);
-        //         }
-        //     }
-		// }
+        
 
         public void Update(GameTime gameTime, Room currentRoom, Camera.Camera camera, IPlayer player)
         {
