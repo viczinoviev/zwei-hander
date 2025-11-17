@@ -21,8 +21,8 @@ public abstract class AbstractSprite : ISprite
 
     public int Width
     {
-        get => Math.Abs(Math.Cos(Rotation)) > Math.Abs(Math.Sin(Rotation)) ?
-            UnrotatedWidth : UnrotatedHeight;
+        get => _sideways ?
+            UnrotatedHeight : UnrotatedWidth;
     }
     /// <summary>
     /// The SpriteBatch to draw to
