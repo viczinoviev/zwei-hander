@@ -6,6 +6,7 @@ using ZweiHander.Items;
 using ZweiHander.Enemy.EnemyStorage;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using System.Numerics;
 
 namespace ZweiHander.Enemy;
 
