@@ -77,7 +77,7 @@ public class AnimatedSprite : AbstractSprite
 
     public void AnchorBottomRight(Vector2 offset)
     {
-        Origin = new Vector2(Width - offset.X, Height - offset.Y);
+        Origin = new Vector2(_region.Width - offset.X, _region.Height - offset.Y);
         _offset = offset;
         _anchor = true;
     }
