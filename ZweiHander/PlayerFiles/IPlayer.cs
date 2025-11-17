@@ -23,6 +23,10 @@ namespace ZweiHander.PlayerFiles
         void MoveLeft();
         void MoveRight();
         void Attack();
+        void UseItem1();
+        void UseItem2();
+        void UseItem3();
+        void UseItem4();
         void Idle();
         void Draw(SpriteBatch spriteBatch);
 

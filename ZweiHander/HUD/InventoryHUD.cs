@@ -21,6 +21,9 @@ namespace ZweiHander.HUD
         private readonly Vector2 _position;
         private readonly Vector2 _relativePosition;
         private readonly Player _player;
+        private readonly Vector2 _selectedPosition = new Vector2(145,112);
+        private readonly Vector2 _selectedPositionB = new Vector2(264, 464);
+        private readonly Vector2 _selectedPositionA = new Vector2(312, 464);
 
         private int _selectedIndex = 0;
 
@@ -36,19 +39,30 @@ namespace ZweiHander.HUD
 
         public void SelectNext()
         {
-            // Simple wrap-around
-            _selectedIndex = (_selectedIndex + 1) % _orderedItemCount;
+            do
+            {
+                _selectedIndex = (_selectedIndex + 1) % _orderedItemCount;
+            }
+            while (!_acquiredItems[_selectedIndex]);
         }
 
         public void SelectPrevious()
         {
-            _selectedIndex = (_selectedIndex - 1 + _orderedItemCount) % _orderedItemCount;
+            do
+            {
+                _selectedIndex = (_selectedIndex - 1 + _orderedItemCount) % _orderedItemCount;
+            }
+            while (!_acquiredItems[_selectedIndex]);
         }
 
+        public OrderedItem? GetSelectedItem()
+        {
+            return (OrderedItem)_selectedIndex;
+        }
         /// <summary>
         /// The items in the inventory, ordered in this enum
         /// </summary>
-        private enum OrderedItem
+        public enum OrderedItem
         {
             Map,
             Sword, Boomerang, Bow, Fire
@@ -58,7 +72,7 @@ namespace ZweiHander.HUD
         /// Position of each item relative to inventory sprite, ordered by enum
         /// </summary>
         private readonly List<Vector2> _itemPositions = [
-            new(271, 63),
+            //new(271, 63),
             new(272, 106), new(320, 106), new(368, 106), new(416, 106),
             new(272, 146), new(320, 146), new(368, 146), new(416, 146),
         ];
@@ -105,11 +119,17 @@ namespace ZweiHander.HUD
         public void Draw(SpriteBatch spriteBatch, Vector2 offset)
         {
             _inventoryDisplayHUD.Draw(_position + offset);
+            _itemSprites[(int)OrderedItem.Sword].Draw(_selectedPositionA + _relativePosition + offset);
             for (int i = 0; i < _orderedItemCount; i++)
             {
                 if (_acquiredItems[i]) _itemSprites[i].Draw(_itemPositions[i] + _relativePosition + offset);
             }
-            if(_acquiredItems[_selectedIndex]) _blueFrameHUD.Draw(_usablePositions[_selectedIndex] + _relativePosition + offset);
+            if (_acquiredItems[_selectedIndex])
+            {
+                _blueFrameHUD.Draw(_itemPositions[_selectedIndex] + _relativePosition + offset);
+                _itemSprites[_selectedIndex].Draw(_selectedPosition + _relativePosition + offset);
+                _itemSprites[_selectedIndex].Draw(_selectedPositionB + _relativePosition + offset);
+            }
         }
     }
 }

@@ -90,9 +90,10 @@ namespace ZweiHander.HUD
             // Add all components to the list
             _components = new List<IHUDComponent>
             {
-                _inventoryHUD,
+                
                 _mapHUD,
                 _headsUpHud,
+                _inventoryHUD,
                 _healthDisplay
             };
         }
@@ -202,7 +203,39 @@ namespace ZweiHander.HUD
             _inventoryHUD.SelectPrevious();
         }
 
-        
+        public void ConfirmInventorySelection()
+        {
+            var selected = _inventoryHUD.GetSelectedItem();
+            if (!selected.HasValue)
+                return;
+
+            switch (selected.Value)
+            {
+                case InventoryHUD.OrderedItem.Sword:
+                    // Use sword (attack)
+                    _player.Attack();
+                    break;
+
+                case InventoryHUD.OrderedItem.Bow:
+                    // Bow uses UsingItem1 in your PlayerHandler
+                    _player.UseItem1();
+                    break;
+
+                case InventoryHUD.OrderedItem.Boomerang:
+                    // Boomerang uses UsingItem2
+                    _player.UseItem2();
+                    break;
+
+                case InventoryHUD.OrderedItem.Fire:
+                    // Fire uses UsingItem4
+                    _player.UseItem4();
+                    break;
+
+                case InventoryHUD.OrderedItem.Map:
+                    // TODO: later, toggle map HUD or something
+                    break;
+            }
+        }
 
         public void Draw(SpriteBatch spriteBatch)
         {
