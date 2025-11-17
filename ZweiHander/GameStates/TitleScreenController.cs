@@ -15,10 +15,11 @@ namespace ZweiHander.GameStates
             _previousKeyState = Keyboard.GetState();
         }
 
-        /// <summary>
-        /// Checks if any valid key was pressed to start the game
-        /// </summary>
-        /// <returns>True if player pressed any key except Q or Escape</returns>
+        public void Reset()
+        {
+            _previousKeyState = Keyboard.GetState();
+        }
+
         public bool ShouldStartGame()
         {
             KeyboardState currentKeyState = Keyboard.GetState();

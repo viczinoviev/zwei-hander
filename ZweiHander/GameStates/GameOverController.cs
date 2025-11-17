@@ -1,30 +1,36 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
+using ZweiHander.Input;
 
 namespace ZweiHander.GameStates
 {
     public class GameOverController
     {
-        private float _timer;
-        private const float GAME_OVER_DURATION = 4.0f;
+        private readonly KeyboardInputHandler _inputHandler;
 
-        public GameOverController()
+        public GameOverController(KeyboardInputHandler inputHandler)
         {
-            _timer = 0f;
+            _inputHandler = inputHandler;
         }
 
         public void Reset()
         {
-            _timer = 0f;
+            _inputHandler.Reset();
         }
 
         public void Update(GameTime gameTime)
         {
-            _timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            _inputHandler.Update();
         }
 
         public bool ShouldReturnToTitle()
         {
-            return _timer >= GAME_OVER_DURATION;
+            return _inputHandler.IsKeyPressed(Keys.Space);
+        }
+
+        public bool ShouldQuit()
+        {
+            return _inputHandler.IsAnyKeyPressed(Keys.Q, Keys.Escape);
         }
     }
 }

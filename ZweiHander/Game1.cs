@@ -32,7 +32,7 @@ namespace ZweiHander
         private Player _gamePlayer;
         private KeyboardController _keyboardController;
         private TitleScreenController _titleScreenController;
-        private GameOverController _gameOverController;
+        private GameOverScreen _gameOverScreen;
 
 
 
@@ -42,8 +42,6 @@ namespace ZweiHander
         private TreasureSprites _treasureSprites;
         private ItemSprites _itemSprites;
         private TitleSprites _titleSprites;
-
-        private SpriteFont _gameOverFont;
         
         private Universe _universe;
         private CsvAreaConstructor _areaConstructor;
@@ -82,8 +80,7 @@ namespace ZweiHander
 
             _titleSprites = new TitleSprites(Content, _spriteBatch);
             _titleScreenController = new TitleScreenController();
-            _gameOverController = new GameOverController();
-            _gameOverFont = Content.Load<SpriteFont>("Fonts/GameOverFont");
+            _gameOverScreen = new GameOverScreen(Content, GraphicsDevice);
 
             // This line will load all of the sprites into the program through an xml file
             _linkSprites = new PlayerSprites(Content, _spriteBatch);
@@ -111,7 +108,11 @@ namespace ZweiHander
             }
             else if (newMode == GameMode.GameOver)
             {
-                _gameOverController.Reset();
+                _gameOverScreen.Reset();
+            }
+            else if (newMode == GameMode.TitleScreen)
+            {
+                _titleScreenController.Reset();
             }
         }
 
@@ -162,8 +163,11 @@ namespace ZweiHander
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+            if (_gameState.CurrentMode != GameMode.GameOver)
+            {
+                if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+                    Exit();
+            }
 
             if (_gameState.CurrentMode == GameMode.TitleScreen)
             {
@@ -174,8 +178,13 @@ namespace ZweiHander
             }
             else if (_gameState.CurrentMode == GameMode.GameOver)
             {
-                _gameOverController.Update(gameTime);
-                if (_gameOverController.ShouldReturnToTitle())
+                _gameOverScreen.Update(gameTime);
+
+                if (_gameOverScreen.ShouldQuit())
+                {
+                    Exit();
+                }
+                else if (_gameOverScreen.ShouldReturnToTitle())
                 {
                     _gameState.SetMode(GameMode.TitleScreen);
                 }
@@ -223,15 +232,7 @@ namespace ZweiHander
             }
             else if (_gameState.CurrentMode == GameMode.GameOver)
             {
-                _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-                string gameOverText = "GAMEOVER";
-                Vector2 textSize = _gameOverFont.MeasureString(gameOverText);
-                Vector2 textPosition = new Vector2(
-                    (GraphicsDevice.Viewport.Width - textSize.X) / 2.0f,
-                    (GraphicsDevice.Viewport.Height - textSize.Y) / 2.0f
-                );
-                _spriteBatch.DrawString(_gameOverFont, gameOverText, textPosition, Color.White);
-                _spriteBatch.End();
+                _gameOverScreen.Draw(_spriteBatch);
             }
             else if (_gameState.CurrentMode == GameMode.Playing)
             {
