@@ -147,7 +147,11 @@ namespace ZweiHander.Environment
         {
             string[] parts = objectId.Split('.');
             string prefix = parts[0];
-            string name = parts[1];
+            String name = "";
+            if (parts.Length > 1)
+            {
+                name = parts[1];
+            }
 
             switch (prefix)
             {
@@ -169,6 +173,10 @@ namespace ZweiHander.Environment
 
                 case "p":
                     CreatePortal(name, position);
+                    break;
+
+                case "spawn":
+                    _currentRoom.PlayerSpawnPoint = position;
                     break;
             }
         }
