@@ -173,6 +173,14 @@ namespace ZweiHander
                 // Update stuff when game is running
                 if (!gamePaused)
                 {
+                    //Game over if player is dead
+                    if(_gamePlayer.CurrentHealth <= 0)
+                    {
+                        SoundEffect gameOverSFX = Content.Load<SoundEffect>("Audio/GameOver");
+                        gameOverSFX.Play();
+                        ResetCommand reset = new(this);
+                        reset.Execute();
+                    }
                     _universe.Update(gameTime);
 
                     _gamePlayer.Update(gameTime);

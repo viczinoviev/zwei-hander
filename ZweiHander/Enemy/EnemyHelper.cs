@@ -48,7 +48,7 @@ class EnemyHelper
             (float v, float a) = ItemHelper.BoomerangTrajectory(50, 2);
             enemy._currentProjectile = projectileManager.GetItem("Boomerang",position: enemy.Position,
             velocity: EnemyHelper.BehaveFromFace(enemy, v, 1), acceleration: EnemyHelper.BehaveFromFace(enemy, a, 1),
-                extras: [() => enemy.Position, enemy.CollisionHandler]);
+                properties: [ItemProperty.EnemyProjectile],extras: [() => enemy.Position, enemy.CollisionHandler]);
             enemy.Thrower = 2;
         }
         else
