@@ -84,7 +84,7 @@ public int Thrower = 1;
             }
         }
         //projectile handling
-        EnemyHelper.goriyaAttack(this,_projectileManager);
+        EnemyHelper.GoriyaAttack(this,_projectileManager);
         //updates
         CollisionHandler.UpdateCollisionBox();
         Sprite.Update(time);

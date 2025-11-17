@@ -1,0 +1,25 @@
+Author of the code review: Luke Howarrd
+Date of the code review: 2025-11-17
+Sprint number: 4
+Name of the .cs file being reviewed: Universe.cs
+Author of the .cs file being reviewed: Stash
+Number of minutes taken to complete the review: 10 minutes.
+Specific comments on readability: 
+
+    This file is a little challenging to read, as it has very few comments. However, a lot of the code is not challenging
+    to understand as there are a good few methods that are just one line or are overall not complicated. The set current location
+    and load room functions are the two more challenging methods, but with some time its not too hard. Overall, this file could use a
+    little bit more commenting, but its not drastically hard to read or anything.
+
+Author of the code review: Luke Howard
+Date of the code review: 2025-11-17
+Sprint number: 4
+Name of the .cs file being reviewed: GameOverScreen.cs
+Author of the .cs file being reviewed: Victor Zinoviev
+Number of minutes taken to complete the review: 10 minutes.
+Specific comments on maintainability/code quality: 
+
+    This file is very well made. It seems to be fairly easy to modify and maintain to adjust the needs for the gameover screen. Intially,
+    I had implemented a quick gameover and this is far more in depth and complete. It is very nice that it is set up to restart the game on
+    a new command other than the reset r we had. I am thinking about changing the music for the gameover screen, and with this implementation
+    I think it should be fairly easy to add.

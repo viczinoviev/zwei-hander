@@ -130,7 +130,7 @@ namespace ZweiHander.Map
         public void persistentRemoveItemAndEnemy(ItemManager itemManager, EnemyManager enemyManager)
         {
             _itemData.RemoveAll(data => !itemManager.hasThisItemInstance(data.itemPointer));
-            _enemyData.RemoveAll(data => !enemyManager.hasThisEnemyInstance(data.enemyPointer));
+            _enemyData.RemoveAll(data => !enemyManager.HasThisEnemyInstance(data.enemyPointer));
         }
 
         public bool Contains(Vector2 position) => Bounds.Contains(position);

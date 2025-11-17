@@ -53,7 +53,7 @@ class EnemyHelper
     /// </summary>
     /// <param name="enemy">Goriya that is attacking</param>
     /// <param name="projectileManager">Projectile manager to handle the projectile</param>
-    public static void goriyaAttack(Goriya enemy, ItemManager projectileManager)
+    public static void GoriyaAttack(Goriya enemy, ItemManager projectileManager)
     {
         //Randomize attacking (projectile throwing)
         int attack = enemy.rnd.Next(randomChance);
@@ -85,7 +85,7 @@ class EnemyHelper
     /// </summary>
     /// <param name="enemy">Aquamentus that is attacking</param>
     /// <param name="projectileManager">Projectile manager to handle the projectiles</param>
-    public static void aquamentusAttack(Aquamentus enemy, ItemManager projectileManager)
+    public static void AquamentusAttack(Aquamentus enemy, ItemManager projectileManager)
     {
         //Randomize attacking (projectile throwing)
         int attack = enemy.rnd.Next(randomChance);
@@ -123,7 +123,7 @@ class EnemyHelper
         }
     }
 
-    public static void bladeTrapAttack(BladeTrap enemy, float dt)
+    public static void BladeTrapAttack(BladeTrap enemy, float dt)
     {
         if (enemy.attackTime >= 0)
         {
@@ -136,7 +136,7 @@ class EnemyHelper
             enemy.Face = (enemy.Face + FaceChanger) % FaceModulus;
         }
     }
-    public static void bladeTrapReturn(BladeTrap enemy)
+    public static void BladeTrapReturn(BladeTrap enemy)
     {
         if (Math.Abs(enemy.originalPosition.X - enemy.Position.X) >= AllowedPosDifference || Math.Abs(enemy.originalPosition.Y - enemy.Position.Y) >= AllowedPosDifference)
             {
