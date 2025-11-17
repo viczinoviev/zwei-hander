@@ -18,8 +18,8 @@ namespace ZweiHander.Map
         // Stored data for recreation
         private readonly List<(BlockName blockName, Point gridPosition)> _blockData;
         private readonly List<(BorderName borderName, Vector2 position)> _borderData;
-        private readonly List<(string enemyName, Vector2 position)> _enemyData;
-        private readonly List<(string itemType, Vector2 position)> _itemData;
+        private readonly List<(string enemyName, Vector2 position, IEnemy enemyPointer)> _enemyData;
+        private readonly List<(string itemType, Vector2 position, IItem itemPointer)> _itemData;
         private readonly List<(int portalId, Vector2 position)> _portalData;
         
         private readonly Universe _universe;
@@ -36,8 +36,8 @@ namespace ZweiHander.Map
             
             _blockData = new List<(BlockName, Point)>();
             _borderData = new List<(BorderName, Vector2)>();
-            _enemyData = new List<(string, Vector2)>();
-            _itemData = new List<(string, Vector2)>();
+            _enemyData = new List<(string, Vector2, IEnemy)>();
+            _itemData = new List<(string, Vector2, IItem)>();
             _portalData = new List<(int, Vector2)>();
         }
 
@@ -53,12 +53,12 @@ namespace ZweiHander.Map
         
         public void AddEnemy(string enemyName, Vector2 position)
         {
-            _enemyData.Add((enemyName, position));
+            _enemyData.Add((enemyName, position, null));
         }
         
         public void AddItem(string itemType, Vector2 position)
         {
-            _itemData.Add((itemType, position));
+            _itemData.Add((itemType, position, null));
         }
         
         public void AddPortal(int portalId, Vector2 position)
@@ -73,7 +73,7 @@ namespace ZweiHander.Map
 
             IsLoaded = true;
             
-            // Create fresh instances - collision handlers auto-register in their constructors
+            // Create fresh instances
             foreach (var (blockName, gridPosition) in _blockData)
             {
                 Point adjustedGridPosition = new Point(gridPosition.X + (int)offsetInTiles.X, gridPosition.Y + (int)offsetInTiles.Y);
@@ -86,18 +86,22 @@ namespace ZweiHander.Map
                 _universe.BorderFactory.CreateBorder(borderName, adjustedPosition);
             }
             
-            foreach (var (enemyName, position) in _enemyData)
+            for (int i = 0; i < _enemyData.Count; i++)
             {
+                var (enemyName, position, enemyPointer) = _enemyData[i];
                 Vector2 adjustedPosition = position + new Vector2(offsetInTiles.X * _universe.TileSize, offsetInTiles.Y * _universe.TileSize);
-                _universe.EnemyManager.GetEnemy(enemyName, adjustedPosition);
+                enemyPointer = _universe.EnemyManager.GetEnemy(enemyName, adjustedPosition);
+                _enemyData[i] = (enemyName, position, enemyPointer);
             }
             
-            foreach (var (itemType, position) in _itemData)
+           for (int i = 0; i < _itemData.Count; i++)
             {
+                var (itemType, position, itemPointer) = _itemData[i];
                 Vector2 adjustedPosition = position + new Vector2(offsetInTiles.X * _universe.TileSize, offsetInTiles.Y * _universe.TileSize);
-                _universe.ItemManager.GetItem(itemType, -1, adjustedPosition);
+                itemPointer = _universe.ItemManager.GetItem(itemType, -1, adjustedPosition);
+                _itemData[i] = (itemType, position, itemPointer);
             }
-            
+ 
             if (excludePortals) return;
             foreach (var (portalId, position) in _portalData)
             {
@@ -106,6 +110,12 @@ namespace ZweiHander.Map
                 portal.OnRoomLoad();
             }
             
+        }
+
+        public void persistentRemoveItemAndEnemy(ItemManager itemManager, EnemyManager enemyManager)
+        {
+            _itemData.RemoveAll(data => !itemManager.hasThisItemInstance(data.itemPointer));
+            _enemyData.RemoveAll(data => !enemyManager.hasThisEnemyInstance(data.enemyPointer));
         }
 
         public bool Contains(Vector2 position) => Bounds.Contains(position);
