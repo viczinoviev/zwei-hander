@@ -120,7 +120,7 @@ namespace ZweiHander
         /// </summary>
         public void GameSetUp()
         {
-            //Clears all the Colliders first
+                //Clears all the Colliders first
             CollisionManager.Instance.ClearAllColliders();
 
             _gamePlayer = new Player(_linkSprites, _itemSprites, _treasureSprites,Content);
