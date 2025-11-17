@@ -7,24 +7,18 @@ using ZweiHander.HUD;
 
 namespace ZweiHander.Commands
 {
-    public class InventoryCommand : ICommand
+    public class PauseCommand : ICommand
     {
         private readonly Game1 _game;
 
-        public InventoryCommand(Game1 game)
+        public PauseCommand(Game1 game)
         {
             _game = game;
         }
 
         public void Execute()
         {
-            bool open = !_game.HUDManager.Paused;
-
-            // Toggle inventory HUD
-            _game.HUDManager.Paused = open;
-
-            // Freeze or unfreeze the world as well
-            _game.gamePaused = open;
+            _game.gamePaused = !_game.gamePaused;
         }
     }
 }

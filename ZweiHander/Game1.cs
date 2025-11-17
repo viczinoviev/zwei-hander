@@ -156,7 +156,8 @@ namespace ZweiHander
             _keyboardController.BindKey(Keys.R, new ResetCommand(this));
             _keyboardController.BindKey(Keys.Q, new QuitCommand(this));
             _keyboardController.BindKey(Keys.E, new HurtPlayerCommand(this));
-            _keyboardController.BindKey(Keys.I, new InventoryCommand(this));
+            _keyboardController.BindKey(Keys.I, new InventoryCommand(this));  
+            _keyboardController.BindKey(Keys.P, new PauseCommand(this));
             _keyboardController.BindKey(Keys.D8, new PreviousInventoryItemCommand(this)); 
             _keyboardController.BindKey(Keys.D9, new NextInventoryItemCommand(this));
             _keyboardController.BindKey(Keys.X, new ConfirmInventoryItemCommand(this));
