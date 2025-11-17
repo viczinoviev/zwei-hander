@@ -4,9 +4,9 @@ using ZweiHander.Graphics.SpriteStorages;
 using System.Collections.Generic;
 using ZweiHander.Items;
 using ZweiHander.Enemy.EnemyStorage;
-using ZweiHander.CollisionFiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using System.Numerics;
 
 namespace ZweiHander.Enemy;
 
@@ -97,7 +97,7 @@ public class EnemyManager(EnemySprites enemysprites, ItemManager projectileManag
                 break;
         }
         enemy.Position = position;
-        enemy.Face = 2;
+        enemy.Face = 0;
         currentEnemies.Add(enemy);
         return enemy;
     }
@@ -134,16 +134,17 @@ public class EnemyManager(EnemySprites enemysprites, ItemManager projectileManag
             _enemy.CollisionHandler.Dead = true;
             if (_enemy is BladeTrap bladeTrap)
             {
-                bladeTrap.home1CollisionHandler.Dead = true;
-                bladeTrap.home2CollisionHandler.Dead = true;
+                bladeTrap.homeRightCollisionHandler.Dead = true;
+                bladeTrap.homeUpCollisionHandler.Dead = true;
+                bladeTrap.homeLeftCollisionHandler.Dead = true;
+                bladeTrap.homeDownCollisionHandler.Dead = true;
             }
         }
         currentEnemies.RemoveAll(enemy => enemy != null);
+        _projectileManager.Clear();
     }
-
-    public bool hasThisEnemyInstance(IEnemy enemy)
+public bool hasThisEnemyInstance(IEnemy enemy)
     {
         return currentEnemies.Contains(enemy);
     }
-
 }

@@ -50,7 +50,7 @@ namespace ZweiHander.Map
             {
                 Vector2 tiledOffset = roomSpawnTransitionOffset / _tileSize;
                 targetRoom.Load(true, tiledOffset);
-
+                //_universe.EnemyManager.Clear();
             }
 
             player.SetUpdateEnabled(false);

@@ -5,6 +5,7 @@ using ZweiHander.Enemy;
 using ZweiHander.Items;
 using ZweiHander.CollisionFiles;
 using System;
+using System.Linq;
 
 namespace ZweiHander.Map
 {
@@ -14,6 +15,9 @@ namespace ZweiHander.Map
         public Vector2 Position { get; }
         public Vector2 Size { get; }
         public bool IsLoaded { get; set; }
+
+        // Not required in a room, but allows for predetermined spawn location
+        public Vector2 PlayerSpawnPoint = new Vector2(0,0);
 
         // Stored data for recreation
         private readonly List<(BlockName blockName, Point gridPosition)> _blockData;
@@ -67,6 +71,17 @@ namespace ZweiHander.Map
         }
 
         public IEnumerable<(int portalId, Vector2 position)> GetPortalData() => _portalData;
+        
+        public Vector2 GetPlayerSpawnPoint()
+        {
+            return RoomSpawnHelper.GetPlayerSpawnPoint(
+                PlayerSpawnPoint,
+                _borderData,
+                Bounds,
+                _universe.TileSize,
+                RoomNumber
+            );
+        }
 
         public void Load(bool excludePortals = false, Vector2 offsetInTiles = default)
         {

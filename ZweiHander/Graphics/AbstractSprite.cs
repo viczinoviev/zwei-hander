@@ -12,7 +12,14 @@ public abstract class AbstractSprite : ISprite
     /// </summary>
     protected TextureRegion _region;
 
+    /// <summary>
+    /// The height of this sprite before rotation
+    /// </summary>
     private int UnrotatedHeight { get => (int) ((float) _region.Height * Scale.Y); }
+    
+    /// <summary>
+    /// The width of this sprite before rotation
+    /// </summary>
     private int UnrotatedWidth { get => (int)((float)_region.Width * Scale.X); }
 
     public int Height { get => _sideways ?
@@ -21,8 +28,8 @@ public abstract class AbstractSprite : ISprite
 
     public int Width
     {
-        get => Math.Abs(Math.Cos(Rotation)) > Math.Abs(Math.Sin(Rotation)) ?
-            UnrotatedWidth : UnrotatedHeight;
+        get => _sideways ?
+            UnrotatedHeight : UnrotatedWidth;
     }
     /// <summary>
     /// The SpriteBatch to draw to
@@ -43,9 +50,12 @@ public abstract class AbstractSprite : ISprite
     /// </summary>
     public float Rotation { get => _rotation; set {
             _rotation = value;
-            _sideways = Math.Abs(Math.Cos(value)) < Math.Abs(Math.Sin(value));
+            _sideways = Math.Abs(Math.Cos(value)) < Math.Abs(Math.Sin(value)); //Is it sideways?
         } }
 
+    /// <summary>
+    /// If this sprite is rotatd enough that it is on its side
+    /// </summary>
     private bool _sideways = false;
 
     /// <summary>

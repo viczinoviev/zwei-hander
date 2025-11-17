@@ -3,7 +3,6 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using ZweiHander.Enemy.EnemyStorage;
 using ZweiHander.Items;
-using ZweiHander.Items.ItemStorages;
 
 namespace ZweiHander.Enemy;
 
@@ -13,6 +12,23 @@ namespace ZweiHander.Enemy;
 /// </summary>
 class EnemyHelper
 {
+    private const int Up = 0;
+    private const int Right = 1;
+    private const int Down = 2;
+    private const int Left = 3;
+    private const int randomChance = 300;
+    private const int doAttack = 5;
+    private const int attacking = 2;
+    private const int attackDuration = 2;
+    private const int attackLength = 50;
+    private const int fireballLifetime = 3;
+    private const int fireballSpawnOffset = 20;
+    private const int fireballXSpeed = -100;
+    private const int fireballYSpeed = 30;
+    private const int FaceModulus = 4;
+    private const int FaceChanger = 2;
+    private const int TrapSpeed = 2;
+    private const int AllowedPosDifference = 2;
     /// <summary>
     /// Manages behaviors for enemies/projectiles based on their speed and direction they face
     /// </summary>
@@ -24,11 +40,11 @@ class EnemyHelper
     {
         if (thrown != 1)
         {
-            return new Vector2(enemy.Position.X + ((-1 + 2 * Convert.ToInt32(!(enemy.Face == 3))) * (magnitude * Convert.ToInt32((enemy.Face == 3) || (enemy.Face == 1)))), enemy.Position.Y + ((-1 + 2 * Convert.ToInt32(!(enemy.Face == 0))) * (magnitude * Convert.ToInt32((enemy.Face == 0) || (enemy.Face == 2)))));
+            return new Vector2(enemy.Position.X + ((-1 + 2 * Convert.ToInt32(!(enemy.Face == Left))) * (magnitude * Convert.ToInt32((enemy.Face == Left) || (enemy.Face == Right)))), enemy.Position.Y + ((-1 + 2 * Convert.ToInt32(!(enemy.Face == Up))) * (magnitude * Convert.ToInt32((enemy.Face == Up) || (enemy.Face == Down)))));
         }
         else
         {
-            return new Vector2((-1 + 2 * Convert.ToInt32(!(enemy.Face == 3))) * (magnitude * Convert.ToInt32((enemy.Face == 3) || (enemy.Face == 1))), (-1 + 2 * Convert.ToInt32(!(enemy.Face == 0))) * (magnitude * Convert.ToInt32((enemy.Face == 0) || (enemy.Face == 2))));
+            return new Vector2((-1 + 2 * Convert.ToInt32(!(enemy.Face == Left))) * (magnitude * Convert.ToInt32((enemy.Face == Left) || (enemy.Face == Right))), (-1 + 2 * Convert.ToInt32(!(enemy.Face == Up))) * (magnitude * Convert.ToInt32((enemy.Face == Up) || (enemy.Face == Down))));
         }
     }
 
@@ -40,21 +56,21 @@ class EnemyHelper
     public static void goriyaAttack(Goriya enemy, ItemManager projectileManager)
     {
         //Randomize attacking (projectile throwing)
-        int attack = enemy.rnd.Next(300);
+        int attack = enemy.rnd.Next(randomChance);
         //attack, as long as not already attacking
-        if (attack == 5 && enemy.Thrower != 2)
+        if (attack == doAttack && enemy.Thrower != attacking)
         {
             //Create a projectile using ItemHelpers boomerang trajectory method
-            (float v, float a) = ItemHelper.BoomerangTrajectory(50, 2);
+            (float v, float a) = ItemHelper.BoomerangTrajectory(attackLength, attackDuration);
             enemy._currentProjectile = projectileManager.GetItem("Boomerang",position: enemy.Position,
             velocity: EnemyHelper.BehaveFromFace(enemy, v, 1), acceleration: EnemyHelper.BehaveFromFace(enemy, a, 1),
                 properties: [ItemProperty.EnemyProjectile],extras: [() => enemy.Position, enemy.CollisionHandler]);
-            enemy.Thrower = 2;
+            enemy.Thrower = attacking;
         }
         else
         {
             //If currently throwing and projectile is dead, set back to not throwing
-            if (enemy.Thrower == 2)
+            if (enemy.Thrower == attacking)
             {
 
                 if (enemy._currentProjectile.IsDead())
@@ -72,27 +88,27 @@ class EnemyHelper
     public static void aquamentusAttack(Aquamentus enemy, ItemManager projectileManager)
     {
         //Randomize attacking (projectile throwing)
-        int attack = enemy.rnd.Next(300);
+        int attack = enemy.rnd.Next(randomChance);
         //attack, as long as not already attacking
-        if (attack == 5 && enemy.Thrower != 2)
+        if (attack == doAttack && enemy.Thrower != attacking)
         {
             //Create projectiles and Set up the projectiles behavior
-            IItem _currentProjectile1 = projectileManager.GetItem("Fireball",3, position: new Vector2(enemy.Position.X - 20, enemy.Position.Y - 20));
-            _currentProjectile1.Velocity = new Vector2(-100, 0);
-            IItem _currentProjectile2 = projectileManager.GetItem("Fireball",3, position: new Vector2(enemy.Position.X - 20, enemy.Position.Y - 20));
-            _currentProjectile2.Velocity = new Vector2(-100, 30);
-            IItem _currentProjectile3 = projectileManager.GetItem("Fireball",3, position: new Vector2(enemy.Position.X - 20, enemy.Position.Y - 20));
-            _currentProjectile3.Velocity = new Vector2(-100, -30);
+            IItem _currentProjectile1 = projectileManager.GetItem("Fireball",fireballLifetime, position: new Vector2(enemy.Position.X - fireballSpawnOffset, enemy.Position.Y - fireballSpawnOffset));
+            _currentProjectile1.Velocity = new Vector2(fireballXSpeed, 0);
+            IItem _currentProjectile2 = projectileManager.GetItem("Fireball",fireballLifetime, position: new Vector2(enemy.Position.X - fireballSpawnOffset, enemy.Position.Y - fireballSpawnOffset));
+            _currentProjectile2.Velocity = new Vector2(fireballXSpeed, fireballYSpeed);
+            IItem _currentProjectile3 = projectileManager.GetItem("Fireball",fireballLifetime, position: new Vector2(enemy.Position.X - fireballSpawnOffset, enemy.Position.Y - fireballSpawnOffset));
+            _currentProjectile3.Velocity = new Vector2(fireballXSpeed, -fireballYSpeed);
             enemy._projectiles.Add(_currentProjectile1);
             enemy._projectiles.Add(_currentProjectile2);
             enemy._projectiles.Add(_currentProjectile3);
-            enemy.Thrower = 2;
+            enemy.Thrower = attacking;
             //Set up the projectiles behavior
         }
         else
         {
             //If currently throwing and projectiles are dead, set back to not throwing
-            if (enemy.Thrower == 2)
+            if (enemy.Thrower == attacking)
             {
                 if (enemy._projectiles.First().IsDead())
                 {
@@ -111,18 +127,18 @@ class EnemyHelper
     {
         if (enemy.attackTime >= 0)
         {
-            enemy.Position = EnemyHelper.BehaveFromFace(enemy, 2, 0);
+            enemy.Position = EnemyHelper.BehaveFromFace(enemy, TrapSpeed, 0);
             enemy.attackTime -= dt;
         }
         else
         {
-            enemy.Thrower = 2;
-            enemy.Face = (enemy.Face + 2) % 4;
+            enemy.Thrower = attacking;
+            enemy.Face = (enemy.Face + FaceChanger) % FaceModulus;
         }
     }
     public static void bladeTrapReturn(BladeTrap enemy)
     {
-        if (Math.Abs(enemy.originalPosition.X - enemy.Position.X) >= 2 || Math.Abs(enemy.originalPosition.Y - enemy.Position.Y) >= 2)
+        if (Math.Abs(enemy.originalPosition.X - enemy.Position.X) >= AllowedPosDifference || Math.Abs(enemy.originalPosition.Y - enemy.Position.Y) >= AllowedPosDifference)
             {
                 enemy.Position = EnemyHelper.BehaveFromFace(enemy, 1, 0);
             }

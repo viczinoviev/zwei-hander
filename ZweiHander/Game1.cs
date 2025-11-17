@@ -124,7 +124,6 @@ namespace ZweiHander
             CollisionManager.Instance.ClearAllColliders();
 
             _gamePlayer = new Player(_linkSprites, _itemSprites, _treasureSprites,Content);
-            _gamePlayer.Position = new Vector2(100, 200);
             SetCameraCommand moveCameraToPlayer = new SetCameraCommand(_camera, _gamePlayer);
             moveCameraToPlayer.Execute();
 
@@ -137,9 +136,7 @@ namespace ZweiHander
                 _treasureSprites,
                 new BlockSprites(Content, _spriteBatch),
                 _linkSprites,
-
                 Content,
-
                 _camera
             );
             _universe.SetPlayer(_gamePlayer);
@@ -151,6 +148,8 @@ namespace ZweiHander
 
             _universe.AddArea(testArea);
             _universe.SetCurrentLocation("TestDungeon", 1);
+            _gamePlayer.Position = _universe.CurrentRoom.GetPlayerSpawnPoint();
+            moveCameraToPlayer.Execute();
 
             _keyboardController = new KeyboardController(_gamePlayer);
             _keyboardController.BindKey(Keys.R, new ResetCommand(this));

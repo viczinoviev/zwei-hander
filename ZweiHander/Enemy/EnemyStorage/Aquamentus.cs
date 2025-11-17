@@ -15,6 +15,10 @@ namespace ZweiHander.Enemy.EnemyStorage;
 /// </summary>
 public class Aquamentus : IEnemy
 {
+    private const int EnemyStartHealth = 50;
+    private const int FaceChangeChance = 200;
+    private const int FaceChangeCase = 3;
+    private const int CollisionBoxOffset = 2;
     public ISprite Sprite { get; set; }
     /// <summary>
     /// Projectiles for this enemy
@@ -32,7 +36,7 @@ public class Aquamentus : IEnemy
 
     public int Face { get; set; } = default;
 
-    public int Hitpoints { get; set; } = 15;
+    public int Hitpoints { get; set; } = EnemyStartHealth;
 
     public EnemyCollisionHandler CollisionHandler { get; } = default;
     public int Thrower = 1;
@@ -53,9 +57,9 @@ public class Aquamentus : IEnemy
     {
         
             //Randomize  movement
-            int mov = rnd.Next(200);
+            int mov = rnd.Next(FaceChangeChance);
             //Move according to current direction faced
-            if (mov > 3)
+            if (mov > FaceChangeCase)
             {
                 Position = EnemyHelper.BehaveFromFace(this,1,0);
             }
@@ -83,8 +87,8 @@ public class Aquamentus : IEnemy
     {
         // Sprites are centered
         return new Rectangle(
-                (int)Position.X - Sprite.Width / 2,
-                (int)Position.Y - Sprite.Height / 2,
+                (int)Position.X - Sprite.Width / CollisionBoxOffset,
+                (int)Position.Y - Sprite.Height / CollisionBoxOffset,
                 Sprite.Width,
                 Sprite.Height
         );
