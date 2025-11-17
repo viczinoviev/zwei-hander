@@ -20,21 +20,29 @@ Some sprite transitions may not align perfectly with movement direction.
 ## Code Structure
 Game1.cs – Main entry point, handles initialization, loading content, and game loop.
 
-Commands/ – Contains command classes for each input (e.g., ChangeBlockCommand, ResetCommand, HurtPlayerCommand).
+Commands/ – Contains command classes for each input (e.g., InventoryCommand, ResetCommand, QuitCommand).
 
 Environment/ – Includes block classes and the BlockFactory.
 
-Enemy/ – Manages enemies and the EnemyFactory.
+Enemy/ – Manages enemies and the EnemyManager, with all the actual enemy classes in EnemyStorage.
 
 Items/ – Contains item logic and the ItemManager.
 
-Graphics/ – Includes all sprite classes and storage systems for player, blocks, enemies, and items.
+Graphics/ – Includes all sprite classes and storage systems for player, blocks, enemies, items, and portals.
 
 Player/ – Defines Player behavior, movement, attacks, and sprite rendering.
 
 Controllers/ – Implements the KeyboardController to map keys to commands. (In Player Class as of Sprint 2)
 
-Collisions/ - Handles collisions between player, enemies, items, and blocks.
+CollisionFiles/ - Handles collisions between player, enemies, items, and blocks.
+
+Camera/ - Has Camera.cs, which handles the poisition of what is viewed.
+
+GameStates/ - Handles what section (state) the game itself is in (titlescreen, paused, etc.)
+
+HUD/ - Contains all parts of the HUD like inventory and map.
+
+Map/ - How the game is laid out and handled.
 ## Tools/Frameworks
 Used .NET messages to help put code into better format.
 
