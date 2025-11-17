@@ -39,9 +39,8 @@ namespace ZweiHander.CollisionFiles
 
         public override void OnCollision(ICollisionHandler other, CollisionInfo collisionInfo)
         {
-            Console.WriteLine(other);
             //Player collision
-            if (other is PlayerCollisionHandler playerCollisionHandler)
+            if (other is PlayerCollisionHandler)
             {
                 if (_enemy.Thrower == 0)
                 {
