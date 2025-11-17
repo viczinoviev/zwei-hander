@@ -139,6 +139,7 @@ public class EnemyManager(EnemySprites enemysprites, ItemManager projectileManag
             }
         }
         currentEnemies.RemoveAll(enemy => enemy != null);
+        _projectileManager.Clear();
     }
 
     public bool hasThisEnemyInstance(IEnemy enemy)
