@@ -157,6 +157,8 @@ namespace ZweiHander
             _keyboardController.BindKey(Keys.Q, new QuitCommand(this));
             _keyboardController.BindKey(Keys.E, new HurtPlayerCommand(this));
             _keyboardController.BindKey(Keys.I, new InventoryCommand(this));
+            _keyboardController.BindKey(Keys.D8, new PreviousInventoryItemCommand(this)); 
+            _keyboardController.BindKey(Keys.D9, new NextInventoryItemCommand(this));
             // Initialize HUD Manager
             _hudManager = new HUDManager(_gamePlayer, _hudSprites, gamePaused);
         }

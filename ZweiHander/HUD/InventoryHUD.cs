@@ -17,9 +17,33 @@ namespace ZweiHander.HUD
     public class InventoryHUD : IHUDComponent
     {
         private readonly ISprite _inventoryDisplayHUD;
+        private readonly ISprite _blueFrameHUD;
         private readonly Vector2 _position;
         private readonly Vector2 _relativePosition;
         private readonly Player _player;
+
+        private int _selectedIndex = 0;
+
+        public int SelectedIndex
+        {
+            get => _selectedIndex;
+            set
+            {
+                if (value < 0 || value >= _orderedItemCount) return;
+                _selectedIndex = value;
+            }
+        }
+
+        public void SelectNext()
+        {
+            // Simple wrap-around
+            _selectedIndex = (_selectedIndex + 1) % _orderedItemCount;
+        }
+
+        public void SelectPrevious()
+        {
+            _selectedIndex = (_selectedIndex - 1 + _orderedItemCount) % _orderedItemCount;
+        }
 
         private enum OrderedItem
         {
@@ -28,7 +52,8 @@ namespace ZweiHander.HUD
         }
         private readonly List<Vector2> _usablePositions = [
             new(271, 63),
-            new(272, 106), new(320, 106), new(368, 106), new(416, 106)
+            new(272, 106), new(320, 106), new(368, 106), new(416, 106),
+            new(272, 146), new(320, 146), new(368, 146), new(416, 146),
         ];
         private readonly List<bool> _acquiredItems;
         private readonly List<ISprite> _itemSprites;
@@ -38,6 +63,7 @@ namespace ZweiHander.HUD
         {
             hudSprites = hudSprites ?? throw new ArgumentNullException(nameof(hudSprites));
             _inventoryDisplayHUD = hudSprites.InventoryDisplay();
+            _blueFrameHUD = hudSprites.BlueFrame();
             _position = position; // Position is determined by HUDManager
             _relativePosition = position - new Vector2(_inventoryDisplayHUD.Width, _inventoryDisplayHUD.Height) / 2;
             _player = player;
@@ -67,6 +93,7 @@ namespace ZweiHander.HUD
             {
                 if (_acquiredItems[i]) _itemSprites[i].Draw(_usablePositions[i] + _relativePosition + offset);
             }
+            if(_acquiredItems[_selectedIndex]) _blueFrameHUD.Draw(_usablePositions[_selectedIndex] + _relativePosition + offset);
         }
     }
 }

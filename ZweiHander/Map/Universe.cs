@@ -92,10 +92,10 @@ namespace ZweiHander.Map
             Room targetRoom = CurrentArea.GetRoom(roomNumber);
             if (targetRoom == null) return;
 
-            RoomTransition.StartTransition(CurrentRoom, targetRoom, spawnPosition, camera, oldPortalPos, newPortalPos, portalDirection, Player);
-
             // Remove items and enemies that were picked up/killed in the previous room
             CurrentRoom.persistentRemoveItemAndEnemy(ItemManager, EnemyManager);
+
+            RoomTransition.StartTransition(CurrentRoom, targetRoom, spawnPosition, camera, oldPortalPos, newPortalPos, portalDirection, Player);
 
             CurrentRoom = targetRoom;
         }

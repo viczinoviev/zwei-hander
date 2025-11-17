@@ -36,7 +36,7 @@ namespace ZweiHander.Enemy.EnemyStorage
 
             Sprite = _enemySprites.Gel();
         }
-
+//unsued enemy!
         public MovingBlock(EnemySprites enemySprites, Vector2 startPos, Vector2 endPos, float moveTime)
         {
             _enemySprites = enemySprites;

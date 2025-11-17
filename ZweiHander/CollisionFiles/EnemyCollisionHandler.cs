@@ -3,15 +3,14 @@ using ZweiHander.Enemy;
 using ZweiHander.PlayerFiles;
 using ZweiHander.Items;
 using Microsoft.Xna.Framework.Audio;
-using System.Net.Mime;
 using Microsoft.Xna.Framework.Content;
-using System;
 using ZweiHander.Enemy.EnemyStorage;
 
 namespace ZweiHander.CollisionFiles
 {
     public class EnemyCollisionHandler : CollisionHandlerAbstract
     {
+        private const int Damage = 5;
         /// <summary>
         /// The enemy this handler manages
         /// </summary>
@@ -47,7 +46,7 @@ namespace ZweiHander.CollisionFiles
                 if (itemCollisionHandler.Item.HasProperty(ItemProperty.CanDamageEnemy))
                 {
                     enemyHurt.Play();
-                    _enemy.Hitpoints -= 5;
+                    _enemy.Hitpoints -= Damage;
                     
                     //if the enemy has died, set this handler to be removed
                     if (_enemy.Hitpoints <= 0)
@@ -62,7 +61,7 @@ namespace ZweiHander.CollisionFiles
                 //If the player is attacking, hurt the enemy
                 if (playerCollisionHandler._player.CurrentState == PlayerState.Attacking)
                 {
-                    _enemy.Hitpoints -= 5;
+                    _enemy.Hitpoints -= Damage;
                     if (currentSFX.State == SoundState.Stopped)
                     {
                         currentSFX.Play();

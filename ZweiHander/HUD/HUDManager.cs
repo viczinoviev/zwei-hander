@@ -28,7 +28,7 @@ namespace ZweiHander.HUD
         private List<IHUDComponent> _components;
         private IHUDComponent _headsUpHud;
         private IHUDComponent _healthDisplay;
-        private IHUDComponent _inventoryHUD;
+        private InventoryHUD _inventoryHUD;
         private IHUDComponent _mapHUD;
         private HUDSprites _hudSprites;
         private IPlayer _player;
@@ -191,7 +191,19 @@ namespace ZweiHander.HUD
                 component.Update(gameTime);
             }
         }
+
+        public void SelectNextInventoryItem()
+        {
+            _inventoryHUD.SelectNext();
+        }
+
+        public void SelectPreviousInventoryItem()
+        {
+            _inventoryHUD.SelectPrevious();
+        }
+
         
+
         public void Draw(SpriteBatch spriteBatch)
         {
             // Draw black background for HUD area
