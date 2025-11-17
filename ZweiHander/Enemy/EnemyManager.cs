@@ -7,6 +7,7 @@ using ZweiHander.Enemy.EnemyStorage;
 using ZweiHander.CollisionFiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using System.Numerics;
 
 namespace ZweiHander.Enemy;
 
