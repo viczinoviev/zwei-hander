@@ -3,3 +3,10 @@ This sprint was a little confusing for me, as I didnt fully understand what I ha
 an opportunity to work on refactoring enemies and getting bladetrap functioning, which ended up being a lot of work itself.
 I also did some sfx and worked on the music. I think everyone did a good job this sprint at finding something the project needed and 
 getting it done. Overall, I am happy with the teams work this sprint.
+
+Jacob:
+This sprint felt strange. I was not quite sure what I was supposed to do for this. I did do a major rework of how items worked based
+upon the sprint2 feedback. I also implemeneted some fun items I really liked. The sprint2 feedback said to differentiate items and
+projectiles, but I disagree with this. The reasoning was based upon "different properties", but these properties are already
+differentitated using actual properties like CanDamageEnemy or CanBePickedUp, as well as through virtual methods. I got to make a
+song for this, which was very fun. I am not very good at songwriting, so it has been a while since I have had an excuse to do so.
