@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using System.ComponentModel;
 using System.IO;
 using ZweiHander.CollisionFiles;
 using ZweiHander.Commands;
@@ -33,6 +34,7 @@ namespace ZweiHander
         private KeyboardController _keyboardController;
         private TitleScreenController _titleScreenController;
         private GameOverScreen _gameOverScreen;
+        private GameWonScreen _gameWonScreen;
 
 
 
@@ -81,6 +83,7 @@ namespace ZweiHander
             _titleSprites = new TitleSprites(Content, _spriteBatch);
             _titleScreenController = new TitleScreenController();
             _gameOverScreen = new GameOverScreen(Content, GraphicsDevice);
+            _gameWonScreen = new GameWonScreen(Content, GraphicsDevice);
 
             // This line will load all of the sprites into the program through an xml file
             _linkSprites = new PlayerSprites(Content, _spriteBatch);
@@ -109,6 +112,10 @@ namespace ZweiHander
             else if (newMode == GameMode.GameOver)
             {
                 _gameOverScreen.Reset();
+            }
+            else if (newMode == GameMode.GameWon)
+            {
+                _gameWonScreen.Reset();
             }
             else if (newMode == GameMode.TitleScreen)
             {
@@ -208,6 +215,10 @@ namespace ZweiHander
                         gameOverSFX.Play();
                         _gameState.SetMode(GameMode.GameOver);
                     }
+                    if (_gamePlayer.InventoryCount(typeof(Items.ItemStorages.Triforce)) > 0)
+                    {
+                        _gameState.SetMode(GameMode.GameWon);
+                    }
                     _universe.Update(gameTime);
 
                     _gamePlayer.Update(gameTime);
@@ -237,6 +248,10 @@ namespace ZweiHander
             else if (_gameState.CurrentMode == GameMode.GameOver)
             {
                 _gameOverScreen.Draw(_spriteBatch);
+            }
+            else if (_gameState.CurrentMode == GameMode.GameWon)
+            {
+                _gameWonScreen.Draw(_spriteBatch);
             }
             else if (_gameState.CurrentMode == GameMode.Playing)
             {
