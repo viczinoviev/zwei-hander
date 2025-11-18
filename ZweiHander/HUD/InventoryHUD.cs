@@ -22,8 +22,8 @@ namespace ZweiHander.HUD
         private readonly Vector2 _position;
         private readonly Vector2 _relativePosition;
         private readonly Player _player;
-        private readonly Vector2 _selectedPositionB = new Vector2(264, 464);
-        private readonly Vector2 _selectedPositionA = new Vector2(312, 464);
+        private readonly Vector2 _selectedPositionB = new(264, 464);
+        private readonly Vector2 _selectedPositionA = new(312, 464);
 
         private int _selectedIndex = 0;
 

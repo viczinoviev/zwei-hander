@@ -9,11 +9,11 @@ namespace ZweiHander.Graphics;
 public class NumberSprite : AbstractSprite
 {
     private string _number;
-    private Dictionary<char, ISprite> _sprites;
+    private readonly Dictionary<char, ISprite> _sprites;
     private List<Vector2> _relativePositions;
     public int CumWidth;
     public int CumHeight { get => _sprites['0'].Height; }
-    private int Digits;
+    private readonly int Digits;
     public NumberSprite(int number, SpriteBatch spriteBatch, HUDSprites hudSprites, int digits = -1, bool centered = true)
     {
         _spriteBatch = spriteBatch;
@@ -23,7 +23,7 @@ public class NumberSprite : AbstractSprite
         {
             _sprites[i.ToString()[0]] = hudSprites.Digit(i);
         }
-        SetNumber(number);
+        SetNumber(number, centered);
     }
 
     public void SetNumber(int number, bool centered = true)
