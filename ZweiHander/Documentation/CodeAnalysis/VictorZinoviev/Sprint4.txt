@@ -1,0 +1,5 @@
+Much of the output from the code analysis tool that I got from the classes I worked on were about public fields that are 
+not being used and some formatting issues.
+
+I believe that there could be more coupling for my code that can be reduced, getting a lower coupling for each class, so
+I am planning on investigating those and refactoring them as needed in the future sprints.

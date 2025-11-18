@@ -55,3 +55,17 @@ Command Pattern for flexible input handling.
 Factory Pattern for object creation (blocks, items, enemies).
 
 XML-based SpriteSheets for efficient sprite management.
+
+
+## Functionality notes
+Bombs can explode other bombs
+
+Fire item (denoted by candle in inventory after pickup) shoots fire that chooses and homes in on nearby enemy after initial stopping
+
+Picking up bomb gives 10 bombs
+
+Fairy causes health change of random amount between -2 and 2 (inclusive, 2 life=1 heart)
+
+Bow has unlimited arrows
+
+Map and Clock currently have no functionality
