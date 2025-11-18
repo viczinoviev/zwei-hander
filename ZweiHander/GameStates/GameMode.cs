@@ -4,6 +4,7 @@ namespace ZweiHander.GameStates
     {
         TitleScreen,
         Playing,
-        GameOver
+        GameOver,
+        GameWon
     }
 }
