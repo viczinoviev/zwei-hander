@@ -20,10 +20,10 @@ namespace ZweiHander.CollisionFiles
         /// </summary>
         public readonly Player _player;
 
-        private SoundEffect PlayerHurt;
-        private SoundEffect ItemPickup;
+        private readonly SoundEffect PlayerHurt;
+        private readonly SoundEffect ItemPickup;
 
-        private SoundEffectInstance currentSFX;
+        private readonly SoundEffectInstance currentSFX;
         private readonly Random _random;
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace ZweiHander.CollisionFiles
                 }
             }
 
-            if (other is EnemyCollisionHandler enemy)
+            if (other is EnemyCollisionHandler)
             {
                 _player.TakeDamage();
                 if (currentSFX.State == SoundState.Stopped)
@@ -106,7 +106,7 @@ namespace ZweiHander.CollisionFiles
         {
 
             
-            collisionBox = new Rectangle(
+            CollisionBox = new (
                 (int)(_player.Position.X - COLLISION_SIZE / 2),
                 (int)(_player.Position.Y - COLLISION_SIZE / 2),
                 COLLISION_SIZE,
@@ -128,7 +128,7 @@ namespace ZweiHander.CollisionFiles
             if (Math.Abs(intendedMovement.X) > 0.0001f)
             {
                 Vector2 xOnlyPosition = _player.Position + new Vector2(intendedMovement.X, 0);
-                Rectangle xTestBox = new Rectangle(
+                Rectangle xTestBox = new(
                     (int)(xOnlyPosition.X - COLLISION_SIZE / 2),
                     (int)(xOnlyPosition.Y - COLLISION_SIZE / 2),
                     COLLISION_SIZE,
@@ -155,7 +155,7 @@ namespace ZweiHander.CollisionFiles
             if (Math.Abs(intendedMovement.Y) > 0.0001f)
             {
                 Vector2 xyPosition = _player.Position + new Vector2(safeMovement.X, intendedMovement.Y);
-                Rectangle yTestBox = new Rectangle(
+                Rectangle yTestBox = new(
                     (int)(xyPosition.X - COLLISION_SIZE / 2),
                     (int)(xyPosition.Y - COLLISION_SIZE / 2),
                     COLLISION_SIZE,

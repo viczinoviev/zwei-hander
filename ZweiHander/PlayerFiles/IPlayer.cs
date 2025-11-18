@@ -34,6 +34,6 @@ namespace ZweiHander.PlayerFiles
 
         void SetUpdateEnabled(bool enabled);
 
-        void clearSpawnedItems();
+        void ClearSpawnedItems();
     }
 }

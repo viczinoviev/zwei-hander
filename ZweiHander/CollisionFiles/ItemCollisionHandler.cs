@@ -26,6 +26,6 @@ public class ItemCollisionHandler : CollisionHandlerAbstract
 
     public override void UpdateCollisionBox()
     {
-        collisionBox = Item.GetHitBox();
+        CollisionBox = Item.GetHitBox();
     }
 }

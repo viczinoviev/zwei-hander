@@ -1,0 +1,19 @@
+Removed random unreacheable code.
+Made Camera.cs use primary constructor.
+CalculateCollisionInfo in CollisionManager.cs made static.
+Simplified some collection initializations.
+Removed redundant methods from CollisionManager.cs
+Made any fields that can be readonly, readonly.
+Made PlayerTeleportCommand.cs and SetCameraCommand.cs use primary constructor.
+
+I did not fix the code in DebugRenderer.cs as its just a dev tool class whose quality does not contribute to the whole project.
+
+Used primary constructor in BorderFactory.cs, simplifed initalizations too. Same for Area.cs nad Border.cs (including making fields readonly).
+Also Player.cs, Universe.cs, RoomTransition.cs, RoomPortal.cs, Room.cs, PortalManager.cs, BorderFactory.cs
+
+Update method in RoomPortal cannot be static or have the paremeter removed, we might need that later on.
+
+Fixed some namespace locations (were using not their folder)
+
+	I tend to make the same mistakes over and over, such as not using primary constructors, overcomplicated initalizations
+	and not making fields readonly. Something to work on.

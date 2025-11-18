@@ -48,10 +48,10 @@ namespace ZweiHander.CollisionFiles
 				for (int j = i + 1; j < colliders.Count; j++)
 				{
 				
-					if (colliders[i].collisionBox.Intersects(colliders[j].collisionBox))
+					if (colliders[i].CollisionBox.Intersects(colliders[j].CollisionBox))
 					{
-						CollisionInfo collisionInfoI = CalculateCollisionInfo(colliders[i].collisionBox, colliders[j].collisionBox);
-						CollisionInfo collisionInfoJ = CalculateCollisionInfo(colliders[j].collisionBox, colliders[i].collisionBox);
+						CollisionInfo collisionInfoI = CalculateCollisionInfo(colliders[i].CollisionBox, colliders[j].CollisionBox);
+						CollisionInfo collisionInfoJ = CalculateCollisionInfo(colliders[j].CollisionBox, colliders[i].CollisionBox);
 
 						colliders[i].OnCollision(colliders[j], collisionInfoI);
 						colliders[j].OnCollision(colliders[i], collisionInfoJ);
@@ -60,7 +60,7 @@ namespace ZweiHander.CollisionFiles
 			}
 		}
 
-		private CollisionInfo CalculateCollisionInfo(Rectangle movingRect, Rectangle staticRect)
+		private static CollisionInfo CalculateCollisionInfo(Rectangle movingRect, Rectangle staticRect)
 		{
 			Rectangle intersection = Rectangle.Intersect(movingRect, staticRect);
 			Vector2 intersectionCenter = new (
@@ -146,35 +146,27 @@ namespace ZweiHander.CollisionFiles
 			foreach (var collider in colliders)
 			{
 				string type = collider.GetType().Name;
-				System.Console.WriteLine($"  - {type} at {collider.collisionBox}");
+				System.Console.WriteLine($"  - {type} at {collider.CollisionBox}");
 			}
 		}
 
 		public List<(ICollisionHandler handler, CollisionInfo info)> CheckCollisionsForOne(ICollisionHandler sourceHandler, Rectangle testBox)
 		{
-			List<(ICollisionHandler, CollisionInfo)> collisions = new();
+			List<(ICollisionHandler, CollisionInfo)> collisions = [];
 
 			foreach (var collider in colliders)
 			{
 				if (collider == null || collider.Dead || collider == sourceHandler)
 					continue;
 
-				if (testBox.Intersects(collider.collisionBox))
+				if (testBox.Intersects(collider.CollisionBox))
 				{
-					CollisionInfo info = CalculateCollisionInfo(testBox, collider.collisionBox);
+					CollisionInfo info = CalculateCollisionInfo(testBox, collider.CollisionBox);
 					collisions.Add((collider, info));
 				}
 			}
 
 			return collisions;
-		}
-
-		public void InitializeDebugTexture(GraphicsDevice graphicsDevice)
-		{
-		}
-
-		public void DrawDebugCollisionBoxes(SpriteBatch spriteBatch)
-		{
 		}
 
 	}

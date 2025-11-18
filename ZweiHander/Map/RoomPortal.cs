@@ -17,7 +17,7 @@ namespace ZweiHander.Map
         private readonly Camera.Camera _camera;
         private readonly RoomPortalCollisionHandler _collisionHandler;
 
-        private Vector2 TRIGGER_AREA = new Vector2(16, 16);
+        private Vector2 TRIGGER_AREA = new(16, 16);
 
         private const int TELEPORT_OFFSET = 20;
 
@@ -35,9 +35,6 @@ namespace ZweiHander.Map
             _collisionHandler = new RoomPortalCollisionHandler(this);
         }
 
-        public void OnRoomLoad()
-        {
-        }
 
         public void OnRoomUnload()
         {
@@ -70,7 +67,6 @@ namespace ZweiHander.Map
                         break;
                     case Direction.Left:
                         offsetDirection = new Vector2(-TELEPORT_OFFSET, 0);
-                        break;
                         break;
                     case Direction.Right:
                         offsetDirection = new Vector2(TELEPORT_OFFSET, 0);

@@ -23,19 +23,19 @@ namespace ZweiHander.CollisionFiles
             Rectangle colbox = _enemy.GetCollisionBox();
             if (_axis == "yu")
             {
-                collisionBox = new Rectangle(colbox.X, colbox.Y - CollisionBoxOffset, colbox.Width, CollisionBoxOffset);
+                CollisionBox = new Rectangle(colbox.X, colbox.Y - CollisionBoxOffset, colbox.Width, CollisionBoxOffset);
             }
             else if(_axis == "yd")
             {
-                collisionBox = new Rectangle(colbox.X, colbox.Y + colbox.Height + 1, colbox.Width, CollisionBoxOffset);
+                CollisionBox = new Rectangle(colbox.X, colbox.Y + colbox.Height + 1, colbox.Width, CollisionBoxOffset);
             }
             else if(_axis == "xl")
             {
-                collisionBox = new Rectangle(colbox.X - CollisionBoxOffset, colbox.Y, CollisionBoxOffset, colbox.Height);
+                CollisionBox = new Rectangle(colbox.X - CollisionBoxOffset, colbox.Y, CollisionBoxOffset, colbox.Height);
             }
             else
             {
-                collisionBox = new Rectangle(colbox.X + colbox.Width, colbox.Y, CollisionBoxOffset, colbox.Height);
+                CollisionBox = new Rectangle(colbox.X + colbox.Width, colbox.Y, CollisionBoxOffset, colbox.Height);
             }
         }
 

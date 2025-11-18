@@ -25,13 +25,11 @@ namespace ZweiHander.Environment
         // Constructor: creates a new block with given type, position, size, and sprite
         public Block(BlockName name, BlockType blockType, Point gridPosition, int gridSize, ISprite sprite)
         {
-            if (sprite == null) throw new ArgumentNullException(nameof(sprite));
-
-            Name = name;
+			Name = name;
             _blockType = blockType;
             _gridPosition = gridPosition;
             _gridSize = gridSize;
-            _sprite = sprite;
+            _sprite = sprite ?? throw new ArgumentNullException(nameof(sprite));
 
             // Only create collision handler for collidable blocks
             if (IsCollidable())

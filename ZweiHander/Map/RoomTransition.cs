@@ -6,26 +6,20 @@ using ZweiHander.PlayerFiles;
 
 namespace ZweiHander.Map
 {
-    public class RoomTransition
-    {
+    public class RoomTransition(Universe universe, int tileSize)
+	{
         private float _transitionTimer = 0f;
         private Vector2 _spawnPosition = Vector2.Zero;
         
         public float TransitionTime { get; set; } = 0.5f;
         public bool IsTransitioning => _transitionTimer > 0;
 
-        private readonly int _tileSize;
-        private readonly Universe _universe;
+        private readonly int _tileSize = tileSize;
+        private readonly Universe _universe = universe;
 
-		private int tilePadding = 1;
+		private readonly int tilePadding = 1;
 
-        public RoomTransition(Universe universe, int tileSize)
-        {
-            _universe = universe;
-            _tileSize = tileSize;
-        }
-
-        public void StartTransition(
+		public void StartTransition(
             Room currentRoom,
             Room targetRoom,
             Vector2 spawnPosition,
@@ -54,7 +48,7 @@ namespace ZweiHander.Map
             }
 
             player.SetUpdateEnabled(false);
-            player.clearSpawnedItems();
+            player.ClearSpawnedItems();
             _transitionTimer = TransitionTime;
             camera.OverrideMotion(roomSpawnTransitionOffset + _spawnPosition + new Vector2(_tileSize, _tileSize), TransitionTime);
         }

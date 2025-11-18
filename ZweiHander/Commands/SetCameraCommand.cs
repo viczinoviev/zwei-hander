@@ -3,18 +3,12 @@ using ZweiHander.PlayerFiles;
 
 namespace ZweiHander.Commands
 {
-    public class SetCameraCommand : ICommand
+    public class SetCameraCommand(Camera.Camera camera, IPlayer player) : ICommand
     {
-        private readonly Camera.Camera _camera;
-        private readonly IPlayer _player;
+        private readonly Camera.Camera _camera = camera;
+        private readonly IPlayer _player = player;
 
-        public SetCameraCommand(Camera.Camera camera, IPlayer player)
-        {
-            _camera = camera;
-            _player = player;
-        }
-
-        public void Execute()
+		public void Execute()
         {
             _camera.SetPositionImmediate(_player.Position);
         }

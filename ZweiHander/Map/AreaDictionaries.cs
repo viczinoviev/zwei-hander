@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using ZweiHander.Items;
 using ZweiHander.Items.ItemStorages;
-
-namespace ZweiHander.Environment
+using ZweiHander.Environment;
+namespace ZweiHander.Map
 {
 	public static class AreaDictionaries
 	{

@@ -24,7 +24,7 @@ namespace ZweiHander.CollisionFiles
 
         public override void UpdateCollisionBox()
         {
-            collisionBox = _portal.TriggerArea;
+            CollisionBox = _portal.TriggerArea;
         }
     }
 }

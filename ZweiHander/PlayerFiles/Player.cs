@@ -25,7 +25,7 @@ namespace ZweiHander.PlayerFiles
         private int _maxHealth;
         private const int STARTING_HEARTS = 3; // 3 hearts = 6 half-hearts
 
-        public Dictionary<Type, int> Inventory { get; private set; } = new Dictionary<Type, int>();
+        public Dictionary<Type, int> Inventory { get; private set; } = [];
 
         public Vector2 Position
         {
@@ -166,7 +166,7 @@ namespace ZweiHander.PlayerFiles
             _position = newPosition;
         }
 
-        public void clearSpawnedItems()
+        public void ClearSpawnedItems()
 		{
 			_itemManager.Clear();
 		}

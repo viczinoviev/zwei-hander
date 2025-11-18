@@ -17,3 +17,10 @@ the current game system. I think that this was caused due to the quick and dirty
 sprite being off center when in animation. I implemented the HUD components and game state transitions such as the title screen and the 
 game over screen. In the next sprint, I am thinking on focusing on refactoring some of the issues we had this sprint, and also adding the
 last elements of the game. 
+
+Stanislaw:
+This sprint I focused on getting a lot of the underlaying systems up and running, as well as upgrading the quality of existing systems. This means
+that I put weeks worth of effort into stuff that could be replaced by cobbled-together minimum solutions. I added the new map parser, builder, and
+organization system, which also includes stuff like room transisitons and item/enemy loading persistence. I also worked on upgrading, by doing stuff
+like making the players collisions work smoother and more precise, making a debug rendering mode, or adding a simple HUD white border to better
+distinguish gameplay. I also had to make and remake graphics. Incredibly busy sprint for me, where the effort didnt align completely with Spring goals.
