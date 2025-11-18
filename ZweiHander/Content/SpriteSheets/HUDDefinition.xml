@@ -42,6 +42,7 @@
 		<Region name="minimap-node-nes" x="117" y="352" width="8" height="8"/>
 		<Region name="minimap-node-nsw" x="126" y="352" width="8" height="8"/>
 		<Region name="minimap-node-nesw" x="135" y="352" width="8" height="8"/>
+		<Region name="minimap-player" x="0" y="361" width="8" height="8"/>
 
 
     </Regions>

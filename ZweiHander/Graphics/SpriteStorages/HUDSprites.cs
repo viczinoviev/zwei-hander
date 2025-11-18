@@ -30,4 +30,17 @@ public class HUDSprites : SpriteFactory
     public ISprite RedFrame() => new IdleSprite(_regions["red-frame"], _spriteBatch);
     public ISprite NormalBoomerang() => new IdleSprite(_regions["normal-boomerang"], _spriteBatch);
     public ISprite Bomb() => new IdleSprite(_regions["bomb"], _spriteBatch);
+    
+    // Minimap sprites
+    public ISprite MinimapNode(string connections)
+    {
+        string key = "minimap-node";
+        if (!string.IsNullOrEmpty(connections))
+        {
+            key += "-" + connections.ToLower();
+        }
+        return _regions.ContainsKey(key) ? new IdleSprite(_regions[key], _spriteBatch) : new IdleSprite(_regions["minimap-node"], _spriteBatch);
+    }
+    
+    public ISprite MinimapPlayer() => new IdleSprite(_regions["minimap-player"], _spriteBatch);
 }

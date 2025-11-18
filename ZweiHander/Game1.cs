@@ -170,6 +170,7 @@ namespace ZweiHander
             _keyboardController.BindKey(Keys.X, new ConfirmInventoryItemCommand(this));
             // Initialize HUD Manager
             _hudManager = new HUDManager(_gamePlayer, _hudSprites, gamePaused);
+            _hudManager.SetUniverse(_universe);
         }
 
         protected override void Update(GameTime gameTime)

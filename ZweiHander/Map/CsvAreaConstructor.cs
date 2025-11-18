@@ -8,6 +8,7 @@ using ZweiHander.Map;
 using ZweiHander.PlayerFiles;
 using System.Diagnostics;
 using ZweiHander.Environment;
+using System.Linq;
 namespace ZweiHander.Map
 {
     public class CsvAreaConstructor
@@ -33,13 +34,63 @@ namespace ZweiHander.Map
             {
                 string line = lines[lineIndex].Trim();
 
-                if (line.StartsWith("room."))
+                if (line.StartsWith("\"room.") || line.StartsWith("room."))
                 {
-                    string[] parts = line.Split('.');
-                    if (parts.Length >= 2 && int.TryParse(parts[1].Split(',')[0], out int roomNumber))
+                    string[] csvFields = ParseCsvLine(line);
+                    
+                    if (csvFields.Length > 0 && csvFields[0].Contains("room."))
                     {
-                        Room room = ParseRoom(lines, ref lineIndex, roomNumber);
-                        area.AddRoom(roomNumber, room);
+                        string roomField = csvFields[0];
+                        
+                        List<string> roomParts = [];
+                        int parenDepth = 0;
+                        int lastSplit = 0;
+                        
+                        for (int i = 0; i < roomField.Length; i++)
+                        {
+                            if (roomField[i] == '(') parenDepth++;
+                            if (roomField[i] == ')') parenDepth--;
+                            if (roomField[i] == ',' && parenDepth == 0)
+                            {
+                                roomParts.Add(roomField.Substring(lastSplit, i - lastSplit).Trim());
+                                lastSplit = i + 1;
+                            }
+                        }
+                        roomParts.Add(roomField.Substring(lastSplit).Trim());
+                        
+                        if (roomParts.Count > 0 && roomParts[0].StartsWith("room."))
+                        {
+                            string[] roomIdParts = roomParts[0].Split('.');
+                            if (roomIdParts.Length >= 2 && int.TryParse(roomIdParts[1].Trim(), out int roomNumber))
+                            {
+                                Point minimapPos = new(-1, -1);
+                                string minimapConnections = "";
+                                
+                                if (roomParts.Count >= 2)
+                                {
+                                    string posStr = roomParts[1].Trim();
+                                    if (posStr.StartsWith("(") && posStr.EndsWith(")"))
+                                    {
+                                        string coords = posStr.Trim('(', ')');
+                                        string[] coordParts = coords.Split(',');
+                                        if (coordParts.Length == 2 && 
+                                            int.TryParse(coordParts[0].Trim(), out int x) && 
+                                            int.TryParse(coordParts[1].Trim(), out int y))
+                                        {
+                                            minimapPos = new Point(x, y);
+                                        }
+                                    }
+                                }
+                                
+                                if (roomParts.Count >= 3)
+                                {
+                                    minimapConnections = roomParts[2].Trim();
+                                }
+                                
+                                Room room = ParseRoom(lines, ref lineIndex, roomNumber, minimapPos, minimapConnections);
+                                area.AddRoom(roomNumber, room);
+                            }
+                        }
                     }
                 }
                 lineIndex++;
@@ -49,7 +100,7 @@ namespace ZweiHander.Map
             return area;
         }
 
-        private Room ParseRoom(string[] lines, ref int lineIndex, int roomNumber)
+        private Room ParseRoom(string[] lines, ref int lineIndex, int roomNumber, Point minimapPos, string minimapConnections)
         {
             lineIndex++;
 
@@ -86,7 +137,11 @@ namespace ZweiHander.Map
 
             int roomWidth = maxCellX + 1;
             Vector2 roomSize = new(roomWidth * CELL_SIZE, (roomHeight-1) * CELL_SIZE);
-            Room room = new(roomNumber, Vector2.Zero, roomSize, _universe);
+            Room room = new(roomNumber, Vector2.Zero, roomSize, _universe)
+            {
+                MinimapPosition = minimapPos,
+                MinimapConnections = minimapConnections
+            };
             _currentRoom = room;
 
             for (int y = roomStartLine; y < roomEndLine; y++)

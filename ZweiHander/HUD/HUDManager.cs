@@ -29,7 +29,7 @@ namespace ZweiHander.HUD
         private IHUDComponent _headsUpHud;
         private IHUDComponent _healthDisplay;
         private InventoryHUD _inventoryHUD;
-        private IHUDComponent _mapHUD;
+        private MapHUD _mapHUD;
         private HUDSprites _hudSprites;
         private IPlayer _player;
         private bool _paused;
@@ -68,6 +68,11 @@ namespace ZweiHander.HUD
 
             BuildHUD();
         }
+        
+        public void SetUniverse(Map.Universe universe)
+        {
+            _mapHUD?.SetUniverse(universe);
+        }
 
         private void BuildHUD()
         {
@@ -90,11 +95,11 @@ namespace ZweiHander.HUD
             // Add all components to the list
             _components = new List<IHUDComponent>
             {
-                
-                _mapHUD,
+            
                 _headsUpHud,
                 _inventoryHUD,
-                _healthDisplay
+                _healthDisplay,
+                _mapHUD
             };
         }
 

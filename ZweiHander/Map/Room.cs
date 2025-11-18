@@ -18,6 +18,10 @@ namespace ZweiHander.Map
 
         // Not required in a room, but allows for predetermined spawn location
         public Vector2 PlayerSpawnPoint = new(0,0);
+        
+        // Minimap data
+        public Point MinimapPosition { get; set; } = new(-1, -1);
+        public string MinimapConnections { get; set; } = "";
 
         // Stored data for recreation
         private readonly List<(BlockName blockName, Point gridPosition)> _blockData = [];
