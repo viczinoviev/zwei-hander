@@ -16,9 +16,9 @@ namespace ZweiHander.CollisionFiles
         /// </summary>
         public readonly IEnemy _enemy;
 
-        private SoundEffect enemyHurt;
+        private readonly SoundEffect enemyHurt;
 
-        private SoundEffectInstance currentSFX;
+        private readonly SoundEffectInstance currentSFX;
         public EnemyCollisionHandler(IEnemy enemy,ContentManager sfxPlayer)
         {
             _enemy = enemy;

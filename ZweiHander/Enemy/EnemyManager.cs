@@ -37,7 +37,7 @@ public class EnemyManager(EnemySprites enemysprites, ItemManager projectileManag
     /// </summary>
     readonly List<IEnemy> currentEnemies = [];
 
-    private ContentManager sfxPlayer = sfx;
+    private readonly ContentManager sfxPlayer = sfx;
 
 
     /// <summary>
@@ -97,7 +97,7 @@ public class EnemyManager(EnemySprites enemysprites, ItemManager projectileManag
                 break;
         }
         enemy.Position = position;
-        enemy.Face = 0;
+        enemy.Face = face;
         currentEnemies.Add(enemy);
         return enemy;
     }
@@ -143,7 +143,7 @@ public class EnemyManager(EnemySprites enemysprites, ItemManager projectileManag
         currentEnemies.RemoveAll(enemy => enemy != null);
         _projectileManager.Clear();
     }
-public bool hasThisEnemyInstance(IEnemy enemy)
+public bool HasThisEnemyInstance(IEnemy enemy)
     {
         return currentEnemies.Contains(enemy);
     }

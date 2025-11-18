@@ -57,11 +57,11 @@ public class BladeTrap : IEnemy
         if (Thrower == 1)
         {
             float dt = (float)time.ElapsedGameTime.TotalSeconds;
-            EnemyHelper.bladeTrapAttack(this, dt);
+            EnemyHelper.BladeTrapAttack(this, dt);
         }
         else if (Thrower == Attacking)
         {
-            EnemyHelper.bladeTrapReturn(this);
+            EnemyHelper.BladeTrapReturn(this);
         }
         CollisionHandler.UpdateCollisionBox();
         Sprite.Update(time);

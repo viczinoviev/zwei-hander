@@ -8,7 +8,7 @@ namespace ZweiHander.CollisionFiles
         /// <summary>
         /// The enemy this handler manages
         /// </summary>
-        private BladeTrap _enemy;
+        private readonly BladeTrap _enemy;
 
         private readonly string _axis;
 
@@ -48,22 +48,14 @@ namespace ZweiHander.CollisionFiles
                 {
                     _enemy.attackTime = 1;
                     _enemy.Thrower = 1;
-                    switch (_axis)
+                    _enemy.Face = _axis switch
                     {
-                        case "yu":
-                        _enemy.Face = 0;
-                        break;
-                        case "xr":
-                        _enemy.Face = 1;
-                        break;
-                        case "yd":
-                        _enemy.Face = Down;
-                        break;
-                        default:
-                        _enemy.Face = Left;
-                        break;
-                    }
-            }
+                        "yu" => 0,
+                        "xr" => 1,
+                        "yd" => Down,
+                        _ => Left,
+                    };
+                }
         }
         }
 

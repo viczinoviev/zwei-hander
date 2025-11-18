@@ -1,0 +1,3 @@
+Not many errors for this sprint, some fields were made readonly, I changed a switch case into a better version in
+the bladetrap home collision handlers, made enemies properly get their face set by the getEnemy method, and
+fixed some naming conventions for some methods (non uppercase first letter).

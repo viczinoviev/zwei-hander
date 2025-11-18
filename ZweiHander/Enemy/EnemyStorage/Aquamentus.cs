@@ -70,7 +70,7 @@ public class Aquamentus : IEnemy
             }
 
         //projectile attacking
-        EnemyHelper.aquamentusAttack(this, _projectileManager);
+        EnemyHelper.AquamentusAttack(this, _projectileManager);
         CollisionHandler.UpdateCollisionBox();
         Sprite.Update(time);
         _projectileManager.Update(time);
