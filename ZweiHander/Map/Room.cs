@@ -95,10 +95,16 @@ namespace ZweiHander.Map
             
            for (int i = 0; i < _itemData.Count; i++)
             {
-				var (itemType, position, _) = _itemData[i];
+				var (itemType, position, itemPointer) = _itemData[i];
                 Vector2 adjustedPosition = position + new Vector2(offsetInTiles.X * _universe.TileSize, offsetInTiles.Y * _universe.TileSize);
-				IItem itemPointer = _universe.ItemManager.GetItem(itemType, -1, adjustedPosition);
-				_itemData[i] = (itemType, position, itemPointer);
+                itemPointer = _universe.ItemManager.GetItem(itemType, -1, adjustedPosition);
+                switch (itemType)
+                {
+                    case "Fairy":
+                        itemPointer.Velocity = new(0, 10);
+                        break;
+                }
+                _itemData[i] = (itemType, position, itemPointer);
             }
  
             if (excludePortals) return;

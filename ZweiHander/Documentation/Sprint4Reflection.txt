@@ -1,7 +1,7 @@
 Luke:
 This sprint was a little confusing for me, as I didnt fully understand what I had to do for it. However, I took it as
 an opportunity to work on refactoring enemies and getting bladetrap functioning, which ended up being a lot of work itself.
-I also did some sfx,worked on the music, and made 4 rooms. I think everyone did a good job this sprint at finding something the project needed and 
+I also did some sfx,worked on the music, made 4 rooms, and implemented winning the game. I think everyone did a good job this sprint at finding something the project needed and 
 getting it done. Overall, I am happy with the teams work this sprint.
 
 Jacob:
