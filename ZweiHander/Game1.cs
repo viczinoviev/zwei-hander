@@ -200,6 +200,19 @@ namespace ZweiHander
                     _gameState.SetMode(GameMode.TitleScreen);
                 }
             }
+            else if (_gameState.CurrentMode == GameMode.GameWon)
+            {
+                _gameWonScreen.Update(gameTime);
+
+                if (_gameWonScreen.ShouldQuit())
+                {
+                    Exit();
+                }
+                else if (_gameWonScreen.ShouldReturnToTitle())
+                {
+                    _gameState.SetMode(GameMode.TitleScreen);
+                }
+            }
             else if (_gameState.CurrentMode == GameMode.Playing)
             {
                 // Always update keyboard and HUD
