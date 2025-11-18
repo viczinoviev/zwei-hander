@@ -153,7 +153,12 @@ public class ItemManager
         return ItemTypeCount.TryGetValue(itemType, out int value) ? value : 0;
     }
 
-    public bool hasThisItemInstance(IItem item)
+    /// <summary>
+    /// Whether the item manager has this specific item or not.
+    /// </summary>
+    /// <param name="item">Item to check for.</param>
+    /// <returns>If item is in this manager or not.</returns>
+    public bool HasItem(IItem item)
     {
         return _items.Contains(item);
     }

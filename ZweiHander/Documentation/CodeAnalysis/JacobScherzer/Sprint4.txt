@@ -1,0 +1,20 @@
+﻿The code analysis recommended changing certain fields to readonly, and for all 
+those fields it made sense; all these fields had values set in the constructor
+that were meant to never change afterwards.
+
+The code analysis recommended removing unused parameters for NumberSprites.
+The parameter was "centered". This parameter was supposed to be passed to
+another function, but I had forgotten to, so I added this rather than
+removing the parameter.
+
+There was some new() simplifcations I was able to do, which I agree with since
+you can see the type by just hovering over the variable.
+
+It wanted me to remove unused "itemConstructor" from Setup in AbstractItem. I
+disagreed with this, as there is a high probability that setup will use itemConstructor
+in the future, possible for a singular items or maybe all items. I want the code to be
+ready for that possible change.
+
+ItemManager had a new method made by someone else, with a lowercase first letter. I changed
+the name of this method to be simpler (and have a capital first letter), and also added
+a summary for this method since it had none.

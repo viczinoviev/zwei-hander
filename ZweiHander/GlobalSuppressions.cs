@@ -8,3 +8,4 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Style", "IDE0090:Use 'new(...)'", Justification = "Readability", Scope = "namespaceanddescendants", Target = "~N:ZweiHander.Graphics")]
 [assembly: SuppressMessage("Style", "IDE0063:Use simple 'using' statement", Justification = "Readability", Scope = "namespaceanddescendants", Target = "~N:ZweiHander.Graphics")]
 [assembly: SuppressMessage("Style", "IDE0290:Use primary constructor", Justification = "Maintainability", Scope = "namespaceanddescendants", Target = "~N:ZweiHander.Items")]
+[assembly: SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>", Scope = "member", Target = "~M:ZweiHander.Items.AbstractItem.Setup(ZweiHander.Items.ItemConstructor)")]

@@ -129,7 +129,7 @@ namespace ZweiHander.Map
 
         public void persistentRemoveItemAndEnemy(ItemManager itemManager, EnemyManager enemyManager)
         {
-            _itemData.RemoveAll(data => !itemManager.hasThisItemInstance(data.itemPointer));
+            _itemData.RemoveAll(data => !itemManager.HasItem(data.itemPointer));
             _enemyData.RemoveAll(data => !enemyManager.HasThisEnemyInstance(data.enemyPointer));
         }
 

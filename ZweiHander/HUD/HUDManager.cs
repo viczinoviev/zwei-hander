@@ -211,28 +211,21 @@ namespace ZweiHander.HUD
 
             switch (selected.Value)
             {
-                case InventoryHUD.OrderedItem.Sword:
-                    // Use sword (attack)
-                    _player.Attack();
-                    break;
-
-                case InventoryHUD.OrderedItem.Bow:
+                case InventoryHUD.OrderedUsable.Bow:
                     // Bow uses UsingItem1 in your PlayerHandler
                     _player.UseItem1();
                     break;
 
-                case InventoryHUD.OrderedItem.Boomerang:
+                case InventoryHUD.OrderedUsable.Boomerang:
                     // Boomerang uses UsingItem2
                     _player.UseItem2();
                     break;
-
-                case InventoryHUD.OrderedItem.Fire:
+                case InventoryHUD.OrderedUsable.Bomb:
+                    _player.UseItem3();
+                    break;
+                case InventoryHUD.OrderedUsable.Fire:
                     // Fire uses UsingItem4
                     _player.UseItem4();
-                    break;
-
-                case InventoryHUD.OrderedItem.Map:
-                    // TODO: later, toggle map HUD or something
                     break;
             }
         }
