@@ -10,3 +10,10 @@ upon the sprint2 feedback. I also implemeneted some fun items I really liked. Th
 projectiles, but I disagree with this. The reasoning was based upon "different properties", but these properties are already
 differentitated using actual properties like CanDamageEnemy or CanBePickedUp, as well as through virtual methods. I got to make a
 song for this, which was very fun. I am not very good at songwriting, so it has been a while since I have had an excuse to do so.
+
+Stanislaw:
+This sprint I focused on getting a lot of the underlaying systems up and running, as well as upgrading the quality of existing systems. This means
+that I put weeks worth of effort into stuff that could be replaced by cobbled-together minimum solutions. I added the new map parser, builder, and
+organization system, which also includes stuff like room transisitons and item/enemy loading persistence. I also worked on upgrading, by doing stuff
+like making the players collisions work smoother and more precise, making a debug rendering mode, or adding a simple HUD white border to better
+distinguish gameplay. I also had to make and remake graphics. Incredibly busy sprint for me, where the effort didnt align completely with Spring goals.

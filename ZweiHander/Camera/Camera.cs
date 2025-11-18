@@ -4,41 +4,33 @@ using ZweiHander.Map;
 
 namespace ZweiHander.Camera
 {
-    public class Camera
+    public class Camera(Viewport viewport)
     {
         /// <summary>
         /// Position of the center point of camera
         /// </summary>
-        public Vector2 Position { get; private set; }
+        public Vector2 Position { get; private set; } = Vector2.Zero;
 
         /// <summary>
         /// Desired position of the camera
         /// </summary>
-        public Vector2 DesiredPosition { get; private set; }
+        public Vector2 DesiredPosition { get; private set; } = Vector2.Zero;
 
         /// <summary>
         /// Dimensions of the game screen
         /// </summary>
-        public Viewport Viewport { get; private set; }
+        public Viewport Viewport { get; private set; } = viewport;
 
         /// <summary>
 		/// Speed of camera smoothing, between 0 and 1, where 1 is instant movement
 		/// </summary>
         private float SmoothSpeed = 0.1f;
 
-        private bool _isOverridden;
+        private bool _isOverridden = false;
         private Vector2 _overrideStartPosition;
         private Vector2 _overrideTargetPosition;
         private float _overrideElapsedTime;
         private float _overrideDuration;
-
-        public Camera(Viewport viewport)
-        {
-            Viewport = viewport;
-            Position = Vector2.Zero;
-            DesiredPosition = Vector2.Zero;
-            _isOverridden = false;
-        }
 
         /// <summary>
         /// Sets the smoothing speed of the camera

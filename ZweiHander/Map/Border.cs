@@ -4,17 +4,17 @@ using System;
 using System.Collections.Generic;
 using ZweiHander.CollisionFiles;
 using ZweiHander.Graphics;
-
-namespace ZweiHander.Environment
+using ZweiHander.Environment;
+namespace ZweiHander.Map
 {
     public class Border
     {
-        private BorderType _borderType;
+        private readonly BorderType _borderType;
         private readonly Vector2 _position; // Upper-left corner position (covers 2x2 grid cells)
         private readonly int _tileSize; // 32 pixels
         private bool collision = true;
 
-        private ISprite _sprite;
+        private readonly ISprite _sprite;
         private readonly List<BlockCollisionHandler> _collisionHandlers;
 
         public BorderType BorderType => _borderType;
@@ -27,7 +27,7 @@ namespace ZweiHander.Environment
             _position = position;
             _tileSize = tileSize;
             _sprite = sprite;
-            _collisionHandlers = new List<BlockCollisionHandler>();
+            _collisionHandlers = [];
 
             // Create collision handlers based on border type
             if (IsCollidable())

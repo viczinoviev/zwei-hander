@@ -7,8 +7,8 @@ using ZweiHander.Enemy;
 using ZweiHander.Map;
 using ZweiHander.PlayerFiles;
 using System.Diagnostics;
-
-namespace ZweiHander.Environment
+using ZweiHander.Environment;
+namespace ZweiHander.Map
 {
     public class CsvAreaConstructor
     {
@@ -17,17 +17,15 @@ namespace ZweiHander.Environment
         private Room _currentRoom;
         private Area _currentArea;
         private Universe _universe;
-        private IPlayer _player;
         private Camera.Camera _camera;
 
-        public Area LoadArea(string filePath, Universe universe, IPlayer player, Camera.Camera camera, string areaName = null)
+        public Area LoadArea(string filePath, Universe universe, Camera.Camera camera, string areaName = null)
         {
             _universe = universe;
-            _player = player;
             _camera = camera;
 
             string[] lines = File.ReadAllLines(filePath);
-            Area area = new Area(areaName);
+            Area area = new(areaName);
             _currentArea = area;
 
             int lineIndex = 0;
@@ -87,8 +85,8 @@ namespace ZweiHander.Environment
             }
 
             int roomWidth = maxCellX + 1;
-            Vector2 roomSize = new Vector2(roomWidth * CELL_SIZE, (roomHeight-1) * CELL_SIZE);
-            Room room = new Room(roomNumber, Vector2.Zero, roomSize, _universe);
+            Vector2 roomSize = new(roomWidth * CELL_SIZE, (roomHeight-1) * CELL_SIZE);
+            Room room = new(roomNumber, Vector2.Zero, roomSize, _universe);
             _currentRoom = room;
 
             for (int y = roomStartLine; y < roomEndLine; y++)
@@ -102,9 +100,9 @@ namespace ZweiHander.Environment
 
                     int cellX = x-1;
                     int cellY = y - roomStartLine;
-                    Vector2 position = new Vector2(cellX * CELL_SIZE, cellY * CELL_SIZE);
+                    Vector2 position = new(cellX * CELL_SIZE, cellY * CELL_SIZE);
 
-                    string[] objects = cell.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                    string[] objects = cell.Split([','], StringSplitOptions.RemoveEmptyEntries);
                     
                     foreach (string obj in objects)
                     {
@@ -120,7 +118,7 @@ namespace ZweiHander.Environment
             return room;
         }
 
-        private string[] ParseCsvLine(string line)
+        private static string[] ParseCsvLine(string line)
         {
             var result = new List<string>();
             bool inQuotes = false;
@@ -134,13 +132,13 @@ namespace ZweiHander.Environment
                 }
                 else if (line[i] == ',' && !inQuotes)
                 {
-                    result.Add(line.Substring(startIndex, i - startIndex).Trim('"').Trim());
+                    result.Add(line[startIndex..i].Trim('"').Trim());
                     startIndex = i + 1;
                 }
             }
 
-            result.Add(line.Substring(startIndex).Trim('"').Trim());
-            return result.ToArray();
+            result.Add(line[startIndex..].Trim('"').Trim());
+            return [.. result];
         }
 
         private void CreateObject(string objectId, Vector2 position, Point gridPosition)
@@ -204,7 +202,7 @@ namespace ZweiHander.Environment
 
         private void CreateItem(string itemName, Vector2 position)
         {
-            string cleanName = itemName.EndsWith("Item") ? itemName.Substring(0, itemName.Length - 4) : itemName;
+            string cleanName = itemName.EndsWith("Item") ? itemName[..^4] : itemName;
 
             if (AreaDictionaries.itemNameToItemType.TryGetValue(cleanName, out string itemType))
             {
@@ -219,7 +217,7 @@ namespace ZweiHander.Environment
         private void CreatePortal(string portalId, Vector2 position)
         {
             int id = int.Parse(portalId);
-            Vector2 centeredPosition = new Vector2(position.X, position.Y);
+            Vector2 centeredPosition = new(position.X, position.Y);
             _currentRoom.AddPortal(id, centeredPosition);
             _currentArea.RegisterPortalData(id, _currentRoom.RoomNumber, centeredPosition);
         }

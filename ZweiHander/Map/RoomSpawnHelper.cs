@@ -8,38 +8,37 @@ namespace ZweiHander.Map
 {
     public static class RoomSpawnHelper
     {
-        private static readonly BorderName[] EastEntrances = new[]
-        {
-            BorderName.DoorTileEast,
+        private static readonly BorderName[] EastEntrances =
+		[
+			BorderName.DoorTileEast,
             BorderName.HoleInWallEast,
             BorderName.EntranceTileEast,
             BorderName.LockedDoorTileEast
-        };
+        ];
 
-        private static readonly BorderName[] WestEntrances = new[]
-        {
+        private static readonly BorderName[] WestEntrances = 
+        [
             BorderName.DoorTileWest,
             BorderName.HoleInWallWest,
             BorderName.EntranceTileWest,
             BorderName.LockedDoorTileWest
-        };
+        ];
 
-        private static readonly BorderName[] NorthEntrances = new[]
-        {
-            BorderName.DoorTileNorth,
+        private static readonly BorderName[] NorthEntrances =
+		[
+			BorderName.DoorTileNorth,
             BorderName.HoleInWallNorth,
             BorderName.EntranceTileNorth,
             BorderName.LockedDoorTileNorth
-        };
+        ];
 
-        private static readonly BorderName[] SouthEntrances = new[]
-        {
-            BorderName.DoorTileSouth,
+        private static readonly BorderName[] SouthEntrances =
+		[
+			BorderName.DoorTileSouth,
             BorderName.HoleInWallSouth,
             BorderName.EntranceTileSouth,
             BorderName.LockedDoorTileSouth
-        };
-
+        ];
         /// <summary>
         /// Calculates the player spawn point for a room based on its borders and predefined spawn point.
         /// If a spawn point is set, uses that. Otherwise, finds the first entrance border and spawns near it.

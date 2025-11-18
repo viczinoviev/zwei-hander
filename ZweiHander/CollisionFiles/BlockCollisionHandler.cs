@@ -39,11 +39,11 @@ namespace ZweiHander.CollisionFiles
         {
             if (_customCollisionBox.HasValue)
             {
-                collisionBox = _customCollisionBox.Value;
+                CollisionBox = _customCollisionBox.Value;
             }
             else if (_block != null)
             {
-                collisionBox = _block.GetBlockHitbox();
+                CollisionBox = _block.GetBlockHitbox();
             }
         }
     }

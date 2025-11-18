@@ -55,7 +55,7 @@ namespace ZweiHander
                 if (collider == null || collider.Dead)
                     continue;
                 
-                spriteBatch.Draw(_debugTexture, collider.collisionBox, debugColor);
+                spriteBatch.Draw(_debugTexture, collider.CollisionBox, debugColor);
             }
         }
         

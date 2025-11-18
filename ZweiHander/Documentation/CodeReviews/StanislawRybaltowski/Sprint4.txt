@@ -1,0 +1,38 @@
+Author of the code review: Stanislaw Rybaltowski
+Date of the code review: 2025-11-17
+Sprint number: 4
+Name of the .cs file being reviewed: BladeTrap.cs
+Author of the .cs file being reviewed: Luke Howard
+Number of minutes taken to complete the review: 12 minutes.
+Specific comments on readability: 
+
+    The BladeTrap enemy class has a good foundation but contains several readability 
+    issues that make understanding its behavior difficult. The Thrower property uses 
+    magic numbers without explanation, which are also not documented. The Face property 
+    appears unused. The originalPosition field stores the trap's home position but
+    is public, which breaks encapsulation.
+    
+    My suggestions are:
+    - Create an enum for trap states
+    - Add comments for the collisions
+    - Make originalPosition private
+    - Add comments for thrower
+
+Author of the code review: Stanislaw Rybaltowski
+Date of the code review: 2025-11-17
+Sprint number: 4
+Name of the .cs file being reviewed: HUDManager.cs
+Author of the .cs file being reviewed: Victor Zinoviev
+Number of minutes taken to complete the review: 15 minutes.
+Specific comments on maintainability/code quality: 
+
+    The HUD manager properly uses the state machine pattern for animations. The
+    animation system with AnimationState enum is well-designed and the constants for positioning are clearly 
+    named. On the other hand, the BuildHUD method has hardcoded magic numbers for off-screen positioning and
+    the ConfirmInventorySelection method also has a large switch statement that directly couples the HUD
+    to player input actions, which makes it harder to modify or extend the inventory system later.
+    
+    My suggestions are:
+    - Store _inventoryHUD as InventoryHUD type instead of interface
+    - Consider extracting the animation logic into a separate AnimationController class
+    - Move the item-to-action mapping to InventoryHUD or use a dictionary lookup

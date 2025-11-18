@@ -29,7 +29,7 @@ namespace ZweiHander.Map
         public BorderFactory BorderFactory { get; private set; }
         public PortalManager PortalManager { get; private set; }
 
-        public Camera.Camera camera { get; private set; }
+        public Camera.Camera Camera { get; private set; }
 
         public RoomTransition RoomTransition { get; private set; }
 
@@ -48,17 +48,17 @@ namespace ZweiHander.Map
             int tileSize = 32)
         {
             TileSize = tileSize;
-            _areas = new Dictionary<string, Area>();
+            _areas = [];
             
             // Create separate instances for Universe's use
-            ItemManager projectileManager = new ItemManager(itemSprites, treasureSprites, bossSprites);
+            ItemManager projectileManager = new(itemSprites, treasureSprites, bossSprites);
             ItemManager = new ItemManager(itemSprites, treasureSprites, bossSprites);
             EnemyManager = new EnemyManager(enemySprites, projectileManager, bossSprites, npcSprites, Content);
             BlockFactory = new BlockFactory(tileSize, blockSprites, playerSprites);
             BorderFactory = new BorderFactory(tileSize, blockSprites);
             RoomTransition = new RoomTransition(this, tileSize);
 
-            this.camera = camera;
+            this.Camera = camera;
         }
 
         public void AddArea(Area area) => _areas[area.Name] = area;
@@ -93,7 +93,7 @@ namespace ZweiHander.Map
             if (targetRoom == null) return;
 
             // Remove items and enemies that were picked up/killed in the previous room
-            CurrentRoom.persistentRemoveItemAndEnemy(ItemManager, EnemyManager);
+            CurrentRoom.PersistentRemoveItemAndEnemy(ItemManager, EnemyManager);
 
             RoomTransition.StartTransition(CurrentRoom, targetRoom, spawnPosition, camera, oldPortalPos, newPortalPos, portalDirection, Player);
 
@@ -119,7 +119,7 @@ namespace ZweiHander.Map
 
         public void Update(GameTime gameTime)
         {
-            RoomTransition.Update(gameTime, CurrentRoom, camera, Player);
+            RoomTransition.Update(gameTime, CurrentRoom, Camera, Player);
 
             if (CurrentRoom == null || !CurrentRoom.IsLoaded || RoomTransition.IsTransitioning) return;
 

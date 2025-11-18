@@ -3,18 +3,12 @@ using ZweiHander.PlayerFiles;
 
 namespace ZweiHander.Commands
 {
-    public class PlayerTeleportCommand : ICommand
+    public class PlayerTeleportCommand(IPlayer player, Vector2 targetPosition) : ICommand
     {
-        private readonly IPlayer _player;
-        private readonly Vector2 _targetPosition;
+        private readonly IPlayer _player = player;
+        private readonly Vector2 _targetPosition = targetPosition;
 
-        public PlayerTeleportCommand(IPlayer player, Vector2 targetPosition)
-        {
-            _player = player;
-            _targetPosition = targetPosition;
-        }
-
-        public void Execute()
+		public void Execute()
         {
             _player.Position = _targetPosition;
             _player.ForceUpdateCollisionBox();
