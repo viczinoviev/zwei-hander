@@ -10,12 +10,6 @@ WASD or arrow keys to move; diagonal movememnt allowed.
 8 and 9 to rotate through acquired items. X to use selected item.
 
 N or Z to make Link attack with sword.
-## Known issues
-The game lags really hard if reset is used multiple times.
-
-Player health system is partially implemented.
-
-Some sprite transitions may not align perfectly with movement direction.
 
 ## Code Structure
 Game1.cs – Main entry point, handles initialization, loading content, and game loop.
