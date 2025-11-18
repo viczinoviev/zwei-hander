@@ -7,7 +7,9 @@ E to hurt player.
 
 WASD or arrow keys to move; diagonal movememnt allowed.
 
-1 to shoot arrow, 2 to throw boomerang, 3 to place bomb.
+X to use the current item selected under the letter 'A'
+
+< and > to swap between items selected
 
 N or Z to make Link attack with sword.
 ## Known issues
