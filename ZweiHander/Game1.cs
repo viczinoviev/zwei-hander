@@ -165,8 +165,8 @@ namespace ZweiHander
             _keyboardController.BindKey(Keys.E, new HurtPlayerCommand(this));
             _keyboardController.BindKey(Keys.I, new InventoryCommand(this));  
             _keyboardController.BindKey(Keys.P, new PauseCommand(this));
-            _keyboardController.BindKey(Keys.D8, new PreviousInventoryItemCommand(this)); 
-            _keyboardController.BindKey(Keys.D9, new NextInventoryItemCommand(this));
+            _keyboardController.BindKey(Keys.OemComma, new PreviousInventoryItemCommand(this)); 
+            _keyboardController.BindKey(Keys.OemPeriod, new NextInventoryItemCommand(this));
             _keyboardController.BindKey(Keys.X, new ConfirmInventoryItemCommand(this));
             // Initialize HUD Manager
             _hudManager = new HUDManager(_gamePlayer, _hudSprites, gamePaused);
@@ -197,6 +197,19 @@ namespace ZweiHander
                     Exit();
                 }
                 else if (_gameOverScreen.ShouldReturnToTitle())
+                {
+                    _gameState.SetMode(GameMode.TitleScreen);
+                }
+            }
+            else if (_gameState.CurrentMode == GameMode.GameWon)
+            {
+                _gameWonScreen.Update(gameTime);
+
+                if (_gameWonScreen.ShouldQuit())
+                {
+                    Exit();
+                }
+                else if (_gameWonScreen.ShouldReturnToTitle())
                 {
                     _gameState.SetMode(GameMode.TitleScreen);
                 }

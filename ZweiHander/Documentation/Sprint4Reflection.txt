@@ -24,3 +24,10 @@ that I put weeks worth of effort into stuff that could be replaced by cobbled-to
 organization system, which also includes stuff like room transisitons and item/enemy loading persistence. I also worked on upgrading, by doing stuff
 like making the players collisions work smoother and more precise, making a debug rendering mode, or adding a simple HUD white border to better
 distinguish gameplay. I also had to make and remake graphics. Incredibly busy sprint for me, where the effort didnt align completely with Spring goals.
+
+Darren:
+This sprint we tried to divide up the work evenly, but it was way harder to do so in this sprint than other ones, as this sprint revolved 
+around mostly the HUD, which to get a consistent HUD up and running required one person to set up the framework of HUD, so it will be easier
+for others to stay on the same page and code into the same logic. The code itself was a lot shorter for this sprint but the logic involved 
+was generally more complex than the previous sprints. I made the pause command, implemented inventory toggle in the HUD file Victor coded, 
+and did item selection logic with jacob's item logic in inventoryHUD. 

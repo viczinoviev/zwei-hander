@@ -1,0 +1,27 @@
+Author of the code review: Darren Zhou
+Date of the code review: 2025-11-17
+Sprint number: 4
+Name of the .cs file being reviewed: GameWonScreen.cs
+Author of the .cs file being reviewed: Luke
+Number of minutes taken to complete the review: 20
+Specific comments on what is readable and what is not:
+    I think this class is generally well-structured and easy to follow. The 
+	responsibilities are clear where the GameWonScreen owns its controller,
+	loads its font, and handles drawing the “You Won” screen while delegating 
+	input/state logic to GameWonController. Good practices like using readonly
+	for _controller, _font, and _graphicsDevice is good practice and makes it 
+	clear these dependencies are set at construction time and not changed later. 
+
+Author of the code review: Darren Zhou
+Date of the code review: 2025-11-17
+Sprint number: 4
+Name of the .cs file being reviewed: TitleScreenController.cs
+Author of the .cs file being reviewed: Victor
+Specific comments on code quality:
+	This is a nice and simple class. It implements the title screen. Any key 
+	press will start the game. The class is minimal while also incorporating
+	game state, which allows for switching between different states, such as 
+	"game over" screen can now restart into "game start". The class is well 
+	commented. The logic in ShouldStartGame is easy to follow. It uses 
+	GetPressedKeys() to compare against the previous frame, which is a good 
+	way to detect transitions.

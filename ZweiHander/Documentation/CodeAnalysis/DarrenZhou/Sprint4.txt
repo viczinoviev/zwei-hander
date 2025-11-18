@@ -1,0 +1,4 @@
+There is infinite loop risk in SelectNext and SelectPrevious, but it shouldn't be a problem since _acquiredItems 
+starts out with some "true" boolean. The only small clarity improvement would be explicitly initializing `_paused`
+in the constructor for readability, even though the default value of `false` is technically correct. There are no 
+readability concerns, and the design supports extension without introducing unnecessary complexity.
