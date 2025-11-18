@@ -100,6 +100,9 @@ namespace ZweiHander.Environment
 			{ "Clock", "Clock" },
 			{ "Fairy", "Fairy" },
 			{ "Fire", "Fire" },
+			{ "Rupy", "Rupy" },
+			{ "BlueCandle", "BlueCandle" },
+			{ "BluePotion", "BluePotion" },
 		};
 	}
 }
