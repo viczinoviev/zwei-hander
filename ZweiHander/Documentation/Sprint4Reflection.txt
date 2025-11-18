@@ -10,3 +10,10 @@ upon the sprint2 feedback. I also implemeneted some fun items I really liked. Th
 projectiles, but I disagree with this. The reasoning was based upon "different properties", but these properties are already
 differentitated using actual properties like CanDamageEnemy or CanBePickedUp, as well as through virtual methods. I got to make a
 song for this, which was very fun. I am not very good at songwriting, so it has been a while since I have had an excuse to do so.
+
+Victor:
+We found major bugs and inconsistencies within the code base this sprint. I feel that we used much of our time debugging and reworking
+the current game system. I think that this was caused due to the quick and dirty fixes we have done to some parts, such as the player's
+sprite being off center when in animation. I implemented the HUD components and game state transitions such as the title screen and the 
+game over screen. In the next sprint, I am thinking on focusing on refactoring some of the issues we had this sprint, and also adding the
+last elements of the game. 

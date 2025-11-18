@@ -1,0 +1,21 @@
+Author of the code review: Victor Zinoviev
+Date of the code review: 2025-11-17
+Sprint number: 4
+Name of the .cs file being reviewed: EnemyHelper.cs
+Author of the .cs file being reviewed: Luke
+Number of minutes taken to complete the review: 20
+Specific comments on what is readable and what is not:
+    Variable names are descriptive and easy to understand. There are also helpful method headers explaining what each method are
+doing. However, I do think that some of the one-line methods are harder to read, simply because it is too long to fit on the screen,
+making it harder to follow. I would recommend to break down the logic into different lines for readbility.
+
+Author of the code review: Victor Zinoviev
+Date of the code review: 2025-11-17
+Sprint number: 4
+Name of the .cs file being reviewed: PortalManager.cs
+Author of the .cs file being reviewed: Stash
+Specific comments on code quality:
+	I think that this is a well written class. Each method is short and easy to understand just from reading the body. There are no
+	comments to the code, but I don't think that it is necessary since everything is explained by the code itself. The class is highly
+	cohesive, having a single responsibility on the portal logic in the map. The class has references to the player and the camera, which
+	I think can be extracted out using a command design pattern, but it should not be a great issue.
