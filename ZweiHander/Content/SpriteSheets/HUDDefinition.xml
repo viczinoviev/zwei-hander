@@ -8,13 +8,14 @@
         <Region name="heart-full" x="18" y="256" width="8" height="8" />
         <Region name="heart-half" x="9" y="256" width="8" height="8" />
         <Region name="heart-empty" x="0" y="256" width="8" height="8" />
-        <Region name="blue-frame" x="0" y="288" width="16" height="16"/>
 		<Region name="normal-sword" x="36" y="288" width="8" height="16"/>
 		<Region name="bow" x="114" y="288" width="8" height="16"/>
 		<Region name="map" x="82" y="320" width="8" height="16"/>
 		<Region name="orange-candle" x="134" y="288" width="8" height="16"/>
 		<Region name="normal-boomerang" x="65" y="288" width="8" height="16"/>
-		<Region name="blue-select" x="17" y="288" width="16" height="16"/>
+		<Region name="blue-frame" x="17" y="288" width="16" height="16"/>
+		<Region name="red-frame" x="0" y="288" width="16" height="16"/>
+		<Region name="bomb" x="85" y="288" width="8" height="16"/>
 		<Region name="0" x="0" y="272" width="8" height="8"/>
 		<Region name="1" x="9" y="272" width="8" height="8"/>
 		<Region name="2" x="18" y="272" width="8" height="8"/>
