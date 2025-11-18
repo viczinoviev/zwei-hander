@@ -93,9 +93,9 @@ public class Bomb : AbstractItem
             case Bomb bomb:
                 if (bomb.HasProperty(ItemProperty.CanDamagePlayer) && Life > 0 && Phase == 0) Life = Phases[Phase];
                 break;
-            case Fire: //Yes, explode on *any* fire
-                if (Life > 0 && Phase == 0) Life = Phases[Phase];
-                break;
+            //case Fire: //Yes, explode on *any* fire
+            //    if (Life > 0 && Phase == 0) Life = Phases[Phase];
+            //    break;
         }
     }
 }
