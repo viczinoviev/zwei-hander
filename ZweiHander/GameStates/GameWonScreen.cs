@@ -43,7 +43,7 @@ namespace ZweiHander.GameStates
         {
             spriteBatch.Begin(samplerState: SamplerState.PointClamp);
 
-            string GameWonText = "GameWon";
+            string GameWonText = "You Won!";
             string quitText = "Press Q or ESC to quit";
             string restartText = "Press SPACE to restart";
 

@@ -217,6 +217,8 @@ namespace ZweiHander
                     }
                     if (_gamePlayer.InventoryCount(typeof(Items.ItemStorages.Triforce)) > 0)
                     {
+                        SoundEffect gameWonSFX = Content.Load<SoundEffect>("Audio/SuperSuccess");
+                        gameWonSFX.Play();
                         _gameState.SetMode(GameMode.GameWon);
                     }
                     _universe.Update(gameTime);
