@@ -9,6 +9,8 @@ using ZweiHander.Graphics.SpriteStorages;
 using ZweiHander.Items;
 using ZweiHander.Items.ItemStorages;
 using ZweiHander.HUD;
+using Microsoft.Xna.Framework.Audio;
+using System.Collections.Generic;
 
 namespace ZweiHander.PlayerFiles
 {
@@ -31,6 +33,11 @@ namespace ZweiHander.PlayerFiles
         private const float BLINK_INTERVAL = 0.075f; // How fast to blink
         private bool _isVisible = true;
 
+        /// <summary>
+        /// Sword, Fireball
+        /// </summary>
+        private readonly List<SoundEffect> Sounds;
+
         public Color Color { get; set; } = Color.White;
 
         public PlayerHandler(PlayerSprites playerSprites, Player player, PlayerStateMachine stateMachine,ContentManager content)
@@ -42,6 +49,10 @@ namespace ZweiHander.PlayerFiles
             _lastState = _stateMachine.CurrentState;
             _lastDirectionVector = _stateMachine.LastDirection;
             _collisionHandler = new PlayerCollisionHandler(_player,content);
+            Sounds = [
+                content.Load<SoundEffect>("Audio/SwordAttack"),
+                content.Load<SoundEffect>("Audio/Fireball")
+            ];
         }
 
         private void UpdateSprite(PlayerState state, Vector2 directionVector)
@@ -49,6 +60,7 @@ namespace ZweiHander.PlayerFiles
             switch (state)
             {
                 case PlayerState.Attacking:
+                    Sounds[0].Play();
                     // Determine attack sprite based on primary direction (prioritize horizontal)
                     if (Math.Abs(directionVector.X) > Math.Abs(directionVector.Y))
                     {
@@ -203,6 +215,7 @@ namespace ZweiHander.PlayerFiles
             Vector2 itemVelocity = _stateMachine.LastDirection * 300f;
             if (itemInput == PlayerInput.UsingItem1 && _player.InventoryCount(typeof(Bow)) > 0)
             {
+                Sounds[0].Play();
                 _player.ItemManager.GetItem(
                     "Arrow",
                     life: 1.1,
@@ -215,6 +228,7 @@ namespace ZweiHander.PlayerFiles
             }
             else if (itemInput == PlayerInput.UsingItem2)
             {
+                Sounds[0].Play();
                 _player.ItemManager.GetItem(
                     "Boomerang",
                     life: -1f,
@@ -228,6 +242,7 @@ namespace ZweiHander.PlayerFiles
             }
             else if (itemInput == PlayerInput.UsingItem3)
             {
+                Sounds[0].Play();
                 if (_player.InventoryCount(typeof(Bomb)) > 0)
                 {
                     _player.ItemManager.GetItem(
@@ -243,6 +258,7 @@ namespace ZweiHander.PlayerFiles
             }
             else if (itemInput == PlayerInput.UsingItem4 && _player.InventoryCount(typeof(Fire)) > 0)
             {
+                Sounds[1].Play();
                 _player.ItemManager.GetItem(
                     "Fire",
                     life: 6f,
