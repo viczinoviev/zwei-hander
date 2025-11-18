@@ -7,9 +7,15 @@ E to hurt player.
 
 WASD or arrow keys to move; diagonal movememnt allowed.
 
-8 and 9 to rotate through acquired items. X to use selected item.
+1 to shoot arrow, 2 to throw boomerang, 3 to place bomb.
 
 N or Z to make Link attack with sword.
+## Known issues
+The game lags really hard if reset is used multiple times.
+
+Player health system is partially implemented.
+
+Some sprite transitions may not align perfectly with movement direction.
 
 ## Code Structure
 Game1.cs – Main entry point, handles initialization, loading content, and game loop.
@@ -37,7 +43,6 @@ GameStates/ - Handles what section (state) the game itself is in (titlescreen, p
 HUD/ - Contains all parts of the HUD like inventory and map.
 
 Map/ - How the game is laid out and handled.
-
 ## Tools/Frameworks
 Used .NET messages to help put code into better format.
 
@@ -50,16 +55,3 @@ Command Pattern for flexible input handling.
 Factory Pattern for object creation (blocks, items, enemies).
 
 XML-based SpriteSheets for efficient sprite management.
-
-## Functionality notes
-Bombs can explode other bombs
-
-Fire item (denoted by candle in inventory after pickup) shoots fire that chooses and homes in on nearby enemy after initial stopping
-
-Picking up bomb gives 10 bombs
-
-Fairy causes health change of random amount between -2 and 2 (inclusive, 2 life=1 heart)
-
-Bow has unlimited arrows
-
-Map and Clock currently have no functionality
