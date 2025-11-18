@@ -114,6 +114,12 @@ namespace ZweiHander.Map
                 var (itemType, position, itemPointer) = _itemData[i];
                 Vector2 adjustedPosition = position + new Vector2(offsetInTiles.X * _universe.TileSize, offsetInTiles.Y * _universe.TileSize);
                 itemPointer = _universe.ItemManager.GetItem(itemType, -1, adjustedPosition);
+                switch (itemType)
+                {
+                    case "Fairy":
+                        itemPointer.Velocity = new(0, 10);
+                        break;
+                }
                 _itemData[i] = (itemType, position, itemPointer);
             }
  

@@ -24,6 +24,7 @@ namespace ZweiHander.CollisionFiles
         private SoundEffect ItemPickup;
 
         private SoundEffectInstance currentSFX;
+        private readonly Random _random;
 
         /// <summary>
         /// How big the player's collision box is (for now a rectangle 24 by 24 px)
@@ -36,6 +37,7 @@ namespace ZweiHander.CollisionFiles
             PlayerHurt = sfxPlayer.Load<SoundEffect>("Audio/PlayerHurt");
             ItemPickup = sfxPlayer.Load<SoundEffect>("Audio/ItemPickup");
             currentSFX = PlayerHurt.CreateInstance();
+            _random = new Random();
             UpdateCollisionBox();
         }
 
@@ -73,6 +75,11 @@ namespace ZweiHander.CollisionFiles
                             break;
                         case Heart:
                             _player.Heal(2);
+                            break;
+                        case Fairy:
+                            int healthChange = _random.Next(-2, 3);
+                            if (healthChange > 0) _player.Heal(healthChange);
+                            if (healthChange < 0) _player.TakeDamage(-healthChange);
                             break;
                         case Bomb:
                             _player.AddItemToInventory(itemHandler.Item.ItemType, 10);
