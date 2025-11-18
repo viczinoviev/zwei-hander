@@ -23,7 +23,7 @@ namespace ZweiHander.Commands
             // Toggle inventory HUD
             _game.HUDManager.Paused = open;
 
-            // Freeze or unfreeze the world as well
+            // Pause or unpause the world as well
             _game.gamePaused = open;
         }
     }
