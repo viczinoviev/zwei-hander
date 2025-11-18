@@ -1,0 +1,31 @@
+﻿Author of the code review: Jacob Scherzer
+Date of the code review: 2025-11-17
+Sprint number: 4
+Name of the .cs file being reviewed: BlockFactory.cs
+Author of the .cs file being reviewed: Darren
+Number of minutes taken to complete the review: 13 minutes.
+Specific comments on maintainability/code quality:
+	The class works as it should, although more as a manager than as a factory, but 
+	that is fine. It avoids usage of magic numbers and instead takes in its constants, 
+	such as _tileSize, as input. Thia is a very maintainable approach, that will allow 
+	for an easier time changing block size if ever desired in the future. The usage of
+	an enum for block names means that the class will get longer as more blocks are
+	added, but it also makes it easier to work with the different blocks, as a 
+	generic Type does not need to be used for lookup, like in the dictionary used to map
+	name to BlockType.
+
+
+Author of the code review: Jacob Scherzer
+Date of the code review: 2025-11-17
+Sprint number: 4
+Name of the .cs file being reviewed: CsvAreaConstructor.cs
+Author of the .cs file being reviewed: Stash
+Number of minutes taken to complete the review: 11 minutes.
+Specific comments on readability:
+	All the actual code, such as the variables and methods, have informative names
+	that greatly helps in understanding their purpose, usage within the class, and
+	how others could use them. However, there is a lack of actual comments explaining
+	what is going on in the code. This can make understanding some of the longer
+	methods, such as LoadArea or ParseRoom, harder to understand how they work.
+	Specifically, this could lead to issues with debugging, or others trying to
+	understand how to make their own area.csv.
