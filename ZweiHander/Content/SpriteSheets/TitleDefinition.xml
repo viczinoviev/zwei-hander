@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TextureAtlas>
-    <Texture>SpriteSheets/Treasures</Texture>
+    <Texture>SpriteSheets/TreasuresCustomLogo</Texture>
     <Regions>
         <Region name="title" x="1" y="11" width="256" height="224" />
     </Regions>
