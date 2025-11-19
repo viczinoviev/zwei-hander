@@ -37,8 +37,9 @@ public class Stalfos : IEnemy
     readonly Random rnd = new();
 
 
-    public Stalfos(EnemySprites enemySprites,ContentManager sfxPlayer)
+    public Stalfos(EnemySprites enemySprites,ContentManager sfxPlayer,Vector2 position)
     {
+        Position = position;
         _enemySprites = enemySprites;
         Sprite = _enemySprites.Stalfos();
         CollisionHandler = new EnemyCollisionHandler(this,sfxPlayer);

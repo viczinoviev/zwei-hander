@@ -39,8 +39,9 @@ public class Darknut : IEnemy
     readonly Random rnd = new();
 
 
-    public Darknut(EnemySprites enemySprites,ContentManager sfxPlayer)
+    public Darknut(EnemySprites enemySprites,ContentManager sfxPlayer,Vector2 position)
     {
+        Position = position;
         _enemySprites = enemySprites;
         //create list of all sprites associated with the enemy to swap with
         _sprites.Add(_enemySprites.DarknutMoveUp());

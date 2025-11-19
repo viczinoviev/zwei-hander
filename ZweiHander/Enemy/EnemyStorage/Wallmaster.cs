@@ -44,8 +44,9 @@ public class Wallmaster : IEnemy
     readonly Random rnd = new();
 
 
-    public Wallmaster(EnemySprites enemySprites,ContentManager sfxPlayer)
+    public Wallmaster(EnemySprites enemySprites,ContentManager sfxPlayer,Vector2 position)
     {
+        Position = position;
         _enemySprites = enemySprites;
         _sprites.Add(_enemySprites.WallmasterUp());
         _sprites.Add(_enemySprites.WallmasterDown());

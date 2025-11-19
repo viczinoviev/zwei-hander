@@ -36,8 +36,9 @@ public class Zol : IEnemy
     readonly Random rnd = new();
 
 
-    public Zol(EnemySprites enemySprites,ContentManager sfxPlayer)
+    public Zol(EnemySprites enemySprites,ContentManager sfxPlayer,Vector2 position)
     {
+        Position = position;
         _enemySprites = enemySprites;
         Sprite = _enemySprites.Zol();
         CollisionHandler = new EnemyCollisionHandler(this,sfxPlayer);

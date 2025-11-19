@@ -44,8 +44,9 @@ public class Rope : IEnemy
     readonly Random rnd = new();
 
 
-    public Rope(EnemySprites enemySprites,ContentManager sfxPlayer)
+    public Rope(EnemySprites enemySprites,ContentManager sfxPlayer,Vector2 position)
     {
+        Position = position;
         _enemySprites = enemySprites;
         _sprites.Add(_enemySprites.RopeRight());
         _sprites.Add(_enemySprites.RopeLeft());

@@ -42,8 +42,9 @@ public class Dodongo : IEnemy
     readonly Random rnd = new();
 
 
-    public Dodongo(BossSprites bossSprites,ContentManager sfxPlayer)
+    public Dodongo(BossSprites bossSprites,ContentManager sfxPlayer,Vector2 position)
     {
+        Position = position;
         _bossSprites = bossSprites;
         _sprites.Add(_bossSprites.DodongoUp());
         _sprites.Add(_bossSprites.DodongoRight());

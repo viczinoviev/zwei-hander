@@ -36,8 +36,9 @@ public class Gel : IEnemy
     readonly Random rnd = new();
 
 
-    public Gel(EnemySprites enemySprites,ContentManager sfxPlayer)
+    public Gel(EnemySprites enemySprites,ContentManager sfxPlayer,Vector2 position)
     {
+        Position = position;
         _enemySprites = enemySprites;
         Sprite = _enemySprites.Gel();
         CollisionHandler = new EnemyCollisionHandler(this,sfxPlayer);

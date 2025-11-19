@@ -54,34 +54,34 @@ public class EnemyManager(EnemySprites enemysprites, ItemManager projectileManag
         switch (enemyName)
         {
             case "Darknut":
-                enemy = new Darknut(_enemySprites,sfxPlayer);
+                enemy = new Darknut(_enemySprites,sfxPlayer,position);
                 break;
             case "Gel":
-                enemy = new Gel(_enemySprites,sfxPlayer);
+                enemy = new Gel(_enemySprites,sfxPlayer,position);
                 break;
             case "Goriya":
-                enemy = new Goriya(_enemySprites, _projectileManager,sfxPlayer);
+                enemy = new Goriya(_enemySprites, _projectileManager,sfxPlayer,position);
                 break;
             case "Keese":
-                enemy = new Keese(_enemySprites,sfxPlayer);
+                enemy = new Keese(_enemySprites,sfxPlayer,position);
                 break;
             case "Stalfos":
-                enemy = new Stalfos(_enemySprites,sfxPlayer);
+                enemy = new Stalfos(_enemySprites,sfxPlayer,position);
                 break;
             case "Aquamentus":
-                enemy = new Aquamentus(_bossSprites, _projectileManager,sfxPlayer);
+                enemy = new Aquamentus(_bossSprites, _projectileManager,sfxPlayer,position);
                 break;
             case "Rope":
-                enemy = new Rope(_enemySprites,sfxPlayer);
+                enemy = new Rope(_enemySprites,sfxPlayer,position);
                 break;
             case "Wallmaster":
-                enemy = new Wallmaster(_enemySprites,sfxPlayer);
+                enemy = new Wallmaster(_enemySprites,sfxPlayer,position);
                 break;
             case "Zol":
-                enemy = new Zol(_enemySprites,sfxPlayer);
+                enemy = new Zol(_enemySprites,sfxPlayer,position);
                 break;
             case "Dodongo":
-                enemy = new Dodongo(_bossSprites,sfxPlayer);
+                enemy = new Dodongo(_bossSprites,sfxPlayer,position);
                 break;
             case "BladeTrap":
                 enemy = new BladeTrap(_enemySprites,sfxPlayer,position);

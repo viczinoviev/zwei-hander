@@ -46,8 +46,9 @@ public class Aquamentus : IEnemy
     public readonly Random rnd = new();
 
 
-    public Aquamentus(BossSprites bossSprites, ItemManager projectileManager,ContentManager sfxPlayer)
+    public Aquamentus(BossSprites bossSprites, ItemManager projectileManager,ContentManager sfxPlayer,Vector2 position)
     {
+        Position = position;
         _projectileManager = projectileManager;
         _bossSprites = bossSprites;
         Sprite = _bossSprites.Aquamentus();

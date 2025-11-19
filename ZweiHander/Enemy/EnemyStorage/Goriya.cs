@@ -52,8 +52,9 @@ public int Thrower = 1;
     public readonly Random rnd = new();
 
 
-    public Goriya(EnemySprites enemySprites, ItemManager projectileManager, ContentManager sfxPlayer)
+    public Goriya(EnemySprites enemySprites, ItemManager projectileManager, ContentManager sfxPlayer,Vector2 position)
     {
+        Position = position;
         _projectileManager = projectileManager;
         _enemySprites = enemySprites;
         //create list of all sprites associated with the enemy to swap with

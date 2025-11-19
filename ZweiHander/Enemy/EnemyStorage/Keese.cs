@@ -41,8 +41,9 @@ public class Keese : IEnemy
     readonly Random rnd = new();
 
 
-    public Keese(EnemySprites enemySprites,ContentManager sfxPlayer)
+    public Keese(EnemySprites enemySprites,ContentManager sfxPlayer,Vector2 position)
     {
+        Position = position;
         _enemySprites = enemySprites;
         Sprite = _enemySprites.Keese();
         CollisionHandler = new EnemyCollisionHandler(this,sfxPlayer);
