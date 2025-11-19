@@ -1,50 +1,103 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-<title>CSE 3902 Sprint 4</title>
+<title>CSE 3902 Sprint 5</title>
 </head>
+
 <body>
-<h1>Sprint 4 - Completed first level</h1>
+<h1>Sprint 5 - extending your game framework</h1>
 <p><strong>Due dates:</strong></p>
 <ul>
-  <li>Initial task planning: Tues. 10/28 before midnight
-  <li>Functionality check-in (on Carmen): Mon. 11/10 before midnight
-  <li>Due (on Carmen): Mon. 11/17 before midnight
-  <li>Team evaluation on CATME: Tues. 11/18 before midnight
-</ul>
-<p><strong>Objectives (short-form):</strong></p>
-<ul>
-  <li>Implement everything else needed for the first level of your game.
-</ul>
-<p><strong>Objectives (long-form):</strong></p>
-<ul>
-	<li>Keep the mouse controls to teleport between rooms for testing purposes.</li>
-	<li>Keep a room with an assortment of items for testing purposes.</li>
-	<li>Add sound effects and background music. Include a way to mute the background music for testing purposes.</li>
-	<li>Update your level file(s) and loading to include the layout of the dungeon.</li>
-	<li>Implement resetting the level upon the player character's death.</li>
-	<li>Add the Heads Up Display (the font does not need to match the one used in the original game).</li>
-	<li>Implement game state transitions:</li>
-	<ul>
-		<li>The item selection screen/state and transitions to and from it to the gameplay screen/state</li>
-		<li>A game over screen</li>
-		<li>Pausing</li>
-		<li>The winning game state on grabbing the triforce piece</li>
-		<li>Transitioning between rooms</li>
-	</ul>
-	<li>Implement any other features you deem necessary for the first dungeon. Implementing a few additional items, enemies, or NPCs is encouraged.</li>
-	<li>Remove magic numbers and strings by making local constants and/or moving them to a utility class (or multiple ones). 
-	    Consider making it possible to load these from a file as well as user input options for changing some during runtime (such as player movement speed). </li>
-	<li>Begin research on feature ideas for Sprint 5.</li>
+  <li>Due (on Carmen): Mon. 12/10 before midnight
+  Any additional work done after the deadline and shown at or before demonstrations during the final exam period will count towards the team's overall project grade
+  <li>Team evaluation on CATME: Tues. 12/11 before midnight
 </ul>
 
-<img src="Sprint4(loz).png"></img>
+<p><strong>Objective:</strong> Extend your implementation in some interesting way.
+You may choose topics from the list below or come up with your own.
+Early on in the sprint, your team should contact the instructor with your proposed topics for feedback on if the workload is sufficient.
+It does not necessarily need to be a coordinated plan, everyone can work on their own completely different pieces, but it should still be all part of one application when finished</p>
+<p>It is <b>highly recommended</b> that you record a video of your game to show off your work and ideas to future students of the course</p>
+
+<ul>
+<li>Misc. Features
+	<ul>
+	<li>Simultaneous multiplayer
+	<li>Add new powers and/or states for the player character
+	<li>Alter the behavior of existing movement (jump, run, walk, etc.) during run-time
+	<li>Add more levels/dungeons (including new object types in it) 
+	<li>Alternative cameras
+	<li>Player controlled enemies
+	<li>Achievements
+	<li>Input processing - cheat codes ; special moves (ex: down down-right right attack for fireball)
+	<li>Console for changing game constants
+	<li>Game event log file
+	</ul>
+<li>Genre-crossing
+	<ul>
+	<li>RPG elements (leveling, stats)
+	<li>Puzzle elements (find keys, push blocks, mazes, etc.)
+	<li>Limit player vision (fog of war or cone of vision for player)
+	<li>Platforming elements
+	<li>Gravity manipulation
+	<li>Portals
+	<li>Time control (entire world or just player) ; undo/redo
+	<li>Rhytmn based gameplay
+	<li>Horde mode (enemy spawners)
+	<li>Nightmare mode (killed enemies haunt the player)
+	<li>AI escort
+	<li>Random events
+	</ul>
+<li>Graphics
+	<ul>
+	<li>Shaders
+	<li>Replace sprites with 3d models
+	</ul>
+<li>AI
+	<ul>
+	<li>Control player for optimal play (solves level fastest or with maximum points)
+	<li>Control player for Turing Test (plays like a human)
+	<li>Alternative enemy AI
+	<li>Player assisting AI - passive (displays prompts to help the user - think quick time events)
+	<li>Player assisting AI - active (AI takes over player control when in danger)
+	</ul>
+<li>Procedural Content - level generation
+	<ul>
+	<li>Ensure a procedurally generated level is solvable
+	<li>Ensure a procedurally generated level is solvable for an AI player
+	<li>Create a never-ending level
+	</ul>
+<li>Hardware - Input
+	<ul>
+	<li>Mouse
+	<li>Kinect (the department has a few that can be borrowed - ask the instructor for details)
+	<li>Multitouch (MS Surface)
+	<li>Trackball
+	<li>Tiltable or shakable devices
+	<li>Altering gameplay for non-traditional users (toddlers, adults with Carpal Tunnel syndrome, adults with slow reaction times)
+	</ul>
+<li>Hardware - Output
+	<ul>
+	<li>Mobile device
+	<li>High definition televisions or monitors
+	<li>Supporting changing screen size
+	</ul>
+<li>Software Engineering + Design
+	<ul>
+	<li>Control player via file input, ghost race
+	<li>Perform data analysis on your VSO server
+	<li>Written documentation (on your system, requirements, C# and .NET features, other game development environments and tools)
+	<li>Graphical documentation (UML diagrams for use-cases or class interaction/coupling)
+	<li>Testing (somewhere in the neighborhood of 500-1000 test cases)
+	<li>Game state/world tracking - undo/redo, replay camera, save states
+	<li>Port to a console [Instructor's note: this was viable back on the Xbox360, may not be practical now]
+	<li>Comparative assessment of 2D game project code bases (talk to the instructor about finding/selecting samples)
+	</ul>
+</ul>
 
 <hr>
 
-<h3>Sprint 4 Work Expectations (the same as in previous sprints, repeated for convenience):</h3>
+<h3>Sprint 5 Work Expectations (the same as in previous sprints, repeated for convenience):</h3>
 <ul>
   <li>Planning:
     <ul>
@@ -140,11 +193,7 @@ In the plaintext file for a code quality review, include the following informati
 
 <h3>Functionality check-in</h3>
 <p>
-One member of your team should follow project zipping process from Sprint0 and turn in your project on Carmen on the appropriate assignment page.
-The purpose of this submission is similar to the "early bonus" from Sprint0 - incentive for students to not delay in getting their portion of the project done before the last few days of the sprint.
-Your team should aim to have have at least 2/3 of the functional requirements for the sprint completed for this check-in. Detailed feedback will limited,
-but you will be informed on whether your team is exceeding, meeting, or behind in the expected amount of functionality. 
-The functional check-in is worth about 7.5% (the range of - to + within a letter grade) for the sprint as a whole.
+There is no "early" functionality check-in required for Sprint5. <a href="https://www.merriam-webster.com/dictionary/crunch%20time">Crunch time</a> is discouraged, but is not explicitly penalized.
 </p>
 
 <h3>Project Submission</h3>
@@ -192,6 +241,13 @@ Code quality will also play a role in determining numeric project scores at the 
 Assume around 30-40% of the project scores are based on meeting high quality code standards.
 You should refactor your code to eliminate any major code quality problems cited by your instructor and grader.
 Minor issues may be excused but only after discussing the details with your instructor.
+</p>
+
+<h3>Final project demos</h3>
+<p>
+Your team will be required to present your project during finals week, during our university scheduled exam time slot. 
+Up to three teams may instead present their project during our final regular class meeting: firstcome, first scheduled.
+These presentations are not formally graded, but they are a small factor in your team's overall evaluation by the instructor.
 </p>
 
 </body></html>
