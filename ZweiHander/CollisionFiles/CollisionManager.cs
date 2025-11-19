@@ -102,7 +102,10 @@ namespace ZweiHander.CollisionFiles
 			return new CollisionInfo(normal, intersectionCenter, resolutionOffset);
 		}
 
-
+		/// <summary>
+		/// Adds specified collider
+		/// </summary>
+		/// <param name="collider">Collider to add</param>
 		public void AddCollider(ICollisionHandler collider)
 		{
 			if (collider != null)
@@ -111,6 +114,10 @@ namespace ZweiHander.CollisionFiles
 			}
 		}
 
+		/// <summary>
+		/// Removes specified collider
+		/// </summary>
+		/// <param name="collider">Collider to remove</param>
 		public void RemoveCollider(ICollisionHandler collider)
 		{
 			if (collider != null && colliders.Contains(collider))
@@ -119,11 +126,17 @@ namespace ZweiHander.CollisionFiles
 			}
 		}
 
+		/// <summary>
+		/// Removes all colliders
+		/// </summary>
 		public void ClearAllColliders()
 		{
 			colliders.Clear();
 		}
 
+		/// <summary>
+		/// Remove all dead and null colliders
+		/// </summary>
 		public void RemoveDeadColliders()
 		{
 			for (int i = colliders.Count - 1; i >= 0; i--)
@@ -135,11 +148,18 @@ namespace ZweiHander.CollisionFiles
 			}
 		}
 
+		/// <summary>
+		/// Gets all colliders
+		/// </summary>
+		/// <returns>All colliders in this</returns>
 		public IEnumerable<ICollisionHandler> GetAllColliders()
 		{
 			return colliders;
 		}
 
+		/// <summary>
+		/// Prints number of colliders, then type and location of each
+		/// </summary>
 		public void PrintAllColliders()
 		{
 			System.Console.WriteLine($"=== CollisionManager has {colliders.Count} colliders ===");
@@ -150,13 +170,18 @@ namespace ZweiHander.CollisionFiles
 			}
 		}
 
-		public List<(ICollisionHandler handler, CollisionInfo info)> CheckCollisionsForOne(ICollisionHandler sourceHandler, Rectangle testBox)
+		/// <summary>
+		/// Finds any collisions with a test rectangle.
+		/// </summary>
+		/// <param name="testBox">Rectangle to check for collisions with</param>
+		/// <returns>List of all collisions as (handler, info)</returns>
+		public List<(ICollisionHandler handler, CollisionInfo info)> CheckCollisionsForOne(Rectangle testBox)
 		{
 			List<(ICollisionHandler, CollisionInfo)> collisions = [];
 
 			foreach (var collider in colliders)
 			{
-				if (collider == null || collider.Dead || collider == sourceHandler)
+				if (collider == null || collider.Dead)
 					continue;
 
 				if (testBox.Intersects(collider.CollisionBox))

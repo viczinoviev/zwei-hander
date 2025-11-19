@@ -135,7 +135,7 @@ namespace ZweiHander.CollisionFiles
                     COLLISION_SIZE
                 );
 
-                var xCollisions = CollisionManager.Instance.CheckCollisionsForOne(this, xTestBox);
+                var xCollisions = CollisionManager.Instance.CheckCollisionsForOne(xTestBox);
                 
                 float maxXOffset = 0f;
                 foreach (var (handler, info) in xCollisions)
@@ -162,7 +162,7 @@ namespace ZweiHander.CollisionFiles
                     COLLISION_SIZE
                 );
 
-                var yCollisions = CollisionManager.Instance.CheckCollisionsForOne(this, yTestBox);
+                var yCollisions = CollisionManager.Instance.CheckCollisionsForOne(yTestBox);
                 
                 float maxYOffset = 0f;
                 foreach (var (handler, info) in yCollisions)
