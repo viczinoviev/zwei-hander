@@ -10,7 +10,7 @@ namespace ZweiHander.CollisionFiles
         private readonly Block _block;
         
         // Custom collision box for borders or other objects that don't use block-based collision
-        private readonly Rectangle? _customCollisionBox;
+        public readonly Rectangle? _customCollisionBox;
 
         // Standard constructor for blocks
         public BlockCollisionHandler(Block block)
