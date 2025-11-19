@@ -5,6 +5,8 @@ using ZweiHander.Items;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using ZweiHander.Enemy.EnemyStorage;
+using ZweiHander.Environment;
+using ZweiHander.Map;
 
 namespace ZweiHander.CollisionFiles
 {
@@ -30,14 +32,27 @@ namespace ZweiHander.CollisionFiles
         public override void OnCollision(ICollisionHandler other, CollisionInfo collisionInfo)
         {
             //Block collision
-            if (other is BlockCollisionHandler)
+            if (other is BlockCollisionHandler blockCollisionHandler)
             {
                 //If enemy is running into a block, prevent enemy from going into the block
+                if(_enemy is not Wallmaster){
                 Vector2 newPosition = _enemy.Position + collisionInfo.ResolutionOffset;
                 _enemy.Position = newPosition;
                 _enemy.Face = (int)collisionInfo.Normal;
 
                 UpdateCollisionBox();
+                }
+                else
+                {
+                    if(blockCollisionHandler._customCollisionBox != null)
+                    {
+                        Vector2 newPosition = _enemy.Position + collisionInfo.ResolutionOffset;
+                _enemy.Position = newPosition;
+                _enemy.Face = (int)collisionInfo.Normal;
+
+                UpdateCollisionBox();
+                    }
+                }
             }
             //Item collision
             if (other is ItemCollisionHandler itemCollisionHandler)
