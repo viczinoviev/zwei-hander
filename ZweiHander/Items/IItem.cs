@@ -54,11 +54,6 @@ public interface IItem
     public void Update(GameTime gameTime);
 
     /// <summary>
-    /// What to do when phase changes; excludes death and Spawn. Uses new phase number.
-    /// </summary>
-    public void OnPhaseChange();
-
-    /// <summary>
     /// Removes a property from the item, if it has it.
     /// </summary>
     /// <param name="property">Property to be removed.</param>

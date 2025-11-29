@@ -77,7 +77,6 @@ public class Boomerang : AbstractItem
             if (Math.Sign(Velocity.X) != Signs.X || Math.Sign(Velocity.Y) != Signs.Y)
             {
                 Phase++;
-                OnPhaseChange();
             }
         }
         else
@@ -90,7 +89,7 @@ public class Boomerang : AbstractItem
         }
     }
 
-    public override void OnPhaseChange()
+    protected override void OnPhaseChange()
     {
         if (Phase == 1)
         {

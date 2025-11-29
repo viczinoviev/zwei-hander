@@ -63,10 +63,16 @@ public abstract class AbstractItem : IItem
     /// </summary>
     protected virtual List<double> Phases { get; set; } = [];
 
+    private int _phase = 0;
+
     /// <summary>
     /// Current phase, starting from 0.
     /// </summary>
-    protected int Phase { get; set; } = 0;
+    protected int Phase { get => _phase; set
+        {
+            _phase = value;
+            OnPhaseChange();
+        } }
 
     /// <summary>
     /// Handles the collisions for this item.
@@ -110,27 +116,16 @@ public abstract class AbstractItem : IItem
         // Life progression
         ProgressLife(dt);
         if (IsDead()) return;
-
         // Movement
-        if (!HasProperty(ItemProperty.Stationary))
-        {
-            Move(dt);
-        }
-
+        if (!HasProperty(ItemProperty.Stationary)) Move(dt);
         // Face correct direction; UNTESTED
-        if (HasProperty(ItemProperty.FacingVelocity))
-        {
-            Sprite.Rotation = (float)Math.Atan2(Velocity.Y, Velocity.X);
-        }
+        if (HasProperty(ItemProperty.FacingVelocity)) Sprite.Rotation = (float)Math.Atan2(Velocity.Y, Velocity.X);
 
         Sprite.Update(time);
         CollisionHandler.UpdateCollisionBox();
     }
 
-    public void Draw()
-    {
-        Sprite.Draw(Position + SpriteOffset);
-    }
+    public void Draw() { Sprite.Draw(Position + SpriteOffset); }
 
     /// <summary>
     /// Progresses this item's life.
@@ -147,11 +142,7 @@ public abstract class AbstractItem : IItem
                 CollisionHandler.Dead = true;
             }
             // If there is threshold for this phase, and we are past that threshold, then progress the phase
-            if (Phase < Phases.Count && Life <= Phases[Phase])
-            {
-                Phase++;
-                OnPhaseChange();
-            }
+            if (Phase < Phases.Count && Life <= Phases[Phase]) Phase++;
         }
     }
 
@@ -165,34 +156,17 @@ public abstract class AbstractItem : IItem
         Position += dt * Velocity + (dt * dt / 2) * Acceleration;
     }
 
-    public virtual void OnPhaseChange()
-    {
-    }
+    protected virtual void OnPhaseChange() { }
 
-    public void RemoveProperty(ItemProperty property)
-    {
-        Properties &= ~property;
-    }
+    public void RemoveProperty(ItemProperty property) { Properties &= ~property; }
 
-    public void AddProperty(ItemProperty property)
-    {
-        Properties |= property;
-    }
+    public void AddProperty(ItemProperty property) { Properties |= property; }
 
-    public bool HasProperty(ItemProperty property)
-    {
-        return Properties.HasFlag(property);
-    }
+    public bool HasProperty(ItemProperty property) { return Properties.HasFlag(property); }
 
-    public void SetDamage(Type damaged, DamageObject damage)
-    {
-        Damage[damaged] = damage;
-    }
+    public void SetDamage(Type damaged, DamageObject damage) { Damage[damaged] = damage; }
 
-    public DamageObject GetDamage(Type damaged)
-    {
-        return Damage[damaged];
-    }
+    public DamageObject GetDamage(Type damaged) { return Damage[damaged]; }
 
     public bool IsDead()
     {
@@ -207,18 +181,9 @@ public abstract class AbstractItem : IItem
 
     public Rectangle GetHitBox()
     {
-        int width, height;
+        int width = Hitbox.X == 0f ? Sprite.Width : (int) Hitbox.X;
+        int height = Hitbox.Y == 0f ? Sprite.Height : (int) Hitbox.Y;
         // Sprites are centered
-        if (Hitbox != Vector2.Zero)
-        {
-            width = (int) Hitbox.X;
-            height = (int) Hitbox.Y;
-        }
-        else
-        {
-            width = Sprite.Width;
-            height = Sprite.Height;
-        }
         return new Rectangle(
                 (int)Position.X - width / 2,
                 (int)Position.Y - height / 2,
@@ -257,10 +222,13 @@ public abstract class AbstractItem : IItem
     /// </summary>
     /// <param name="other">What is being collided with.</param>
     /// <param name="collisionInfo">Info related to the collision.</param>
-    protected virtual void ItemInteract(ItemCollisionHandler other, CollisionInfo collisionInfo)
-    {
-    }
+    protected virtual void ItemInteract(ItemCollisionHandler other, CollisionInfo collisionInfo){ }
 
+    /// <summary>
+    /// How to interact with enemies on collision.
+    /// </summary>
+    /// <param name="other">What is being collided with.</param>
+    /// <param name="collisionInfo">Info related to the collision.</param>
     protected virtual void EnemyInteract(EnemyCollisionHandler other, CollisionInfo collisionInfo)
     {
         if (HasProperty(ItemProperty.DeleteOnEnemy)) Kill();

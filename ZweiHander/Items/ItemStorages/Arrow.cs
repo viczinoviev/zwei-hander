@@ -34,7 +34,7 @@ public class Arrow : AbstractItem
         }
     }
 
-    public override void OnPhaseChange()
+    protected override void OnPhaseChange()
     {
         if (Phase == 1)
         {

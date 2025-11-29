@@ -90,7 +90,6 @@ public class Fire : AbstractItem
                 if (Math.Sign(Velocity.X) != Signs.X || Math.Sign(Velocity.Y) != Signs.Y)
                 {
                     Phase++;
-                    OnPhaseChange();
                 }
                 Life += dt;
             }
@@ -100,7 +99,6 @@ public class Fire : AbstractItem
             if (Homing != null)
             {
                 Phase++;
-                OnPhaseChange();
             }
         }
         else if (Phase == 2)
@@ -111,7 +109,7 @@ public class Fire : AbstractItem
         }
     }
 
-    public override void OnPhaseChange()
+    protected override void OnPhaseChange()
     {
         if (Phase == 1)
         {
