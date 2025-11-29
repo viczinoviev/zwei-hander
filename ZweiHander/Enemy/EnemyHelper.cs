@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using ZweiHander.Enemy.EnemyStorage;
 using ZweiHander.Items;
+using ZweiHander.Items.ItemStorages;
 
 namespace ZweiHander.Enemy;
 
@@ -61,7 +62,7 @@ class EnemyHelper
         if (attack == doAttack && enemy.Thrower != attacking)
         {
             //Create a projectile using ItemHelpers boomerang trajectory method
-            (float v, float a) = ItemHelper.BoomerangTrajectory(attackLength, attackDuration);
+            (float v, float a) = Boomerang.Trajectory(attackLength, attackDuration);
             enemy._currentProjectile = projectileManager.GetItem("Boomerang",position: enemy.Position,
             velocity: EnemyHelper.BehaveFromFace(enemy, v, 1), acceleration: EnemyHelper.BehaveFromFace(enemy, a, 1),
                 properties: [ItemProperty.EnemyProjectile],extras: [() => enemy.Position, enemy.CollisionHandler]);

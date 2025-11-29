@@ -109,4 +109,15 @@ public class Boomerang : AbstractItem
             }
         }
     }
+
+    /// <summary>
+    /// Calculates the trajectory needed to go a certain distance over a certain period.
+    /// </summary>
+    /// <param name="distance">Furhtest distance to go.</param>
+    /// <param name="time">Time it takes to return.</param>
+    /// <returns>Necessary velocity and acceleration magnitudes.</returns>
+    public static (float Velocity, float Acceleration) Trajectory(float distance, float time)
+    {
+        return (4f * distance / time, -8f * distance / (time * time));
+    }
 }
