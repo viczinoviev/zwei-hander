@@ -139,8 +139,8 @@ namespace ZweiHander.Map
             Vector2 roomSize = new(roomWidth * CELL_SIZE, (roomHeight-1) * CELL_SIZE);
             Room room = new(roomNumber, Vector2.Zero, roomSize, _universe)
             {
-                MinimapPosition = minimapPos,
-                MinimapConnections = minimapConnections
+                MapPosition = minimapPos,
+                MapConnections = minimapConnections
             };
             _currentRoom = room;
 

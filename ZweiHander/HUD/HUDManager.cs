@@ -57,6 +57,11 @@ namespace ZweiHander.HUD
         {
             _mapHUD?.SetUniverse(universe);
         }
+        
+        public void SetDebugRenderer(DebugRenderer debugRenderer)
+        {
+            _mapHUD?.SetDebugRenderer(debugRenderer);
+        }
 
         private void BuildHUD()
         {
@@ -171,9 +176,9 @@ namespace ZweiHander.HUD
             _mapHUD.mapItemGotten = true;
         }
 
-        public void compasItemGotten()
+        public void compassItemGotten()
         {
-            _mapHUD.compasItemGotten = true;
+            _mapHUD.compassItemGotten = true;
         }
     }
 }
