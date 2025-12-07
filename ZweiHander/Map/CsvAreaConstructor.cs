@@ -228,6 +228,10 @@ namespace ZweiHander.Map
                     CreatePortal(name, position);
                     break;
 
+                case "l":
+                    CreateLockedEntrance(name, position);
+                    break;
+
                 case "spawn":
                     _currentRoom.PlayerSpawnPoint = position;
                     break;
@@ -241,7 +245,7 @@ namespace ZweiHander.Map
             _currentRoom.AddBlock(blockName, gridPosition);
         }
 
-        private void CreateBorder(string borderTag, Vector2 position)
+        public void CreateBorder(string borderTag, Vector2 position)
         {
             BorderName borderName = AreaDictionaries.tagToBorderName[borderTag];
             _currentRoom.AddBorder(borderName, position);
@@ -275,6 +279,14 @@ namespace ZweiHander.Map
             Vector2 centeredPosition = new(position.X, position.Y);
             _currentRoom.AddPortal(id, centeredPosition);
             _currentArea.RegisterPortalData(id, _currentRoom.RoomNumber, centeredPosition);
+        }
+
+        private void CreateLockedEntrance(string portalId, Vector2 position)
+        {
+            int id = int.Parse(portalId);
+            Vector2 centeredPosition = new(position.X, position.Y);
+            _currentRoom.AddLockedEntrance(id, centeredPosition);
+           
         }
     }
 }

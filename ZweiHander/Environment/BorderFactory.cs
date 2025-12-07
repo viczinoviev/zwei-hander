@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using ZweiHander.Graphics;
 using ZweiHander.Graphics.SpriteStorages;
+using ZweiHander.Items;
 using ZweiHander.Map;
 namespace ZweiHander.Environment
 {
@@ -51,10 +52,10 @@ namespace ZweiHander.Environment
             { BorderName.LockedDoorTileSouth, BorderType.Solid },
             
             // Doors - decorative (passable)
-            { BorderName.DoorTileNorth, BorderType.Decorative },
-            { BorderName.DoorTileWest, BorderType.Decorative },
-            { BorderName.DoorTileEast, BorderType.Decorative },
-            { BorderName.DoorTileSouth, BorderType.Decorative },
+            { BorderName.DoorTileNorth, BorderType.EntranceUp },
+            { BorderName.DoorTileWest, BorderType.EntranceRight },
+            { BorderName.DoorTileEast, BorderType.EntranceLeft },
+            { BorderName.DoorTileSouth, BorderType.EntranceDown },
             
             // Holes in walls - decorative
             { BorderName.HoleInWallNorth, BorderType.Decorative },
@@ -136,6 +137,11 @@ namespace ZweiHander.Environment
                 border.UnsubscribeFromCollisions();
             }
             BorderMap.Clear();
+        }
+
+        public bool HasBorder(Border border)
+        {
+            return BorderMap.Contains(border);
         }
     }
 }

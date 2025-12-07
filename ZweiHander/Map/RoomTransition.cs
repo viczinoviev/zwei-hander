@@ -43,7 +43,7 @@ namespace ZweiHander.Map
             if (TransitionTime > 0 && roomSpawnTransitionOffset != Vector2.Zero)
             {
                 Vector2 tiledOffset = roomSpawnTransitionOffset / _tileSize;
-                targetRoom.Load(true, tiledOffset);
+                targetRoom.Load(true, false, tiledOffset);
             }
 
             player.SetUpdateEnabled(false);

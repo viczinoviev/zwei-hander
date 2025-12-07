@@ -45,7 +45,7 @@ namespace ZweiHander.Map
         /// </summary>
         public static Vector2 GetPlayerSpawnPoint(
             Vector2 predefinedSpawnPoint,
-            IEnumerable<(BorderName borderName, Vector2 position)> borderData,
+            IEnumerable<(BorderName borderName, Vector2 position, Border dummyValue)> borderData,
             Rectangle roomBounds,
             int tileSize,
             int roomNumber)
@@ -55,7 +55,7 @@ namespace ZweiHander.Map
                 return predefinedSpawnPoint;
             }
 
-            foreach (var (borderName, position) in borderData)
+            foreach (var (borderName, position , dummyValue) in borderData)
             {
                 if (EastEntrances.Contains(borderName))
                 {

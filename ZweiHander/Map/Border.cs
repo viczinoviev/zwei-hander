@@ -87,6 +87,10 @@ namespace ZweiHander.Map
             return _position;
         }
 
+        public Rectangle GetHitBox()
+        {
+            return new Rectangle((int)_position.X - 32, (int)_position.Y - 32, 64, 64);
+        }
         public void Draw()
         {
             _sprite.Draw(_position);

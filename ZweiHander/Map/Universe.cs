@@ -29,6 +29,8 @@ namespace ZweiHander.Map
         public BorderFactory BorderFactory { get; private set; }
         public PortalManager PortalManager { get; private set; }
 
+        public LockedEntranceManager LockedEntranceManager { get; private set; }
+
         public Camera.Camera Camera { get; private set; }
 
         public RoomTransition RoomTransition { get; private set; }
@@ -72,6 +74,11 @@ namespace ZweiHander.Map
             PortalManager = new PortalManager(this, Player, camera);
         }
 
+        public void SetupLockedEntranceManager(Camera.Camera camera)
+        {
+            LockedEntranceManager = new LockedEntranceManager(this, Player, camera);
+        }
+
         public void SetCurrentLocation(string areaName, int roomNumber)
         {
             Area area = GetArea(areaName);
@@ -93,7 +100,7 @@ namespace ZweiHander.Map
             if (targetRoom == null) return;
 
             // Remove items and enemies that were picked up/killed in the previous room
-            CurrentRoom.PersistentRemoveItemAndEnemy(ItemManager, EnemyManager);
+            CurrentRoom.PersistentRemoveItemAndEnemy(ItemManager, EnemyManager, BorderFactory);
 
             RoomTransition.StartTransition(CurrentRoom, targetRoom, spawnPosition, camera, oldPortalPos, newPortalPos, portalDirection, Player);
 
@@ -110,6 +117,7 @@ namespace ZweiHander.Map
             EnemyManager.Clear();
             ItemManager.Clear();
             PortalManager.Clear();
+            LockedEntranceManager.Clear();
             
             // Remove dead/null colliders immediately before loading next room
             CollisionManager.Instance.RemoveDeadColliders();
@@ -126,6 +134,7 @@ namespace ZweiHander.Map
             EnemyManager.Update(gameTime);
             ItemManager.Update(gameTime);
             PortalManager.Update(gameTime);
+            LockedEntranceManager.Update(gameTime);
         }
         
 

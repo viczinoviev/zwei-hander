@@ -25,11 +25,12 @@ namespace ZweiHander.Map
 
         // Stored data for recreation
         private readonly List<(BlockName blockName, Point gridPosition)> _blockData = [];
-        private readonly List<(BorderName borderName, Vector2 position)> _borderData = [];
+        private readonly List<(BorderName borderName, Vector2 position, Border borderPointer)> _borderData = [];
         private readonly List<(string enemyName, Vector2 position, IEnemy enemyPointer)> _enemyData = [];
         private readonly List<(string itemType, Vector2 position, IItem itemPointer)> _itemData = [];
         private readonly List<(int portalId, Vector2 position)> _portalData = [];
-        
+        private readonly List<(int portalId, Vector2 position)> _lockedEntranceData = [];
+
         private readonly Universe _universe = universe;
         private Rectangle Bounds = new((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
 
@@ -40,7 +41,7 @@ namespace ZweiHander.Map
         
         public void AddBorder(BorderName borderName, Vector2 position)
         {
-            _borderData.Add((borderName, position));
+            _borderData.Add((borderName, position, null));
         }
         
         public void AddEnemy(string enemyName, Vector2 position)
@@ -58,8 +59,14 @@ namespace ZweiHander.Map
             _portalData.Add((portalId, position));
         }
 
+        public void AddLockedEntrance(int portalId, Vector2 position)
+        {
+            _lockedEntranceData.Add((portalId, position));
+        }
+
         public IEnumerable<(int portalId, Vector2 position)> GetPortalData() => _portalData;
-        
+        public IEnumerable<(int portalId, Vector2 position)> GetLockedEntranceData() => _lockedEntranceData;
+
         public Vector2 GetPlayerSpawnPoint()
         {
             return RoomSpawnHelper.GetPlayerSpawnPoint(
@@ -71,7 +78,7 @@ namespace ZweiHander.Map
             );
         }
 
-        public void Load(bool excludePortals = false, Vector2 offsetInTiles = default)
+        public void Load(bool excludePortals = false, bool excludeLockedEntrance = false, Vector2 offsetInTiles = default)
         {
 
             IsLoaded = true;
@@ -83,10 +90,12 @@ namespace ZweiHander.Map
                 _universe.BlockFactory.CreateBlock(blockName, adjustedGridPosition);
             }
             
-            foreach (var (borderName, position) in _borderData)
+            for (int i = 0; i < _borderData.Count; i++)
             {
+                var (borderName, position, borderPointer) = _borderData[i];
                 Vector2 adjustedPosition = position + new Vector2(offsetInTiles.X * _universe.TileSize, offsetInTiles.Y * _universe.TileSize);
-                _universe.BorderFactory.CreateBorder(borderName, adjustedPosition);
+                borderPointer = _universe.BorderFactory.CreateBorder(borderName, adjustedPosition);
+                _borderData[i] = (borderName, position, borderPointer);
             }
             
             for (int i = 0; i < _enemyData.Count; i++)
@@ -117,13 +126,20 @@ namespace ZweiHander.Map
                 Vector2 adjustedPosition = position + new Vector2(offsetInTiles.X * _universe.TileSize, offsetInTiles.Y * _universe.TileSize);
                 _universe.PortalManager.CreatePortal(portalId, adjustedPosition, this, _universe.CurrentArea);
             }
-            
+            if (excludeLockedEntrance) return;
+            foreach (var (portalId, position) in _lockedEntranceData)
+            {
+                Vector2 adjustedPosition = position + new Vector2(offsetInTiles.X * _universe.TileSize, offsetInTiles.Y * _universe.TileSize);
+                _universe.LockedEntranceManager.CreateLockedEntrance(portalId, adjustedPosition, this, _universe.CurrentArea);
+            }
+
         }
 
-        public void PersistentRemoveItemAndEnemy(ItemManager itemManager, EnemyManager enemyManager)
+        public void PersistentRemoveItemAndEnemy(ItemManager itemManager, EnemyManager enemyManager, BorderFactory borderFactory)
         {
             _itemData.RemoveAll(data => !itemManager.HasItem(data.itemPointer));
             _enemyData.RemoveAll(data => !enemyManager.HasThisEnemyInstance(data.enemyPointer));
+            _borderData.RemoveAll(data => !borderFactory.HasBorder(data.borderPointer));
         }
 
         public bool Contains(Vector2 position) => Bounds.Contains(position);
