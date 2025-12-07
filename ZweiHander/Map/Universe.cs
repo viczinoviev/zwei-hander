@@ -91,6 +91,19 @@ namespace ZweiHander.Map
             CurrentRoom = room;
             CurrentRoom.Load();
         }
+
+        public void ForceChangeRoom(int roomNumber)
+        {
+            if (CurrentArea == null) return;
+
+            Room targetRoom = CurrentArea.GetRoom(roomNumber);
+            if (targetRoom == null) return;
+
+            UnloadContents();
+            CurrentRoom = targetRoom;
+            CurrentRoom.Load();
+        }
+
         public void LoadRoom(int roomNumber, Vector2 spawnPosition, Camera.Camera camera, Vector2 oldPortalPos, Vector2 newPortalPos, Direction portalDirection)
         {   
             if (RoomTransition.IsTransitioning) return;

@@ -8,10 +8,12 @@ namespace ZweiHander
     public class DebugRenderer
     {
         private Texture2D _debugTexture;
+        private System.Collections.Generic.List<Rectangle> _clickableRectangles = new();
         
         public bool ShowCollisionBoxes { get; set; } = false;
         public bool ShowRoomBounds { get; set; } = false;
         public bool ShowGrid { get; set; } = false;
+        public bool ShowClickableRectangles { get; set; } = false;
         
         public void Initialize(GraphicsDevice graphicsDevice)
         {
@@ -42,6 +44,39 @@ namespace ZweiHander
         
         public void DrawScreenDebug(SpriteBatch spriteBatch)
         {
+            if (ShowClickableRectangles)
+            {
+                DrawClickableRectangles(spriteBatch);
+            }
+        }
+        
+        public void AddClickableRectangle(Rectangle rect)
+        {
+            _clickableRectangles.Add(rect);
+        }
+        
+        public void ClearClickableRectangles()
+        {
+            _clickableRectangles.Clear();
+        }
+        
+        private void DrawClickableRectangles(SpriteBatch spriteBatch)
+        {
+            if (_debugTexture == null) return;
+            
+            Color fillColor = Color.Cyan * 0.3f;
+            Color outlineColor = Color.Cyan * 0.8f;
+            int thickness = 2;
+            
+            foreach (var rect in _clickableRectangles)
+            {
+                spriteBatch.Draw(_debugTexture, rect, fillColor);
+                
+                spriteBatch.Draw(_debugTexture, new Rectangle(rect.X, rect.Y, rect.Width, thickness), outlineColor);
+                spriteBatch.Draw(_debugTexture, new Rectangle(rect.X, rect.Bottom - thickness, rect.Width, thickness), outlineColor);
+                spriteBatch.Draw(_debugTexture, new Rectangle(rect.X, rect.Y, thickness, rect.Height), outlineColor);
+                spriteBatch.Draw(_debugTexture, new Rectangle(rect.Right - thickness, rect.Y, thickness, rect.Height), outlineColor);
+            }
         }
         
         private void DrawCollisionBoxes(SpriteBatch spriteBatch)

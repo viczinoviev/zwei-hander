@@ -172,6 +172,7 @@ namespace ZweiHander
             // Initialize HUD Manager
             _hudManager = new HUDManager(_gamePlayer, _hudSprites, gamePaused);
             _hudManager.SetUniverse(_universe);
+            _hudManager.SetDebugRenderer(_debugRenderer);
         }
 
         protected override void Update(GameTime gameTime)
