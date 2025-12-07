@@ -2,6 +2,7 @@ using System;
 using Microsoft.Xna.Framework;
 using ZweiHander.CollisionFiles;
 using ZweiHander.Environment;
+using ZweiHander.FriendlyNPC;
 using ZweiHander.PlayerFiles;
 
 namespace ZweiHander.Map
@@ -9,7 +10,7 @@ namespace ZweiHander.Map
     public class RoomTransition(Universe universe, int tileSize)
 	{
         private float _transitionTimer = 0f;
-        private Vector2 _spawnPosition = Vector2.Zero;
+        public Vector2 _spawnPosition = Vector2.Zero;
         
         public float TransitionTime { get; set; } = 0.5f;
         public bool IsTransitioning => _transitionTimer > 0;
@@ -53,7 +54,7 @@ namespace ZweiHander.Map
         }
         
 
-        public void Update(GameTime gameTime, Room currentRoom, Camera.Camera camera, IPlayer player)
+        public void Update(GameTime gameTime, Room currentRoom, Camera.Camera camera, IPlayer player, IKirby kirby)
         {
             if (_transitionTimer > 0)
             {
@@ -61,16 +62,17 @@ namespace ZweiHander.Map
                 if (_transitionTimer < 0)
                 {
                     _transitionTimer = 0;
-                    CompleteTransition(currentRoom, camera, player);
+                    CompleteTransition(currentRoom, camera, player, kirby);
                 }
             }
         }
 
-        private void CompleteTransition(Room currentRoom, Camera.Camera camera, IPlayer player)
+        private void CompleteTransition(Room currentRoom, Camera.Camera camera, IPlayer player, IKirby kirby)
         {
             _universe.UnloadContents();
             currentRoom.Load();
             new Commands.PlayerTeleportCommand(player, _spawnPosition + new Vector2(_tileSize, _tileSize)).Execute();
+            new Commands.KirbyTeleportCommand(kirby, _spawnPosition + new Vector2(_tileSize, _tileSize)).Execute();
             new Commands.SetCameraCommand(camera, player).Execute();
             player.SetUpdateEnabled(true);
         }

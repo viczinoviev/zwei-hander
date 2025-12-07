@@ -13,23 +13,59 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin Audio/EnemyHurt.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/EnemyHurt.wav
+
+#begin Audio/Fireball.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Fireball.wav
+
+#begin Audio/GameOver.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/GameOver.wav
+
+#begin Audio/GameOver2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/GameOver2.wav
+
 #begin Audio/Great Awesome Majestic Epic Music.mp3
 /importer:Mp3Importer
 /processor:SongProcessor
 /processorParam:Quality=Best
 /build:Audio/Great Awesome Majestic Epic Music.mp3;Audio/DungeonTheme.mp3
 
+#begin Audio/ItemPickup.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/ItemPickup.wav
+
+#begin Audio/PlayerHurt.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/PlayerHurt.wav
+
+#begin Audio/SecretFound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/SecretFound.wav
+
 #begin Audio/Sound Effect (1).wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/Sound Effect (1).wav
-
-#begin Audio/Sound Effect (10).wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/Fireball.wav
 
 #begin Audio/Sound Effect (11).wav
 /importer:WavImporter
@@ -61,12 +97,6 @@
 /processorParam:Quality=Best
 /build:Audio/Sound Effect (15).wav
 
-#begin Audio/Sound Effect (16).wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/ItemPickup.wav
-
 #begin Audio/Sound Effect (17).wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -91,41 +121,11 @@
 /processorParam:Quality=Best
 /build:Audio/Sound Effect (2).wav
 
-#begin Audio/Sound Effect (20).wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/Success.wav
-
-#begin Audio/Sound Effect (21).wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/SecretFound.wav
-
-#begin Audio/Sound Effect (22).wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/GameOver.wav
-
 #begin Audio/Sound Effect (23).wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/Sound Effect (23).wav
-
-#begin Audio/Sound Effect (24).wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/GameOver2.wav
-
-#begin Audio/Sound Effect (25).wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/SuperSuccess.wav
 
 #begin Audio/Sound Effect (26).wav
 /importer:WavImporter
@@ -145,12 +145,6 @@
 /processorParam:Quality=Best
 /build:Audio/Sound Effect (28).wav
 
-#begin Audio/Sound Effect (3).wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/EnemyHurt.wav
-
 #begin Audio/Sound Effect (4).wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -163,29 +157,42 @@
 /processorParam:Quality=Best
 /build:Audio/Sound Effect (5).wav
 
-#begin Audio/Sound Effect (6).wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/SwordAttack.wav
-
 #begin Audio/Sound Effect (7).wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/Sound Effect (7).wav
 
-#begin Audio/Sound Effect (8).wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/PlayerHurt.wav
-
 #begin Audio/Sound Effect (9).wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/Sound Effect (9).wav
+
+#begin Audio/Success.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Success.wav
+
+#begin Audio/SuperSuccess.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/SuperSuccess.wav
+
+#begin Audio/SwordAttack.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/SwordAttack.wav
+
+#begin Fonts/GameOverFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/GameOverFont.spritefont
 
 #begin Maps/testDungeon1.csv
 /copy:Maps/testDungeon1.csv
@@ -262,6 +269,21 @@
 #begin SpriteSheets/HUDDefinition.xml
 /copy:SpriteSheets/HUDDefinition.xml
 
+#begin SpriteSheets/kirby1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:SpriteSheets/kirby1.png
+
+#begin SpriteSheets/kirbyDefinition.xml
+/copy:SpriteSheets/kirbyDefinition.xml
+
 #begin SpriteSheets/Link.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -321,11 +343,4 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:SpriteSheets/TreasuresCustomLogo.png
-
-#begin Fonts/GameOverFont.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:Fonts/GameOverFont.spritefont
 

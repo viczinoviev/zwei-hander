@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework.Content;
 using System;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
+using ZweiHander.FriendlyNPC;
 
 
 namespace ZweiHander.Map
@@ -23,6 +24,7 @@ namespace ZweiHander.Map
         public Area CurrentArea { get; private set; }
         public Room CurrentRoom { get; private set; }
         public IPlayer Player { get; private set; }
+        public IKirby Kirby { get; private set; }
         public EnemyManager EnemyManager { get; private set; }
         public ItemManager ItemManager { get; private set; }
         public BlockFactory BlockFactory { get; private set; }
@@ -45,6 +47,7 @@ namespace ZweiHander.Map
             TreasureSprites treasureSprites,
             BlockSprites blockSprites,
             PlayerSprites playerSprites,
+            KirbySprites kirbySprites,
             ContentManager Content,
             Camera.Camera camera,
             int tileSize = 32)
@@ -68,6 +71,8 @@ namespace ZweiHander.Map
         public Area GetArea(string areaName) => _areas.TryGetValue(areaName, out Area area) ? area : null;
 
         public void SetPlayer(IPlayer player) => Player = player;
+
+        public void SetKirby(IKirby kirby) => Kirby = kirby;
 
         public void SetupPortalManager(Camera.Camera camera)
         {
@@ -127,7 +132,7 @@ namespace ZweiHander.Map
 
         public void Update(GameTime gameTime)
         {
-            RoomTransition.Update(gameTime, CurrentRoom, Camera, Player);
+            RoomTransition.Update(gameTime, CurrentRoom, Camera, Player, Kirby);
 
             if (CurrentRoom == null || !CurrentRoom.IsLoaded || RoomTransition.IsTransitioning) return;
 

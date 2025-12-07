@@ -8,7 +8,9 @@ using System.ComponentModel;
 using System.IO;
 using ZweiHander.CollisionFiles;
 using ZweiHander.Commands;
+using ZweiHander.Enemy;
 using ZweiHander.Environment;
+using ZweiHander.FriendlyNPC;
 using ZweiHander.GameStates;
 using ZweiHander.Graphics.SpriteStorages;
 using ZweiHander.HUD;
@@ -36,7 +38,8 @@ namespace ZweiHander
         private GameOverScreen _gameOverScreen;
         private GameWonScreen _gameWonScreen;
 
-
+        private Kirby _kirby;
+        private KirbySprites _kirbySprites;
 
         //Sprites and factories
         private PlayerSprites _linkSprites;
@@ -132,6 +135,12 @@ namespace ZweiHander
             CollisionManager.Instance.ClearAllColliders();
 
             _gamePlayer = new Player(_linkSprites, _itemSprites, _treasureSprites,Content);
+            _kirbySprites = new KirbySprites(Content, _spriteBatch);
+            _kirby = new Kirby(
+                _gamePlayer,
+                _kirbySprites,
+                _gamePlayer.Position
+            );
             SetCameraCommand moveCameraToPlayer = new SetCameraCommand(_camera, _gamePlayer);
             moveCameraToPlayer.Execute();
 
@@ -144,12 +153,17 @@ namespace ZweiHander
                 _treasureSprites,
                 new BlockSprites(Content, _spriteBatch),
                 _linkSprites,
+                _kirbySprites,
                 Content,
                 _camera
             );
+            
+            
             _universe.SetPlayer(_gamePlayer);
+            _universe.SetKirby(_kirby);
             _universe.SetupPortalManager(_camera);
             _universe.SetupLockedEntranceManager(_camera);
+            
             _areaConstructor = new CsvAreaConstructor();
 
             string mapPath = Path.Combine(Content.RootDirectory, "Maps", "testDungeon1.csv");
@@ -158,6 +172,11 @@ namespace ZweiHander
             _universe.AddArea(testArea);
             _universe.SetCurrentLocation("TestDungeon", 1);
             _gamePlayer.Position = _universe.CurrentRoom.GetPlayerSpawnPoint();
+            _kirby.Position = _gamePlayer.Position;
+            
+
+
+
             moveCameraToPlayer.Execute();
 
             _keyboardController = new KeyboardController(_gamePlayer);
@@ -240,6 +259,8 @@ namespace ZweiHander
 
                     _gamePlayer.Update(gameTime);
 
+                    _kirby.Update(gameTime);
+
                     CollisionManager.Instance.Update(gameTime);
 
                     _camera.Update(gameTime, _gamePlayer.Position);
@@ -280,6 +301,7 @@ namespace ZweiHander
 
                 _universe.Draw();
                 _gamePlayer.Draw(_spriteBatch);
+                _kirby.Draw();
 
                 _debugRenderer.DrawWorldDebug(_spriteBatch, _universe);
 
