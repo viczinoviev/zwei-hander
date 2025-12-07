@@ -17,14 +17,14 @@ namespace ZweiHander.HUD
         private readonly NumberSprite _bombs;
         private readonly NumberSprite _keys;
         private readonly Vector2 _position;
-        private readonly Player _player;
+        private readonly IPlayer _player;
 
         public HeadsUpHUD(HUDSprites hudSprites, Vector2 position, IPlayer player)
         {
             hudSprites = hudSprites ?? throw new ArgumentNullException(nameof(hudSprites));
             _headsUpDisplayHUD = hudSprites.HeadsUpHUD();
             _position = position; // Position is determined by HUDManager
-            _player = (Player) player;
+            _player = player;
             _bombs = (NumberSprite)hudSprites.Number(0, 3);
             _keys = (NumberSprite)hudSprites.Number(0, 3);
         }

@@ -18,10 +18,10 @@ namespace ZweiHander.Commands
 
         public void Execute()
         {
-            bool open = !_game.HUDManager.Paused;
+            bool open = !_game.HUDManager.IsHUDOpen;
 
             // Toggle inventory HUD
-            _game.HUDManager.Paused = open;
+            _game.HUDManager.IsHUDOpen = open;
 
             // Pause or unpause the world as well
             _game.gamePaused = open;

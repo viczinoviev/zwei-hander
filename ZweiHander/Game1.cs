@@ -72,7 +72,7 @@ namespace ZweiHander
             _gameState = new GameState();
             Services.AddService<IGameState>(_gameState);
 
-            _gameState.PausedChanged += p => _hudManager?.SetPaused(p);
+            _gameState.PausedChanged += p => _hudManager?.SetHUDOpen(p);
             _gameState.ModeChanged += OnGameModeChanged;
 
             _spriteBatch = new SpriteBatch(GraphicsDevice);
