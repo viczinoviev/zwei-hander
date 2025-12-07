@@ -11,14 +11,6 @@ namespace ZweiHander.HUD
 {
     public class HUDManager
     {
-        private enum AnimationState
-        {
-            Closed,      // HUD closed, only the HeadUpHUD being displayed
-            SlidingIn,   // HUD components moving down (opening)
-            Open,        // HUD open, inventory visible
-            SlidingOut   // HUD components moving up (closing)
-        }
-
         public bool IsHUDOpen
         {
             get => _isHUDOpen;
@@ -35,17 +27,12 @@ namespace ZweiHander.HUD
         private bool _isHUDOpen;
         private Texture2D _pixelTexture; // Cached 1x1 white pixel for drawing rectangles
         private HUDLayoutManager _layoutManager; // Calculates all HUD component positions
+        private HUDAnimator _animator; // Handles open/close animation
 
-        // Animation state fields
-        private AnimationState _animationState = AnimationState.Closed;
-        private float _currentHUDYOffset = 0f; // Current Y offset for the entire HUD
-        private const float CLOSED_HUD_Y_OFFSET = 0f; // HUD offset when closed
-        private const float SLIDE_SPEED = 1200f; // Pixels per second
-
-        // Background animation fields
-        private float _currentBackgroundHeight = 112f; // Current animated background height
-        private const float CLOSED_HUD_BACKGROUND_HEIGHT = 112f; // Background height when HUD closed
-        private const float OPEN_HUD_BACKGROUND_HEIGHT = 480f; // Background height when HUD open
+        // Animation constants
+        private const float SLIDE_SPEED = 1200f;
+        private const float CLOSED_HUD_BACKGROUND_HEIGHT = 112f;
+        private const float OPEN_HUD_BACKGROUND_HEIGHT = 480f;
         
         public HUDManager(IPlayer player, HUDSprites hudSprites, bool hudOpen)
         {
@@ -55,6 +42,12 @@ namespace ZweiHander.HUD
             _layoutManager = new HUDLayoutManager(
                 GraphicsDeviceManager.DefaultBackBufferWidth,
                 GraphicsDeviceManager.DefaultBackBufferHeight
+            );
+            _animator = new HUDAnimator(
+                _layoutManager.OpenHUDAnimationOffset,
+                OPEN_HUD_BACKGROUND_HEIGHT,
+                CLOSED_HUD_BACKGROUND_HEIGHT,
+                SLIDE_SPEED
             );
 
             BuildHUD();
@@ -90,88 +83,23 @@ namespace ZweiHander.HUD
 
             _isHUDOpen = isOpen;
 
-            // Trigger animation state transition
+            // Trigger animation
             if (_isHUDOpen)
             {
-                _animationState = AnimationState.SlidingIn;
+                _animator.Open();
             }
             else
             {
-                _animationState = AnimationState.SlidingOut;
+                _animator.Close();
             }
         }
 
         public void Update(GameTime gameTime)
         {
-            if (IsAnimating())
-            {
-                UpdateAnimation(gameTime);
-            }
+            // Update animation
+            _animator.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
 
-            UpdateComponents(gameTime);
-        }
-
-        /// <summary>
-        /// Checks if the HUD is currently animating
-        /// </summary>
-        private bool IsAnimating()
-        {
-            return _animationState == AnimationState.SlidingIn ||
-                   _animationState == AnimationState.SlidingOut;
-        }
-
-        /// <summary>
-        /// Updates the HUD animation (offset and background height)
-        /// </summary>
-        private void UpdateAnimation(GameTime gameTime)
-        {
-            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-            // Determine target values based on animation direction
-            bool isSlidingIn = _animationState == AnimationState.SlidingIn;
-            float targetHUDOffset = isSlidingIn ? _layoutManager.OpenHUDAnimationOffset : CLOSED_HUD_Y_OFFSET;
-            float targetBackgroundHeight = isSlidingIn ? OPEN_HUD_BACKGROUND_HEIGHT : CLOSED_HUD_BACKGROUND_HEIGHT;
-
-            // Animate both values toward their targets
-            bool hudFinished = ApplyTransition(ref _currentHUDYOffset, targetHUDOffset, deltaTime);
-            bool backgroundFinished = ApplyTransition(ref _currentBackgroundHeight, targetBackgroundHeight, deltaTime);
-
-            // Transition to final state when animation completes
-            if (hudFinished && backgroundFinished)
-            {
-                _animationState = isSlidingIn ? AnimationState.Open : AnimationState.Closed;
-            }
-        }
-        
-        /// <summary>
-        /// Updates currentValue toward targetValue at SLIDE_SPEED
-        /// </summary>
-        /// <param name="currentValue">Current value to update</param>
-        /// <param name="targetValue">Target value to reach</param>
-        /// <param name="deltaTime">Time elapsed since last frame</param>
-        /// <returns>True when transition is complete</returns>
-        private bool ApplyTransition(ref float currentValue, float targetValue, float deltaTime)
-        {
-            float delta = targetValue - currentValue;
-            float movement = Math.Sign(delta) * SLIDE_SPEED * deltaTime;
-
-            // snap to destination if close enough
-            if (Math.Abs(movement) >= Math.Abs(delta))
-            {
-                currentValue = targetValue;
-                return true;
-            }
-
-            // Apply movement toward target
-            currentValue += movement;
-            return false;
-        }
-
-        /// <summary>
-        /// Updates all HUD components
-        /// </summary>
-        private void UpdateComponents(GameTime gameTime)
-        {
+            // Update all HUD components
             foreach (var component in _components)
             {
                 component.Update(gameTime);
@@ -208,19 +136,19 @@ namespace ZweiHander.HUD
             // Draws a black ground, since some HUD components don't span the whole screen horizontally
             spriteBatch.Draw(
                 _pixelTexture,
-                new Rectangle(0, 0, spriteBatch.GraphicsDevice.Viewport.Width, (int)_currentBackgroundHeight),
+                new Rectangle(0, 0, spriteBatch.GraphicsDevice.Viewport.Width, (int)_animator.CurrentBackgroundHeight),
                 Color.Black
             );
 
             // Draw 2px white separator line at the bottom of the HUD
             spriteBatch.Draw(
                 _pixelTexture,
-                new Rectangle(0, (int)_currentBackgroundHeight, spriteBatch.GraphicsDevice.Viewport.Width, 2),
+                new Rectangle(0, (int)_animator.CurrentBackgroundHeight, spriteBatch.GraphicsDevice.Viewport.Width, 2),
                 Color.White
             );
 
-            // Draw all HUD components
-            Vector2 hudOffset = new Vector2(0, _currentHUDYOffset);
+            // Draw all HUD components with current animation offset
+            Vector2 hudOffset = new Vector2(0, _animator.CurrentYOffset);
             foreach (var component in _components)
             {
                 component.Draw(spriteBatch, hudOffset);
