@@ -154,8 +154,6 @@ namespace ZweiHander.HUD
                 component.Draw(spriteBatch, hudOffset);
             }
         }
-<<<<<<< Updated upstream
-=======
         
 
         /// <summary>
@@ -177,6 +175,5 @@ namespace ZweiHander.HUD
         {
             _mapHUD.compasItemGotten = true;
         }
->>>>>>> Stashed changes
     }
 }
