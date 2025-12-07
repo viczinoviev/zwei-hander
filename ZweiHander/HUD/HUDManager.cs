@@ -33,7 +33,8 @@ namespace ZweiHander.HUD
         private HUDSprites _hudSprites;
         private IPlayer _player;
         private bool _paused;
-        
+        private Texture2D _pixelTexture; // Cached 1x1 white pixel for drawing rectangles
+
         /**
          * Screen size is 480 pixels. The HeadUpHUD height is 56. Sprites are all scaled by x2
          * So the distance the HUD components needs to travel to reach the bottom of the screen is
@@ -237,19 +238,23 @@ namespace ZweiHander.HUD
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            // Draw black background for HUD area
-            Texture2D pixel = CreatePixelTexture(spriteBatch.GraphicsDevice);
+            // Lazy initialization of pixel texture (only created once)
+            if (_pixelTexture == null)
+            {
+                _pixelTexture = new Texture2D(spriteBatch.GraphicsDevice, 1, 1);
+                _pixelTexture.SetData(new[] { Color.White });
+            }
 
             // Draws a black ground, since some HUD components don't span the whole screen horizontally
             spriteBatch.Draw(
-                pixel,
+                _pixelTexture,
                 new Rectangle(0, 0, spriteBatch.GraphicsDevice.Viewport.Width, (int)_currentBackgroundHeight),
                 Color.Black
             );
 
             // Draw 2px white separator line at the bottom of the HUD
             spriteBatch.Draw(
-                pixel,
+                _pixelTexture,
                 new Rectangle(0, (int)_currentBackgroundHeight, spriteBatch.GraphicsDevice.Viewport.Width, 2),
                 Color.White
             );
@@ -260,17 +265,6 @@ namespace ZweiHander.HUD
             {
                 component.Draw(spriteBatch, hudOffset);
             }
-        }
-        
-
-        /// <summary>
-        /// Helper method to create a 1x1 white pixel texture for drawing rectangles
-        /// </summary>
-        private Texture2D CreatePixelTexture(GraphicsDevice graphicsDevice)
-        {
-            Texture2D texture = new Texture2D(graphicsDevice, 1, 1);
-            texture.SetData(new[] { Color.White });
-            return texture;
         }
     }
 }
