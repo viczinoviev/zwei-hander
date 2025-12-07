@@ -154,5 +154,29 @@ namespace ZweiHander.HUD
                 component.Draw(spriteBatch, hudOffset);
             }
         }
+<<<<<<< Updated upstream
+=======
+        
+
+        /// <summary>
+        /// Helper method to create a 1x1 white pixel texture for drawing rectangles
+        /// </summary>
+        private Texture2D CreatePixelTexture(GraphicsDevice graphicsDevice)
+        {
+            Texture2D texture = new Texture2D(graphicsDevice, 1, 1);
+            texture.SetData(new[] { Color.White });
+            return texture;
+        }
+
+        public void mapItemGotten()
+        {
+            _mapHUD.mapItemGotten = true;
+        }
+
+        public void compasItemGotten()
+        {
+            _mapHUD.compasItemGotten = true;
+        }
+>>>>>>> Stashed changes
     }
 }
