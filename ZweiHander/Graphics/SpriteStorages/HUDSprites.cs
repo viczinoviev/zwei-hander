@@ -49,4 +49,6 @@ public class HUDSprites : SpriteFactory
     public ISprite MapPlayer() => new IdleSprite(_regions["map-player"], _spriteBatch);
     public ISprite MinimapPlayer() => new IdleSprite(_regions["minimap-player"], _spriteBatch);
     public ISprite MinimapTriforce() => new IdleSprite(_regions["minimap-triforce"], _spriteBatch);
+
+    public ISprite Compass() => new IdleSprite(_regions["compass"], _spriteBatch);
 }

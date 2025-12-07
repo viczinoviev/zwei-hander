@@ -22,15 +22,21 @@ namespace ZweiHander.HUD
         private Universe _universe;
 
         private readonly HashSet<int> _exploredRoomNumbers = new();
+        private readonly HashSet<Point> _allRoomPositions = new();
         
         // Minimap layout constants
-        private const int MINIMAP_CELL_SIZE = 16; // 8px sprite * 2 scale
-        private const int MINIMAP_GRID_WIDTH = 8;
-        private const int MINIMAP_GRID_HEIGHT = 4;
-        private readonly Vector2 MINIMAP_OFFSET = new(8, 0); // Offset from HUD background position
+        private const int MAP_CELL_SIZE = 16; // 8px sprite * 2 scale
+        private const int MAP_GRID_WIDTH = 8;
+        private const int MAP_GRID_HEIGHT = 8;
+        private readonly Vector2 MAP_OFFSET = new(8, 48); // Offset from HUD background position
+
+        private readonly Vector2 MINIMAP_OFFSET = new(-216, 211);
+
+        private readonly Vector2 mapIconOffset = new(-152, -24);
+        private readonly Vector2 compassIconOffset = new(-154, 60);
 
         public bool mapItemGotten = false;
-        public bool compasItemGotten = false;
+        public bool compassItemGotten = false;
 
         public MapHUD(HUDSprites hudSprites, Vector2 position)
         {
@@ -43,6 +49,10 @@ namespace ZweiHander.HUD
         public void SetUniverse(Universe universe)
         {
             _universe = universe;
+            foreach (var room in _universe?.CurrentArea.GetAllRooms())
+            {
+                _allRoomPositions.Add(room.MapPosition);
+            }
         }
 
         public void Update(GameTime gameTime)
@@ -55,53 +65,163 @@ namespace ZweiHander.HUD
 
         public void Draw(SpriteBatch spriteBatch, Vector2 offset)
         {
+            
+
             Vector2 basePos = _position + offset;
             _mapDisplayHUD.Draw(basePos);
             
             if (_universe?.CurrentArea == null) return;
             
+            if (mapItemGotten)
+            {
+                DrawMinimap(basePos);
+
+                ISprite mapIcon = _hudSprites.Map();
+                Vector2 mapIconPos = basePos + mapIconOffset;
+                mapIcon.Draw(mapIconPos);
+            }
+
+            if(compassItemGotten)
+            {
+                ISprite compassIcon = _hudSprites.Compass();
+                Vector2 compassIconPos = basePos + compassIconOffset;
+                compassIcon.Draw(compassIconPos);
+            }
+
             foreach (var room in _universe.CurrentArea.GetAllRooms())
             {
-                if (room.MinimapPosition.X >= 0 && room.MinimapPosition.Y >= 0 && _exploredRoomNumbers.Contains(room.RoomNumber))
+                if (_exploredRoomNumbers.Contains(room.RoomNumber))
                 {
-                    DrawMinimapNode(basePos, room);
+                    DrawMapNode(basePos, room);
                 }
+
+                if (compassItemGotten)
+                {
+                    DrawMinimapTriforce(basePos, room);
+                }
+
             }
+
+            DrawMinimapPlayerPosition(basePos, _universe.CurrentRoom);
             
-            if (_universe.CurrentRoom?.MinimapPosition.X >= 0)
+            if (_universe.CurrentRoom?.MapPosition.X >= 0)
             {
                 DrawPlayerPosition(basePos, _universe.CurrentRoom);
             }
         }
+
+        private void DrawMinimap(Vector2 basePos)
+        {
+            foreach (var position in _allRoomPositions)
+            {
+                int screenX = position.X;
+                bool hasRoomAbove = _allRoomPositions.Contains(new Point(position.X, position.Y + 1));
+                bool hasRoomBelow = _allRoomPositions.Contains(new Point(position.X, position.Y - 1));
+                
+                ISprite nodeSprite;
+                int screenY;
+                
+                if (position.Y % 2 == 0)
+                {
+                    screenY = -(position.Y / 2);
+                    
+                    if (hasRoomAbove)
+                    {
+                        nodeSprite = _hudSprites.MinimapBoth();
+                    }
+                    else
+                    {
+                        nodeSprite = _hudSprites.MinimapLower();
+                    }
+                    
+                    Vector2 nodePos = basePos + MINIMAP_OFFSET + new Vector2(
+                        screenX * MAP_CELL_SIZE,
+                        screenY * MAP_CELL_SIZE
+                    );
+                    nodeSprite.Draw(nodePos);
+                }
+                else
+                {
+                    if (!hasRoomBelow)
+                    {
+                        screenY = -(position.Y / 2);
+                        nodeSprite = _hudSprites.MinimapUpper();
+                        
+                        Vector2 nodePos = basePos + MINIMAP_OFFSET + new Vector2(
+                            screenX * MAP_CELL_SIZE,
+                            screenY * MAP_CELL_SIZE
+                        );
+                        nodeSprite.Draw(nodePos);
+                    }
+                }
+            }
+        }
         
-        private void DrawMinimapNode(Vector2 basePos, Room room)
+        private void DrawMapNode(Vector2 basePos, Room room)
         {
             // Convert minimap grid position to screen position
             // (0,0) is lower-left in grid
-            int screenX = room.MinimapPosition.X;
-            int screenY = (MINIMAP_GRID_HEIGHT - 1) - room.MinimapPosition.Y;
+            int screenX = room.MapPosition.X;
+            int screenY = -room.MapPosition.Y;
             
-            Vector2 nodePos = basePos + MINIMAP_OFFSET + new Vector2(
-                screenX * MINIMAP_CELL_SIZE,
-                screenY * MINIMAP_CELL_SIZE
+            Vector2 nodePos = basePos + MAP_OFFSET + new Vector2(
+                screenX * MAP_CELL_SIZE,
+                screenY * MAP_CELL_SIZE
             );
             
-            ISprite nodeSprite = _hudSprites.MinimapNode(room.MinimapConnections);
+            ISprite nodeSprite = _hudSprites.MinimapNode(room.MapConnections);
             nodeSprite.Draw(nodePos);
         }
         
         private void DrawPlayerPosition(Vector2 basePos, Room currentRoom)
         {
-            int screenX = currentRoom.MinimapPosition.X;
-            int screenY = (MINIMAP_GRID_HEIGHT - 1) - currentRoom.MinimapPosition.Y;
+            int screenX = currentRoom.MapPosition.X;
+            int screenY = -currentRoom.MapPosition.Y;
             
-            Vector2 playerPos = basePos + MINIMAP_OFFSET + new Vector2(
-                screenX * MINIMAP_CELL_SIZE,
-                screenY * MINIMAP_CELL_SIZE + 2
+            Vector2 playerPos = basePos + MAP_OFFSET + new Vector2(
+                screenX * MAP_CELL_SIZE -1,
+                screenY * MAP_CELL_SIZE + 2
             );
             
             ISprite playerSprite = _hudSprites.MapPlayer();
             playerSprite.Draw(playerPos);
+        }
+        
+        private void DrawMinimapPlayerPosition(Vector2 basePos, Room currentRoom)
+        {
+            int screenX = currentRoom.MapPosition.X;
+            int screenY = -(currentRoom.MapPosition.Y / 2);
+            
+            float yOffset = (currentRoom.MapPosition.Y % 2 != 0) ? -(MAP_CELL_SIZE / 2) : 0;
+            
+            Vector2 playerPos = basePos + MINIMAP_OFFSET + new Vector2(
+                screenX * MAP_CELL_SIZE +1,
+                screenY * MAP_CELL_SIZE + yOffset -1
+            );
+            
+            ISprite playerSprite = _hudSprites.MinimapPlayer();
+            playerSprite.Draw(playerPos);
+        }
+
+        private void DrawMinimapTriforce(Vector2 basePos, Room room)
+        {
+            if(room.hasTriforce() == false)
+            {
+                return;
+            }
+
+            int screenX = room.MapPosition.X;
+            int screenY = -(room.MapPosition.Y / 2);
+            
+            float yOffset = (room.MapPosition.Y % 2 != 0) ? -(MAP_CELL_SIZE / 2) : 0;
+            
+            Vector2 triforcePos = basePos + MINIMAP_OFFSET + new Vector2(
+                screenX * MAP_CELL_SIZE +1,
+                screenY * MAP_CELL_SIZE + yOffset -1
+            );
+            
+            ISprite triforceSprite = _hudSprites.MinimapTriforce();
+            triforceSprite.Draw(triforcePos);
         }
     }
 }

@@ -7,18 +7,18 @@ using ZweiHander.HUD;
 
 namespace ZweiHander.Commands
 {
-    public class CompasItemGottenCommand : ICommand
+    public class CompassItemGottenCommand : ICommand
     {
         private readonly Game1 _game;
 
-        public CompasItemGottenCommand(Game1 game)
+        public CompassItemGottenCommand(Game1 game)
         {
             _game = game;
         }
 
         public void Execute()
         {
-            _game.HUDManager.compasItemGotten();
+            _game.HUDManager.compassItemGotten();
         }
     }
 }

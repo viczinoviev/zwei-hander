@@ -171,9 +171,9 @@ namespace ZweiHander.HUD
             _mapHUD.mapItemGotten = true;
         }
 
-        public void compasItemGotten()
+        public void compassItemGotten()
         {
-            _mapHUD.compasItemGotten = true;
+            _mapHUD.compassItemGotten = true;
         }
     }
 }

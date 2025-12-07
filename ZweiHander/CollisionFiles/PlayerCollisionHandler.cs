@@ -7,6 +7,7 @@ using ZweiHander.Items.ItemStorages;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Audio;
 using System;
+using ZweiHander.Commands;
 
 namespace ZweiHander.CollisionFiles
 {
@@ -83,6 +84,14 @@ namespace ZweiHander.CollisionFiles
                             break;
                         case Bomb:
                             _player.AddItemToInventory(itemHandler.Item.ItemType, 10);
+                            break;
+                        case MapItem:
+                            ICommand makeMinimapVisible = new MapItemGottenCommand(_player.GameInstance);
+                            makeMinimapVisible.Execute();
+                            break;
+                        case Compass:
+                            ICommand makeCompassVisible = new CompassItemGottenCommand(_player.GameInstance);
+                            makeCompassVisible.Execute();
                             break;
                         default:
                             _player.AddItemToInventory(itemHandler.Item.ItemType);

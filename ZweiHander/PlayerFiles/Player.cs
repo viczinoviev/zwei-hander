@@ -61,6 +61,8 @@ namespace ZweiHander.PlayerFiles
         public ItemManager ItemManager => _itemManager;
         public bool IsDamaged => _isDamaged;
 
+        public Game1 GameInstance;
+
         public bool allowedToUpdate = true;
 
         public Color Color
@@ -68,13 +70,14 @@ namespace ZweiHander.PlayerFiles
             get => _handler.Color;
             set => _handler.Color = value;
         }
-        public Player(PlayerSprites playerSprites, ItemSprites itemSprites, TreasureSprites treasureSprites,ContentManager content)
+        public Player(Game1 game, PlayerSprites playerSprites, ItemSprites itemSprites, TreasureSprites treasureSprites,ContentManager content)
         {
             _itemManager = new ItemManager(itemSprites, treasureSprites);
             _stateMachine = new PlayerStateMachine(this);
             _handler = new PlayerHandler(playerSprites, this, _stateMachine,content);
             _stateMachine.SetPlayerHandler(_handler);
             Position = Vector2.Zero;
+            GameInstance = game;
 
             // Initialize health (3 hearts = 6 half-hearts)
             _maxHealth = STARTING_HEARTS * 2;

@@ -20,8 +20,8 @@ namespace ZweiHander.Map
         public Vector2 PlayerSpawnPoint = new(0,0);
         
         // Minimap data
-        public Point MinimapPosition { get; set; } = new(-1, -1);
-        public string MinimapConnections { get; set; } = "";
+        public Point MapPosition { get; set; } = new(-1, -1);
+        public string MapConnections { get; set; } = "";
 
         // Stored data for recreation
         private readonly List<(BlockName blockName, Point gridPosition)> _blockData = [];
@@ -34,6 +34,17 @@ namespace ZweiHander.Map
         private readonly Universe _universe = universe;
         private Rectangle Bounds = new((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
 
+        public Boolean hasTriforce()
+        {
+            foreach (var (itemType, position, itemPointer) in _itemData)
+            {
+                if (itemType == "Triforce")
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 		public void AddBlock(BlockName blockName, Point gridPosition)
         {
             _blockData.Add((blockName, gridPosition));
