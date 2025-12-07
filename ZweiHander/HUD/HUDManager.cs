@@ -57,6 +57,11 @@ namespace ZweiHander.HUD
         {
             _mapHUD?.SetUniverse(universe);
         }
+        
+        public void SetDebugRenderer(DebugRenderer debugRenderer)
+        {
+            _mapHUD?.SetDebugRenderer(debugRenderer);
+        }
 
         private void BuildHUD()
         {
