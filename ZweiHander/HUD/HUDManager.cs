@@ -96,7 +96,7 @@ namespace ZweiHander.HUD
             // Add all components to the list
             _components = new List<IHUDComponent>
             {
-            
+
                 _headsUpHud,
                 _inventoryHUD,
                 _healthDisplay,
@@ -211,29 +211,10 @@ namespace ZweiHander.HUD
 
         public void ConfirmInventorySelection()
         {
-            var selected = _inventoryHUD.GetSelectedItem();
-            if (!selected.HasValue)
-                return;
-
-            switch (selected.Value)
-            {
-                case InventoryHUD.OrderedUsable.Bow:
-                    // Bow uses UsingItem1 in your PlayerHandler
-                    _player.UseItem1();
-                    break;
-
-                case InventoryHUD.OrderedUsable.Boomerang:
-                    // Boomerang uses UsingItem2
-                    _player.UseItem2();
-                    break;
-                case InventoryHUD.OrderedUsable.Bomb:
-                    _player.UseItem3();
-                    break;
-                case InventoryHUD.OrderedUsable.Fire:
-                    // Fire uses UsingItem4
-                    _player.UseItem4();
-                    break;
-            }
+            // Get selected slot index and equip/use the item
+            int slotIndex = _inventoryHUD.GetSelectedItemSlot();
+            _player.EquipItemSlot(slotIndex);
+            _player.UseEquippedItem();
         }
 
         public void Draw(SpriteBatch spriteBatch)

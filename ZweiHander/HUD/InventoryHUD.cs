@@ -55,9 +55,9 @@ namespace ZweiHander.HUD
             while (!_acquiredItems[_selectedIndex]);
         }
 
-        public OrderedUsable? GetSelectedItem()
+        public int GetSelectedItemSlot()
         {
-            return (OrderedUsable)_selectedIndex;
+            return _selectedIndex;
         }
 
         /// <summary>
@@ -126,11 +126,14 @@ namespace ZweiHander.HUD
 
         public void Update(GameTime gameTime)
         {
-            _acquiredItems[(int)OrderedUsable.Bow] = _player.InventoryCount(typeof(Bow)) > 0;
+            // Iterate through usable items (slots 0-3)
+            for (int i = 0; i < _orderedUsableCount; i++)
+            {
+                _acquiredItems[i] = _player.HasItemInSlot(i);
+            }
+
+            // Update permanent items (4 for map)
             _acquiredItems[(int)OrderedPermanent.Map] = _player.InventoryCount(typeof(MapItem)) > 0;
-            _acquiredItems[(int)OrderedUsable.Fire] = _player.InventoryCount(typeof(Fire)) > 0;
-            _acquiredItems[(int)OrderedUsable.Boomerang] = _player.InventoryCount(typeof(Boomerang)) > 0;
-            _acquiredItems[(int)OrderedUsable.Bomb] = _player.InventoryCount(typeof(Bomb)) > 0;
         }
 
         public void Draw(SpriteBatch spriteBatch, Vector2 offset)

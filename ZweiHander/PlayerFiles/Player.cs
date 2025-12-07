@@ -26,6 +26,16 @@ namespace ZweiHander.PlayerFiles
         private const int STARTING_HEARTS = 3; // 3 hearts = 6 half-hearts
 
         public Dictionary<Type, int> Inventory { get; private set; } = [];
+        public UsableItem EquippedItem { get; set; } = UsableItem.None;
+
+        // Slot-to-item mapping (Used for HUD and inventory to index into these items)
+        private static readonly Dictionary<int, (UsableItem item, Type itemType)> _itemSlots = new()
+        {
+            { 0, (UsableItem.Boomerang, typeof(Boomerang)) },
+            { 1, (UsableItem.Bow, typeof(Bow)) },
+            { 2, (UsableItem.Bomb, typeof(Bomb)) },
+            { 3, (UsableItem.Fire, typeof(Fire)) }
+        };
 
         public Vector2 Position
         {
@@ -214,6 +224,42 @@ namespace ZweiHander.PlayerFiles
         public void UseItem4()
         {
             AddInput(PlayerInput.UsingItem4);
+        }
+
+        public void UseEquippedItem()
+        {
+            switch (EquippedItem)
+            {
+                case UsableItem.Bow:
+                    UseItem1();
+                    break;
+                case UsableItem.Boomerang:
+                    UseItem2();
+                    break;
+                case UsableItem.Bomb:
+                    UseItem3();
+                    break;
+                case UsableItem.Fire:
+                    UseItem4();
+                    break;
+            }
+        }
+
+        public void EquipItemSlot(int slotIndex)
+        {
+            if (_itemSlots.TryGetValue(slotIndex, out var slot))
+            {
+                EquippedItem = slot.item;
+            }
+        }
+
+        public bool HasItemInSlot(int slotIndex)
+        {
+            if (_itemSlots.TryGetValue(slotIndex, out var slot))
+            {
+                return InventoryCount(slot.itemType) > 0;
+            }
+            return false;
         }
 
         public void Idle()
