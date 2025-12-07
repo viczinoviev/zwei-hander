@@ -13,16 +13,16 @@ namespace ZweiHander.HUD
     {
         private enum AnimationState
         {
-            Unpaused,    // Game running, only the HeadUpHUD being displayed
-            SlidingIn,   // HUD components moving down
-            Paused,      // Game is paused, inventory visible
-            SlidingOut   // Transitioning back to running state, components  are moving up
+            Closed,      // HUD closed, only the HeadUpHUD being displayed
+            SlidingIn,   // HUD components moving down (opening)
+            Open,        // HUD open, inventory visible
+            SlidingOut   // HUD components moving up (closing)
         }
 
-        public bool Paused
+        public bool IsHUDOpen
         {
-            get => _paused;
-            set => SetPaused(value);
+            get => _isHUDOpen;
+            set => SetHUDOpen(value);
         }
 
         private List<IHUDComponent> _components;
@@ -32,40 +32,30 @@ namespace ZweiHander.HUD
         private MapHUD _mapHUD;
         private HUDSprites _hudSprites;
         private IPlayer _player;
-        private bool _paused;
+        private bool _isHUDOpen;
         private Texture2D _pixelTexture; // Cached 1x1 white pixel for drawing rectangles
+        private HUDLayoutManager _layoutManager; // Calculates all HUD component positions
 
-        /**
-         * Screen size is 480 pixels. The HeadUpHUD height is 56. Sprites are all scaled by x2
-         * So the distance the HUD components needs to travel to reach the bottom of the screen is
-         * 480 - 2(56) = 368
-         */
-
-        // Fields for the HUD items. 
-        private AnimationState _animationState = AnimationState.Unpaused;
+        // Animation state fields
+        private AnimationState _animationState = AnimationState.Closed;
         private float _currentHUDYOffset = 0f; // Current Y offset for the entire HUD
-        private const float UNPAUSED_HUD_Y_OFFSET = 0f; // HUD offset when unpaused
-        private const float PAUSED_HUD_Y_OFFSET = 368f; // HUD offset when paused (moves down)
+        private const float CLOSED_HUD_Y_OFFSET = 0f; // HUD offset when closed
         private const float SLIDE_SPEED = 1200f; // Pixels per second
 
-        // Fields for the black background.
+        // Background animation fields
         private float _currentBackgroundHeight = 112f; // Current animated background height
-        private const float UNPAUSED_BACKGROUND_HEIGHT = 112f; // Background height when unpaused
-        private const float PAUSED_BACKGROUND_HEIGHT = 480f; // Background height when paused
-
-        // HUD layout constants
-
-        public const int HEADS_UP_HUD_X = 256;
-        public const int HEADS_UP_HUD_Y = 56;
-
-        private const int HEALTH_DISPLAY_X_OFFSET = 104; // X position for health display
-        private const int HEALTH_DISPLAY_Y = 72; // Y position for health display
+        private const float CLOSED_HUD_BACKGROUND_HEIGHT = 112f; // Background height when HUD closed
+        private const float OPEN_HUD_BACKGROUND_HEIGHT = 480f; // Background height when HUD open
         
-        public HUDManager(IPlayer player, HUDSprites hudSprites, bool gamePaused)
+        public HUDManager(IPlayer player, HUDSprites hudSprites, bool hudOpen)
         {
             _player = player;
             _hudSprites = hudSprites;
-            _paused = gamePaused;
+            _isHUDOpen = hudOpen;
+            _layoutManager = new HUDLayoutManager(
+                GraphicsDeviceManager.DefaultBackBufferWidth,
+                GraphicsDeviceManager.DefaultBackBufferHeight
+            );
 
             BuildHUD();
         }
@@ -77,26 +67,15 @@ namespace ZweiHander.HUD
 
         private void BuildHUD()
         {
-            int screen_center_x = GraphicsDeviceManager.DefaultBackBufferWidth / 2;
-
-            // TODO: calculate these values dynamically, consider changing access params for sprites in components
-            
-            // InventoryHUD: base + 368 = 56, so base = -312 (off-screen above)
-            // MapHUD: base + 368 = 245, so base = -123 (off-screen above)
-            _inventoryHUD = new InventoryHUD(_hudSprites, new Vector2(screen_center_x, -312), _player);
-            _mapHUD = new MapHUD(_hudSprites, new Vector2(screen_center_x, -123));
-            
-            _headsUpHud = new HeadsUpHUD(_hudSprites, new Vector2(screen_center_x, HEADS_UP_HUD_Y), _player);
-            _healthDisplay = new HealthDisplay(
-                _player,
-                _hudSprites,
-                new Vector2(screen_center_x + HEALTH_DISPLAY_X_OFFSET, HEALTH_DISPLAY_Y)
-            );
+            // Use layout manager for all position calculations
+            _inventoryHUD = new InventoryHUD(_hudSprites, _layoutManager.GetInventoryHUDPosition(), _player);
+            _mapHUD = new MapHUD(_hudSprites, _layoutManager.GetMapHUDPosition());
+            _headsUpHud = new HeadsUpHUD(_hudSprites, _layoutManager.GetHeadsUpHUDPosition(), _player);
+            _healthDisplay = new HealthDisplay(_player, _hudSprites, _layoutManager.GetHealthDisplayPosition());
 
             // Add all components to the list
             _components = new List<IHUDComponent>
             {
-
                 _headsUpHud,
                 _inventoryHUD,
                 _healthDisplay,
@@ -104,15 +83,15 @@ namespace ZweiHander.HUD
             };
         }
 
-        public void SetPaused(bool paused)
+        public void SetHUDOpen(bool isOpen)
         {
-            if (_paused == paused)
+            if (_isHUDOpen == isOpen)
                 return; // No need to change if nothing changed
 
-            _paused = paused;
+            _isHUDOpen = isOpen;
 
             // Trigger animation state transition
-            if (_paused)
+            if (_isHUDOpen)
             {
                 _animationState = AnimationState.SlidingIn;
             }
@@ -150,8 +129,8 @@ namespace ZweiHander.HUD
 
             // Determine target values based on animation direction
             bool isSlidingIn = _animationState == AnimationState.SlidingIn;
-            float targetHUDOffset = isSlidingIn ? PAUSED_HUD_Y_OFFSET : UNPAUSED_HUD_Y_OFFSET;
-            float targetBackgroundHeight = isSlidingIn ? PAUSED_BACKGROUND_HEIGHT : UNPAUSED_BACKGROUND_HEIGHT;
+            float targetHUDOffset = isSlidingIn ? _layoutManager.OpenHUDAnimationOffset : CLOSED_HUD_Y_OFFSET;
+            float targetBackgroundHeight = isSlidingIn ? OPEN_HUD_BACKGROUND_HEIGHT : CLOSED_HUD_BACKGROUND_HEIGHT;
 
             // Animate both values toward their targets
             bool hudFinished = ApplyTransition(ref _currentHUDYOffset, targetHUDOffset, deltaTime);
@@ -160,7 +139,7 @@ namespace ZweiHander.HUD
             // Transition to final state when animation completes
             if (hudFinished && backgroundFinished)
             {
-                _animationState = isSlidingIn ? AnimationState.Paused : AnimationState.Unpaused;
+                _animationState = isSlidingIn ? AnimationState.Open : AnimationState.Closed;
             }
         }
         
