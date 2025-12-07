@@ -30,6 +30,13 @@ namespace ZweiHander.PlayerFiles
         void Idle();
         void Draw(SpriteBatch spriteBatch);
 
+        /// <summary>
+        /// Gets the count of a specific item type in the player's inventory
+        /// </summary>
+        /// <param name="itemType">The type of item to count</param>
+        /// <returns>The number of items of the specified type, or 0 if none</returns>
+        int InventoryCount(Type itemType);
+
         void ForceUpdateCollisionBox();
 
         void SetUpdateEnabled(bool enabled);

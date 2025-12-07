@@ -83,7 +83,7 @@ namespace ZweiHander.HUD
             
             // InventoryHUD: base + 368 = 56, so base = -312 (off-screen above)
             // MapHUD: base + 368 = 245, so base = -123 (off-screen above)
-            _inventoryHUD = new InventoryHUD(_hudSprites, new Vector2(screen_center_x, -312), (Player)_player);
+            _inventoryHUD = new InventoryHUD(_hudSprites, new Vector2(screen_center_x, -312), _player);
             _mapHUD = new MapHUD(_hudSprites, new Vector2(screen_center_x, -123));
             
             _headsUpHud = new HeadsUpHUD(_hudSprites, new Vector2(screen_center_x, HEADS_UP_HUD_Y), _player);

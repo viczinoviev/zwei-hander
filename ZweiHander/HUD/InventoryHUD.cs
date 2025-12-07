@@ -21,7 +21,7 @@ namespace ZweiHander.HUD
         private readonly ISprite _swordSprite;
         private readonly Vector2 _position;
         private readonly Vector2 _relativePosition;
-        private readonly Player _player;
+        private readonly IPlayer _player;
         private readonly Vector2 _selectedPositionB = new(264, 464);
         private readonly Vector2 _selectedPositionA = new(312, 464);
 
@@ -105,7 +105,7 @@ namespace ZweiHander.HUD
         /// </summary>
         private readonly int _orderedItemCount = Enum.GetNames(typeof(OrderedPermanent)).Length + Enum.GetNames(typeof(OrderedUsable)).Length;
 
-        public InventoryHUD(HUDSprites hudSprites, Vector2 position, Player player)
+        public InventoryHUD(HUDSprites hudSprites, Vector2 position, IPlayer player)
         {
             hudSprites = hudSprites ?? throw new ArgumentNullException(nameof(hudSprites));
             _inventoryDisplayHUD = hudSprites.InventoryDisplay();
