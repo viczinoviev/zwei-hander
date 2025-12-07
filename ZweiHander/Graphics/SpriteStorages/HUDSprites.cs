@@ -34,13 +34,19 @@ public class HUDSprites : SpriteFactory
     // Minimap sprites
     public ISprite MinimapNode(string connections)
     {
-        string key = "minimap-node";
+        string key = "map-node";
         if (!string.IsNullOrEmpty(connections))
         {
             key += "-" + connections.ToLower();
         }
-        return _regions.ContainsKey(key) ? new IdleSprite(_regions[key], _spriteBatch) : new IdleSprite(_regions["minimap-node"], _spriteBatch);
+        return _regions.ContainsKey(key) ? new IdleSprite(_regions[key], _spriteBatch) : new IdleSprite(_regions["map-node"], _spriteBatch);
     }
+
+    public ISprite MinimapUpper() => new IdleSprite(_regions["minimap-upper"], _spriteBatch);
+    public ISprite MinimapLower() => new IdleSprite(_regions["minimap-lower"], _spriteBatch);
+    public ISprite MinimapBoth() => new IdleSprite(_regions["minimap-both"], _spriteBatch);
     
+    public ISprite MapPlayer() => new IdleSprite(_regions["map-player"], _spriteBatch);
     public ISprite MinimapPlayer() => new IdleSprite(_regions["minimap-player"], _spriteBatch);
+    public ISprite MinimapTriforce() => new IdleSprite(_regions["minimap-triforce"], _spriteBatch);
 }

@@ -20,12 +20,17 @@ namespace ZweiHander.HUD
         private readonly Vector2 _position;
         private readonly HUDSprites _hudSprites;
         private Universe _universe;
+
+        private readonly HashSet<int> _exploredRoomNumbers = new();
         
         // Minimap layout constants
         private const int MINIMAP_CELL_SIZE = 16; // 8px sprite * 2 scale
         private const int MINIMAP_GRID_WIDTH = 8;
         private const int MINIMAP_GRID_HEIGHT = 4;
         private readonly Vector2 MINIMAP_OFFSET = new(8, 0); // Offset from HUD background position
+
+        public bool mapItemGotten = false;
+        public bool compasItemGotten = false;
 
         public MapHUD(HUDSprites hudSprites, Vector2 position)
         {
@@ -42,6 +47,10 @@ namespace ZweiHander.HUD
 
         public void Update(GameTime gameTime)
         {
+            if (_universe?.CurrentRoom != null)
+            {
+                _exploredRoomNumbers.Add(_universe.CurrentRoom.RoomNumber);
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch, Vector2 offset)
@@ -53,7 +62,7 @@ namespace ZweiHander.HUD
             
             foreach (var room in _universe.CurrentArea.GetAllRooms())
             {
-                if (room.MinimapPosition.X >= 0 && room.MinimapPosition.Y >= 0)
+                if (room.MinimapPosition.X >= 0 && room.MinimapPosition.Y >= 0 && _exploredRoomNumbers.Contains(room.RoomNumber))
                 {
                     DrawMinimapNode(basePos, room);
                 }
@@ -91,7 +100,7 @@ namespace ZweiHander.HUD
                 screenY * MINIMAP_CELL_SIZE + 2
             );
             
-            ISprite playerSprite = _hudSprites.MinimapPlayer();
+            ISprite playerSprite = _hudSprites.MapPlayer();
             playerSprite.Draw(playerPos);
         }
     }
