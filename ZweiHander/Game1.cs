@@ -134,7 +134,7 @@ namespace ZweiHander
                 //Clears all the Colliders first
             CollisionManager.Instance.ClearAllColliders();
 
-            _gamePlayer = new Player(_linkSprites, _itemSprites, _treasureSprites,Content);
+            _gamePlayer = new Player(this, _linkSprites, _itemSprites, _treasureSprites,Content);
             _kirbySprites = new KirbySprites(Content, _spriteBatch);
             _kirby = new Kirby(
                 _gamePlayer,
