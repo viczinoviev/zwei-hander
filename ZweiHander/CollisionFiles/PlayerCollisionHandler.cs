@@ -78,9 +78,7 @@ namespace ZweiHander.CollisionFiles
                             _player.Heal(2);
                             break;
                         case Fairy:
-                            int healthChange = _random.Next(-2, 3);
-                            if (healthChange > 0) _player.Heal(healthChange);
-                            if (healthChange < 0) _player.TakeDamage(-healthChange);
+                            _player.Heal(9999);
                             break;
                         case Bomb:
                             _player.AddItemToInventory(itemHandler.Item.ItemType, 10);
