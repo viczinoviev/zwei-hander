@@ -35,7 +35,7 @@ namespace ZweiHander.PlayerFiles
             { 0, (UsableItem.Boomerang, typeof(Boomerang)) },
             { 1, (UsableItem.Bow, typeof(Bow)) },
             { 2, (UsableItem.Bomb, typeof(Bomb)) },
-            { 3, (UsableItem.Fire, typeof(Fire)) }
+            { 3, (UsableItem.RedCandle, typeof(RedCandle)) }
         };
 
         public Vector2 Position

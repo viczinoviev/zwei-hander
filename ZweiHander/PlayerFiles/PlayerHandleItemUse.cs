@@ -78,7 +78,7 @@ namespace ZweiHander.PlayerFiles
                 }
                 
             }
-            else if (itemInput == UsableItem.Fire && _player.InventoryCount(typeof(Fire)) > 0)
+            else if (itemInput == UsableItem.RedCandle && _player.InventoryCount(typeof(RedCandle)) > 0)
             {
                 actionDuration = 1000f;
                 _sounds[1].Play();
