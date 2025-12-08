@@ -41,8 +41,6 @@ namespace ZweiHander.GameStates
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-
             const string GameWonText = "You Won!";
             const string quitText = "Press Q or ESC to quit";
             const string restartText = "Press SPACE to restart";
@@ -75,8 +73,6 @@ namespace ZweiHander.GameStates
             spriteBatch.DrawString(_font, GameWonText, GameWonPosition, Color.White);
             spriteBatch.DrawString(_font, quitText, quitPosition, Color.White, 0f, Vector2.Zero, instructionScale, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0f);
             spriteBatch.DrawString(_font, restartText, restartPosition, Color.White, 0f, Vector2.Zero, instructionScale, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0f);
-
-            spriteBatch.End();
         }
     }
 }
