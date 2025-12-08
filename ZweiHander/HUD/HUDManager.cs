@@ -139,14 +139,14 @@ namespace ZweiHander.HUD
             // Draws a black ground, since some HUD components don't span the whole screen horizontally
             spriteBatch.Draw(
                 _pixelTexture,
-                new Rectangle(0, 0, spriteBatch.GraphicsDevice.Viewport.Width, (int)_animator.CurrentBackgroundHeight),
+                new Rectangle(0, 0, 800, (int)_animator.CurrentBackgroundHeight),
                 Color.Black
             );
 
             // Draw 2px white separator line at the bottom of the HUD
             spriteBatch.Draw(
                 _pixelTexture,
-                new Rectangle(0, (int)_animator.CurrentBackgroundHeight, spriteBatch.GraphicsDevice.Viewport.Width, 2),
+                new Rectangle(0, (int)_animator.CurrentBackgroundHeight, 800, 2),
                 Color.White
             );
 

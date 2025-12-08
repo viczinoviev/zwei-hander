@@ -58,13 +58,24 @@ namespace ZweiHander
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+            
+            _graphics.PreferredBackBufferWidth = 800;
+            _graphics.PreferredBackBufferHeight = 480;
+            
+            Window.ClientSizeChanged += OnClientSizeChanged;
         }
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-
             base.Initialize();
+        }
+
+        private void OnClientSizeChanged(object sender, System.EventArgs e)
+        {
+            if (_camera != null && GraphicsDevice != null)
+            {
+                _camera.UpdateViewport(GraphicsDevice.Viewport);
+            }
         }
 
         protected override void LoadContent()
@@ -319,20 +330,30 @@ namespace ZweiHander
 
             if (_gameState.CurrentMode == GameMode.TitleScreen)
             {
-                _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-                _titleSprites.Title().Draw(new Vector2(
-                    GraphicsDevice.Viewport.Width / 2.0f,
-                    GraphicsDevice.Viewport.Height / 2.0f
-                    ));
+                _spriteBatch.Begin(
+                    samplerState: SamplerState.PointClamp,
+                    transformMatrix: _camera.GetUITransformMatrix()
+                );
+                _titleSprites.Title().Draw(new Vector2(400, 240));
                 _spriteBatch.End();
             }
             else if (_gameState.CurrentMode == GameMode.GameOver)
             {
+                _spriteBatch.Begin(
+                    samplerState: SamplerState.PointClamp,
+                    transformMatrix: _camera.GetUITransformMatrix()
+                );
                 _gameOverScreen.Draw(_spriteBatch);
+                _spriteBatch.End();
             }
             else if (_gameState.CurrentMode == GameMode.GameWon)
             {
+                _spriteBatch.Begin(
+                    samplerState: SamplerState.PointClamp,
+                    transformMatrix: _camera.GetUITransformMatrix()
+                );
                 _gameWonScreen.Draw(_spriteBatch);
+                _spriteBatch.End();
             }
             else if (_gameState.CurrentMode == GameMode.Playing || _gameState.CurrentMode == GameMode.Horde)
             {
@@ -352,7 +373,8 @@ namespace ZweiHander
                 _spriteBatch.End();
 
                 _spriteBatch.Begin(
-                    samplerState: SamplerState.PointClamp
+                    samplerState: SamplerState.PointClamp,
+                    transformMatrix: _camera.GetUITransformMatrix()
                 );
                 _hudManager.Draw(_spriteBatch);
 

@@ -20,10 +20,23 @@ namespace ZweiHander.Camera
         /// </summary>
         public Viewport Viewport { get; private set; } = viewport;
 
+        private readonly int BaseWidth = 800;
+        private readonly int BaseHeight = 480;
+        private float _scale = 1f;
+
         /// <summary>
 		/// Speed of camera smoothing, between 0 and 1, where 1 is instant movement
 		/// </summary>
         private float SmoothSpeed = 0.1f;
+
+        public void UpdateViewport(Viewport newViewport)
+        {
+            Viewport = newViewport;
+
+            float scaleX = (float)newViewport.Width / BaseWidth;
+            float scaleY = (float)newViewport.Height / BaseHeight;
+            _scale = MathHelper.Min(scaleX, scaleY);
+        }
 
         private bool _isOverridden = false;
         private Vector2 _overrideStartPosition;
@@ -43,7 +56,7 @@ namespace ZweiHander.Camera
 
         public void SetPositionImmediate(Vector2 playerPosition)
         {
-            Vector2 cameraPosition = playerPosition - new Vector2(Viewport.Width / 2f, Viewport.Height / 2f);
+            Vector2 cameraPosition = playerPosition - new Vector2(BaseWidth / 2f, BaseHeight / 2f);
             Position = cameraPosition;
             DesiredPosition = cameraPosition;
             _isOverridden = false;
@@ -84,7 +97,7 @@ namespace ZweiHander.Camera
             }
             else
             {
-                DesiredPosition = target - new Vector2(Viewport.Width / 2f, Viewport.Height / 2f);
+                DesiredPosition = target - new Vector2(BaseWidth / 2f, BaseHeight / 2f);
                 if (Vector2.Distance(DesiredPosition, Position) > deadZone)
                     Position += (DesiredPosition - Position) * SmoothSpeed;
             }
@@ -95,7 +108,28 @@ namespace ZweiHander.Camera
         /// </summary>
         public Matrix GetTransformMatrix()
         {
-            return Matrix.CreateTranslation(new Vector3(-Position.X, -Position.Y, 0));
+            int scaledWidth = (int)(BaseWidth * _scale);
+            int scaledHeight = (int)(BaseHeight * _scale);
+            int offsetX = (Viewport.Width - scaledWidth) / 2;
+            int offsetY = (Viewport.Height - scaledHeight) / 2;
+
+            return Matrix.CreateTranslation(new Vector3(-Position.X, -Position.Y, 0)) *
+                   Matrix.CreateScale(_scale) *
+                   Matrix.CreateTranslation(new Vector3(offsetX, offsetY, 0));
+        }
+
+        /// <summary>
+        /// Gets the transformation matrix for UI elements without camera position.
+        /// </summary>
+        public Matrix GetUITransformMatrix()
+        {
+            int scaledWidth = (int)(BaseWidth * _scale);
+            int scaledHeight = (int)(BaseHeight * _scale);
+            int offsetX = (Viewport.Width - scaledWidth) / 2;
+            int offsetY = (Viewport.Height - scaledHeight) / 2;
+
+            return Matrix.CreateScale(_scale) *
+                   Matrix.CreateTranslation(new Vector3(offsetX, offsetY, 0));
         }
     }
 }

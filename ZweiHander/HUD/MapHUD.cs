@@ -48,7 +48,7 @@ namespace ZweiHander.HUD
             {
                 _allRoomPositions.Add(room.MapPosition);
             }
-            _mapTeleport = new MapTeleport(this, _universe);
+            _mapTeleport = new MapTeleport(this, _universe, _universe.Camera);
         }
 
         public void SetDebugRenderer(DebugRenderer debugRenderer)

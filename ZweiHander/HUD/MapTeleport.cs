@@ -13,11 +13,13 @@ namespace ZweiHander.HUD
         private readonly MapHUD _mapHUD;
         private readonly Universe _universe;
         private DebugRenderer _debugRenderer;
+        private Camera.Camera _camera;
 
-        public MapTeleport(MapHUD mapHUD, Universe universe)
+        public MapTeleport(MapHUD mapHUD, Universe universe, Camera.Camera camera)
         {
             _mapHUD = mapHUD;
             _universe = universe;
+            _camera = camera;
             _previousMouseState = Mouse.GetState();
             _currentMouseState = _previousMouseState;
         }
@@ -41,6 +43,8 @@ namespace ZweiHander.HUD
                 _previousMouseState.LeftButton == ButtonState.Released)
             {
                 Vector2 mousePosition = new(_currentMouseState.X, _currentMouseState.Y);
+                Matrix inverseMatrix = Matrix.Invert(_camera.GetUITransformMatrix());
+                mousePosition = Vector2.Transform(mousePosition, inverseMatrix);
                 HandleMapClick(mousePosition, hudPosition, hudOffset);
             }
         }
