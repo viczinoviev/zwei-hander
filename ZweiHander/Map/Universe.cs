@@ -27,8 +27,8 @@ namespace ZweiHander.Map
         public IKirby Kirby { get; private set; }
         public EnemyManager EnemyManager { get; private set; }
         public ItemManager ItemManager { get; private set; }
-        public BlockFactory BlockFactory { get; private set; }
-        public BorderFactory BorderFactory { get; private set; }
+        public BlockManager BlockFactory { get; private set; }
+        public BorderManager BorderFactory { get; private set; }
         public PortalManager PortalManager { get; private set; }
 
         public LockedEntranceManager LockedEntranceManager { get; private set; }
@@ -59,8 +59,8 @@ namespace ZweiHander.Map
             ItemManager projectileManager = new(itemSprites, treasureSprites, bossSprites);
             ItemManager = new ItemManager(itemSprites, treasureSprites, bossSprites);
             EnemyManager = new EnemyManager(enemySprites, projectileManager, bossSprites, npcSprites, Content);
-            BlockFactory = new BlockFactory(tileSize, blockSprites, playerSprites);
-            BorderFactory = new BorderFactory(tileSize, blockSprites);
+            BlockFactory = new BlockManager(tileSize, blockSprites, playerSprites);
+            BorderFactory = new BorderManager(tileSize, blockSprites);
             RoomTransition = new RoomTransition(this, tileSize);
 
             this.Camera = camera;

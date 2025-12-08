@@ -8,9 +8,6 @@ namespace ZweiHander.PlayerFiles
         MovingLeft,
         MovingRight,
         Attacking,
-        UsingItem1,
-        UsingItem2,
-        UsingItem3,
-        UsingItem4
+        UsingEquippedItem
     }
 }

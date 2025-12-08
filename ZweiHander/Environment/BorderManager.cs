@@ -10,7 +10,7 @@ namespace ZweiHander.Environment
 	/// <summary>
 	/// Constructor initializes the factory with a tile size and block sprite storage
 	/// </summary>
-	public class BorderFactory(int tileSize, BlockSprites blockSprites)
+	public class BorderManager(int tileSize, BlockSprites blockSprites)
 	{
         private readonly int _tileSize = tileSize; // 32 pixels for borders
         private readonly BlockSprites _blockSprites = blockSprites; // Borders use the same sprite sheet as blocks

@@ -146,7 +146,7 @@ namespace ZweiHander.Map
 
         }
 
-        public void PersistentRemoveItemAndEnemy(ItemManager itemManager, EnemyManager enemyManager, BorderFactory borderFactory)
+        public void PersistentRemoveItemAndEnemy(ItemManager itemManager, EnemyManager enemyManager, BorderManager borderFactory)
         {
             _itemData.RemoveAll(data => !itemManager.HasItem(data.itemPointer));
             _enemyData.RemoveAll(data => !enemyManager.HasThisEnemyInstance(data.enemyPointer));
