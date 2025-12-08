@@ -100,7 +100,7 @@ namespace ZweiHander.FriendlyNPC
             {
                 hitCount++;
                 enemyHurt.Play();
-                _closestEnemy.Hitpoints -= 2;
+                _closestEnemy.TakeDamage(2);
                 Vector2 centerOfUlt = _closestEnemy.Position;
                 rndAngleX = (float)(rnd.NextDouble() * 2.0 - 1.0);
                 rndAngleY = (float)(rnd.NextDouble() * 1.7 - 0.7);

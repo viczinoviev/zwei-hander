@@ -49,4 +49,5 @@ public interface IEnemy
     /// <returns>Rectangle equating to the collision box</returns>
     public Rectangle GetCollisionBox();
 
+    void TakeDamage(int dmgAmount);
 }

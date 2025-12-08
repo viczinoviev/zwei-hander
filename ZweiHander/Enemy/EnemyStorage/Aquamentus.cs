@@ -76,7 +76,18 @@ public class Aquamentus : IEnemy
         Sprite.Update(time);
         _projectileManager.Update(time);
     }
+    public void TakeDamage(int dmg)
+    {
+        Hitpoints -= dmg;
 
+        if (Hitpoints <= 0)
+        {
+            if (CollisionHandler != null)
+            {
+                CollisionHandler.Dead = true;
+            }
+        }
+    }
 
 
     public void Draw()

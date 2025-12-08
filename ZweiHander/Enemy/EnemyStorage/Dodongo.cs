@@ -71,7 +71,18 @@ public class Dodongo : IEnemy
         CollisionHandler.UpdateCollisionBox();
         Sprite.Update(time);
     }
+    public void TakeDamage(int dmg)
+    {
+        Hitpoints -= dmg;
 
+        if (Hitpoints <= 0)
+        {
+            if (CollisionHandler != null)
+            {
+                CollisionHandler.Dead = true;
+            }
+        }
+    }
 
 
 
