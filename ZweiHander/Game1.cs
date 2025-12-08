@@ -6,10 +6,12 @@ using Microsoft.Xna.Framework.Media;
 using System.IO;
 using ZweiHander.CollisionFiles;
 using ZweiHander.Commands;
+using ZweiHander.Enemy;
 using ZweiHander.FriendlyNPC;
 using ZweiHander.GameStates;
 using ZweiHander.Graphics.SpriteStorages;
 using ZweiHander.HUD;
+using ZweiHander.Items;
 using ZweiHander.Map;
 using ZweiHander.PlayerFiles;
 
@@ -42,6 +44,9 @@ namespace ZweiHander
         private TreasureSprites _treasureSprites;
         private ItemSprites _itemSprites;
         private TitleSprites _titleSprites;
+        private EnemySprites _enemySprites;
+        private BossSprites _bossSprites;
+        private NPCSprites _npcSprites;
 
         private Universe _universe;
         private CsvAreaConstructor _areaConstructor;
@@ -52,6 +57,8 @@ namespace ZweiHander
         public Player GamePlayer => _gamePlayer;
 
         public Kirby GameKirby => _kirby;
+
+        public EnemyManager HordeManager;
 
         public Game1()
         {
@@ -101,6 +108,9 @@ namespace ZweiHander
             _hudSprites = new HUDSprites(Content, _spriteBatch);
             _treasureSprites = new TreasureSprites(Content, _spriteBatch);
             _itemSprites = new ItemSprites(Content, _spriteBatch);
+            _bossSprites = new BossSprites(Content, _spriteBatch);
+            _enemySprites = new EnemySprites(Content, _spriteBatch);
+            _npcSprites = new NPCSprites(Content, _spriteBatch);
 
             _debugRenderer = new DebugRenderer();
             _debugRenderer.Initialize(GraphicsDevice);
@@ -180,6 +190,8 @@ namespace ZweiHander
                 Area HordeArea = _areaConstructor.LoadArea(mapPath2, _universe, _camera, "HordeDungeon");
                 _universe.AddArea(HordeArea);
                 _universe.SetCurrentLocation("HordeDungeon", 1);
+                ItemManager projectileManager = new(_itemSprites,_treasureSprites,_bossSprites);
+                HordeManager = new(_enemySprites,projectileManager,_bossSprites,_npcSprites,Content);
             }
             else{
                 string mapPath = Path.Combine(Content.RootDirectory, "Maps", "testDungeon1.csv");
@@ -318,6 +330,10 @@ namespace ZweiHander
                     CollisionManager.Instance.Update(gameTime);
 
                     _camera.Update(gameTime, _gamePlayer.Position);
+                    if (_universe.EnemyManager.IsEmpty())
+                    {
+                        _universe.EnemyManager.MakeEnemy("Aquamentus",new Vector2(300,300));
+                    }
             }
             }
 
@@ -379,7 +395,6 @@ namespace ZweiHander
                 _hudManager.Draw(_spriteBatch);
 
                 _debugRenderer.DrawScreenDebug(_spriteBatch);
-
                 _spriteBatch.End();
             }
 

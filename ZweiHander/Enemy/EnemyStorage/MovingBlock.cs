@@ -20,6 +20,7 @@ namespace ZweiHander.Enemy.EnemyStorage
         public Vector2 Position { get; set; }
         public int Face { get; set; }
         public int Hitpoints { get; set; } = 5;
+        public float HitcoolDown { get; set; } = 0;
         public int Thrower { get; set; }
         public EnemyCollisionHandler CollisionHandler { get; } = default;
         public MovingBlock(EnemySprites enemySprites)

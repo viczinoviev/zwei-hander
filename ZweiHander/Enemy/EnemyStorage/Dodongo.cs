@@ -34,6 +34,7 @@ public class Dodongo : IEnemy
     public int Face { get; set; } = default;
 
     public int Hitpoints { get; set; } = EnemyStartHealth;
+    public float HitcoolDown { get; set; } = 0;
 
     public EnemyCollisionHandler CollisionHandler { get; } = default;
 
@@ -56,6 +57,11 @@ public class Dodongo : IEnemy
     }
     public virtual void Update(GameTime time)
     {
+        //Decrement hit cooldown
+        if(HitcoolDown > 0)
+        {
+            HitcoolDown -= 1;
+        }
         Sprite = _sprites[Face];
         //Randomize  movement
         int mov = rnd.Next(FaceChangeChance);

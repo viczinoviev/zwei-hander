@@ -29,6 +29,7 @@ public class BladeTrap : IEnemy
 
     public int Face { get; set; } = default;
     public int Hitpoints { get; set; } = EnemyStartHealth;
+    public float HitcoolDown { get; set; } = 0;
 
     public int Thrower;
 
