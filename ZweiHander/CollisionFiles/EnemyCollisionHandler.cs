@@ -94,14 +94,8 @@ namespace ZweiHander.CollisionFiles
                     if(!(_enemy.HitcoolDown > 0)){
                         _enemy.HitcoolDown = hitCoolDown;
                         enemyHurt.Play();
-                        _enemy.Hitpoints -= Damage;
-
-                        //if the enemy has died, set this handler to be removed
-                        if (_enemy.Hitpoints <= 0)
-                        {
-                            Dead = true;
-                        }
-                    }
+                    _enemy.TakeDamage(Damage);
+                }
                 }
         }
         private void HandlePlayerCollision(PlayerCollisionHandler playerCollisionHandler)
@@ -111,16 +105,13 @@ namespace ZweiHander.CollisionFiles
                 {
                     if(!(_enemy.HitcoolDown > 0)){
                         _enemy.HitcoolDown = hitCoolDown;
-                        _enemy.Hitpoints -= Damage;
+                        
                         if (currentSFX.State == SoundState.Stopped)
                         {
                             currentSFX.Play();
                         }
-                        //if the enemy has died, set this handler to be removed
-                        if (_enemy.Hitpoints <= 0)
-                        {
-                            Dead = true;
-                        }
+                    //if the enemy has died, set this handler to be removed
+                    _enemy.TakeDamage(Damage);
                     }
                 }
         }
