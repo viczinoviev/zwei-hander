@@ -7,7 +7,7 @@ using ZweiHander.Graphics.SpriteStorages;
 
 namespace ZweiHander.Environment
 {
-    public class BlockFactory
+    public class BlockManager
     {
         private readonly int _tileSize; // Size of each block in pixels
         private readonly BlockSprites _blockSprites; // Reference to sprite storage for blocks
@@ -36,7 +36,7 @@ namespace ZweiHander.Environment
         /// <summary>
         /// Constructor initializes the factory with a tile size and block sprite storage
         ///</summary>
-        public BlockFactory(int tileSize, BlockSprites blockSprites, PlayerSprites playerSprites)
+        public BlockManager(int tileSize, BlockSprites blockSprites, PlayerSprites playerSprites)
         {
             _tileSize = tileSize; // Set tile size
             _blockSprites = blockSprites ?? throw new ArgumentNullException(nameof(blockSprites)); // Store sprite storage

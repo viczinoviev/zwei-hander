@@ -26,18 +26,14 @@ namespace ZweiHander.PlayerFiles
 
         private readonly float _itemUseMoveSpeed = 50f;
         private PlayerState _lastState = PlayerState.Idle;
-        private Vector2 _lastDirectionVector = Vector2.UnitY; // Default facing down
+        private Vector2 _lastDirectionVector = Vector2.UnitY;
 
         public Vector2 movement = Vector2.Zero;
 
-        // Blink effect settings for damage state
         private float _blinkTimer = 0f;
-        private const float BLINK_INTERVAL = 0.075f; // How fast to blink
+        private const float BLINK_INTERVAL = 0.075f;
         private bool _isVisible = true;
 
-        /// <summary>
-        /// Sword, Fireball
-        /// </summary>
         private readonly List<SoundEffect> Sounds;
 
         public Color Color { get; set; } = Color.White;
@@ -63,7 +59,6 @@ namespace ZweiHander.PlayerFiles
             {
                 case PlayerState.Attacking:
                     Sounds[0].Play();
-                    // Determine attack sprite based on primary direction (prioritize horizontal)
                     if (Math.Abs(directionVector.X) > Math.Abs(directionVector.Y))
                     {
                         if (directionVector.X < 0)
@@ -81,7 +76,6 @@ namespace ZweiHander.PlayerFiles
 
                     break;
                 case PlayerState.UsingItem:
-                    // Use item sprite based on direction
                     if (Math.Abs(directionVector.X) > Math.Abs(directionVector.Y))
                     {
                         if (directionVector.X < 0)
@@ -126,11 +120,9 @@ namespace ZweiHander.PlayerFiles
 
         public void Update(GameTime gameTime)
         {
-            // Check if state or direction vector has changed
             PlayerState currentState = _stateMachine.CurrentState;
             Vector2 currentDirectionVector = _stateMachine.LastDirection;
 
-            // Only update sprite when state or direction actually changes
             if (currentState != _lastState || currentDirectionVector != _lastDirectionVector)
             {
                 _lastState = currentState;
@@ -138,7 +130,6 @@ namespace ZweiHander.PlayerFiles
                 UpdateSprite(currentState, currentDirectionVector);
             }
 
-            // Handle damage blink effect
             if (_player.IsDamaged)
             {
                 _blinkTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -150,13 +141,11 @@ namespace ZweiHander.PlayerFiles
             }
             else
             {
-                // Reset blinking effect
                 _isVisible = true;
                 _blinkTimer = 0f;
             }
 
             UpdatePosition(gameTime);
-            // Let the sprite animate automatically (AnimatedSprite handles this)
             _currentSprite.Update(gameTime);
         }
 
@@ -164,7 +153,6 @@ namespace ZweiHander.PlayerFiles
         {
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            // Use different speed based on whether player is attacking
             float currentSpeed = _moveSpeed;
             if (_stateMachine.CurrentState == PlayerState.Attacking)
             {
@@ -175,11 +163,9 @@ namespace ZweiHander.PlayerFiles
                 currentSpeed = _itemUseMoveSpeed;
             }
 
-            // Get normalized movement vector from state machine
             Vector2 movementVector = _stateMachine.CurrentMovementVector;
             Vector2 intendedMovement = movementVector * currentSpeed * deltaTime;
 
-            // Meant to stop wall clipping by preactively adjusting movement
             Vector2 safeMovement = _collisionHandler.CalculateSafeMovement(intendedMovement);
 
             _player.Position += safeMovement;
@@ -187,15 +173,12 @@ namespace ZweiHander.PlayerFiles
 
         public void Draw()
         {
-            // Apply blink effect when damaged
             if (_player.IsDamaged && !_isVisible)
             {
-                // Make sprite transparent during blink
                 _currentSprite.Color = new Color(0f, 0f, 0f, 0f);
             }
             else
             {
-                // Normal color
                 _currentSprite.Color = this.Color;
             }
 
