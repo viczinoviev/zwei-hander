@@ -111,7 +111,7 @@ namespace ZweiHander.Map
             {
                 var (enemyName, position, _) = _enemyData[i];
                 Vector2 adjustedPosition = position + new Vector2(offsetInTiles.X * _universe.TileSize, offsetInTiles.Y * _universe.TileSize);
-                IEnemy enemyPointer = _universe.EnemyManager.GetEnemy(enemyName, adjustedPosition);
+                IEnemy enemyPointer = _universe.EnemyManager.MakeEnemy(enemyName, adjustedPosition);
                 _enemyData[i] = (enemyName, position, enemyPointer);
             }
 

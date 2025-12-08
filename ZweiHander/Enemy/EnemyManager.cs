@@ -48,7 +48,7 @@ public class EnemyManager(EnemySprites enemysprites, ItemManager projectileManag
     /// <param name="position">The enemies starting position.</param>
     /// <param name="face">The enemies intial facing direction</param>
     /// <returns>The desired item.</returns>
-    public IEnemy GetEnemy(String enemyName, Vector2 position, int face = default)
+    public IEnemy MakeEnemy(String enemyName, Vector2 position, int face = default)
     {
         IEnemy enemy = null;
         switch (enemyName)

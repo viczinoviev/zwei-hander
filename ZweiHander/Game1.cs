@@ -321,7 +321,7 @@ namespace ZweiHander
                     _camera.Update(gameTime, _gamePlayer.Position);
                     if (_universe.EnemyManager.IsEmpty())
                     {
-                        _universe.EnemyManager.GetEnemy("Aquamentus",new Vector2(300,300));
+                        _universe.EnemyManager.MakeEnemy("Aquamentus",new Vector2(300,300));
                     }
             }
             }
