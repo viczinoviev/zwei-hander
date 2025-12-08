@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using ZweiHander.Graphics.SpriteStorages;
 using ZweiHander.Items;
 using ZweiHander.Items.ItemStorages;
+using ZweiHander.CollisionFiles;
 
 namespace ZweiHander.PlayerFiles
 {
@@ -73,8 +74,9 @@ namespace ZweiHander.PlayerFiles
         public Player(Game1 game, PlayerSprites playerSprites, ItemSprites itemSprites, TreasureSprites treasureSprites,ContentManager content)
         {
             _itemManager = new ItemManager(itemSprites, treasureSprites);
-            _stateMachine = new PlayerStateMachine(this);
-            _handler = new PlayerHandler(playerSprites, this, _stateMachine,content);
+            var collisionHandler = new PlayerCollisionHandler(this, content);
+            _stateMachine = new PlayerStateMachine(this, collisionHandler, content);
+            _handler = new PlayerHandler(playerSprites, this, _stateMachine, collisionHandler, content);
             _stateMachine.SetPlayerHandler(_handler);
             Position = Vector2.Zero;
             GameInstance = game;
@@ -209,43 +211,9 @@ namespace ZweiHander.PlayerFiles
             AddInput(PlayerInput.Attacking);
         }
 
-        public void UseItem1()
-        {
-            AddInput(PlayerInput.UsingItem1);
-        }
-
-        public void UseItem2()
-        {
-            AddInput(PlayerInput.UsingItem2);
-        }
-
-        public void UseItem3()
-        {
-            AddInput(PlayerInput.UsingItem3);
-        }
-
-        public void UseItem4()
-        {
-            AddInput(PlayerInput.UsingItem4);
-        }
-
         public void UseEquippedItem()
         {
-            switch (EquippedItem)
-            {
-                case UsableItem.Bow:
-                    UseItem1();
-                    break;
-                case UsableItem.Boomerang:
-                    UseItem2();
-                    break;
-                case UsableItem.Bomb:
-                    UseItem3();
-                    break;
-                case UsableItem.Fire:
-                    UseItem4();
-                    break;
-            }
+            AddInput(PlayerInput.UsingEquippedItem);
         }
 
         public void EquipItemSlot(int slotIndex)

@@ -22,7 +22,9 @@ namespace ZweiHander.PlayerFiles
         private readonly PlayerCollisionHandler _collisionHandler;
         private ISprite _currentSprite;
         private readonly float _moveSpeed = 250f;
-        private readonly float _attackMoveSpeed = 50f;
+        private readonly float _attackMoveSpeed = 100f;
+
+        private readonly float _itemUseMoveSpeed = 50f;
         private PlayerState _lastState = PlayerState.Idle;
         private Vector2 _lastDirectionVector = Vector2.UnitY; // Default facing down
 
@@ -40,7 +42,7 @@ namespace ZweiHander.PlayerFiles
 
         public Color Color { get; set; } = Color.White;
 
-        public PlayerHandler(PlayerSprites playerSprites, Player player, PlayerStateMachine stateMachine,ContentManager content)
+        public PlayerHandler(PlayerSprites playerSprites, Player player, PlayerStateMachine stateMachine, PlayerCollisionHandler collisionHandler, ContentManager content)
         {
             _playerSprites = playerSprites;
             _player = player;
@@ -48,7 +50,7 @@ namespace ZweiHander.PlayerFiles
             _currentSprite = _playerSprites.PlayerIdle();
             _lastState = _stateMachine.CurrentState;
             _lastDirectionVector = _stateMachine.LastDirection;
-            _collisionHandler = new PlayerCollisionHandler(_player,content);
+            _collisionHandler = collisionHandler;
             Sounds = [
                 content.Load<SoundEffect>("Audio/SwordAttack"),
                 content.Load<SoundEffect>("Audio/Fireball")
@@ -162,12 +164,16 @@ namespace ZweiHander.PlayerFiles
         {
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            // Don't move when using items
-            if (_stateMachine.CurrentState == PlayerState.UsingItem)
-                return;
-
             // Use different speed based on whether player is attacking
-            float currentSpeed = _stateMachine.CurrentState == PlayerState.Attacking ? _attackMoveSpeed : _moveSpeed;
+            float currentSpeed = _moveSpeed;
+            if (_stateMachine.CurrentState == PlayerState.Attacking)
+            {
+                currentSpeed = _attackMoveSpeed;
+            }
+            else if (_stateMachine.CurrentState == PlayerState.UsingItem)
+            {
+                currentSpeed = _itemUseMoveSpeed;
+            }
 
             // Get normalized movement vector from state machine
             Vector2 movementVector = _stateMachine.CurrentMovementVector;
@@ -207,71 +213,6 @@ namespace ZweiHander.PlayerFiles
                 position: swordPosition,
                 velocity: swordVelocity
             );
-        }
-
-        public void HandleItemUse(PlayerInput itemInput)
-        {
-            Vector2 itemPosition = _player.Position;
-            Vector2 itemVelocity = _stateMachine.LastDirection * 300f;
-            if (itemInput == PlayerInput.UsingItem1 && _player.InventoryCount(typeof(Bow)) > 0)
-            {
-                Sounds[0].Play();
-                _player.ItemManager.GetItem(
-                    "Arrow",
-                    life: 1.1,
-                    position: itemPosition,
-                    velocity: itemVelocity,
-                    properties: [ItemProperty.DeleteOnEnemy,
-                    ItemProperty.DeleteOnBlock,
-                    ItemProperty.CanDamageEnemy]
-                );
-            }
-            else if (itemInput == PlayerInput.UsingItem2)
-            {
-                Sounds[0].Play();
-                _player.ItemManager.GetItem(
-                    "Boomerang",
-                    life: -1f,
-                    position: itemPosition,
-                    velocity: itemVelocity,
-                    acceleration: -itemVelocity * 0.9f,
-                    properties: [ItemProperty.DeleteOnBlock,
-                         ItemProperty.CanDamageEnemy],
-                    extras: [() => _player.Position, _collisionHandler]
-                );
-            }
-            else if (itemInput == PlayerInput.UsingItem3)
-            {
-                Sounds[0].Play();
-                if (_player.InventoryCount(typeof(Bomb)) > 0)
-                {
-                    _player.ItemManager.GetItem(
-                        "Bomb",
-                        life: 3.3f,
-                        position: itemPosition + _stateMachine.LastDirection * 30f,
-                        velocity: Vector2.Zero,
-                        acceleration: Vector2.Zero
-                    );
-                    _player.Inventory[typeof(Bomb)]--;
-                }
-                
-            }
-            else if (itemInput == PlayerInput.UsingItem4 && _player.InventoryCount(typeof(Fire)) > 0)
-            {
-                Sounds[1].Play();
-                _player.ItemManager.GetItem(
-                    "Fire",
-                    life: 6f,
-                    position: itemPosition,
-                    velocity: itemVelocity * 0.11f,
-                    acceleration: -itemVelocity * 0.1f
-                );
-            }
-            else
-            {
-                return;
-            }
-
         }
 
         public void UpdateCollisionBox()
