@@ -31,6 +31,8 @@ namespace ZweiHander.Camera
         private float _overrideElapsedTime;
         private float _overrideDuration;
 
+        private readonly float deadZone = 5f;
+
         /// <summary>
         /// Sets the smoothing speed of the camera
         /// </summary>
@@ -83,7 +85,8 @@ namespace ZweiHander.Camera
             else
             {
                 DesiredPosition = target - new Vector2(Viewport.Width / 2f, Viewport.Height / 2f);
-                Position += (DesiredPosition - Position) * SmoothSpeed;
+                if (Vector2.Distance(DesiredPosition, Position) > deadZone)
+                    Position += (DesiredPosition - Position) * SmoothSpeed;
             }
         }
 
