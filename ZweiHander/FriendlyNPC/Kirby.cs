@@ -31,7 +31,7 @@ namespace ZweiHander.FriendlyNPC
 
         private readonly float _followDistance = 30f;
         private readonly float _fearDistance = 60f;
-        private readonly float _attackAnimationDistance = 50f;
+        private readonly float _attackAnimationDistance = 20f;
         private readonly float _speed = 80f;
 
         private bool isUlting = false;
@@ -103,7 +103,7 @@ namespace ZweiHander.FriendlyNPC
                 _closestEnemy.TakeDamage(2);
                 Vector2 centerOfUlt = _closestEnemy.Position;
                 rndAngleX = (float)(rnd.NextDouble() * 2.0 - 1.0);
-                rndAngleY = (float)(rnd.NextDouble() * 1.7 - 0.7);
+                rndAngleY = (float)(rnd.NextDouble() * 1.5 - 0.5);
                 Vector2 rndDirection = new Vector2(rndAngleX, rndAngleY);
 
                 if (rndAngleX < 0) _kirbySprite = _attackRightSprite;
