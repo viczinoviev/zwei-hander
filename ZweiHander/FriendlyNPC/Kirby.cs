@@ -51,9 +51,9 @@ namespace ZweiHander.FriendlyNPC
             _runningSprite = _sprites.Kirby();
             _attackLeftSprite = _sprites.KirbyAttackLeft();
             _attackRightSprite = _sprites.KirbyAttackRight();
-            _runningSprite.Scale = new Vector2(1.25f, 1.25f);
-            _attackLeftSprite.Scale = new Vector2(1.25f, 1.25f);
-            _attackRightSprite.Scale = new Vector2(1.25f, 1.25f);
+            _runningSprite.Scale = new Vector2(1f, 1f);
+            _attackLeftSprite.Scale = new Vector2(1f, 1f);
+            _attackRightSprite.Scale = new Vector2(1f, 1f);
 
             _kirbySprite = _runningSprite;
             
