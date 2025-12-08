@@ -12,15 +12,18 @@ namespace ZweiHander.FriendlyNPC
     {
         private readonly IPlayer _player;
         private readonly ISprite _kirbySprite;
+        EnemyManager _enemyManager;
 
         private readonly float _followDistance = 30f;
+        private readonly float _fearDistance = 60f;
         private readonly float _speed = 80f;
 
         public Vector2 Position { get; set; }
 
-        public Kirby(IPlayer player, KirbySprites kirbySprites, Vector2 startPosition)
+        public Kirby(IPlayer player, EnemyManager enemyManager, KirbySprites kirbySprites, Vector2 startPosition)
         {
             _player = player;
+            _enemyManager = enemyManager;
             _kirbySprite = kirbySprites.Kirby();
             Position = startPosition;
         }
@@ -28,17 +31,32 @@ namespace ZweiHander.FriendlyNPC
         public void Update(GameTime gameTime)
         {
             float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            Vector2 differenceVector = _player.Position - Position;
-            float distanceFromPlayer = differenceVector.Length();
+            Vector2 differenceVectorPlayer = _player.Position - Position;
+            float distanceFromPlayer = differenceVectorPlayer.Length();
             float travelDistance = dt * _speed;
 
-            differenceVector.Normalize();
+            Vector2 differenceVectorEnemy;
+            float distanceFromEnemy;
+
+            Vector2 moveVector = Vector2.Zero;
 
             if (_followDistance < distanceFromPlayer)
             {
-                Position += differenceVector*travelDistance;
+                differenceVectorPlayer.Normalize();
+                moveVector = differenceVectorPlayer * travelDistance;
             }
 
+            foreach (IEnemy enemy in _enemyManager.currentEnemiesPub) 
+            {
+                differenceVectorEnemy = enemy.Position - Position;
+                distanceFromEnemy = differenceVectorEnemy.Length();
+                if (_fearDistance > distanceFromEnemy)
+                {
+                    differenceVectorEnemy.Normalize();
+                    moveVector = -differenceVectorEnemy * travelDistance;
+                }
+             }      
+            Position += moveVector;
             _kirbySprite.Update(gameTime);
         }
 

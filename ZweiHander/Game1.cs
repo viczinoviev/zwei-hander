@@ -136,11 +136,7 @@ namespace ZweiHander
 
             _gamePlayer = new Player(this, _linkSprites, _itemSprites, _treasureSprites,Content);
             _kirbySprites = new KirbySprites(Content, _spriteBatch);
-            _kirby = new Kirby(
-                _gamePlayer,
-                _kirbySprites,
-                _gamePlayer.Position
-            );
+            
             SetCameraCommand moveCameraToPlayer = new SetCameraCommand(_camera, _gamePlayer);
             moveCameraToPlayer.Execute();
 
@@ -157,8 +153,13 @@ namespace ZweiHander
                 Content,
                 _camera
             );
-            
-            
+
+            _kirby = new Kirby(
+                _gamePlayer,
+                _universe.EnemyManager,
+                _kirbySprites,
+                _gamePlayer.Position
+            );
             _universe.SetPlayer(_gamePlayer);
             _universe.SetKirby(_kirby);
             _universe.SetupPortalManager(_camera);

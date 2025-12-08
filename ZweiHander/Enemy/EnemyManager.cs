@@ -37,6 +37,8 @@ public class EnemyManager(EnemySprites enemysprites, ItemManager projectileManag
     /// </summary>
     readonly List<IEnemy> currentEnemies = [];
 
+    
+
     private readonly ContentManager sfxPlayer = sfx;
 
 
@@ -147,4 +149,6 @@ public bool HasThisEnemyInstance(IEnemy enemy)
     {
         return currentEnemies.Contains(enemy);
     }
+
+    public IReadOnlyList<IEnemy> currentEnemiesPub => currentEnemies;
 }
