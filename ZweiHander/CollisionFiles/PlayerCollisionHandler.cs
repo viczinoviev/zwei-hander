@@ -1,13 +1,11 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using ZweiHander.Environment;
-using ZweiHander.PlayerFiles;
-using ZweiHander.Items;
-using ZweiHander.Items.ItemStorages;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
 using System;
 using ZweiHander.Commands;
+using ZweiHander.Items;
+using ZweiHander.Items.ItemStorages;
+using ZweiHander.PlayerFiles;
 
 namespace ZweiHander.CollisionFiles
 {
@@ -32,7 +30,7 @@ namespace ZweiHander.CollisionFiles
         /// </summary>
         private const int COLLISION_SIZE = 24;
 
-        public PlayerCollisionHandler(Player player,ContentManager sfxPlayer)
+        public PlayerCollisionHandler(Player player, ContentManager sfxPlayer)
         {
             _player = player;
             PlayerHurt = sfxPlayer.Load<SoundEffect>("Audio/PlayerHurt");
@@ -136,8 +134,8 @@ namespace ZweiHander.CollisionFiles
         public override void UpdateCollisionBox()
         {
 
-            
-            CollisionBox = new (
+
+            CollisionBox = new(
                 (int)(_player.Position.X - COLLISION_SIZE / 2),
                 (int)(_player.Position.Y - COLLISION_SIZE / 2),
                 COLLISION_SIZE,

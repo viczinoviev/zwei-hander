@@ -1,12 +1,12 @@
 using Microsoft.Xna.Framework;
-using Vector2 = Microsoft.Xna.Framework.Vector2;
-using ZweiHander.Items;
-using ZweiHander.Graphics;
-using System;
-using ZweiHander.Graphics.SpriteStorages;
-using ZweiHander.CollisionFiles;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework.Content;
+using System;
+using System.Collections.Generic;
+using ZweiHander.CollisionFiles;
+using ZweiHander.Graphics;
+using ZweiHander.Graphics.SpriteStorages;
+using ZweiHander.Items;
+using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace ZweiHander.Enemy.EnemyStorage;
 
@@ -45,14 +45,14 @@ public class Goriya : IEnemy
 
     public EnemyCollisionHandler CollisionHandler { get; } = default;
 
-public int Thrower = 1;
+    public int Thrower = 1;
     /// <summary>
     /// Random number generator to randomize enemy behavior
     /// </summary>
     public readonly Random rnd = new();
 
 
-    public Goriya(EnemySprites enemySprites, ItemManager projectileManager, ContentManager sfxPlayer,Vector2 position)
+    public Goriya(EnemySprites enemySprites, ItemManager projectileManager, ContentManager sfxPlayer, Vector2 position)
     {
         Position = position;
         _projectileManager = projectileManager;
@@ -85,7 +85,7 @@ public int Thrower = 1;
             }
         }
         //projectile handling
-        EnemyHelper.GoriyaAttack(this,_projectileManager);
+        EnemyHelper.GoriyaAttack(this, _projectileManager);
         //updates
         CollisionHandler.UpdateCollisionBox();
         Sprite.Update(time);

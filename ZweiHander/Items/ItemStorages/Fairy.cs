@@ -1,7 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using System.Collections.Generic;
-using ZweiHander.Graphics;
-using ZweiHander.Graphics.SpriteStorages;
 
 namespace ZweiHander.Items.ItemStorages;
 
@@ -10,7 +7,7 @@ namespace ZweiHander.Items.ItemStorages;
 /// </summary>
 public class Fairy : AbstractItem
 {
-    protected Vector2 StartingPosition {  get; set; }
+    protected Vector2 StartingPosition { get; set; }
 
     protected override ItemProperty Properties { get; set; } = ItemProperty.CanBePickedUp;
 

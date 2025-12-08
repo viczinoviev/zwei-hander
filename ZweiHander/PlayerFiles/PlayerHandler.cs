@@ -1,16 +1,11 @@
-using System;
-using System.CodeDom.Compiler;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.Collections.Generic;
 using ZweiHander.CollisionFiles;
 using ZweiHander.Graphics;
 using ZweiHander.Graphics.SpriteStorages;
-using ZweiHander.Items;
-using ZweiHander.Items.ItemStorages;
-using ZweiHander.HUD;
-using Microsoft.Xna.Framework.Audio;
-using System.Collections.Generic;
 
 namespace ZweiHander.PlayerFiles
 {

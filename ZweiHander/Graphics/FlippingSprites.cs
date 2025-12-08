@@ -39,7 +39,8 @@ public class FlippingSprites : IdleSprite
             if (this.Effects == SpriteEffects.None)
             {
                 this.Effects = SpriteEffects.FlipHorizontally;
-            } else
+            }
+            else
             {
                 this.Effects = SpriteEffects.None;
             }

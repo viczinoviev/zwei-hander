@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System;
 using ZweiHander.CollisionFiles;
 using ZweiHander.Graphics;
@@ -25,7 +24,7 @@ namespace ZweiHander.Environment
         // Constructor: creates a new block with given type, position, size, and sprite
         public Block(BlockName name, BlockType blockType, Point gridPosition, int gridSize, ISprite sprite)
         {
-			Name = name;
+            Name = name;
             _blockType = blockType;
             _gridPosition = gridPosition;
             _gridSize = gridSize;
@@ -59,7 +58,7 @@ namespace ZweiHander.Environment
         {
             _blockType = newType;
             _sprite = newSprite ?? throw new ArgumentNullException(nameof(newSprite)); ;
-            
+
         }
 
         public void Draw()
@@ -75,9 +74,9 @@ namespace ZweiHander.Environment
         public Rectangle GetBlockHitbox()
         {
             return new Rectangle(
-                _gridPosition.X * _gridSize - _gridSize / 2, 
-                _gridPosition.Y * _gridSize - _gridSize / 2, 
-                _gridSize, 
+                _gridPosition.X * _gridSize - _gridSize / 2,
+                _gridPosition.Y * _gridSize - _gridSize / 2,
+                _gridSize,
                 _gridSize
             );
         }

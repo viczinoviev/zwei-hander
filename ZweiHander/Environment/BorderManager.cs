@@ -1,25 +1,23 @@
 using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
 using ZweiHander.Graphics;
 using ZweiHander.Graphics.SpriteStorages;
-using ZweiHander.Items;
 using ZweiHander.Map;
 namespace ZweiHander.Environment
 {
-	/// <summary>
-	/// Constructor initializes the factory with a tile size and block sprite storage
-	/// </summary>
-	public class BorderManager(int tileSize, BlockSprites blockSprites)
-	{
+    /// <summary>
+    /// Constructor initializes the factory with a tile size and block sprite storage
+    /// </summary>
+    public class BorderManager(int tileSize, BlockSprites blockSprites)
+    {
         private readonly int _tileSize = tileSize; // 32 pixels for borders
         private readonly BlockSprites _blockSprites = blockSprites; // Borders use the same sprite sheet as blocks
-		public List<Border> BorderMap { get; private set; } = [];
+        public List<Border> BorderMap { get; private set; } = [];
 
-		/// <summary>
-		/// Maps border names to their logic type
-		/// </summary>
-		private static readonly Dictionary<BorderName, BorderType> BorderNameToType = new()
+        /// <summary>
+        /// Maps border names to their logic type
+        /// </summary>
+        private static readonly Dictionary<BorderName, BorderType> BorderNameToType = new()
         {
             // Wall tiles - all solid
             { BorderName.WallTileNorth, BorderType.Solid },
@@ -64,57 +62,57 @@ namespace ZweiHander.Environment
             { BorderName.HoleInWallSouth, BorderType.Decorative },
         };
 
-		/// <summary>
-		/// Creates a new border given its name and upper-left corner position
-		/// Border covers 32x32 pixels
-		/// </summary>
-		public Border CreateBorder(BorderName name, Vector2 position)
+        /// <summary>
+        /// Creates a new border given its name and upper-left corner position
+        /// Border covers 32x32 pixels
+        /// </summary>
+        public Border CreateBorder(BorderName name, Vector2 position)
         {
 
             Vector2 offsetPosition = new(position.X + 16, position.Y + 16);
-            
+
 
             BorderType borderType = BorderNameToType[name];
-			ISprite sprite = name switch
-			{
-				// Wall tiles
-				BorderName.WallTileNorth => _blockSprites.WallTileNorth(),
-				BorderName.WallTileWest => _blockSprites.WallTileWest(),
-				BorderName.WallTileEast => _blockSprites.WallTileEast(),
-				BorderName.WallTileSouth => _blockSprites.WallTileSouth(),
-				// Inside corners
-				BorderName.InsideCornerNortheast => _blockSprites.InsideCornerNortheast(),
-				BorderName.InsideCornerSoutheast => _blockSprites.InsideCornerSoutheast(),
-				BorderName.InsideCornerSouthwest => _blockSprites.InsideCornerSouthwest(),
-				BorderName.InsideCornerNorthwest => _blockSprites.InsideCornerNorthwest(),
-				// Outside corners
-				BorderName.OutsideCornerSouthwest => _blockSprites.OutsideCornerSouthwest(),
-				BorderName.OutsideCornerNorthwest => _blockSprites.OutsideCornerNorthwest(),
-				BorderName.OutsideCornerNortheast => _blockSprites.OutsideCornerNortheast(),
-				BorderName.OutsideCornerSoutheast => _blockSprites.OutsideCornerSoutheast(),
-				// Entrance tiles
-				BorderName.EntranceTileNorth => _blockSprites.EntranceTileNorth(),
-				BorderName.EntranceTileWest => _blockSprites.EntranceTileWest(),
-				BorderName.EntranceTileEast => _blockSprites.EntranceTileEast(),
-				BorderName.EntranceTileSouth => _blockSprites.EntranceTileSouth(),
-				// Locked doors
-				BorderName.LockedDoorTileNorth => _blockSprites.LockedDoorTileNorth(),
-				BorderName.LockedDoorTileWest => _blockSprites.LockedDoorTileWest(),
-				BorderName.LockedDoorTileEast => _blockSprites.LockedDoorTileEast(),
-				BorderName.LockedDoorTileSouth => _blockSprites.LockedDoorTileSouth(),
-				// Doors
-				BorderName.DoorTileNorth => _blockSprites.DoorTileNorth(),
-				BorderName.DoorTileWest => _blockSprites.DoorTileWest(),
-				BorderName.DoorTileEast => _blockSprites.DoorTileEast(),
-				BorderName.DoorTileSouth => _blockSprites.DoorTileSouth(),
-				// Holes in walls
-				BorderName.HoleInWallNorth => _blockSprites.HoleInWallNorth(),
-				BorderName.HoleInWallWest => _blockSprites.HoleInWallWest(),
-				BorderName.HoleInWallEast => _blockSprites.HoleInWallEast(),
-				BorderName.HoleInWallSouth => _blockSprites.HoleInWallSouth(),
-				_ => _blockSprites.WallTileNorth(),
-			};
-			Border newBorder = new(name, borderType, offsetPosition, _tileSize, sprite);
+            ISprite sprite = name switch
+            {
+                // Wall tiles
+                BorderName.WallTileNorth => _blockSprites.WallTileNorth(),
+                BorderName.WallTileWest => _blockSprites.WallTileWest(),
+                BorderName.WallTileEast => _blockSprites.WallTileEast(),
+                BorderName.WallTileSouth => _blockSprites.WallTileSouth(),
+                // Inside corners
+                BorderName.InsideCornerNortheast => _blockSprites.InsideCornerNortheast(),
+                BorderName.InsideCornerSoutheast => _blockSprites.InsideCornerSoutheast(),
+                BorderName.InsideCornerSouthwest => _blockSprites.InsideCornerSouthwest(),
+                BorderName.InsideCornerNorthwest => _blockSprites.InsideCornerNorthwest(),
+                // Outside corners
+                BorderName.OutsideCornerSouthwest => _blockSprites.OutsideCornerSouthwest(),
+                BorderName.OutsideCornerNorthwest => _blockSprites.OutsideCornerNorthwest(),
+                BorderName.OutsideCornerNortheast => _blockSprites.OutsideCornerNortheast(),
+                BorderName.OutsideCornerSoutheast => _blockSprites.OutsideCornerSoutheast(),
+                // Entrance tiles
+                BorderName.EntranceTileNorth => _blockSprites.EntranceTileNorth(),
+                BorderName.EntranceTileWest => _blockSprites.EntranceTileWest(),
+                BorderName.EntranceTileEast => _blockSprites.EntranceTileEast(),
+                BorderName.EntranceTileSouth => _blockSprites.EntranceTileSouth(),
+                // Locked doors
+                BorderName.LockedDoorTileNorth => _blockSprites.LockedDoorTileNorth(),
+                BorderName.LockedDoorTileWest => _blockSprites.LockedDoorTileWest(),
+                BorderName.LockedDoorTileEast => _blockSprites.LockedDoorTileEast(),
+                BorderName.LockedDoorTileSouth => _blockSprites.LockedDoorTileSouth(),
+                // Doors
+                BorderName.DoorTileNorth => _blockSprites.DoorTileNorth(),
+                BorderName.DoorTileWest => _blockSprites.DoorTileWest(),
+                BorderName.DoorTileEast => _blockSprites.DoorTileEast(),
+                BorderName.DoorTileSouth => _blockSprites.DoorTileSouth(),
+                // Holes in walls
+                BorderName.HoleInWallNorth => _blockSprites.HoleInWallNorth(),
+                BorderName.HoleInWallWest => _blockSprites.HoleInWallWest(),
+                BorderName.HoleInWallEast => _blockSprites.HoleInWallEast(),
+                BorderName.HoleInWallSouth => _blockSprites.HoleInWallSouth(),
+                _ => _blockSprites.WallTileNorth(),
+            };
+            Border newBorder = new(name, borderType, offsetPosition, _tileSize, sprite);
 
             // Store borders in a map
             BorderMap.Add(newBorder);

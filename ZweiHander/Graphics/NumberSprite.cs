@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
-using System.Linq;
 using ZweiHander.Graphics.SpriteStorages;
 
 namespace ZweiHander.Graphics;
@@ -29,7 +28,7 @@ public class NumberSprite : AbstractSprite
     public void SetNumber(int number, bool centered = true)
     {
         _number = number.ToString();
-        if(_number.Length < Digits)
+        if (_number.Length < Digits)
         {
             _number = _number.PadLeft(Digits, '0');
         }

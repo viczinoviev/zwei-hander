@@ -19,7 +19,7 @@ namespace ZweiHander.Map
         private readonly Camera.Camera _camera;
         private readonly RoomLockedEntranceCollisionHandler _collisionHandler;
 
-        
+
 
         public RoomLockedEntrance(int portalId, Vector2 position, Room parentRoom, Area parentArea, Universe universe, IPlayer player, Camera.Camera camera)
         {
@@ -103,7 +103,7 @@ namespace ZweiHander.Map
                         }
 
                         break;
-                    }       
+                    }
                 }
             }
 

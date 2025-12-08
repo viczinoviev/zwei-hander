@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using ZweiHander.FriendlyNPC;
-using ZweiHander.PlayerFiles;
 
 namespace ZweiHander.Commands
 {

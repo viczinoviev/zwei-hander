@@ -1,12 +1,12 @@
 using Microsoft.Xna.Framework;
-using Vector2 = Microsoft.Xna.Framework.Vector2;
-using ZweiHander.Items;
-using ZweiHander.Graphics;
+using Microsoft.Xna.Framework.Content;
 using System;
-using ZweiHander.Graphics.SpriteStorages;
 using System.Collections.Generic;
 using ZweiHander.CollisionFiles;
-using Microsoft.Xna.Framework.Content;
+using ZweiHander.Graphics;
+using ZweiHander.Graphics.SpriteStorages;
+using ZweiHander.Items;
+using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace ZweiHander.Enemy.EnemyStorage;
 
@@ -46,36 +46,36 @@ public class Aquamentus : IEnemy
     public readonly Random rnd = new();
 
 
-    public Aquamentus(BossSprites bossSprites, ItemManager projectileManager,ContentManager sfxPlayer,Vector2 position)
+    public Aquamentus(BossSprites bossSprites, ItemManager projectileManager, ContentManager sfxPlayer, Vector2 position)
     {
         Position = position;
         _projectileManager = projectileManager;
         _bossSprites = bossSprites;
         Sprite = _bossSprites.Aquamentus();
-        CollisionHandler = new EnemyCollisionHandler(this,sfxPlayer);
+        CollisionHandler = new EnemyCollisionHandler(this, sfxPlayer);
     }
     public virtual void Update(GameTime time)
     {
-        
-            //Randomize  movement
-            int mov = rnd.Next(FaceChangeChance);
-            //Move according to current direction faced
-            if (mov > FaceChangeCase)
-            {
-                Position = EnemyHelper.BehaveFromFace(this,1,0);
-            }
-            //Change face to new value according to the randomized value
-            else
-            {
+
+        //Randomize  movement
+        int mov = rnd.Next(FaceChangeChance);
+        //Move according to current direction faced
+        if (mov > FaceChangeCase)
+        {
+            Position = EnemyHelper.BehaveFromFace(this, 1, 0);
+        }
+        //Change face to new value according to the randomized value
+        else
+        {
             Face = mov;
-            }
+        }
 
         //projectile attacking
         EnemyHelper.AquamentusAttack(this, _projectileManager);
         CollisionHandler.UpdateCollisionBox();
         Sprite.Update(time);
         _projectileManager.Update(time);
-        }
+    }
 
 
 

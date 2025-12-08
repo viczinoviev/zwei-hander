@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using ZweiHander.PlayerFiles;
 
 namespace ZweiHander.Commands
@@ -8,7 +7,7 @@ namespace ZweiHander.Commands
         private readonly Camera.Camera _camera = camera;
         private readonly IPlayer _player = player;
 
-		public void Execute()
+        public void Execute()
         {
             _camera.SetPositionImmediate(_player.Position);
         }

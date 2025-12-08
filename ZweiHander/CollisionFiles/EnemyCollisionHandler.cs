@@ -1,12 +1,10 @@
 using Microsoft.Xna.Framework;
-using ZweiHander.Enemy;
-using ZweiHander.PlayerFiles;
-using ZweiHander.Items;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
+using ZweiHander.Enemy;
 using ZweiHander.Enemy.EnemyStorage;
-using ZweiHander.Environment;
-using ZweiHander.Map;
+using ZweiHander.Items;
+using ZweiHander.PlayerFiles;
 
 namespace ZweiHander.CollisionFiles
 {
@@ -21,7 +19,7 @@ namespace ZweiHander.CollisionFiles
         private readonly SoundEffect enemyHurt;
 
         private readonly SoundEffectInstance currentSFX;
-        public EnemyCollisionHandler(IEnemy enemy,ContentManager sfxPlayer)
+        public EnemyCollisionHandler(IEnemy enemy, ContentManager sfxPlayer)
         {
             _enemy = enemy;
             enemyHurt = sfxPlayer.Load<SoundEffect>("Audio/EnemyHurt");
@@ -35,22 +33,23 @@ namespace ZweiHander.CollisionFiles
             if (other is BlockCollisionHandler blockCollisionHandler)
             {
                 //If enemy is running into a block, prevent enemy from going into the block
-                if(_enemy is not Wallmaster){
-                Vector2 newPosition = _enemy.Position + collisionInfo.ResolutionOffset;
-                _enemy.Position = newPosition;
-                _enemy.Face = (int)collisionInfo.Normal;
+                if (_enemy is not Wallmaster)
+                {
+                    Vector2 newPosition = _enemy.Position + collisionInfo.ResolutionOffset;
+                    _enemy.Position = newPosition;
+                    _enemy.Face = (int)collisionInfo.Normal;
 
-                UpdateCollisionBox();
+                    UpdateCollisionBox();
                 }
                 else
                 {
-                    if(blockCollisionHandler._customCollisionBox != null)
+                    if (blockCollisionHandler._customCollisionBox != null)
                     {
                         Vector2 newPosition = _enemy.Position + collisionInfo.ResolutionOffset;
-                _enemy.Position = newPosition;
-                _enemy.Face = (int)collisionInfo.Normal;
+                        _enemy.Position = newPosition;
+                        _enemy.Face = (int)collisionInfo.Normal;
 
-                UpdateCollisionBox();
+                        UpdateCollisionBox();
                     }
                 }
             }
@@ -62,7 +61,7 @@ namespace ZweiHander.CollisionFiles
                 {
                     enemyHurt.Play();
                     _enemy.Hitpoints -= Damage;
-                    
+
                     //if the enemy has died, set this handler to be removed
                     if (_enemy.Hitpoints <= 0)
                     {

@@ -1,8 +1,8 @@
 using Microsoft.Xna.Framework;
-using Vector2 = Microsoft.Xna.Framework.Vector2;
+using ZweiHander.CollisionFiles;
 using ZweiHander.Graphics;
 using ZweiHander.Graphics.SpriteStorages;
-using ZweiHander.CollisionFiles;
+using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace ZweiHander.Enemy.EnemyStorage;
 
@@ -35,7 +35,7 @@ public class OldMan : IEnemy
     {
         CollisionHandler.UpdateCollisionBox();
         Sprite.Update(time);
-        }
+    }
 
 
 

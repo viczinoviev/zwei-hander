@@ -1,18 +1,13 @@
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
-using ZweiHander.PlayerFiles;
-using ZweiHander.Enemy;
-using ZweiHander.Items;
-using ZweiHander.Environment;
-using ZweiHander.CollisionFiles;
-using ZweiHander.Graphics.SpriteStorages;
-using Microsoft.Xna.Framework.Audio;
-using System.Net.Mime;
 using Microsoft.Xna.Framework.Content;
-using System;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
+using ZweiHander.CollisionFiles;
+using ZweiHander.Enemy;
+using ZweiHander.Environment;
 using ZweiHander.FriendlyNPC;
+using ZweiHander.Graphics.SpriteStorages;
+using ZweiHander.Items;
+using ZweiHander.PlayerFiles;
 
 
 namespace ZweiHander.Map
@@ -54,7 +49,7 @@ namespace ZweiHander.Map
         {
             TileSize = tileSize;
             _areas = [];
-            
+
             // Create separate instances for Universe's use
             ItemManager projectileManager = new(itemSprites, treasureSprites, bossSprites);
             ItemManager = new ItemManager(itemSprites, treasureSprites, bossSprites);
@@ -110,7 +105,7 @@ namespace ZweiHander.Map
         }
 
         public void LoadRoom(int roomNumber, Vector2 spawnPosition, Camera.Camera camera, Vector2 oldPortalPos, Vector2 newPortalPos, Direction portalDirection)
-        {   
+        {
             if (RoomTransition.IsTransitioning) return;
             if (CurrentArea == null) return;
 
@@ -124,7 +119,7 @@ namespace ZweiHander.Map
 
             CurrentRoom = targetRoom;
         }
-        
+
         internal void UnloadContents()
         {
             if (CurrentRoom == null) return;
@@ -136,10 +131,10 @@ namespace ZweiHander.Map
             ItemManager.Clear();
             PortalManager.Clear();
             LockedEntranceManager.Clear();
-            
+
             // Remove dead/null colliders immediately before loading next room
             CollisionManager.Instance.RemoveDeadColliders();
-            
+
             CurrentRoom.IsLoaded = false;
         }
 
@@ -154,7 +149,7 @@ namespace ZweiHander.Map
             PortalManager.Update(gameTime);
             LockedEntranceManager.Update(gameTime);
         }
-        
+
 
         public void Draw()
         {

@@ -15,14 +15,16 @@ public abstract class AbstractSprite : ISprite
     /// <summary>
     /// The height of this sprite before rotation
     /// </summary>
-    private int UnrotatedHeight { get => (int) ((float) _region.Height * Scale.Y); }
-    
+    private int UnrotatedHeight { get => (int)((float)_region.Height * Scale.Y); }
+
     /// <summary>
     /// The width of this sprite before rotation
     /// </summary>
     private int UnrotatedWidth { get => (int)((float)_region.Width * Scale.X); }
 
-    public int Height { get => _sideways ?
+    public int Height
+    {
+        get => _sideways ?
             UnrotatedWidth : UnrotatedHeight;
     }
 
@@ -48,10 +50,14 @@ public abstract class AbstractSprite : ISprite
     /// <summary>
     /// The amount of rotation, in radians, to apply when drawing this sprite on screen
     /// </summary>
-    public float Rotation { get => _rotation; set {
+    public float Rotation
+    {
+        get => _rotation; set
+        {
             _rotation = value;
             _sideways = Math.Abs(Math.Cos(value)) < Math.Abs(Math.Sin(value)); //Is it sideways?
-        } }
+        }
+    }
 
     /// <summary>
     /// If this sprite is rotatd enough that it is on its side

@@ -1,7 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using System.Collections.Generic;
-using ZweiHander.CollisionFiles;
-using ZweiHander.Graphics;
 using ZweiHander.Graphics.SpriteStorages;
 
 namespace ZweiHander.Items;

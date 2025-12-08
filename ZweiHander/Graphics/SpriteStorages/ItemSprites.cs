@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 
 namespace ZweiHander.Graphics.SpriteStorages;
+
 public class ItemSprites : SpriteFactory
 {
     private const string _definitionFile = "SpriteSheets/LinkDefinition.xml";
@@ -14,7 +15,7 @@ public class ItemSprites : SpriteFactory
         _spriteBatch = spriteBatch;
     }
 
-    public ISprite Arrow(Vector2 direction) 
+    public ISprite Arrow(Vector2 direction)
     {
         IdleSprite sprite = new IdleSprite(_regions["arrow-right"], _spriteBatch)
         {
@@ -27,7 +28,7 @@ public class ItemSprites : SpriteFactory
         ISprite sprite = new AnimatedSprite(_spriteBatch, _animations["fire-animation"]);
         return sprite;
     }
-    
+
     public ISprite ProjectileOnHit() => new IdleSprite(_regions["projectile-hit"], _spriteBatch);
     public ISprite Boomerang() => new AnimatedSprite(_spriteBatch, _animations["boomerang-animation"]);
     public ISprite Bomb() => new IdleSprite(_regions["bomb"], _spriteBatch);

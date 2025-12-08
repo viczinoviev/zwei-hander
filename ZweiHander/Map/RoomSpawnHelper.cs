@@ -9,14 +9,14 @@ namespace ZweiHander.Map
     public static class RoomSpawnHelper
     {
         private static readonly BorderName[] EastEntrances =
-		[
-			BorderName.DoorTileEast,
+        [
+            BorderName.DoorTileEast,
             BorderName.HoleInWallEast,
             BorderName.EntranceTileEast,
             BorderName.LockedDoorTileEast
         ];
 
-        private static readonly BorderName[] WestEntrances = 
+        private static readonly BorderName[] WestEntrances =
         [
             BorderName.DoorTileWest,
             BorderName.HoleInWallWest,
@@ -25,16 +25,16 @@ namespace ZweiHander.Map
         ];
 
         private static readonly BorderName[] NorthEntrances =
-		[
-			BorderName.DoorTileNorth,
+        [
+            BorderName.DoorTileNorth,
             BorderName.HoleInWallNorth,
             BorderName.EntranceTileNorth,
             BorderName.LockedDoorTileNorth
         ];
 
         private static readonly BorderName[] SouthEntrances =
-		[
-			BorderName.DoorTileSouth,
+        [
+            BorderName.DoorTileSouth,
             BorderName.HoleInWallSouth,
             BorderName.EntranceTileSouth,
             BorderName.LockedDoorTileSouth
@@ -55,7 +55,7 @@ namespace ZweiHander.Map
                 return predefinedSpawnPoint;
             }
 
-            foreach (var (borderName, position , dummyValue) in borderData)
+            foreach (var (borderName, position, dummyValue) in borderData)
             {
                 if (EastEntrances.Contains(borderName))
                 {

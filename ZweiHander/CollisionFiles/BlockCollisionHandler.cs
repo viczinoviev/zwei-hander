@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using ZweiHander.Environment;
 
 namespace ZweiHander.CollisionFiles
@@ -8,7 +7,7 @@ namespace ZweiHander.CollisionFiles
     {
         // The actual block this handler is taking care of
         private readonly Block _block;
-        
+
         // Custom collision box for borders or other objects that don't use block-based collision
         public readonly Rectangle? _customCollisionBox;
 

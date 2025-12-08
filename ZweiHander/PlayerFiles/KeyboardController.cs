@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 using ZweiHander.Commands;
 
 namespace ZweiHander.PlayerFiles
@@ -39,9 +38,9 @@ namespace ZweiHander.PlayerFiles
 
         public void BindKey(Keys key, ICommand command)
         {
-            #pragma warning disable //Ignoring the one warning here
+#pragma warning disable //Ignoring the one warning here
             _commandBindings ??= new Dictionary<Keys, ICommand>();
-            #pragma warning restore
+#pragma warning restore
 
             _commandBindings[key] = command;
         }

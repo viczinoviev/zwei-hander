@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using ZweiHander.CollisionFiles;
 using ZweiHander.Graphics;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
@@ -68,11 +67,14 @@ public abstract class AbstractItem : IItem
     /// <summary>
     /// Current phase, starting from 0.
     /// </summary>
-    protected int Phase { get => _phase; set
+    protected int Phase
+    {
+        get => _phase; set
         {
             _phase = value;
             OnPhaseChange();
-        } }
+        }
+    }
 
     /// <summary>
     /// Handles the collisions for this item.
@@ -181,8 +183,8 @@ public abstract class AbstractItem : IItem
 
     public Rectangle GetHitBox()
     {
-        int width = Hitbox.X == 0f ? Sprite.Width : (int) Hitbox.X;
-        int height = Hitbox.Y == 0f ? Sprite.Height : (int) Hitbox.Y;
+        int width = Hitbox.X == 0f ? Sprite.Width : (int)Hitbox.X;
+        int height = Hitbox.Y == 0f ? Sprite.Height : (int)Hitbox.Y;
         // Sprites are centered
         return new Rectangle(
                 (int)Position.X - width / 2,
@@ -222,7 +224,7 @@ public abstract class AbstractItem : IItem
     /// </summary>
     /// <param name="other">What is being collided with.</param>
     /// <param name="collisionInfo">Info related to the collision.</param>
-    protected virtual void ItemInteract(ItemCollisionHandler other, CollisionInfo collisionInfo){ }
+    protected virtual void ItemInteract(ItemCollisionHandler other, CollisionInfo collisionInfo) { }
 
     /// <summary>
     /// How to interact with enemies on collision.

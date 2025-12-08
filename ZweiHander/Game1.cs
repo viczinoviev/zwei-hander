@@ -1,20 +1,15 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-using System.ComponentModel;
 using System.IO;
 using ZweiHander.CollisionFiles;
 using ZweiHander.Commands;
-using ZweiHander.Enemy;
-using ZweiHander.Environment;
 using ZweiHander.FriendlyNPC;
 using ZweiHander.GameStates;
 using ZweiHander.Graphics.SpriteStorages;
 using ZweiHander.HUD;
-using ZweiHander.Items;
 using ZweiHander.Map;
 using ZweiHander.PlayerFiles;
 
@@ -47,7 +42,7 @@ namespace ZweiHander
         private TreasureSprites _treasureSprites;
         private ItemSprites _itemSprites;
         private TitleSprites _titleSprites;
-        
+
         private Universe _universe;
         private CsvAreaConstructor _areaConstructor;
 
@@ -133,12 +128,12 @@ namespace ZweiHander
         /// </summary>
         public void GameSetUp()
         {
-                //Clears all the Colliders first
+            //Clears all the Colliders first
             CollisionManager.Instance.ClearAllColliders();
 
-            _gamePlayer = new Player(this, _linkSprites, _itemSprites, _treasureSprites,Content);
+            _gamePlayer = new Player(this, _linkSprites, _itemSprites, _treasureSprites, Content);
             _kirbySprites = new KirbySprites(Content, _spriteBatch);
-            
+
             SetCameraCommand moveCameraToPlayer = new SetCameraCommand(_camera, _gamePlayer);
             moveCameraToPlayer.Execute();
 
@@ -167,7 +162,7 @@ namespace ZweiHander
             _universe.SetKirby(_kirby);
             _universe.SetupPortalManager(_camera);
             _universe.SetupLockedEntranceManager(_camera);
-            
+
             _areaConstructor = new CsvAreaConstructor();
 
             string mapPath = Path.Combine(Content.RootDirectory, "Maps", "testDungeon1.csv");
@@ -177,7 +172,7 @@ namespace ZweiHander
             _universe.SetCurrentLocation("TestDungeon", 1);
             _gamePlayer.Position = _universe.CurrentRoom.GetPlayerSpawnPoint();
             _kirby.Position = _gamePlayer.Position;
-            
+
 
 
 
@@ -187,9 +182,9 @@ namespace ZweiHander
             _keyboardController.BindKey(Keys.R, new ResetCommand(this));
             _keyboardController.BindKey(Keys.Q, new QuitCommand(this));
             _keyboardController.BindKey(Keys.E, new HurtPlayerCommand(this));
-            _keyboardController.BindKey(Keys.I, new InventoryCommand(this));  
+            _keyboardController.BindKey(Keys.I, new InventoryCommand(this));
             _keyboardController.BindKey(Keys.P, new PauseCommand(this));
-            _keyboardController.BindKey(Keys.OemComma, new PreviousInventoryItemCommand(this)); 
+            _keyboardController.BindKey(Keys.OemComma, new PreviousInventoryItemCommand(this));
             _keyboardController.BindKey(Keys.OemPeriod, new NextInventoryItemCommand(this));
             _keyboardController.BindKey(Keys.X, new ConfirmInventoryItemCommand(this));
             _keyboardController.BindKey(Keys.U, new KirbyUltCommand(this));
@@ -248,7 +243,7 @@ namespace ZweiHander
                 // Update stuff when game is running
                 if (!gamePaused)
                 {
-                    if(_gamePlayer.CurrentHealth <= 0)
+                    if (_gamePlayer.CurrentHealth <= 0)
                     {
                         SoundEffect gameOverSFX = Content.Load<SoundEffect>("Audio/GameOver");
                         gameOverSFX.Play();
@@ -307,7 +302,7 @@ namespace ZweiHander
                 _universe.Draw();
                 _kirby.Draw();
                 _gamePlayer.Draw(_spriteBatch);
-                
+
 
                 _debugRenderer.DrawWorldDebug(_spriteBatch, _universe);
 

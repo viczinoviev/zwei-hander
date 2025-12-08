@@ -1,11 +1,11 @@
 using Microsoft.Xna.Framework;
-using Vector2 = Microsoft.Xna.Framework.Vector2;
-using ZweiHander.Graphics;
-using System;
-using ZweiHander.Graphics.SpriteStorages;
-using ZweiHander.CollisionFiles;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework.Content;
+using System;
+using System.Collections.Generic;
+using ZweiHander.CollisionFiles;
+using ZweiHander.Graphics;
+using ZweiHander.Graphics.SpriteStorages;
+using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace ZweiHander.Enemy.EnemyStorage;
 
@@ -24,7 +24,7 @@ public class Wallmaster : IEnemy
     /// <summary>
     /// Holds all sprites for this enemy
     /// </summary>
-    
+
     /// <summary>
     /// List of Sprites for this enemy
     /// <summary>
@@ -44,14 +44,14 @@ public class Wallmaster : IEnemy
     readonly Random rnd = new();
 
 
-    public Wallmaster(EnemySprites enemySprites,ContentManager sfxPlayer,Vector2 position)
+    public Wallmaster(EnemySprites enemySprites, ContentManager sfxPlayer, Vector2 position)
     {
         Position = position;
         _enemySprites = enemySprites;
         _sprites.Add(_enemySprites.WallmasterUp());
         _sprites.Add(_enemySprites.WallmasterDown());
         Sprite = _sprites[0];
-        CollisionHandler = new EnemyCollisionHandler(this,sfxPlayer);
+        CollisionHandler = new EnemyCollisionHandler(this, sfxPlayer);
     }
     public virtual void Update(GameTime time)
     {
@@ -64,7 +64,7 @@ public class Wallmaster : IEnemy
         //Move according to current direction faced
         if (mov > FaceChangeCase)
         {
-            Position = EnemyHelper.BehaveFromFace(this, 1,0);
+            Position = EnemyHelper.BehaveFromFace(this, 1, 0);
         }
         //Change face and sprite to new value according to the randomized value
         else
@@ -73,7 +73,7 @@ public class Wallmaster : IEnemy
         }
         CollisionHandler.UpdateCollisionBox();
         Sprite.Update(time);
-        }
+    }
 
 
 

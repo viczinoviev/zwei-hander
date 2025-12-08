@@ -3,11 +3,10 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+using ZweiHander.CollisionFiles;
 using ZweiHander.Graphics.SpriteStorages;
 using ZweiHander.Items;
 using ZweiHander.Items.ItemStorages;
-using ZweiHander.CollisionFiles;
 
 namespace ZweiHander.PlayerFiles
 {
@@ -71,7 +70,7 @@ namespace ZweiHander.PlayerFiles
             get => _handler.Color;
             set => _handler.Color = value;
         }
-        public Player(Game1 game, PlayerSprites playerSprites, ItemSprites itemSprites, TreasureSprites treasureSprites,ContentManager content)
+        public Player(Game1 game, PlayerSprites playerSprites, ItemSprites itemSprites, TreasureSprites treasureSprites, ContentManager content)
         {
             _itemManager = new ItemManager(itemSprites, treasureSprites);
             var collisionHandler = new PlayerCollisionHandler(this, content);
@@ -122,7 +121,7 @@ namespace ZweiHander.PlayerFiles
         {
             allowedToUpdate = enabled;
         }
-        
+
 
         public void AddItemToInventory(Type itemType, int count = 1)
         {
@@ -182,9 +181,9 @@ namespace ZweiHander.PlayerFiles
         }
 
         public void ClearSpawnedItems()
-		{
-			_itemManager.Clear();
-		}
+        {
+            _itemManager.Clear();
+        }
 
         public void MoveUp()
         {

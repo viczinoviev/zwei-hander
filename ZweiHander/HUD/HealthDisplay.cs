@@ -1,9 +1,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using ZweiHander.Graphics;
 using ZweiHander.Graphics.SpriteStorages;
 using ZweiHander.PlayerFiles;
-using System;
 
 namespace ZweiHander.HUD
 {
@@ -42,13 +42,13 @@ namespace ZweiHander.HUD
 
                 if (remainingHalfHearts >= 2)
                 {
-                    heartSprite =  _hudSprites.HeartFull();
+                    heartSprite = _hudSprites.HeartFull();
                     remainingHalfHearts -= 2;
 
                 }
                 else if (remainingHalfHearts >= 1)
                 {
-                    heartSprite =  _hudSprites.HeartHalf();
+                    heartSprite = _hudSprites.HeartHalf();
                     remainingHalfHearts -= 1;
                 }
                 else

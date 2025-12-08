@@ -1,9 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
-using System.Collections.Generic;
 using ZweiHander.CollisionFiles;
-using ZweiHander.Graphics;
-using ZweiHander.Graphics.SpriteStorages;
 
 namespace ZweiHander.Items.ItemStorages;
 
@@ -118,7 +115,7 @@ public class Fire : AbstractItem
             RemoveProperty(ItemProperty.DeleteOnBlock);
             Acceleration = Vector2.Zero;
             Velocity = Vector2.Zero;
-        } 
+        }
         else if (Phase == 2)
         {
             Hitbox = Vector2.Zero;

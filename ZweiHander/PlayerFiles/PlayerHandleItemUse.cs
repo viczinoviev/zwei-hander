@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
-using System;
 using System.Collections.Generic;
 using ZweiHander.CollisionFiles;
 using ZweiHander.Items;
@@ -76,7 +75,7 @@ namespace ZweiHander.PlayerFiles
                     );
                     _player.Inventory[typeof(Bomb)]--;
                 }
-                
+
             }
             else if (itemInput == UsableItem.RedCandle && _player.InventoryCount(typeof(RedCandle)) > 0)
             {

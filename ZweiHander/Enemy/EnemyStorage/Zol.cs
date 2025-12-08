@@ -1,10 +1,10 @@
 using Microsoft.Xna.Framework;
-using Vector2 = Microsoft.Xna.Framework.Vector2;
-using ZweiHander.Graphics;
-using System;
-using ZweiHander.Graphics.SpriteStorages;
-using ZweiHander.CollisionFiles;
 using Microsoft.Xna.Framework.Content;
+using System;
+using ZweiHander.CollisionFiles;
+using ZweiHander.Graphics;
+using ZweiHander.Graphics.SpriteStorages;
+using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace ZweiHander.Enemy.EnemyStorage;
 
@@ -36,12 +36,12 @@ public class Zol : IEnemy
     readonly Random rnd = new();
 
 
-    public Zol(EnemySprites enemySprites,ContentManager sfxPlayer,Vector2 position)
+    public Zol(EnemySprites enemySprites, ContentManager sfxPlayer, Vector2 position)
     {
         Position = position;
         _enemySprites = enemySprites;
         Sprite = _enemySprites.Zol();
-        CollisionHandler = new EnemyCollisionHandler(this,sfxPlayer);
+        CollisionHandler = new EnemyCollisionHandler(this, sfxPlayer);
     }
     public virtual void Update(GameTime time)
     {
@@ -50,7 +50,7 @@ public class Zol : IEnemy
         //Move according to current direction faced
         if (mov > FaceChangeCase)
         {
-            Position = EnemyHelper.BehaveFromFace(this, 1,0);
+            Position = EnemyHelper.BehaveFromFace(this, 1, 0);
         }
         //Change face and sprite to new value according to the randomized value
         else
@@ -59,7 +59,7 @@ public class Zol : IEnemy
         }
         CollisionHandler.UpdateCollisionBox();
         Sprite.Update(time);
-        }
+    }
 
     public void Draw()
     {

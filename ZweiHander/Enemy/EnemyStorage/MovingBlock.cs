@@ -1,8 +1,7 @@
 using Microsoft.Xna.Framework;
+using ZweiHander.CollisionFiles;
 using ZweiHander.Graphics;
 using ZweiHander.Graphics.SpriteStorages;
-
-using ZweiHander.CollisionFiles;
 
 namespace ZweiHander.Enemy.EnemyStorage
 {
@@ -36,7 +35,7 @@ namespace ZweiHander.Enemy.EnemyStorage
 
             Sprite = _enemySprites.Gel();
         }
-//unsued enemy!
+        //unsued enemy!
         public MovingBlock(EnemySprites enemySprites, Vector2 startPos, Vector2 endPos, float moveTime)
         {
             _enemySprites = enemySprites;

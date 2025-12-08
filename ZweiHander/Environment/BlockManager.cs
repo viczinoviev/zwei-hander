@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
-using ZweiHander.Enemy;
 using ZweiHander.Graphics;
 using ZweiHander.Graphics.SpriteStorages;
 
@@ -107,13 +106,13 @@ namespace ZweiHander.Environment
                     sprite = _blockSprites.TunnelTile();
                     break;
 
-                default: 
+                default:
                     sprite = _blockSprites.SolidCyanTile();
                     break;
             }
 
             // Create the block with its type, position, size, and sprite
-            Block newBlock = new Block(name,blockType, gridPosition, _tileSize, sprite);
+            Block newBlock = new Block(name, blockType, gridPosition, _tileSize, sprite);
 
             // Store blocks in a map
             BlockMap.Add(newBlock);

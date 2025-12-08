@@ -1,6 +1,6 @@
+using Microsoft.Xna.Framework;
 using System;
 using System.Linq;
-using Microsoft.Xna.Framework;
 using ZweiHander.Enemy.EnemyStorage;
 using ZweiHander.Items;
 using ZweiHander.Items.ItemStorages;
@@ -49,7 +49,7 @@ class EnemyHelper
         }
     }
 
-        /// <summary>
+    /// <summary>
     /// Handles goriya projectile attack
     /// </summary>
     /// <param name="enemy">Goriya that is attacking</param>
@@ -63,9 +63,9 @@ class EnemyHelper
         {
             //Create a projectile using ItemHelpers boomerang trajectory method
             (float v, float a) = Boomerang.Trajectory(attackLength, attackDuration);
-            enemy._currentProjectile = projectileManager.GetItem("Boomerang",position: enemy.Position,
+            enemy._currentProjectile = projectileManager.GetItem("Boomerang", position: enemy.Position,
             velocity: EnemyHelper.BehaveFromFace(enemy, v, 1), acceleration: EnemyHelper.BehaveFromFace(enemy, a, 1),
-                properties: [ItemProperty.EnemyProjectile],extras: [() => enemy.Position, enemy.CollisionHandler]);
+                properties: [ItemProperty.EnemyProjectile], extras: [() => enemy.Position, enemy.CollisionHandler]);
             enemy.Thrower = attacking;
         }
         else
@@ -94,11 +94,11 @@ class EnemyHelper
         if (attack == doAttack && enemy.Thrower != attacking)
         {
             //Create projectiles and Set up the projectiles behavior
-            IItem _currentProjectile1 = projectileManager.GetItem("Fireball",fireballLifetime, position: new Vector2(enemy.Position.X - fireballSpawnOffset, enemy.Position.Y - fireballSpawnOffset));
+            IItem _currentProjectile1 = projectileManager.GetItem("Fireball", fireballLifetime, position: new Vector2(enemy.Position.X - fireballSpawnOffset, enemy.Position.Y - fireballSpawnOffset));
             _currentProjectile1.Velocity = new Vector2(fireballXSpeed, 0);
-            IItem _currentProjectile2 = projectileManager.GetItem("Fireball",fireballLifetime, position: new Vector2(enemy.Position.X - fireballSpawnOffset, enemy.Position.Y - fireballSpawnOffset));
+            IItem _currentProjectile2 = projectileManager.GetItem("Fireball", fireballLifetime, position: new Vector2(enemy.Position.X - fireballSpawnOffset, enemy.Position.Y - fireballSpawnOffset));
             _currentProjectile2.Velocity = new Vector2(fireballXSpeed, fireballYSpeed);
-            IItem _currentProjectile3 = projectileManager.GetItem("Fireball",fireballLifetime, position: new Vector2(enemy.Position.X - fireballSpawnOffset, enemy.Position.Y - fireballSpawnOffset));
+            IItem _currentProjectile3 = projectileManager.GetItem("Fireball", fireballLifetime, position: new Vector2(enemy.Position.X - fireballSpawnOffset, enemy.Position.Y - fireballSpawnOffset));
             _currentProjectile3.Velocity = new Vector2(fireballXSpeed, -fireballYSpeed);
             enemy._projectiles.Add(_currentProjectile1);
             enemy._projectiles.Add(_currentProjectile2);
@@ -140,12 +140,12 @@ class EnemyHelper
     public static void BladeTrapReturn(BladeTrap enemy)
     {
         if (Math.Abs(enemy.originalPosition.X - enemy.Position.X) >= AllowedPosDifference || Math.Abs(enemy.originalPosition.Y - enemy.Position.Y) >= AllowedPosDifference)
-            {
-                enemy.Position = EnemyHelper.BehaveFromFace(enemy, 1, 0);
-            }
-            else
-            {
-                enemy.Thrower = 0;
-            }
+        {
+            enemy.Position = EnemyHelper.BehaveFromFace(enemy, 1, 0);
+        }
+        else
+        {
+            enemy.Thrower = 0;
+        }
     }
 }

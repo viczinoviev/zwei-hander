@@ -1,13 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ZweiHander.Graphics;
-using ZweiHander.Graphics.SpriteStorages;
-using ZweiHander.PlayerFiles;
-using ZweiHander.Map;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+using ZweiHander.Graphics;
+using ZweiHander.Graphics.SpriteStorages;
+using ZweiHander.Map;
 
 namespace ZweiHander.HUD
 {
@@ -20,10 +17,10 @@ namespace ZweiHander.HUD
 
         private readonly HashSet<int> _exploredRoomNumbers = new();
         private readonly HashSet<Point> _allRoomPositions = new();
-        
+
         private MapTeleport _mapTeleport;
         private Vector2 _lastDrawOffset = Vector2.Zero;
-        
+
         // Minimap layout constants
         private const int MAP_CELL_SIZE = 16;
         private const int MAP_GRID_WIDTH = 8;
@@ -45,7 +42,7 @@ namespace ZweiHander.HUD
             _mapDisplayHUD = hudSprites.MapDisplay();
             _position = position;
         }
-        
+
         public void SetUniverse(Universe universe)
         {
             _universe = universe;
@@ -55,12 +52,12 @@ namespace ZweiHander.HUD
             }
             _mapTeleport = new MapTeleport(this, _universe);
         }
-        
+
         public void SetDebugRenderer(DebugRenderer debugRenderer)
         {
             _mapTeleport?.SetDebugRenderer(debugRenderer);
         }
-        
+
 
         public void Update(GameTime gameTime)
         {
@@ -70,16 +67,16 @@ namespace ZweiHander.HUD
             }
 
             _mapTeleport?.Update(_position, _lastDrawOffset);
-        }        
-        
+        }
+
         public void Draw(SpriteBatch spriteBatch, Vector2 offset)
         {
             _lastDrawOffset = offset;
             Vector2 basePos = _position + offset;
             _mapDisplayHUD.Draw(basePos);
-            
+
             if (_universe?.CurrentArea == null) return;
-            
+
             if (mapItemGotten)
             {
                 DrawMinimap(basePos);
@@ -105,7 +102,7 @@ namespace ZweiHander.HUD
             }
 
             DrawMinimapPlayerPosition(basePos, _universe.CurrentRoom);
-            
+
             if (_universe.CurrentRoom?.MapPosition.X >= 0)
             {
                 DrawPlayerPosition(basePos, _universe.CurrentRoom);
@@ -133,24 +130,24 @@ namespace ZweiHander.HUD
                     if (hasRoomBelow) continue;
                     nodeSprite = _hudSprites.MinimapUpper();
                 }
-                
+
                 Vector2 nodePos = basePos + MINIMAP_OFFSET + new Vector2(position.X * MAP_CELL_SIZE, -(position.Y / 2) * MAP_CELL_SIZE);
                 nodeSprite.Draw(nodePos);
             }
         }
-        
+
         private void DrawMapNode(Vector2 basePos, Room room)
         {
             Vector2 nodePos = GetMapNodePosition(room, basePos);
             ISprite nodeSprite = _hudSprites.MinimapNode(room.MapConnections);
             nodeSprite.Draw(nodePos);
         }
-        
+
         private void DrawPlayerPosition(Vector2 basePos, Room currentRoom)
         {
             _hudSprites.MapPlayer().Draw(GetMapNodePosition(currentRoom, basePos) + new Vector2(-1, 2));
         }
-        
+
         private void DrawMinimapPlayerPosition(Vector2 basePos, Room currentRoom)
         {
             _hudSprites.MinimapPlayer().Draw(GetMinimapNodePosition(currentRoom, basePos) + new Vector2(1, -1));
@@ -171,7 +168,7 @@ namespace ZweiHander.HUD
             float yOffset = (room.MapPosition.Y % 2 != 0) ? -(MAP_CELL_SIZE / 2) : 0;
             return basePos + MINIMAP_OFFSET + new Vector2(screenX * MAP_CELL_SIZE, screenY * MAP_CELL_SIZE + yOffset);
         }
-        
+
         public Vector2 GetMinimapNodeSpritePosition(Room room, Vector2 basePos)
         {
             return basePos + MINIMAP_OFFSET + new Vector2(room.MapPosition.X * MAP_CELL_SIZE, -(room.MapPosition.Y / 2) * MAP_CELL_SIZE);

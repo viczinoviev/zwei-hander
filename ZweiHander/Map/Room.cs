@@ -1,24 +1,22 @@
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
-using ZweiHander.Environment;
-using ZweiHander.Enemy;
-using ZweiHander.Items;
-using ZweiHander.CollisionFiles;
 using System;
-using System.Linq;
+using System.Collections.Generic;
+using ZweiHander.Enemy;
+using ZweiHander.Environment;
+using ZweiHander.Items;
 
 namespace ZweiHander.Map
 {
     public class Room(int roomNumber, Vector2 position, Vector2 size, Universe universe)
-	{
-		public int RoomNumber { get; } = roomNumber;
-		public Vector2 Position { get; } = position;
-		public Vector2 Size { get; } = size;
-		public bool IsLoaded { get; set; }
+    {
+        public int RoomNumber { get; } = roomNumber;
+        public Vector2 Position { get; } = position;
+        public Vector2 Size { get; } = size;
+        public bool IsLoaded { get; set; }
 
         // Not required in a room, but allows for predetermined spawn location
-        public Vector2 PlayerSpawnPoint = new(0,0);
-        
+        public Vector2 PlayerSpawnPoint = new(0, 0);
+
         // Minimap data
         public Point MapPosition { get; set; } = new(-1, -1);
         public string MapConnections { get; set; } = "";
@@ -45,26 +43,26 @@ namespace ZweiHander.Map
             }
             return false;
         }
-		public void AddBlock(BlockName blockName, Point gridPosition)
+        public void AddBlock(BlockName blockName, Point gridPosition)
         {
             _blockData.Add((blockName, gridPosition));
         }
-        
+
         public void AddBorder(BorderName borderName, Vector2 position)
         {
             _borderData.Add((borderName, position, null));
         }
-        
+
         public void AddEnemy(string enemyName, Vector2 position)
         {
             _enemyData.Add((enemyName, position, null));
         }
-        
+
         public void AddItem(string itemType, Vector2 position)
         {
             _itemData.Add((itemType, position, null));
         }
-        
+
         public void AddPortal(int portalId, Vector2 position)
         {
             _portalData.Add((portalId, position));
@@ -93,14 +91,14 @@ namespace ZweiHander.Map
         {
 
             IsLoaded = true;
-            
+
             // Create fresh instances
             foreach (var (blockName, gridPosition) in _blockData)
             {
                 Point adjustedGridPosition = new(gridPosition.X + (int)offsetInTiles.X, gridPosition.Y + (int)offsetInTiles.Y);
                 _universe.BlockFactory.CreateBlock(blockName, adjustedGridPosition);
             }
-            
+
             for (int i = 0; i < _borderData.Count; i++)
             {
                 var (borderName, position, borderPointer) = _borderData[i];
@@ -108,18 +106,18 @@ namespace ZweiHander.Map
                 borderPointer = _universe.BorderFactory.CreateBorder(borderName, adjustedPosition);
                 _borderData[i] = (borderName, position, borderPointer);
             }
-            
+
             for (int i = 0; i < _enemyData.Count; i++)
             {
-				var (enemyName, position, _) = _enemyData[i];
+                var (enemyName, position, _) = _enemyData[i];
                 Vector2 adjustedPosition = position + new Vector2(offsetInTiles.X * _universe.TileSize, offsetInTiles.Y * _universe.TileSize);
-				IEnemy enemyPointer = _universe.EnemyManager.GetEnemy(enemyName, adjustedPosition);
-				_enemyData[i] = (enemyName, position, enemyPointer);
+                IEnemy enemyPointer = _universe.EnemyManager.GetEnemy(enemyName, adjustedPosition);
+                _enemyData[i] = (enemyName, position, enemyPointer);
             }
-            
-           for (int i = 0; i < _itemData.Count; i++)
+
+            for (int i = 0; i < _itemData.Count; i++)
             {
-				var (itemType, position, itemPointer) = _itemData[i];
+                var (itemType, position, itemPointer) = _itemData[i];
                 Vector2 adjustedPosition = position + new Vector2(offsetInTiles.X * _universe.TileSize, offsetInTiles.Y * _universe.TileSize);
                 itemPointer = _universe.ItemManager.GetItem(itemType, -1, adjustedPosition);
                 switch (itemType)
@@ -130,7 +128,7 @@ namespace ZweiHander.Map
                 }
                 _itemData[i] = (itemType, position, itemPointer);
             }
- 
+
             if (excludePortals) return;
             foreach (var (portalId, position) in _portalData)
             {

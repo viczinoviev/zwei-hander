@@ -1,11 +1,11 @@
 using Microsoft.Xna.Framework;
-using Vector2 = Microsoft.Xna.Framework.Vector2;
-using ZweiHander.Graphics;
-using System;
-using ZweiHander.Graphics.SpriteStorages;
-using ZweiHander.CollisionFiles;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework.Content;
+using System;
+using System.Collections.Generic;
+using ZweiHander.CollisionFiles;
+using ZweiHander.Graphics;
+using ZweiHander.Graphics.SpriteStorages;
+using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace ZweiHander.Enemy.EnemyStorage;
 
@@ -25,7 +25,7 @@ public class Rope : IEnemy
     /// <summary>
     /// Holds all sprites for this enemy
     /// </summary>
-        /// <summary>
+    /// <summary>
     /// List of Sprites for this enemy
     /// <summary>
     public List<ISprite> _sprites = [];
@@ -44,7 +44,7 @@ public class Rope : IEnemy
     readonly Random rnd = new();
 
 
-    public Rope(EnemySprites enemySprites,ContentManager sfxPlayer,Vector2 position)
+    public Rope(EnemySprites enemySprites, ContentManager sfxPlayer, Vector2 position)
     {
         Position = position;
         _enemySprites = enemySprites;
@@ -52,7 +52,7 @@ public class Rope : IEnemy
         _sprites.Add(_enemySprites.RopeLeft());
         Sprite = _sprites[0];
         Face = 1;
-        CollisionHandler = new EnemyCollisionHandler(this,sfxPlayer);
+        CollisionHandler = new EnemyCollisionHandler(this, sfxPlayer);
     }
     public virtual void Update(GameTime time)
     {
@@ -65,7 +65,7 @@ public class Rope : IEnemy
         //Move according to current direction faced
         if (mov > FaceChangeCase)
         {
-            Position = EnemyHelper.BehaveFromFace(this, 1,0);
+            Position = EnemyHelper.BehaveFromFace(this, 1, 0);
         }
         //Change face and sprite to new value according to the randomized value
         else
@@ -74,7 +74,7 @@ public class Rope : IEnemy
         }
         CollisionHandler.UpdateCollisionBox();
         Sprite.Update(time);
-        }
+    }
 
 
 

@@ -33,7 +33,7 @@ public interface IItem
     /// <summary>
     /// Hitbox for this item. Set to 0 to use sprite
     /// </summary>
-    public Vector2 Hitbox {  get; set; }
+    public Vector2 Hitbox { get; set; }
 
     /// <summary>
     /// What type of item this is.
@@ -96,7 +96,7 @@ public interface IItem
     /// Just kill this guy bruh.
     /// </summary>
     public void Kill();
-    
+
     /// <summary>
     /// Gets the hitbox of this item.
     /// </summary>

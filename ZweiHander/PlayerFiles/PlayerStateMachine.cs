@@ -1,11 +1,9 @@
-using System;
-using System.Linq;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using ZweiHander.CollisionFiles;
 
-namespace ZweiHander.PlayerFiles{
+namespace ZweiHander.PlayerFiles
+{
     public class PlayerStateMachine : IStateMachine
     {
         private readonly Player _player;

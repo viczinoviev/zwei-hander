@@ -1,8 +1,4 @@
-﻿using System;
-using Microsoft.Xna.Framework;
-using ZweiHander.PlayerFiles;
-using ZweiHander.Items;
-using ZweiHander.Items.ItemStorages;
+﻿using ZweiHander.Items.ItemStorages;
 using ZweiHander.Map;
 
 namespace ZweiHander.CollisionFiles

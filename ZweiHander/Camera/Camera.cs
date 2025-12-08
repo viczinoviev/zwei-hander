@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ZweiHander.Map;
 
 namespace ZweiHander.Camera
 {
@@ -70,9 +69,9 @@ namespace ZweiHander.Camera
             {
                 _overrideElapsedTime += (float)gameTime.ElapsedGameTime.TotalMilliseconds / 1000f;
                 float t = MathHelper.Clamp(_overrideElapsedTime / _overrideDuration, 0f, 1f);
-                
+
                 t = t * t * (3f - 2f * t);
-                
+
                 Position = Vector2.Lerp(_overrideStartPosition, _overrideTargetPosition, t);
                 DesiredPosition = Position;
 

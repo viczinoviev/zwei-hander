@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using ZweiHander.Graphics;
-using ZweiHander.Graphics.SpriteStorages;
-
-namespace ZweiHander.Items.ItemStorages;
+﻿namespace ZweiHander.Items.ItemStorages;
 
 /// <summary>
 /// Infinite life, collectable
@@ -10,7 +6,6 @@ namespace ZweiHander.Items.ItemStorages;
 public class Bow : AbstractItem
 {
     protected override ItemProperty Properties { get; set; } = ItemProperty.Collectable;
-
     public Bow(ItemConstructor itemConstructor)
         : base(itemConstructor)
     {

@@ -1,5 +1,3 @@
-using System;
-using Microsoft.Xna.Framework;
 using ZweiHander.Map;
 
 namespace ZweiHander.CollisionFiles

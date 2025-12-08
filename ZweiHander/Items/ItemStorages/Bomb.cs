@@ -1,9 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
 using ZweiHander.CollisionFiles;
-using ZweiHander.Graphics;
-using ZweiHander.Graphics.SpriteStorages;
 
 namespace ZweiHander.Items.ItemStorages;
 
@@ -52,15 +49,16 @@ public class Bomb : AbstractItem
         if (Phase == 0)
         {
             base.Update(gameTime);
-            if(Life > 0)
+            if (Life > 0)
             {
                 Sprites[0].Scale += new Vector2(dt, dt) / 2;
                 Wiggle -= dt;
-                if(Wiggle <= 0) {
+                if (Wiggle <= 0)
+                {
                     SpriteOffset *= -1;
                     Wiggle = Life * WiggleScalar;
                 }
-                
+
             }
         }
         else
@@ -93,9 +91,9 @@ public class Bomb : AbstractItem
             case Bomb bomb:
                 if (bomb.HasProperty(ItemProperty.CanDamagePlayer) && Life > 0 && Phase == 0) Life = Phases[Phase];
                 break;
-            //case Fire: //Yes, explode on *any* fire
-            //    if (Life > 0 && Phase == 0) Life = Phases[Phase];
-            //    break;
+                //case Fire: //Yes, explode on *any* fire
+                //    if (Life > 0 && Phase == 0) Life = Phases[Phase];
+                //    break;
         }
     }
 }

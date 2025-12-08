@@ -1,8 +1,8 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using ZweiHander.Graphics;
 
 namespace ZweiHander.Graphics.SpriteStorages;
+
 public class TitleSprites : SpriteFactory
 {
     private const string _definitionFile = "SpriteSheets/TitleDefinition.xml";
@@ -12,7 +12,7 @@ public class TitleSprites : SpriteFactory
         FromFile(content, _definitionFile);
         _spriteBatch = spriteBatch;
     }
-    
+
     public ISprite Title() => new IdleSprite(_regions["title"], _spriteBatch);
 }
 

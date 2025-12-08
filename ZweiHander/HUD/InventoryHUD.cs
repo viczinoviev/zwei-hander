@@ -1,13 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ZweiHander.Graphics;
-using ZweiHander.Graphics.SpriteStorages;
-using ZweiHander.PlayerFiles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ZweiHander.Graphics;
+using ZweiHander.Graphics.SpriteStorages;
 using ZweiHander.Items.ItemStorages;
-using System.Diagnostics;
+using ZweiHander.PlayerFiles;
 
 namespace ZweiHander.HUD
 {

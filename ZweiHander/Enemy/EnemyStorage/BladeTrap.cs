@@ -1,9 +1,9 @@
 using Microsoft.Xna.Framework;
-using Vector2 = Microsoft.Xna.Framework.Vector2;
+using Microsoft.Xna.Framework.Content;
+using ZweiHander.CollisionFiles;
 using ZweiHander.Graphics;
 using ZweiHander.Graphics.SpriteStorages;
-using ZweiHander.CollisionFiles;
-using Microsoft.Xna.Framework.Content;
+using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace ZweiHander.Enemy.EnemyStorage;
 
@@ -40,7 +40,7 @@ public class BladeTrap : IEnemy
     public readonly BladeTrapHomeCollisionHandler homeDownCollisionHandler;
     public EnemyCollisionHandler CollisionHandler { get; } = default;
 
-    public BladeTrap(EnemySprites enemySprites,ContentManager sfxPlayer,Vector2 pos)
+    public BladeTrap(EnemySprites enemySprites, ContentManager sfxPlayer, Vector2 pos)
     {
         Position = pos;
         _enemySprites = enemySprites;
@@ -65,7 +65,7 @@ public class BladeTrap : IEnemy
         }
         CollisionHandler.UpdateCollisionBox();
         Sprite.Update(time);
-        }
+    }
 
 
 

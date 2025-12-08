@@ -1,11 +1,11 @@
 using Microsoft.Xna.Framework;
-using Vector2 = Microsoft.Xna.Framework.Vector2;
-using ZweiHander.Graphics;
-using System;
-using ZweiHander.Graphics.SpriteStorages;
-using ZweiHander.CollisionFiles;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework.Content;
+using System;
+using System.Collections.Generic;
+using ZweiHander.CollisionFiles;
+using ZweiHander.Graphics;
+using ZweiHander.Graphics.SpriteStorages;
+using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace ZweiHander.Enemy.EnemyStorage;
 
@@ -39,7 +39,7 @@ public class Darknut : IEnemy
     readonly Random rnd = new();
 
 
-    public Darknut(EnemySprites enemySprites,ContentManager sfxPlayer,Vector2 position)
+    public Darknut(EnemySprites enemySprites, ContentManager sfxPlayer, Vector2 position)
     {
         Position = position;
         _enemySprites = enemySprites;
@@ -49,7 +49,7 @@ public class Darknut : IEnemy
         _sprites.Add(_enemySprites.DarknutMoveDown());
         _sprites.Add(_enemySprites.DarknutMoveLeft());
         Sprite = _sprites[0];
-        CollisionHandler = new EnemyCollisionHandler(this,sfxPlayer);
+        CollisionHandler = new EnemyCollisionHandler(this, sfxPlayer);
     }
     public virtual void Update(GameTime time)
     {
@@ -60,7 +60,7 @@ public class Darknut : IEnemy
         //Move according to current direction faced
         if (mov > FaceChangeCase)
         {
-            Position = EnemyHelper.BehaveFromFace(this, 1,0);
+            Position = EnemyHelper.BehaveFromFace(this, 1, 0);
         }
         //Change face and sprite to new value according to the randomized value
         else
@@ -69,7 +69,7 @@ public class Darknut : IEnemy
         }
         CollisionHandler.UpdateCollisionBox();
         Sprite.Update(time);
-        }
+    }
 
 
 

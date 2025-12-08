@@ -11,7 +11,7 @@ namespace ZweiHander.Map
         public Rectangle TriggerArea { get; }
         public Room ParentRoom { get; }
         public Area ParentArea { get; }
-        
+
         private readonly Universe _universe;
         private readonly IPlayer _player;
         private readonly Camera.Camera _camera;
@@ -28,7 +28,7 @@ namespace ZweiHander.Map
             ParentRoom = parentRoom;
             ParentArea = parentArea;
             TriggerArea = new Rectangle((int)position.X + universe.TileSize / 2 - (int)TRIGGER_AREA.X / 2, (int)position.Y + universe.TileSize / 2 - (int)TRIGGER_AREA.Y / 2, (int)TRIGGER_AREA.X, (int)TRIGGER_AREA.Y);
-            
+
             _universe = universe;
             _player = player;
             _camera = camera;
@@ -57,7 +57,7 @@ namespace ZweiHander.Map
             if (connectedPortalData.HasValue)
             {
                 Vector2 offsetDirection = Vector2.Zero;
-                switch(direction)
+                switch (direction)
                 {
                     case Direction.Up:
                         offsetDirection = new Vector2(0, -TELEPORT_OFFSET);

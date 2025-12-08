@@ -1,10 +1,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using ZweiHander.Graphics;
 using ZweiHander.Graphics.SpriteStorages;
-using ZweiHander.PlayerFiles;
-using System;
 using ZweiHander.Items.ItemStorages;
+using ZweiHander.PlayerFiles;
 
 namespace ZweiHander.HUD
 {

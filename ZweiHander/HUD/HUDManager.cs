@@ -1,8 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
-using System.Numerics;
 using ZweiHander.Graphics.SpriteStorages;
 using ZweiHander.PlayerFiles;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
@@ -33,7 +31,7 @@ namespace ZweiHander.HUD
         private const float SLIDE_SPEED = 1200f;
         private const float CLOSED_HUD_BACKGROUND_HEIGHT = 112f;
         private const float OPEN_HUD_BACKGROUND_HEIGHT = 480f;
-        
+
         public HUDManager(IPlayer player, HUDSprites hudSprites, bool hudOpen)
         {
             _player = player;
@@ -52,12 +50,12 @@ namespace ZweiHander.HUD
 
             BuildHUD();
         }
-        
+
         public void SetUniverse(Map.Universe universe)
         {
             _mapHUD?.SetUniverse(universe);
         }
-        
+
         public void SetDebugRenderer(DebugRenderer debugRenderer)
         {
             _mapHUD?.SetDebugRenderer(debugRenderer);
@@ -159,7 +157,7 @@ namespace ZweiHander.HUD
                 component.Draw(spriteBatch, hudOffset);
             }
         }
-        
+
 
         /// <summary>
         /// Helper method to create a 1x1 white pixel texture for drawing rectangles

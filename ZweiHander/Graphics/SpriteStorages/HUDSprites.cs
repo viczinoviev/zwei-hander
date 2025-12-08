@@ -30,7 +30,7 @@ public class HUDSprites : SpriteFactory
     public ISprite RedFrame() => new IdleSprite(_regions["red-frame"], _spriteBatch);
     public ISprite NormalBoomerang() => new IdleSprite(_regions["normal-boomerang"], _spriteBatch);
     public ISprite Bomb() => new IdleSprite(_regions["bomb"], _spriteBatch);
-    
+
     // Minimap sprites
     public ISprite MinimapNode(string connections)
     {
@@ -45,7 +45,7 @@ public class HUDSprites : SpriteFactory
     public ISprite MinimapUpper() => new IdleSprite(_regions["minimap-upper"], _spriteBatch);
     public ISprite MinimapLower() => new IdleSprite(_regions["minimap-lower"], _spriteBatch);
     public ISprite MinimapBoth() => new IdleSprite(_regions["minimap-both"], _spriteBatch);
-    
+
     public ISprite MapPlayer() => new IdleSprite(_regions["map-player"], _spriteBatch);
     public ISprite MinimapPlayer() => new IdleSprite(_regions["minimap-player"], _spriteBatch);
     public ISprite MinimapTriforce() => new IdleSprite(_regions["minimap-triforce"], _spriteBatch);
