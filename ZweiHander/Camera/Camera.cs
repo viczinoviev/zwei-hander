@@ -66,7 +66,7 @@ namespace ZweiHander.Camera
         {
             _isOverridden = true;
             _overrideStartPosition = Position;
-            _overrideTargetPosition = targetWorldPosition - new Vector2(Viewport.Width / 2f, Viewport.Height / 2f);
+            _overrideTargetPosition = targetWorldPosition - new Vector2(BaseWidth / 2f, BaseHeight / 2f);
             _overrideElapsedTime = 0f;
             _overrideDuration = duration;
         }
