@@ -301,8 +301,9 @@ namespace ZweiHander
                 );
 
                 _universe.Draw();
-                _gamePlayer.Draw(_spriteBatch);
                 _kirby.Draw();
+                _gamePlayer.Draw(_spriteBatch);
+                
 
                 _debugRenderer.DrawWorldDebug(_spriteBatch, _universe);
 

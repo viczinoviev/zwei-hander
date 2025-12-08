@@ -25,6 +25,7 @@ namespace ZweiHander.FriendlyNPC
             _player = player;
             _enemyManager = enemyManager;
             _kirbySprite = kirbySprites.Kirby();
+            _kirbySprite.Scale = new Vector2(1.25f, 1.25f);
             Position = startPosition;
         }
 
