@@ -11,6 +11,6 @@ public class BluePotion : AbstractItem
         : base(itemConstructor)
     {
         Sprites = [itemConstructor.TreasureSprites.PotionBlue()];
-        Setup(itemConstructor);
+        Setup();
     }
 }

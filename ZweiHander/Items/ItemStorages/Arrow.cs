@@ -17,7 +17,7 @@ public class Arrow : AbstractItem
         : base(itemConstructor)
     {
         Sprites = [itemConstructor.ItemSprites.Arrow(Velocity), itemConstructor.ItemSprites.ProjectileOnHit()];
-        Setup(itemConstructor);
+        Setup();
     }
 
     public override void Update(GameTime gameTime)

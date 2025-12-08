@@ -10,6 +10,6 @@ public class Bow : AbstractItem
         : base(itemConstructor)
     {
         Sprites = [itemConstructor.TreasureSprites.Bow()];
-        Setup(itemConstructor);
+        Setup();
     }
 }

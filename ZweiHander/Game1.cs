@@ -19,7 +19,7 @@ namespace ZweiHander
     {
         //Hey team!
         // Hey hows it going?
-        private IGameState _gameState;
+        private GameState _gameState;
         public bool gamePaused = false;
         public HUDManager HUDManager => _hudManager;
         readonly private GraphicsDeviceManager _graphics;
@@ -134,7 +134,7 @@ namespace ZweiHander
             _gamePlayer = new Player(this, _linkSprites, _itemSprites, _treasureSprites, Content);
             _kirbySprites = new KirbySprites(Content, _spriteBatch);
 
-            SetCameraCommand moveCameraToPlayer = new SetCameraCommand(_camera, _gamePlayer);
+            SetCameraCommand moveCameraToPlayer = new(_camera, _gamePlayer);
             moveCameraToPlayer.Execute();
 
             // Universe creates its own manager instances
@@ -146,7 +146,6 @@ namespace ZweiHander
                 _treasureSprites,
                 new BlockSprites(Content, _spriteBatch),
                 _linkSprites,
-                _kirbySprites,
                 Content,
                 _camera
             );
@@ -210,7 +209,7 @@ namespace ZweiHander
             }
             else if (_gameState.CurrentMode == GameMode.GameOver)
             {
-                _gameOverScreen.Update(gameTime);
+                _gameOverScreen.Update();
 
                 if (_gameOverScreen.ShouldQuit())
                 {
@@ -223,7 +222,7 @@ namespace ZweiHander
             }
             else if (_gameState.CurrentMode == GameMode.GameWon)
             {
-                _gameWonScreen.Update(gameTime);
+                _gameWonScreen.Update();
 
                 if (_gameWonScreen.ShouldQuit())
                 {

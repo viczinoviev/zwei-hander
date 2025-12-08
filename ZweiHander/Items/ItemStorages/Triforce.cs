@@ -11,6 +11,6 @@ public class Triforce : AbstractItem
         : base(itemConstructor)
     {
         Sprites = [itemConstructor.TreasureSprites.Triforce()];
-        Setup(itemConstructor);
+        Setup();
     }
 }

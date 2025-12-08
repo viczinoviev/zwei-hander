@@ -27,7 +27,7 @@ namespace ZweiHander.Map
             Position = position;
             ParentRoom = parentRoom;
             ParentArea = parentArea;
-            TriggerArea = new Rectangle((int)position.X + universe.TileSize / 2 - (int)TRIGGER_AREA.X / 2, (int)position.Y + universe.TileSize / 2 - (int)TRIGGER_AREA.Y / 2, (int)TRIGGER_AREA.X, (int)TRIGGER_AREA.Y);
+            TriggerArea = new Rectangle((int)position.X + (universe.TileSize / 2) - ((int)TRIGGER_AREA.X / 2), (int)position.Y + (universe.TileSize / 2) - ((int)TRIGGER_AREA.Y / 2), (int)TRIGGER_AREA.X, (int)TRIGGER_AREA.Y);
 
             _universe = universe;
             _player = player;
@@ -41,7 +41,7 @@ namespace ZweiHander.Map
             _collisionHandler.Dead = true;
         }
 
-        public void Update(GameTime gameTime)
+        public static void Update()
         {
 
         }

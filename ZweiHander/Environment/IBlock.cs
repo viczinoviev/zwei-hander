@@ -1,7 +1,4 @@
 namespace ZweiHander.Environment
 {
-    public interface IBlock
-    {
-
-    }
+    public interface IBlock;
 }

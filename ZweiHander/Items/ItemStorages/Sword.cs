@@ -18,7 +18,7 @@ public class Sword : AbstractItem
     {
         Sprites = [itemConstructor.ItemSprites.SwordProjectile(Velocity),
             itemConstructor.ItemSprites.SwordProjectileEffect(Velocity)];
-        Setup(itemConstructor);
+        Setup();
     }
 
     public override void Update(GameTime gameTime)

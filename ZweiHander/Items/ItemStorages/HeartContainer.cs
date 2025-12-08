@@ -11,6 +11,6 @@ public class HeartContainer : AbstractItem
         : base(itemConstructor)
     {
         Sprites = [itemConstructor.TreasureSprites.HeartContainer()];
-        Setup(itemConstructor);
+        Setup();
     }
 }

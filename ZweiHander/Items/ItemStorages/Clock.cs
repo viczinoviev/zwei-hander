@@ -11,6 +11,6 @@ public class Clock : AbstractItem
         : base(itemConstructor)
     {
         Sprites = [itemConstructor.TreasureSprites.Clock()];
-        Setup(itemConstructor);
+        Setup();
     }
 }

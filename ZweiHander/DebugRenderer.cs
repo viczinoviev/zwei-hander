@@ -8,7 +8,7 @@ namespace ZweiHander
     public class DebugRenderer
     {
         private Texture2D _debugTexture;
-        private System.Collections.Generic.List<Rectangle> _clickableRectangles = new();
+        private readonly System.Collections.Generic.List<Rectangle> _clickableRectangles = [];
 
         public bool ShowCollisionBoxes { get; set; } = false;
         public bool ShowRoomBounds { get; set; } = false;
@@ -20,7 +20,7 @@ namespace ZweiHander
             if (_debugTexture == null)
             {
                 _debugTexture = new Texture2D(graphicsDevice, 1, 1);
-                _debugTexture.SetData(new[] { Color.White });
+                _debugTexture.SetData([Color.White]);
             }
         }
 
@@ -66,7 +66,7 @@ namespace ZweiHander
 
             Color fillColor = Color.Cyan * 0.3f;
             Color outlineColor = Color.Cyan * 0.8f;
-            int thickness = 2;
+            const int thickness = 2;
 
             foreach (var rect in _clickableRectangles)
             {
@@ -87,7 +87,7 @@ namespace ZweiHander
 
             foreach (var collider in CollisionManager.Instance.GetAllColliders())
             {
-                if (collider == null || collider.Dead)
+                if (collider?.Dead != false)
                     continue;
 
                 spriteBatch.Draw(_debugTexture, collider.CollisionBox, debugColor);
@@ -98,7 +98,7 @@ namespace ZweiHander
         {
             if (_debugTexture == null || !room.IsLoaded) return;
 
-            Rectangle bounds = new Rectangle(
+            Rectangle bounds = new(
                 (int)room.Position.X,
                 (int)room.Position.Y,
                 (int)room.Size.X,
@@ -107,7 +107,7 @@ namespace ZweiHander
 
             Color fillColor = Color.Lime * 0.3f;
             Color outlineColor = Color.Lime * 0.8f;
-            int thickness = 2;
+            const int thickness = 2;
 
             spriteBatch.Draw(_debugTexture, bounds, fillColor);
 
@@ -121,23 +121,23 @@ namespace ZweiHander
         {
             if (_debugTexture == null) return;
 
-            int gridSize = 32;
-            int dotSize = 2;
-            int gridRange = 20;
+            const int gridSize = 32;
+            const int dotSize = 2;
+            const int gridRange = 20;
 
             for (int y = -gridRange; y <= gridRange; y++)
             {
-                Rectangle dot = new Rectangle(0 - dotSize / 2, y * gridSize - dotSize / 2, dotSize, dotSize);
+                Rectangle dot = new(0 - (dotSize / 2), (y * gridSize) - (dotSize / 2), dotSize, dotSize);
                 spriteBatch.Draw(_debugTexture, dot, Color.Yellow);
             }
 
             for (int x = -gridRange; x <= gridRange; x++)
             {
-                Rectangle dot = new Rectangle(x * gridSize - dotSize / 2, 0 - dotSize / 2, dotSize, dotSize);
+                Rectangle dot = new((x * gridSize) - (dotSize / 2), 0 - (dotSize / 2), dotSize, dotSize);
                 spriteBatch.Draw(_debugTexture, dot, Color.Yellow);
             }
 
-            Rectangle origin = new Rectangle(-4, -4, 8, 8);
+            Rectangle origin = new(-4, -4, 8, 8);
             spriteBatch.Draw(_debugTexture, origin, Color.Green);
         }
     }

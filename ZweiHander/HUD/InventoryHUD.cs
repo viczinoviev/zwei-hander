@@ -92,10 +92,6 @@ namespace ZweiHander.HUD
         /// </summary>
         private readonly List<ISprite> _itemSprites;
         /// <summary>
-        /// Number of permanents that CAN be displayed
-        /// </summary>
-        private readonly int _orderedPermanentCount = Enum.GetNames(typeof(OrderedPermanent)).Length;
-        /// <summary>
         /// Number of usables that CAN be displayed
         /// </summary>
         private readonly int _orderedUsableCount = Enum.GetNames(typeof(OrderedUsable)).Length;
@@ -110,7 +106,7 @@ namespace ZweiHander.HUD
             _inventoryDisplayHUD = hudSprites.InventoryDisplay();
             _redFrameHUD = hudSprites.RedFrame();
             _position = position; // Position is determined by HUDManager
-            _relativePosition = position - new Vector2(_inventoryDisplayHUD.Width, _inventoryDisplayHUD.Height) / 2;
+            _relativePosition = position - (new Vector2(_inventoryDisplayHUD.Width, _inventoryDisplayHUD.Height) / 2);
             _player = player;
 
             _acquiredItems = [.. Enumerable.Repeat(false, _orderedItemCount)];

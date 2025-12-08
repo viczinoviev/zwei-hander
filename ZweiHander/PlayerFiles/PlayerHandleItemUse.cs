@@ -8,34 +8,23 @@ using ZweiHander.Items.ItemStorages;
 
 namespace ZweiHander.PlayerFiles
 {
-    public class PlayerHandleItemUse
+    public class PlayerHandleItemUse(Player player, PlayerStateMachine stateMachine, PlayerCollisionHandler collisionHandler, ContentManager content)
     {
-        private readonly Player _player;
-        private readonly PlayerStateMachine _stateMachine;
-        private readonly PlayerCollisionHandler _collisionHandler;
-        private readonly List<SoundEffect> _sounds;
-
-        public PlayerHandleItemUse(Player player, PlayerStateMachine stateMachine, PlayerCollisionHandler collisionHandler, ContentManager content)
-        {
-            _player = player;
-            _stateMachine = stateMachine;
-            _collisionHandler = collisionHandler;
-            _sounds = [
+        private readonly List<SoundEffect> _sounds = [
                 content.Load<SoundEffect>("Audio/SwordAttack"),
                 content.Load<SoundEffect>("Audio/Fireball")
             ];
-        }
 
         public float HandleItemUse(UsableItem itemInput)
         {
             float actionDuration = 0f;
-            Vector2 itemPosition = _player.Position;
-            Vector2 itemVelocity = _stateMachine.LastDirection * 300f;
-            if (itemInput == UsableItem.Bow && _player.InventoryCount(typeof(Bow)) > 0)
+            Vector2 itemPosition = player.Position;
+            Vector2 itemVelocity = stateMachine.LastDirection * 300f;
+            if (itemInput == UsableItem.Bow && player.InventoryCount(typeof(Bow)) > 0)
             {
                 actionDuration = 1000f;
                 _sounds[0].Play();
-                _player.ItemManager.GetItem(
+                player.ItemManager.GetItem(
                     "Arrow",
                     life: 1.1,
                     position: itemPosition,
@@ -49,7 +38,7 @@ namespace ZweiHander.PlayerFiles
             {
                 actionDuration = 800f;
                 _sounds[0].Play();
-                _player.ItemManager.GetItem(
+                player.ItemManager.GetItem(
                     "Boomerang",
                     life: -1f,
                     position: itemPosition,
@@ -57,31 +46,31 @@ namespace ZweiHander.PlayerFiles
                     acceleration: -itemVelocity * 0.9f,
                     properties: [ItemProperty.DeleteOnBlock,
                          ItemProperty.CanDamageEnemy],
-                    extras: [() => _player.Position, _collisionHandler]
+                    extras: [() => player.Position, collisionHandler]
                 );
             }
             else if (itemInput == UsableItem.Bomb)
             {
                 actionDuration = 300f;
                 _sounds[0].Play();
-                if (_player.InventoryCount(typeof(Bomb)) > 0)
+                if (player.InventoryCount(typeof(Bomb)) > 0)
                 {
-                    _player.ItemManager.GetItem(
+                    player.ItemManager.GetItem(
                         "Bomb",
                         life: 3.3f,
-                        position: itemPosition + _stateMachine.LastDirection * 30f,
+                        position: itemPosition + (stateMachine.LastDirection * 30f),
                         velocity: Vector2.Zero,
                         acceleration: Vector2.Zero
                     );
-                    _player.Inventory[typeof(Bomb)]--;
+                    player.Inventory[typeof(Bomb)]--;
                 }
 
             }
-            else if (itemInput == UsableItem.RedCandle && _player.InventoryCount(typeof(RedCandle)) > 0)
+            else if (itemInput == UsableItem.RedCandle && player.InventoryCount(typeof(RedCandle)) > 0)
             {
                 actionDuration = 1000f;
                 _sounds[1].Play();
-                _player.ItemManager.GetItem(
+                player.ItemManager.GetItem(
                     "Fire",
                     life: 6f,
                     position: itemPosition,

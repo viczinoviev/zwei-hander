@@ -32,9 +32,9 @@ namespace ZweiHander.Map
         private readonly Universe _universe = universe;
         private Rectangle Bounds = new((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
 
-        public Boolean hasTriforce()
+        public Boolean HasTriforce()
         {
-            foreach (var (itemType, position, itemPointer) in _itemData)
+            foreach (var (itemType, _, _) in _itemData)
             {
                 if (itemType == "Triforce")
                 {
@@ -101,9 +101,9 @@ namespace ZweiHander.Map
 
             for (int i = 0; i < _borderData.Count; i++)
             {
-                var (borderName, position, borderPointer) = _borderData[i];
+                var (borderName, position, _) = _borderData[i];
                 Vector2 adjustedPosition = position + new Vector2(offsetInTiles.X * _universe.TileSize, offsetInTiles.Y * _universe.TileSize);
-                borderPointer = _universe.BorderFactory.CreateBorder(borderName, adjustedPosition);
+                Border borderPointer = _universe.BorderFactory.CreateBorder(borderName, adjustedPosition);
                 _borderData[i] = (borderName, position, borderPointer);
             }
 
@@ -117,9 +117,9 @@ namespace ZweiHander.Map
 
             for (int i = 0; i < _itemData.Count; i++)
             {
-                var (itemType, position, itemPointer) = _itemData[i];
+                var (itemType, position, _) = _itemData[i];
                 Vector2 adjustedPosition = position + new Vector2(offsetInTiles.X * _universe.TileSize, offsetInTiles.Y * _universe.TileSize);
-                itemPointer = _universe.ItemManager.GetItem(itemType, -1, adjustedPosition);
+                IItem itemPointer = _universe.ItemManager.GetItem(itemType, -1, adjustedPosition);
                 switch (itemType)
                 {
                     case "Fairy":

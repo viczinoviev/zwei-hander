@@ -27,15 +27,18 @@ public class Bomb : AbstractItem
     /// <summary>
     /// How to scale Wiggle based upon life
     /// </summary>
-    private double WiggleScalar { get; set; } = 0.05;
+    private double WiggleScalar { get; } = 0.05;
 
     public Bomb(ItemConstructor itemConstructor)
         : base(itemConstructor)
     {
         Sprites = [itemConstructor.ItemSprites.Bomb(), itemConstructor.ItemSprites.Explosion()];
         Sprites[1].Scale = new(10, 10);
-        Setup(itemConstructor);
-        if (Life < 0) AddProperty(ItemProperty.CanBePickedUp);
+        Setup();
+        if (Life < 0)
+        {
+            AddProperty(ItemProperty.CanBePickedUp);
+        }
         else
         {
             Wiggle = WiggleScalar * Life;

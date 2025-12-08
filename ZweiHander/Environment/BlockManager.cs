@@ -6,13 +6,15 @@ using ZweiHander.Graphics.SpriteStorages;
 
 namespace ZweiHander.Environment
 {
-    public class BlockManager
+    /// <summary>
+    /// Constructor initializes the factory with a tile size and block sprite storage
+    ///</summary>
+    public class BlockManager(int tileSize, BlockSprites blockSprites, PlayerSprites playerSprites)
     {
-        private readonly int _tileSize; // Size of each block in pixels
-        private readonly BlockSprites _blockSprites; // Reference to sprite storage for blocks
+        private readonly BlockSprites _blockSprites = blockSprites ?? throw new ArgumentNullException(nameof(blockSprites)); // Reference to sprite storage for blocks
         //temp
-        private readonly PlayerSprites _playerSprites;
-        public List<Block> BlockMap { get; private set; } // Stores all blocks
+        private readonly PlayerSprites _playerSprites = playerSprites ?? throw new ArgumentNullException(nameof(playerSprites));
+        public List<Block> BlockMap { get; } = []; // Initialize map list
 
         /// <summary>
         /// Maps block names to their logic type (Solid, Pushable, Breakable, Decorative)
@@ -32,16 +34,6 @@ namespace ZweiHander.Environment
             { BlockName.LadderTile, BlockType.Decorative },
             { BlockName.TunnelTile, BlockType.Decorative }
         };
-        /// <summary>
-        /// Constructor initializes the factory with a tile size and block sprite storage
-        ///</summary>
-        public BlockManager(int tileSize, BlockSprites blockSprites, PlayerSprites playerSprites)
-        {
-            _tileSize = tileSize; // Set tile size
-            _blockSprites = blockSprites ?? throw new ArgumentNullException(nameof(blockSprites)); // Store sprite storage
-            _playerSprites = playerSprites ?? throw new ArgumentNullException(nameof(playerSprites));
-            BlockMap = new List<Block>(); // Initialize map list
-        }
 
         /// <summary>
         /// Creates a new block given its name and position on the grid
@@ -53,66 +45,25 @@ namespace ZweiHander.Environment
         {
             // Lookup the BlockType from the dictionary
             BlockType blockType = BlockNameToType[name];
-            ISprite sprite; // Will store the sprite for this block
-
-            // Choose which sprite to use based on block name
-            switch (name)
+            ISprite sprite = name switch
             {
-                case BlockName.SolidCyanTile:
-                    sprite = _blockSprites.SolidCyanTile();
-                    break;
-
-                case BlockName.BlockTile:
-                    sprite = _blockSprites.BlockTile();
-                    break;
-
-                case BlockName.StatueTile1:
-                    sprite = _blockSprites.StatueTile1();
-                    break;
-
-                case BlockName.StatueTile2:
-                    sprite = _blockSprites.StatueTile2();
-                    break;
-
-                case BlockName.SolidBlackTile:
-                    sprite = _blockSprites.SolidBlackTile();
-                    break;
-
-                case BlockName.TexturedTile:
-                    sprite = _blockSprites.TexturedTile();
-                    break;
-
-                case BlockName.StairTile:
-                    sprite = _blockSprites.StairTile();
-                    break;
-
-                case BlockName.BrickTile:
-                    sprite = _blockSprites.BrickTile();
-                    break;
-
-                case BlockName.WhitePatternTile:
-                    sprite = _blockSprites.WhitePatternTile();
-                    break;
-
-                case BlockName.FireTile:
-                    sprite = _playerSprites.Fire();
-                    break;
-
-                case BlockName.LadderTile:
-                    sprite = _playerSprites.Ladder();
-                    break;
-
-                case BlockName.TunnelTile:
-                    sprite = _blockSprites.TunnelTile();
-                    break;
-
-                default:
-                    sprite = _blockSprites.SolidCyanTile();
-                    break;
-            }
+                BlockName.SolidCyanTile => _blockSprites.SolidCyanTile(),
+                BlockName.BlockTile => _blockSprites.BlockTile(),
+                BlockName.StatueTile1 => _blockSprites.StatueTile1(),
+                BlockName.StatueTile2 => _blockSprites.StatueTile2(),
+                BlockName.SolidBlackTile => _blockSprites.SolidBlackTile(),
+                BlockName.TexturedTile => _blockSprites.TexturedTile(),
+                BlockName.StairTile => _blockSprites.StairTile(),
+                BlockName.BrickTile => _blockSprites.BrickTile(),
+                BlockName.WhitePatternTile => _blockSprites.WhitePatternTile(),
+                BlockName.FireTile => _playerSprites.Fire(),
+                BlockName.LadderTile => _playerSprites.Ladder(),
+                BlockName.TunnelTile => _blockSprites.TunnelTile(),
+                _ => _blockSprites.SolidCyanTile(),
+            };
 
             // Create the block with its type, position, size, and sprite
-            Block newBlock = new Block(name, blockType, gridPosition, _tileSize, sprite);
+            Block newBlock = new(name, blockType, gridPosition, tileSize, sprite);
 
             // Store blocks in a map
             BlockMap.Add(newBlock);

@@ -24,8 +24,7 @@ namespace ZweiHander.Map
             Area area = new(areaName);
             _currentArea = area;
 
-            int lineIndex = 0;
-            while (lineIndex < lines.Length)
+            for (int lineIndex = 0; lineIndex < lines.Length; lineIndex++)
             {
                 string line = lines[lineIndex].Trim();
 
@@ -47,11 +46,11 @@ namespace ZweiHander.Map
                             if (roomField[i] == ')') parenDepth--;
                             if (roomField[i] == ',' && parenDepth == 0)
                             {
-                                roomParts.Add(roomField.Substring(lastSplit, i - lastSplit).Trim());
+                                roomParts.Add(roomField[lastSplit..i].Trim());
                                 lastSplit = i + 1;
                             }
                         }
-                        roomParts.Add(roomField.Substring(lastSplit).Trim());
+                        roomParts.Add(roomField[lastSplit..].Trim());
 
                         if (roomParts.Count > 0 && roomParts[0].StartsWith("room."))
                         {
@@ -64,7 +63,7 @@ namespace ZweiHander.Map
                                 if (roomParts.Count >= 2)
                                 {
                                     string posStr = roomParts[1].Trim();
-                                    if (posStr.StartsWith("(") && posStr.EndsWith(")"))
+                                    if (posStr.StartsWith('(') && posStr.EndsWith(')'))
                                     {
                                         string coords = posStr.Trim('(', ')');
                                         string[] coordParts = coords.Split(',');
@@ -88,7 +87,6 @@ namespace ZweiHander.Map
                         }
                     }
                 }
-                lineIndex++;
             }
 
             _currentArea = null;

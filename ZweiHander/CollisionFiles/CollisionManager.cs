@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 namespace ZweiHander.CollisionFiles
 {
-    public class CollisionManager : ICollisionManager
+    public sealed class CollisionManager : ICollisionManager
     {
         private static CollisionManager _instance;
         private static readonly object _lock = new();
@@ -36,7 +36,7 @@ namespace ZweiHander.CollisionFiles
         {
             for (int i = colliders.Count - 1; i >= 0; i--)
             {
-                if (colliders[i].Dead == true || colliders[i] == null)
+                if (colliders[i].Dead || colliders[i] == null)
                 {
                     colliders.RemoveAt(i);
                 }
@@ -63,8 +63,8 @@ namespace ZweiHander.CollisionFiles
         {
             Rectangle intersection = Rectangle.Intersect(movingRect, staticRect);
             Vector2 intersectionCenter = new(
-                intersection.X + intersection.Width / 2f,
-                intersection.Y + intersection.Height / 2f
+                intersection.X + (intersection.Width / 2f),
+                intersection.Y + (intersection.Height / 2f)
             );
 
             Direction normal;
@@ -140,7 +140,7 @@ namespace ZweiHander.CollisionFiles
         {
             for (int i = colliders.Count - 1; i >= 0; i--)
             {
-                if (colliders[i] == null || colliders[i].Dead)
+                if (colliders[i]?.Dead != false)
                 {
                     colliders.RemoveAt(i);
                 }
@@ -180,7 +180,7 @@ namespace ZweiHander.CollisionFiles
 
             foreach (var collider in colliders)
             {
-                if (collider == null || collider.Dead)
+                if (collider?.Dead != false)
                     continue;
 
                 if (testBox.Intersects(collider.CollisionBox))

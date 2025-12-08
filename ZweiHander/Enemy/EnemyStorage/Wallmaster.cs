@@ -97,8 +97,8 @@ public class Wallmaster : IEnemy
     {
         // Sprites are centered
         return new Rectangle(
-                (int)Position.X - Sprite.Width / CollisionBoxOffset,
-                (int)Position.Y - Sprite.Height / CollisionBoxOffset,
+                (int)Position.X - (Sprite.Width / CollisionBoxOffset),
+                (int)Position.Y - (Sprite.Height / CollisionBoxOffset),
                 Sprite.Width,
                 Sprite.Height
         );

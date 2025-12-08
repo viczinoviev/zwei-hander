@@ -18,14 +18,6 @@ namespace ZweiHander.Map
             return portal;
         }
 
-        public void Update(GameTime gameTime)
-        {
-            foreach (var portal in _activeLockedEntrance)
-            {
-                portal.Update(gameTime);
-            }
-        }
-
         public void Clear()
         {
             foreach (var portal in _activeLockedEntrance)

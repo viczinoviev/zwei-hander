@@ -44,10 +44,9 @@ public class EnemyManager(EnemySprites enemysprites, ItemManager projectileManag
     /// <summary>
     /// Creates a new Enemy.
     /// </summary>
-    /// <param name="EnemyName">What enemy to get.</param>
+    /// <param name="enemyName">What enemy to get.</param>
     /// <param name="position">The enemies starting position.</param>
     /// <param name="face">The enemies intial facing direction</param>
-    /// <param name="throw">Whether or not the enemy shoots projectiles/is shooting</param> 
     /// <returns>The desired item.</returns>
     public IEnemy GetEnemy(String enemyName, Vector2 position, int face = default)
     {
@@ -149,5 +148,5 @@ public class EnemyManager(EnemySprites enemysprites, ItemManager projectileManag
         return currentEnemies.Contains(enemy);
     }
 
-    public IReadOnlyList<IEnemy> currentEnemiesPub => currentEnemies;
+    public IReadOnlyList<IEnemy> CurrentEnemiesPub => currentEnemies;
 }

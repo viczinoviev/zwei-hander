@@ -14,6 +14,7 @@ namespace ZweiHander.Enemy.EnemyStorage;
 /// </summary>
 public class Dodongo : IEnemy
 {
+
     private const int EnemyStartHealth = 50;
     private const int FaceChangeChance = 200;
     private const int FaceChangeCase = 3;
@@ -94,8 +95,8 @@ public class Dodongo : IEnemy
     {
         // Sprites are centered
         return new Rectangle(
-                (int)Position.X - Sprite.Width / CollisionBoxOffset,
-                (int)Position.Y - Sprite.Height / CollisionBoxOffset,
+                (int)Position.X - (Sprite.Width / CollisionBoxOffset),
+                (int)Position.Y - (Sprite.Height / CollisionBoxOffset),
                 Sprite.Width,
                 Sprite.Height
         );

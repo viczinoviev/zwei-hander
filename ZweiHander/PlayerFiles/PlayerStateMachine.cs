@@ -8,8 +8,8 @@ namespace ZweiHander.PlayerFiles
     {
         private readonly Player _player;
         private PlayerHandler _playerHandler;
-        private PlayerHandleItemUse _itemUseHandler;
-        private PlayerCollisionHandler _collisionHandler;
+        private readonly PlayerHandleItemUse _itemUseHandler;
+        private readonly PlayerCollisionHandler _collisionHandler;
         private PlayerState _currentState = PlayerState.Idle;
         private Vector2 _lastDirection = Vector2.UnitY; // Default facing down
         private Vector2 _currentMovementVector = Vector2.Zero;
@@ -105,10 +105,10 @@ namespace ZweiHander.PlayerFiles
             Vector2 movement = Vector2.Zero;
             var inputBuffer = _player.InputBuffer;
 
-            if (inputBuffer.Contains(PlayerInput.MovingUp)) movement.Y -= 1;
-            if (inputBuffer.Contains(PlayerInput.MovingDown)) movement.Y += 1;
-            if (inputBuffer.Contains(PlayerInput.MovingLeft)) movement.X -= 1;
-            if (inputBuffer.Contains(PlayerInput.MovingRight)) movement.X += 1;
+            if (inputBuffer.Contains(PlayerInput.MovingUp)) movement.Y--;
+            if (inputBuffer.Contains(PlayerInput.MovingDown)) movement.Y++;
+            if (inputBuffer.Contains(PlayerInput.MovingLeft)) movement.X--;
+            if (inputBuffer.Contains(PlayerInput.MovingRight)) movement.X++;
 
             // Normalize diagonal movement
             if (movement != Vector2.Zero)

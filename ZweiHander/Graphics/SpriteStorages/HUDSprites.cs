@@ -39,7 +39,7 @@ public class HUDSprites : SpriteFactory
         {
             key += "-" + connections.ToLower();
         }
-        return _regions.ContainsKey(key) ? new IdleSprite(_regions[key], _spriteBatch) : new IdleSprite(_regions["map-node"], _spriteBatch);
+        return _regions.TryGetValue(key, out TextureRegion value) ? new IdleSprite(value, _spriteBatch) : new IdleSprite(_regions["map-node"], _spriteBatch);
     }
 
     public ISprite MinimapUpper() => new IdleSprite(_regions["minimap-upper"], _spriteBatch);

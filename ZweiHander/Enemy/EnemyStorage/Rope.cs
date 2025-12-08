@@ -58,7 +58,7 @@ public class Rope : IEnemy
     {
         if (Face == 1 || Face == FaceLeft)
         {
-            Sprite = _sprites[(Face * FaceChangeHelper1 + 1) % FaceChangeHelper2];
+            Sprite = _sprites[((Face * FaceChangeHelper1) + 1) % FaceChangeHelper2];
         }
         //Randomize  movement
         int mov = rnd.Next(FaceChangeChance);
@@ -98,8 +98,8 @@ public class Rope : IEnemy
     {
         // Sprites are centered
         return new Rectangle(
-                (int)Position.X - Sprite.Width / CollisionBoxOffset,
-                (int)Position.Y - Sprite.Height / CollisionBoxOffset,
+                (int)Position.X - (Sprite.Width / CollisionBoxOffset),
+                (int)Position.Y - (Sprite.Height / CollisionBoxOffset),
                 Sprite.Width,
                 Sprite.Height
         );

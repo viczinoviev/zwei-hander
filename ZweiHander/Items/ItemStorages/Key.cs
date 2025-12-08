@@ -11,6 +11,6 @@ public class Key : AbstractItem
         : base(itemConstructor)
     {
         Sprites = [itemConstructor.TreasureSprites.Key()];
-        Setup(itemConstructor);
+        Setup();
     }
 }

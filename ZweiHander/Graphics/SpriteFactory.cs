@@ -82,7 +82,7 @@ public abstract class SpriteFactory
     /// <param name="content">The content manager.</param>
     /// <param name="fileName">The path to the xml file, relative to the content root directory.</param>
     /// <returns>The root element of the XML document.</returns>
-    private XElement LoadXmlDocument(ContentManager content, string fileName)
+    private static XElement LoadXmlDocument(ContentManager content, string fileName)
     {
         string filePath = Path.Combine(content.RootDirectory, fileName);
 

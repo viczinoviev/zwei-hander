@@ -13,6 +13,6 @@ public class Fireball : AbstractItem
         : base(itemConstructor)
     {
         Sprites = [itemConstructor.BossSprites.AquamentusProjectile()];
-        Setup(itemConstructor);
+        Setup();
     }
 }

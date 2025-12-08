@@ -15,16 +15,14 @@ namespace ZweiHander.HUD
         private readonly HUDSprites _hudSprites;
         private Universe _universe;
 
-        private readonly HashSet<int> _exploredRoomNumbers = new();
-        private readonly HashSet<Point> _allRoomPositions = new();
+        private readonly HashSet<int> _exploredRoomNumbers = [];
+        private readonly HashSet<Point> _allRoomPositions = [];
 
         private MapTeleport _mapTeleport;
         private Vector2 _lastDrawOffset = Vector2.Zero;
 
         // Minimap layout constants
         private const int MAP_CELL_SIZE = 16;
-        private const int MAP_GRID_WIDTH = 8;
-        private const int MAP_GRID_HEIGHT = 8;
         private readonly Vector2 MAP_OFFSET = new(8, 48);
 
         private readonly Vector2 MINIMAP_OFFSET = new(-216, 211);
@@ -109,7 +107,7 @@ namespace ZweiHander.HUD
             }
         }
 
-        private void DrawIcon(ISprite icon, Vector2 position)
+        private static void DrawIcon(ISprite icon, Vector2 position)
         {
             icon.Draw(position);
         }
@@ -155,7 +153,7 @@ namespace ZweiHander.HUD
 
         private void DrawMinimapTriforce(Vector2 basePos, Room room)
         {
-            if (room.hasTriforce())
+            if (room.HasTriforce())
             {
                 _hudSprites.MinimapTriforce().Draw(GetMinimapNodePosition(room, basePos) + new Vector2(1, -1));
             }
@@ -166,7 +164,7 @@ namespace ZweiHander.HUD
             int screenX = room.MapPosition.X;
             int screenY = -(room.MapPosition.Y / 2);
             float yOffset = (room.MapPosition.Y % 2 != 0) ? -(MAP_CELL_SIZE / 2) : 0;
-            return basePos + MINIMAP_OFFSET + new Vector2(screenX * MAP_CELL_SIZE, screenY * MAP_CELL_SIZE + yOffset);
+            return basePos + MINIMAP_OFFSET + new Vector2(screenX * MAP_CELL_SIZE, (screenY * MAP_CELL_SIZE) + yOffset);
         }
 
         public Vector2 GetMinimapNodeSpritePosition(Room room, Vector2 basePos)
@@ -179,6 +177,9 @@ namespace ZweiHander.HUD
             return basePos + MAP_OFFSET + new Vector2(room.MapPosition.X * MAP_CELL_SIZE, -room.MapPosition.Y * MAP_CELL_SIZE);
         }
 
-        public int GetCellSize() => MAP_CELL_SIZE;
+        public static int GetCellSize()
+        {
+            return MAP_CELL_SIZE;
+        }
     }
 }

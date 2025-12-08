@@ -182,7 +182,7 @@ namespace ZweiHander.PlayerFiles
 
         public void SpawnSwordProjectile()
         {
-            Vector2 swordPosition = _player.Position + _stateMachine.LastDirection * 10f;
+            Vector2 swordPosition = _player.Position + (_stateMachine.LastDirection * 10f);
             Vector2 swordVelocity = _stateMachine.LastDirection * 400f;
 
             _player.ItemManager.GetItem(

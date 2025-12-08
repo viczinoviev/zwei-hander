@@ -11,6 +11,6 @@ public class RedCandle : AbstractItem
         : base(itemConstructor)
     {
         Sprites = [itemConstructor.TreasureSprites.CandleRed()];
-        Setup(itemConstructor);
+        Setup();
     }
 }

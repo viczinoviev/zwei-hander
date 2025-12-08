@@ -7,14 +7,9 @@ using ZweiHander.FriendlyNPC;
 
 namespace ZweiHander.Commands
 {
-    public class KirbyUltCommand : ICommand
+    public class KirbyUltCommand(Game1 game) : ICommand
     {
-        private Game1 _game;
-
-        public KirbyUltCommand(Game1 game)
-        {
-            _game = game;
-        }
+        private readonly Game1 _game = game;
 
         public void Execute()
         {

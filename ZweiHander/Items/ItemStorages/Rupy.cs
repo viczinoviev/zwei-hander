@@ -11,6 +11,6 @@ public class Rupy : AbstractItem
         : base(itemConstructor)
     {
         Sprites = [itemConstructor.TreasureSprites.Rupy()];
-        Setup(itemConstructor);
+        Setup();
     }
 }

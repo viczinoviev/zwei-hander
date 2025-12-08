@@ -32,7 +32,7 @@ namespace ZweiHander.HUD
             _previousMouseState = _currentMouseState;
             _currentMouseState = Mouse.GetState();
 
-            if (_debugRenderer != null && _debugRenderer.ShowClickableRectangles)
+            if (_debugRenderer?.ShowClickableRectangles == true)
             {
                 RenderClickableAreasForDebug(hudPosition, hudOffset);
             }
@@ -40,7 +40,7 @@ namespace ZweiHander.HUD
             if (_currentMouseState.LeftButton == ButtonState.Pressed &&
                 _previousMouseState.LeftButton == ButtonState.Released)
             {
-                Vector2 mousePosition = new Vector2(_currentMouseState.X, _currentMouseState.Y);
+                Vector2 mousePosition = new(_currentMouseState.X, _currentMouseState.Y);
                 HandleMapClick(mousePosition, hudPosition, hudOffset);
             }
         }
@@ -51,7 +51,7 @@ namespace ZweiHander.HUD
             if (_universe?.CurrentArea == null) return;
 
             Vector2 basePos = hudPosition + hudOffset;
-            int cellSize = _mapHUD.GetCellSize();
+            int cellSize = MapHUD.GetCellSize();
             int halfCell = cellSize / 2;
 
             foreach (var room in _universe.CurrentArea.GetAllRooms())
@@ -87,14 +87,14 @@ namespace ZweiHander.HUD
 
         private Room FindMinimapNodeAtMousePosition(Vector2 mousePosition, Vector2 basePos)
         {
-            int cellSize = _mapHUD.GetCellSize();
+            int cellSize = MapHUD.GetCellSize();
             int halfCell = cellSize / 2;
 
             foreach (var room in _universe.CurrentArea.GetAllRooms())
             {
                 Vector2 nodePos = _mapHUD.GetMinimapNodeSpritePosition(room, basePos);
                 int yPos = room.MapPosition.Y % 2 == 0 ? (int)nodePos.Y : (int)nodePos.Y - halfCell;
-                Rectangle nodeRect = new Rectangle((int)nodePos.X - halfCell, yPos, cellSize, halfCell);
+                Rectangle nodeRect = new((int)nodePos.X - halfCell, yPos, cellSize, halfCell);
 
                 if (nodeRect.Contains(mousePosition)) return room;
             }
@@ -103,13 +103,13 @@ namespace ZweiHander.HUD
 
         private Room FindMainMapNodeAtMousePosition(Vector2 mousePosition, Vector2 basePos)
         {
-            int cellSize = _mapHUD.GetCellSize();
+            int cellSize = MapHUD.GetCellSize();
             int halfCell = cellSize / 2;
 
             foreach (var room in _universe.CurrentArea.GetAllRooms())
             {
                 Vector2 nodePos = _mapHUD.GetMapNodePosition(room, basePos);
-                Rectangle nodeRect = new Rectangle((int)nodePos.X - halfCell, (int)nodePos.Y - halfCell, cellSize, cellSize);
+                Rectangle nodeRect = new((int)nodePos.X - halfCell, (int)nodePos.Y - halfCell, cellSize, cellSize);
                 if (nodeRect.Contains(mousePosition)) return room;
             }
             return null;

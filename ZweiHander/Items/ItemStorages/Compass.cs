@@ -11,6 +11,6 @@ public class Compass : AbstractItem
         : base(itemConstructor)
     {
         Sprites = [itemConstructor.TreasureSprites.Compass()];
-        Setup(itemConstructor);
+        Setup();
     }
 }

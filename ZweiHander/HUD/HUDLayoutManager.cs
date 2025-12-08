@@ -3,11 +3,9 @@ using Microsoft.Xna.Framework;
 namespace ZweiHander.HUD
 {
     // Encapsulates all HUD component position calculations
-    public class HUDLayoutManager
+    public class HUDLayoutManager(int screenWidth, int screenHeight)
     {
-        private readonly int _screenWidth;
-        private readonly int _screenHeight;
-        private readonly int _screenCenterX;
+        private readonly int _screenCenterX = screenWidth / 2;
 
         // HUD layout constants
         private const int HEADS_UP_HUD_Y = 56;
@@ -22,14 +20,7 @@ namespace ZweiHander.HUD
         private const int MAP_HUD_OPEN_Y = 245;
 
         // Distance components travel during open/close animation
-        public int OpenHUDAnimationOffset => _screenHeight - UNPAUSED_BACKGROUND_HEIGHT;
-
-        public HUDLayoutManager(int screenWidth, int screenHeight)
-        {
-            _screenWidth = screenWidth;
-            _screenHeight = screenHeight;
-            _screenCenterX = screenWidth / 2;
-        }
+        public int OpenHUDAnimationOffset => screenHeight - UNPAUSED_BACKGROUND_HEIGHT;
 
         // Always-visible HUD at top
         public Vector2 GetHeadsUpHUDPosition() => new(_screenCenterX, HEADS_UP_HUD_Y);

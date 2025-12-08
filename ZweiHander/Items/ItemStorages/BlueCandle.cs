@@ -11,6 +11,6 @@ public class BlueCandle : AbstractItem
         : base(itemConstructor)
     {
         Sprites = [itemConstructor.TreasureSprites.CandleBlue()];
-        Setup(itemConstructor);
+        Setup();
     }
 }

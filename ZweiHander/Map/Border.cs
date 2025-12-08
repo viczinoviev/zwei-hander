@@ -7,7 +7,6 @@ namespace ZweiHander.Map
 {
     public class Border
     {
-        private readonly BorderType _borderType;
         private readonly Vector2 _position; // Upper-left corner position (covers 2x2 grid cells)
         private readonly int _tileSize; // 32 pixels
         private bool collision = true;
@@ -15,13 +14,13 @@ namespace ZweiHander.Map
         private readonly ISprite _sprite;
         private readonly List<BlockCollisionHandler> _collisionHandlers;
 
-        public BorderType BorderType => _borderType;
-        public BorderName Name { get; private set; }
+        public BorderType BorderType { get; }
+        public BorderName Name { get; }
 
         public Border(BorderName name, BorderType borderType, Vector2 position, int tileSize, ISprite sprite)
         {
             Name = name;
-            _borderType = borderType;
+            BorderType = borderType;
             _position = position;
             _tileSize = tileSize;
             _sprite = sprite;
@@ -39,7 +38,7 @@ namespace ZweiHander.Map
             int x = (int)_position.X;
             int y = (int)_position.Y;
 
-            switch (_borderType)
+            switch (BorderType)
             {
                 case BorderType.Solid:
                     _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x - 32, y - 32, 64, 64)));
@@ -103,7 +102,7 @@ namespace ZweiHander.Map
         public bool IsCollidable()
         {
             // Decorative borders do not collide
-            if (_borderType == BorderType.Decorative) { collision = false; }
+            if (BorderType == BorderType.Decorative) { collision = false; }
             return collision;
         }
     }

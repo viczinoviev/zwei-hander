@@ -27,37 +27,37 @@ namespace ZweiHander.Map
             { "w", BorderName.WallTileWest },
             { "e", BorderName.WallTileEast },
             { "s", BorderName.WallTileSouth },
-			
+
 			// Inside corners - w.i{direction}{direction}
 			{ "ine", BorderName.InsideCornerNortheast },
             { "ise", BorderName.InsideCornerSoutheast },
             { "isw", BorderName.InsideCornerSouthwest },
             { "inw", BorderName.InsideCornerNorthwest },
-			
+
 			// Outside corners - w.o{direction}{direction}
 			{ "osw", BorderName.OutsideCornerSouthwest },
             { "onw", BorderName.OutsideCornerNorthwest },
             { "one", BorderName.OutsideCornerNortheast },
             { "ose", BorderName.OutsideCornerSoutheast },
-			
+
 			// Entrance tiles - w.e{direction}
 			{ "en", BorderName.EntranceTileNorth },
             { "ew", BorderName.EntranceTileWest },
             { "ee", BorderName.EntranceTileEast },
             { "es", BorderName.EntranceTileSouth },
-			
+
 			// Locked doors - w.l{direction}
 			{ "ln", BorderName.LockedDoorTileNorth },
             { "lw", BorderName.LockedDoorTileWest },
             { "le", BorderName.LockedDoorTileEast },
             { "ls", BorderName.LockedDoorTileSouth },
-			
+
 			// Doors - w.d{direction}
 			{ "dn", BorderName.DoorTileNorth },
             { "dw", BorderName.DoorTileWest },
             { "de", BorderName.DoorTileEast },
             { "ds", BorderName.DoorTileSouth },
-			
+
 			// Holes in walls - w.h{direction}
 			{ "hn", BorderName.HoleInWallNorth },
             { "hw", BorderName.HoleInWallWest },

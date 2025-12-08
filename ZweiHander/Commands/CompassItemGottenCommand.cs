@@ -1,17 +1,12 @@
 ﻿namespace ZweiHander.Commands
 {
-    public class CompassItemGottenCommand : ICommand
+    public class CompassItemGottenCommand(Game1 game) : ICommand
     {
-        private readonly Game1 _game;
-
-        public CompassItemGottenCommand(Game1 game)
-        {
-            _game = game;
-        }
+        private readonly Game1 _game = game;
 
         public void Execute()
         {
-            _game.HUDManager.compassItemGotten();
+            _game.HUDManager.CompassItemGotten();
         }
     }
 }

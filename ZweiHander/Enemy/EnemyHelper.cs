@@ -11,7 +11,7 @@ namespace ZweiHander.Enemy;
 /// <summary>
 /// Contains methods that are helpful for enemies.
 /// </summary>
-class EnemyHelper
+static class EnemyHelper
 {
     private const int Up = 0;
     private const int Right = 1;
@@ -41,11 +41,11 @@ class EnemyHelper
     {
         if (thrown != 1)
         {
-            return new Vector2(enemy.Position.X + ((-1 + 2 * Convert.ToInt32(!(enemy.Face == Left))) * (magnitude * Convert.ToInt32((enemy.Face == Left) || (enemy.Face == Right)))), enemy.Position.Y + ((-1 + 2 * Convert.ToInt32(!(enemy.Face == Up))) * (magnitude * Convert.ToInt32((enemy.Face == Up) || (enemy.Face == Down)))));
+            return new Vector2(enemy.Position.X + ((-1 + (2 * Convert.ToInt32(enemy.Face != Left))) * (magnitude * Convert.ToInt32((enemy.Face == Left) || (enemy.Face == Right)))), enemy.Position.Y + ((-1 + (2 * Convert.ToInt32(enemy.Face != Up))) * (magnitude * Convert.ToInt32((enemy.Face == Up) || (enemy.Face == Down)))));
         }
         else
         {
-            return new Vector2((-1 + 2 * Convert.ToInt32(!(enemy.Face == Left))) * (magnitude * Convert.ToInt32((enemy.Face == Left) || (enemy.Face == Right))), (-1 + 2 * Convert.ToInt32(!(enemy.Face == Up))) * (magnitude * Convert.ToInt32((enemy.Face == Up) || (enemy.Face == Down))));
+            return new Vector2((-1 + (2 * Convert.ToInt32(enemy.Face != Left))) * (magnitude * Convert.ToInt32((enemy.Face == Left) || (enemy.Face == Right))), (-1 + (2 * Convert.ToInt32(enemy.Face != Up))) * (magnitude * Convert.ToInt32((enemy.Face == Up) || (enemy.Face == Down))));
         }
     }
 
@@ -111,9 +111,9 @@ class EnemyHelper
             //If currently throwing and projectiles are dead, set back to not throwing
             if (enemy.Thrower == attacking)
             {
-                if (enemy._projectiles.First().IsDead())
+                if (enemy._projectiles[0].IsDead())
                 {
-                    enemy._projectiles.Remove(enemy._projectiles.First());
+                    enemy._projectiles.Remove(enemy._projectiles[0]);
                     if (enemy._projectiles.Count == 0)
                     {
                         enemy.Thrower = 1;

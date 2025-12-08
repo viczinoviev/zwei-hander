@@ -16,7 +16,7 @@ public class Fairy : AbstractItem
     {
         Sprites = [itemConstructor.TreasureSprites.Fairy()];
         StartingPosition = Position;
-        Setup(itemConstructor);
+        Setup();
     }
 
     public override void Update(GameTime gameTime)

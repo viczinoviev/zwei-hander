@@ -27,13 +27,13 @@ namespace ZweiHander.Map
             Position = position;
             ParentRoom = parentRoom;
             ParentArea = parentArea;
-            int expand = 32;
+            const int expand = 32;
 
             TriggerArea = new Rectangle(
                 (int)(position.X - expand),
                 (int)(position.Y - expand),
-                universe.TileSize + expand * 2,
-                universe.TileSize + expand * 2
+                universe.TileSize + (expand * 2),
+                universe.TileSize + (expand * 2)
             );
 
             _universe = universe;
@@ -46,11 +46,6 @@ namespace ZweiHander.Map
         public void OnRoomUnload()
         {
             _collisionHandler.Dead = true;
-        }
-
-        public void Update(GameTime gameTime)
-        {
-
         }
 
 

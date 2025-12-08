@@ -4,33 +4,26 @@ using ZweiHander.Input;
 
 namespace ZweiHander.GameStates
 {
-    public class GameOverController
+    public class GameOverController(KeyboardInputHandler inputHandler)
     {
-        private readonly KeyboardInputHandler _inputHandler;
-
-        public GameOverController(KeyboardInputHandler inputHandler)
-        {
-            _inputHandler = inputHandler;
-        }
-
         public void Reset()
         {
-            _inputHandler.Reset();
+            inputHandler.Reset();
         }
 
-        public void Update(GameTime gameTime)
+        public void Update()
         {
-            _inputHandler.Update();
+            inputHandler.Update();
         }
 
         public bool ShouldReturnToTitle()
         {
-            return _inputHandler.IsKeyPressed(Keys.Space);
+            return inputHandler.IsKeyPressed(Keys.Space);
         }
 
         public bool ShouldQuit()
         {
-            return _inputHandler.IsAnyKeyPressed(Keys.Q, Keys.Escape);
+            return inputHandler.IsAnyKeyPressed(Keys.Q, Keys.Escape);
         }
     }
 }

@@ -52,7 +52,10 @@ public class Fire : AbstractItem
         : base(itemConstructor)
     {
         Sprites = [itemConstructor.ItemSprites.FireProjectile()];
-        if (Life < 0) AddProperty(ItemProperty.Collectable);
+        if (Life < 0)
+        {
+            AddProperty(ItemProperty.Collectable);
+        }
         else
         {
             if (itemConstructor.Extras.Count > 0)
@@ -65,7 +68,7 @@ public class Fire : AbstractItem
             }
             AddProperty(ItemProperty.CanDamageEnemy);
         }
-        Setup(itemConstructor);
+        Setup();
     }
 
     public override void Update(GameTime gameTime)

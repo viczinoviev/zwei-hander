@@ -12,7 +12,7 @@ namespace ZweiHander.Environment
     {
         private readonly int _tileSize = tileSize; // 32 pixels for borders
         private readonly BlockSprites _blockSprites = blockSprites; // Borders use the same sprite sheet as blocks
-        public List<Border> BorderMap { get; private set; } = [];
+        public List<Border> BorderMap { get; } = [];
 
         /// <summary>
         /// Maps border names to their logic type
@@ -24,37 +24,37 @@ namespace ZweiHander.Environment
             { BorderName.WallTileWest, BorderType.Solid },
             { BorderName.WallTileEast, BorderType.Solid },
             { BorderName.WallTileSouth, BorderType.Solid },
-            
+
             // Inside corners - all solid
             { BorderName.InsideCornerNortheast, BorderType.Solid },
             { BorderName.InsideCornerSoutheast, BorderType.Solid },
             { BorderName.InsideCornerSouthwest, BorderType.Solid },
             { BorderName.InsideCornerNorthwest, BorderType.Solid },
-            
+
             // Outside corners - all solid
             { BorderName.OutsideCornerSouthwest, BorderType.Solid },
             { BorderName.OutsideCornerNorthwest, BorderType.Solid },
             { BorderName.OutsideCornerNortheast, BorderType.Solid },
             { BorderName.OutsideCornerSoutheast, BorderType.Solid },
-            
+
             // Entrance tiles - with 24x24 cut-outs
             { BorderName.EntranceTileNorth, BorderType.EntranceUp },
             { BorderName.EntranceTileWest, BorderType.EntranceRight },
             { BorderName.EntranceTileEast, BorderType.EntranceLeft },
             { BorderName.EntranceTileSouth, BorderType.EntranceDown },
-            
+
             // Locked doors - solid (until unlocked in future)
             { BorderName.LockedDoorTileNorth, BorderType.Solid },
             { BorderName.LockedDoorTileWest, BorderType.Solid },
             { BorderName.LockedDoorTileEast, BorderType.Solid },
             { BorderName.LockedDoorTileSouth, BorderType.Solid },
-            
+
             // Doors - decorative (passable)
             { BorderName.DoorTileNorth, BorderType.EntranceUp },
             { BorderName.DoorTileWest, BorderType.EntranceRight },
             { BorderName.DoorTileEast, BorderType.EntranceLeft },
             { BorderName.DoorTileSouth, BorderType.EntranceDown },
-            
+
             // Holes in walls - decorative
             { BorderName.HoleInWallNorth, BorderType.Decorative },
             { BorderName.HoleInWallWest, BorderType.Decorative },

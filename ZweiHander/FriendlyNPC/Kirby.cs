@@ -14,18 +14,18 @@ namespace ZweiHander.FriendlyNPC
     public class Kirby : IKirby
     {
         private readonly IPlayer _player;
-        private ISprite _runningSprite;
-        private ISprite _attackLeftSprite;
-        private ISprite _attackRightSprite;
+        private readonly ISprite _runningSprite;
+        private readonly ISprite _attackLeftSprite;
+        private readonly ISprite _attackRightSprite;
         private ISprite _kirbySprite;
-        private EnemyManager _enemyManager;
+        private readonly EnemyManager _enemyManager;
         private IEnemy _closestEnemy = null;
-        private KirbySprites _sprites;
+        private readonly KirbySprites _sprites;
 
         private readonly SoundEffect enemyHurt;
         private readonly SoundEffectInstance currentSFX;
 
-        private static readonly Random rnd = new Random();
+        private static readonly Random rnd = new();
         private float rndAngleX;
         private float rndAngleY;
 
@@ -36,7 +36,7 @@ namespace ZweiHander.FriendlyNPC
 
         private bool isUlting = false;
         private int hitCount = 0;
-        private int maxHits = 4;
+        private readonly int maxHits = 4;
         private float ultTimer = 0f;
         public Vector2 Position { get; set; }
 
@@ -56,10 +56,10 @@ namespace ZweiHander.FriendlyNPC
             _attackRightSprite.Scale = new Vector2(1f, 1f);
 
             _kirbySprite = _runningSprite;
-            
 
-            Position = startPosition; 
-            
+
+            Position = startPosition;
+
         }
         public void StartUlt()
         {
@@ -87,8 +87,8 @@ namespace ZweiHander.FriendlyNPC
         public void UpdateKirbyUlt(GameTime gameTime)
         {
             FindClosestEnemy();
-            if (hitCount >= maxHits||_closestEnemy==null) 
-            { 
+            if (hitCount >= maxHits||_closestEnemy==null)
+            {
                 isUlting = false;
                 return;
             }
@@ -102,9 +102,9 @@ namespace ZweiHander.FriendlyNPC
                 enemyHurt.Play();
                 _closestEnemy.TakeDamage(2);
                 Vector2 centerOfUlt = _closestEnemy.Position;
-                rndAngleX = (float)(rnd.NextDouble() * 2.0 - 1.0);
-                rndAngleY = (float)(rnd.NextDouble() * 1.5 - 0.5);
-                Vector2 rndDirection = new Vector2(rndAngleX, rndAngleY);
+                rndAngleX = (float)((rnd.NextDouble() * 2.0) - 1.0);
+                rndAngleY = (float)((rnd.NextDouble() * 1.5) - 0.5);
+                Vector2 rndDirection = new(rndAngleX, rndAngleY);
 
                 if (rndAngleX < 0) _kirbySprite = _attackRightSprite;
                 else _kirbySprite = _attackLeftSprite;
@@ -116,15 +116,15 @@ namespace ZweiHander.FriendlyNPC
         //Sets _closestEnemy to the closest enemy
         public void FindClosestEnemy()
         {
-            if (_enemyManager.currentEnemiesPub.Count != 0)
+            if (_enemyManager.CurrentEnemiesPub.Count != 0)
             {
                 float distance;
-                IEnemy _enemy = _enemyManager.currentEnemiesPub[0];
+                IEnemy _enemy = _enemyManager.CurrentEnemiesPub[0];
                 float leastDistance = (_enemy.Position - Position).Length();
                 _closestEnemy = _enemy;
-                for (int x = 1; x < _enemyManager.currentEnemiesPub.Count; x++)
+                for (int x = 1; x < _enemyManager.CurrentEnemiesPub.Count; x++)
                 {
-                    _enemy = _enemyManager.currentEnemiesPub[x];
+                    _enemy = _enemyManager.CurrentEnemiesPub[x];
                     distance = (_enemy.Position - Position).Length();
                     if (distance < leastDistance)
                     {
@@ -133,7 +133,10 @@ namespace ZweiHander.FriendlyNPC
                     }
                 }
             }
-            else _closestEnemy = null;
+            else
+            {
+                _closestEnemy = null;
+            }
         }
         public void UpdateDefault(GameTime gameTime)
         {
@@ -146,14 +149,14 @@ namespace ZweiHander.FriendlyNPC
             float distanceFromEnemy;
 
             Vector2 moveVector = Vector2.Zero;
-            
+
             if (_followDistance < distanceFromPlayer)
             {
                 differenceVectorPlayer.Normalize();
                 moveVector = differenceVectorPlayer * travelDistance;
             }
 
-            foreach (IEnemy enemy in _enemyManager.currentEnemiesPub)
+            foreach (IEnemy enemy in _enemyManager.CurrentEnemiesPub)
             {
                 differenceVectorEnemy = enemy.Position - Position;
                 distanceFromEnemy = differenceVectorEnemy.Length();

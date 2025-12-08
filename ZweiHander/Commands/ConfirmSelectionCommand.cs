@@ -1,13 +1,8 @@
 ﻿namespace ZweiHander.Commands
 {
-    public class ConfirmInventoryItemCommand : ICommand
+    public class ConfirmInventoryItemCommand(Game1 game) : ICommand
     {
-        private readonly Game1 _game;
-
-        public ConfirmInventoryItemCommand(Game1 game)
-        {
-            _game = game;
-        }
+        private readonly Game1 _game = game;
 
         public void Execute()
         {

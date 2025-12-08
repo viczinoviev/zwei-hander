@@ -14,7 +14,7 @@ public class TextureRegion
 
     /// <summary>
     /// gets or Sets the source rectangle boundary of this texture region within the source texture.
-    /// </summary> 
+    /// </summary>
     public Rectangle SourceRectangle { get; set; }
 
     /// <summary>

@@ -20,12 +20,12 @@ namespace ZweiHander.HUD
         private IHUDComponent _healthDisplay;
         private InventoryHUD _inventoryHUD;
         private MapHUD _mapHUD;
-        private HUDSprites _hudSprites;
-        private IPlayer _player;
+        private readonly HUDSprites _hudSprites;
+        private readonly IPlayer _player;
         private bool _isHUDOpen;
         private Texture2D _pixelTexture; // Cached 1x1 white pixel for drawing rectangles
-        private HUDLayoutManager _layoutManager; // Calculates all HUD component positions
-        private HUDAnimator _animator; // Handles open/close animation
+        private readonly HUDLayoutManager _layoutManager; // Calculates all HUD component positions
+        private readonly HUDAnimator _animator; // Handles open/close animation
 
         // Animation constants
         private const float SLIDE_SPEED = 1200f;
@@ -70,13 +70,13 @@ namespace ZweiHander.HUD
             _healthDisplay = new HealthDisplay(_player, _hudSprites, _layoutManager.GetHealthDisplayPosition());
 
             // Add all components to the list
-            _components = new List<IHUDComponent>
-            {
+            _components =
+            [
                 _headsUpHud,
                 _inventoryHUD,
                 _healthDisplay,
                 _mapHUD
-            };
+            ];
         }
 
         public void SetHUDOpen(bool isOpen)
@@ -133,7 +133,7 @@ namespace ZweiHander.HUD
             if (_pixelTexture == null)
             {
                 _pixelTexture = new Texture2D(spriteBatch.GraphicsDevice, 1, 1);
-                _pixelTexture.SetData(new[] { Color.White });
+                _pixelTexture.SetData([Color.White]);
             }
 
             // Draws a black ground, since some HUD components don't span the whole screen horizontally
@@ -151,30 +151,19 @@ namespace ZweiHander.HUD
             );
 
             // Draw all HUD components with current animation offset
-            Vector2 hudOffset = new Vector2(0, _animator.CurrentYOffset);
+            Vector2 hudOffset = new(0, _animator.CurrentYOffset);
             foreach (var component in _components)
             {
                 component.Draw(spriteBatch, hudOffset);
             }
         }
 
-
-        /// <summary>
-        /// Helper method to create a 1x1 white pixel texture for drawing rectangles
-        /// </summary>
-        private Texture2D CreatePixelTexture(GraphicsDevice graphicsDevice)
-        {
-            Texture2D texture = new Texture2D(graphicsDevice, 1, 1);
-            texture.SetData(new[] { Color.White });
-            return texture;
-        }
-
-        public void mapItemGotten()
+        public void MapItemGotten()
         {
             _mapHUD.mapItemGotten = true;
         }
 
-        public void compassItemGotten()
+        public void CompassItemGotten()
         {
             _mapHUD.compassItemGotten = true;
         }

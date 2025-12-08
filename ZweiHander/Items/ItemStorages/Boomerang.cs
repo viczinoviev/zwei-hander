@@ -55,7 +55,7 @@ public class Boomerang : AbstractItem
         {
             ReturnAcceleration = Acceleration.Length();
         }
-        Setup(itemConstructor);
+        Setup();
     }
 
     public override void Update(GameTime time)

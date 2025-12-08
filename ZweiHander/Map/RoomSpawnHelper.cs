@@ -55,7 +55,7 @@ namespace ZweiHander.Map
                 return predefinedSpawnPoint;
             }
 
-            foreach (var (borderName, position, dummyValue) in borderData)
+            foreach (var (borderName, position, _) in borderData)
             {
                 if (EastEntrances.Contains(borderName))
                 {

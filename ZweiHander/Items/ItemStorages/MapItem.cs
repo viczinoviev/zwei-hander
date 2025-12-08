@@ -11,6 +11,6 @@ public class MapItem : AbstractItem
         : base(itemConstructor)
     {
         Sprites = [itemConstructor.TreasureSprites.Map()];
-        Setup(itemConstructor);
+        Setup();
     }
 }

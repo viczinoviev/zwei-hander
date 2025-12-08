@@ -113,11 +113,11 @@ namespace ZweiHander.CollisionFiles
                     _player.AddItemToInventory(item.ItemType, 10);
                     break;
                 case MapItem:
-                    ICommand makeMinimapVisible = new MapItemGottenCommand(_player.GameInstance);
+                    MapItemGottenCommand makeMinimapVisible = new(_player.GameInstance);
                     makeMinimapVisible.Execute();
                     break;
                 case Compass:
-                    ICommand makeCompassVisible = new CompassItemGottenCommand(_player.GameInstance);
+                    CompassItemGottenCommand makeCompassVisible = new(_player.GameInstance);
                     makeCompassVisible.Execute();
                     break;
                 default:
@@ -136,8 +136,8 @@ namespace ZweiHander.CollisionFiles
 
 
             CollisionBox = new(
-                (int)(_player.Position.X - COLLISION_SIZE / 2),
-                (int)(_player.Position.Y - COLLISION_SIZE / 2),
+                (int)(_player.Position.X - (COLLISION_SIZE / 2)),
+                (int)(_player.Position.Y - (COLLISION_SIZE / 2)),
                 COLLISION_SIZE,
                 COLLISION_SIZE
             );
@@ -156,7 +156,7 @@ namespace ZweiHander.CollisionFiles
             // Try moving on X axis first
             if (Math.Abs(intendedMovement.X) > 0.0001f)
             {
-                float xOffset = CalculateAxisOffset(intendedMovement.X, 0, safeMovement.X);
+                float xOffset = CalculateAxisOffset(intendedMovement.X, 0);
                 if (Math.Abs(xOffset) > 0.001f)
                     safeMovement.X += xOffset;
             }
@@ -164,7 +164,7 @@ namespace ZweiHander.CollisionFiles
             // Try moving on Y axis (with the X movement already applied)
             if (Math.Abs(intendedMovement.Y) > 0.0001f)
             {
-                float yOffset = CalculateAxisOffset(safeMovement.X, intendedMovement.Y, safeMovement.X);
+                float yOffset = CalculateAxisOffset(safeMovement.X, intendedMovement.Y);
                 if (Math.Abs(yOffset) > 0.001f)
                     safeMovement.Y += yOffset;
             }
@@ -172,25 +172,25 @@ namespace ZweiHander.CollisionFiles
             return safeMovement;
         }
 
-        private float CalculateAxisOffset(float xMovement, float yMovement, float currentXMovement)
+        private float CalculateAxisOffset(float xMovement, float yMovement)
         {
             Vector2 testPosition = _player.Position + new Vector2(xMovement, yMovement);
             Rectangle testBox = CreateCollisionBoxAt(testPosition);
             var collisions = CollisionManager.Instance.CheckCollisionsForOne(testBox);
-            return GetMaxResolutionOffset(collisions, xMovement, yMovement);
+            return GetMaxResolutionOffset(collisions, yMovement);
         }
 
-        private Rectangle CreateCollisionBoxAt(Vector2 position)
+        private static Rectangle CreateCollisionBoxAt(Vector2 position)
         {
             return new Rectangle(
-                (int)(position.X - COLLISION_SIZE / 2),
-                (int)(position.Y - COLLISION_SIZE / 2),
+                (int)(position.X - (COLLISION_SIZE / 2)),
+                (int)(position.Y - (COLLISION_SIZE / 2)),
                 COLLISION_SIZE,
                 COLLISION_SIZE
             );
         }
 
-        private float GetMaxResolutionOffset(System.Collections.Generic.List<(ICollisionHandler, CollisionInfo)> collisions, float xMovement, float yMovement)
+        private static float GetMaxResolutionOffset(System.Collections.Generic.List<(ICollisionHandler, CollisionInfo)> collisions, float yMovement)
         {
             float maxOffset = 0f;
             bool isXAxis = Math.Abs(yMovement) < 0.0001f;

@@ -13,7 +13,7 @@ namespace ZweiHander.GameStates
 
         public GameOverScreen(ContentManager content, GraphicsDevice graphicsDevice)
         {
-            KeyboardInputHandler inputHandler = new KeyboardInputHandler();
+            KeyboardInputHandler inputHandler = new();
             _controller = new GameOverController(inputHandler);
             _font = content.Load<SpriteFont>("Fonts/GameOverFont");
             _graphicsDevice = graphicsDevice;
@@ -24,9 +24,9 @@ namespace ZweiHander.GameStates
             _controller.Reset();
         }
 
-        public void Update(GameTime gameTime)
+        public void Update()
         {
-            _controller.Update(gameTime);
+            _controller.Update();
         }
 
         public bool ShouldReturnToTitle()
@@ -43,12 +43,12 @@ namespace ZweiHander.GameStates
         {
             spriteBatch.Begin(samplerState: SamplerState.PointClamp);
 
-            string gameOverText = "GAMEOVER";
-            string quitText = "Press Q or ESC to quit";
-            string restartText = "Press SPACE to restart";
+            const string gameOverText = "GAMEOVER";
+            const string quitText = "Press Q or ESC to quit";
+            const string restartText = "Press SPACE to restart";
 
-            float instructionScale = 0.5f;
-            float lineSpacing = 30f;
+            const float instructionScale = 0.5f;
+            const float lineSpacing = 30f;
 
             Vector2 gameOverSize = _font.MeasureString(gameOverText);
             Vector2 quitSize = _font.MeasureString(quitText) * instructionScale;
@@ -57,17 +57,17 @@ namespace ZweiHander.GameStates
             float totalHeight = gameOverSize.Y + lineSpacing + quitSize.Y + lineSpacing + restartSize.Y;
             float startY = (_graphicsDevice.Viewport.Height - totalHeight) / 2.0f;
 
-            Vector2 gameOverPosition = new Vector2(
+            Vector2 gameOverPosition = new(
                 (_graphicsDevice.Viewport.Width - gameOverSize.X) / 2.0f,
                 startY
             );
 
-            Vector2 quitPosition = new Vector2(
+            Vector2 quitPosition = new(
                 (_graphicsDevice.Viewport.Width - quitSize.X) / 2.0f,
                 startY + gameOverSize.Y + lineSpacing
             );
 
-            Vector2 restartPosition = new Vector2(
+            Vector2 restartPosition = new(
                 (_graphicsDevice.Viewport.Width - restartSize.X) / 2.0f,
                 startY + gameOverSize.Y + lineSpacing + quitSize.Y + lineSpacing
             );

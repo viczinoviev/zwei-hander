@@ -20,19 +20,19 @@ namespace ZweiHander.Map
         public Room CurrentRoom { get; private set; }
         public IPlayer Player { get; private set; }
         public IKirby Kirby { get; private set; }
-        public EnemyManager EnemyManager { get; private set; }
-        public ItemManager ItemManager { get; private set; }
-        public BlockManager BlockFactory { get; private set; }
-        public BorderManager BorderFactory { get; private set; }
+        public EnemyManager EnemyManager { get; }
+        public ItemManager ItemManager { get; }
+        public BlockManager BlockFactory { get; }
+        public BorderManager BorderFactory { get; }
         public PortalManager PortalManager { get; private set; }
 
         public LockedEntranceManager LockedEntranceManager { get; private set; }
 
-        public Camera.Camera Camera { get; private set; }
+        public Camera.Camera Camera { get; }
 
-        public RoomTransition RoomTransition { get; private set; }
+        public RoomTransition RoomTransition { get; }
 
-        public int TileSize { get; private set; }
+        public int TileSize { get; }
 
         public Universe(
             EnemySprites enemySprites,
@@ -42,7 +42,6 @@ namespace ZweiHander.Map
             TreasureSprites treasureSprites,
             BlockSprites blockSprites,
             PlayerSprites playerSprites,
-            KirbySprites kirbySprites,
             ContentManager Content,
             Camera.Camera camera,
             int tileSize = 32)
@@ -142,18 +141,16 @@ namespace ZweiHander.Map
         {
             RoomTransition.Update(gameTime, CurrentRoom, Camera, Player, Kirby);
 
-            if (CurrentRoom == null || !CurrentRoom.IsLoaded || RoomTransition.IsTransitioning) return;
+            if (CurrentRoom?.IsLoaded != true || RoomTransition.IsTransitioning) return;
 
             EnemyManager.Update(gameTime);
             ItemManager.Update(gameTime);
-            PortalManager.Update(gameTime);
-            LockedEntranceManager.Update(gameTime);
         }
 
 
         public void Draw()
         {
-            if (CurrentRoom == null || !CurrentRoom.IsLoaded) return;
+            if (CurrentRoom?.IsLoaded != true) return;
 
             BlockFactory.Draw();
             BorderFactory.Draw();

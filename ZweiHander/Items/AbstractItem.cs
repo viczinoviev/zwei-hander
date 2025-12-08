@@ -91,7 +91,7 @@ public abstract class AbstractItem : IItem
     /// </summary>
     protected Dictionary<Type, DamageObject> Damage { get; set; } = [];
 
-    public AbstractItem(ItemConstructor itemConstructor)
+    protected AbstractItem(ItemConstructor itemConstructor)
     {
         _manager = itemConstructor.Manager;
         if (itemConstructor.Life != 0) Life = itemConstructor.Life;
@@ -106,8 +106,7 @@ public abstract class AbstractItem : IItem
     /// <summary>
     /// Final step in each item's constructor.
     /// </summary>
-    /// <param name="itemConstructor"></param>
-    protected void Setup(ItemConstructor itemConstructor)
+    protected void Setup()
     {
         CollisionHandler = new ItemCollisionHandler(this);
     }
@@ -155,7 +154,7 @@ public abstract class AbstractItem : IItem
     protected void Move(float dt)
     {
         Velocity += dt * Acceleration;
-        Position += dt * Velocity + (dt * dt / 2) * Acceleration;
+        Position += (dt * Velocity) + ((dt * dt / 2) * Acceleration);
     }
 
     protected virtual void OnPhaseChange() { }
@@ -187,8 +186,8 @@ public abstract class AbstractItem : IItem
         int height = Hitbox.Y == 0f ? Sprite.Height : (int)Hitbox.Y;
         // Sprites are centered
         return new Rectangle(
-                (int)Position.X - width / 2,
-                (int)Position.Y - height / 2,
+                (int)Position.X - (width / 2),
+                (int)Position.Y - (height / 2),
                 width,
                 height
             );
