@@ -359,7 +359,7 @@ namespace ZweiHander
                     samplerState: SamplerState.PointClamp,
                     transformMatrix: _camera.GetUITransformMatrix()
                 );
-                _gameOverScreen.Draw(_spriteBatch);
+                _gameOverScreen.Draw(_spriteBatch, new Vector2(800, 480));
                 _spriteBatch.End();
             }
             else if (_gameState.CurrentMode == GameMode.GameWon)
@@ -368,7 +368,7 @@ namespace ZweiHander
                     samplerState: SamplerState.PointClamp,
                     transformMatrix: _camera.GetUITransformMatrix()
                 );
-                _gameWonScreen.Draw(_spriteBatch);
+                _gameWonScreen.Draw(_spriteBatch, new Vector2(800, 480));
                 _spriteBatch.End();
             }
             else if (_gameState.CurrentMode == GameMode.Playing || _gameState.CurrentMode == GameMode.Horde)

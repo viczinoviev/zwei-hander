@@ -39,7 +39,7 @@ namespace ZweiHander.GameStates
             return _controller.ShouldQuit();
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, Vector2 screenSize)
         {
             const string GameWonText = "You Won!";
             const string quitText = "Press Q or ESC to quit";
@@ -53,20 +53,20 @@ namespace ZweiHander.GameStates
             Vector2 restartSize = _font.MeasureString(restartText) * instructionScale;
 
             float totalHeight = GameWonSize.Y + lineSpacing + quitSize.Y + lineSpacing + restartSize.Y;
-            float startY = (_graphicsDevice.Viewport.Height - totalHeight) / 2.0f;
+            float startY = (screenSize.Y - totalHeight) / 2.0f;
 
             Vector2 GameWonPosition = new(
-                (_graphicsDevice.Viewport.Width - GameWonSize.X) / 2.0f,
+                (screenSize.X - GameWonSize.X) / 2.0f,
                 startY
             );
 
             Vector2 quitPosition = new(
-                (_graphicsDevice.Viewport.Width - quitSize.X) / 2.0f,
+                (screenSize.X - quitSize.X) / 2.0f,
                 startY + GameWonSize.Y + lineSpacing
             );
 
             Vector2 restartPosition = new(
-                (_graphicsDevice.Viewport.Width - restartSize.X) / 2.0f,
+                (screenSize.X - restartSize.X) / 2.0f,
                 startY + GameWonSize.Y + lineSpacing + quitSize.Y + lineSpacing
             );
 
