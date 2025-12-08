@@ -10,14 +10,33 @@
 		<Region name="kirby-5" x="130" y="0" width="25" height="25" />
 		<Region name="kirby-6" x="160" y="0" width="25" height="25" />
 		<Region name="kirby-7" x="198" y="0" width="25" height="25" />
+		<Region name="kirbyFight-1" x="1" y="227" width="29" height="22" />
+		<Region name="kirbyFight-2" x="38" y="220" width="38" height="35" />
+		<Region name="kirbyFight-3" x="85" y="218" width="21" height="31" />
+		<Region name="kirbyFight-4" x="113" y="228" width="27" height="24" />
+		<Region name="kirbyFight-5" x="214" y="227" width="27" height="22" />
+		<Region name="kirbyFight-6" x="257" y="207" width="28" height="42" />
+		<Region name="kirbyFight-7" x="289" y="218" width="23" height="31" />
 	</Regions>
 	<Animations>
 		<!-- Kirby Animation -->
-		<Animation name="kirby-animation" delay="200">
+		<Animation name="kirby-animation" delay="150">
 			<Frame region="kirby-1" />
 			<Frame region="kirby-2" />
 			<Frame region="kirby-3" />
 			<Frame region="kirby-4" />
+			<Frame region="kirby-5" />
+			<Frame region="kirby-6" />
+		</Animation>
+		<!-- Kirby Fight Animation -->
+		<Animation name="kirby-fight-animation" delay="200">
+			<Frame region="kirbyFight-1" />
+			<Frame region="kirbyFight-2" />
+			<Frame region="kirbyFight-3" />
+			<Frame region="kirbyFight-4" />
+			<Frame region="kirbyFight-5" />
+			<Frame region="kirbyFight-6" />
+			<Frame region="kirbyFight-7" />
 		</Animation>
 	</Animations>
 </TextureAtlas>

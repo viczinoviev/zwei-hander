@@ -56,6 +56,8 @@ namespace ZweiHander
 
         public Player GamePlayer => _gamePlayer;
 
+        public Kirby GameKirby => _kirby;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -158,7 +160,8 @@ namespace ZweiHander
                 _gamePlayer,
                 _universe.EnemyManager,
                 _kirbySprites,
-                _gamePlayer.Position
+                _gamePlayer.Position,
+                Content
             );
             _universe.SetPlayer(_gamePlayer);
             _universe.SetKirby(_kirby);
@@ -189,6 +192,7 @@ namespace ZweiHander
             _keyboardController.BindKey(Keys.OemComma, new PreviousInventoryItemCommand(this)); 
             _keyboardController.BindKey(Keys.OemPeriod, new NextInventoryItemCommand(this));
             _keyboardController.BindKey(Keys.X, new ConfirmInventoryItemCommand(this));
+            _keyboardController.BindKey(Keys.U, new KirbyUltCommand(this));
             // Initialize HUD Manager
             _hudManager = new HUDManager(_gamePlayer, _hudSprites, gamePaused);
             _hudManager.SetUniverse(_universe);

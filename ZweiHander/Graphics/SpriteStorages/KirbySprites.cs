@@ -16,5 +16,13 @@ namespace ZweiHander.Graphics.SpriteStorages
         }
 
         public ISprite Kirby() => new AnimatedSprite(_spriteBatch, _animations["kirby-animation"]);
+        public ISprite KirbyAttackRight() => new AnimatedSprite(_spriteBatch, _animations["kirby-fight-animation"]);
+        public ISprite KirbyAttackLeft()
+        {
+            return new AnimatedSprite(_spriteBatch, _animations["kirby-fight-animation"])
+            {
+                Effects = SpriteEffects.FlipHorizontally
+            };
+        }
     }
 }
