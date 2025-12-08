@@ -105,7 +105,7 @@ namespace ZweiHander
 
         private void OnGameModeChanged(GameMode newMode)
         {
-            if (newMode == GameMode.Playing)
+            if (newMode == GameMode.Playing || newMode == GameMode.Horde)
             {
                 GameSetUp();
             }
@@ -164,11 +164,18 @@ namespace ZweiHander
 
             _areaConstructor = new CsvAreaConstructor();
 
-            string mapPath = Path.Combine(Content.RootDirectory, "Maps", "testDungeon1.csv");
-            Area testArea = _areaConstructor.LoadArea(mapPath, _universe, _camera, "TestDungeon");
-
-            _universe.AddArea(testArea);
-            _universe.SetCurrentLocation("TestDungeon", 1);
+            if(_gameState.CurrentMode == GameMode.Horde){
+                string mapPath2 = Path.Combine(Content.RootDirectory, "Maps", "HordeDungeon.csv");
+                Area HordeArea = _areaConstructor.LoadArea(mapPath2, _universe, _camera, "HordeDungeon");
+                _universe.AddArea(HordeArea);
+                _universe.SetCurrentLocation("HordeDungeon", 1);
+            }
+            else{
+                string mapPath = Path.Combine(Content.RootDirectory, "Maps", "testDungeon1.csv");
+                Area testArea = _areaConstructor.LoadArea(mapPath, _universe, _camera, "TestDungeon");
+                _universe.AddArea(testArea);
+                _universe.SetCurrentLocation("TestDungeon", 1);
+            }
             _gamePlayer.Position = _universe.CurrentRoom.GetPlayerSpawnPoint();
             _kirby.Position = _gamePlayer.Position;
 
@@ -202,9 +209,14 @@ namespace ZweiHander
 
             if (_gameState.CurrentMode == GameMode.TitleScreen)
             {
-                if (_titleScreenController.ShouldStartGame())
+                int mode = _titleScreenController.ShouldStartGame();
+                if (mode == 1)
                 {
                     _gameState.SetMode(GameMode.Playing);
+                }
+                else if(mode == 2)
+                {
+                    _gameState.SetMode(GameMode.Horde);
                 }
             }
             else if (_gameState.CurrentMode == GameMode.GameOver)
@@ -265,6 +277,38 @@ namespace ZweiHander
                     _camera.Update(gameTime, _gamePlayer.Position);
                 }
             }
+            else if(_gameState.CurrentMode == GameMode.Horde)
+            {
+                 // Always update keyboard and HUD
+                _keyboardController.Update();
+                _hudManager.Update(gameTime);
+
+                // Update stuff when game is running
+                if (!gamePaused)
+                {
+                    if(_gamePlayer.CurrentHealth <= 0)
+                    {
+                        SoundEffect gameOverSFX = Content.Load<SoundEffect>("Audio/GameOver");
+                        gameOverSFX.Play();
+                        _gameState.SetMode(GameMode.GameOver);
+                    }
+                    if (_gamePlayer.InventoryCount(typeof(Items.ItemStorages.Triforce)) > 0)
+                    {
+                        SoundEffect gameWonSFX = Content.Load<SoundEffect>("Audio/SuperSuccess");
+                        gameWonSFX.Play();
+                        _gameState.SetMode(GameMode.GameWon);
+                    }
+                    _universe.Update(gameTime);
+
+                    _gamePlayer.Update(gameTime);
+
+                    _kirby.Update(gameTime);
+
+                    CollisionManager.Instance.Update(gameTime);
+
+                    _camera.Update(gameTime, _gamePlayer.Position);
+            }
+            }
 
             base.Update(gameTime);
         }
@@ -290,7 +334,7 @@ namespace ZweiHander
             {
                 _gameWonScreen.Draw(_spriteBatch);
             }
-            else if (_gameState.CurrentMode == GameMode.Playing)
+            else if (_gameState.CurrentMode == GameMode.Playing || _gameState.CurrentMode == GameMode.Horde)
             {
                 // Draw world with camera transform
                 _spriteBatch.Begin(

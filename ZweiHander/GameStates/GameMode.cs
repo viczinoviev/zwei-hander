@@ -5,6 +5,7 @@ namespace ZweiHander.GameStates
         TitleScreen,
         Playing,
         GameOver,
-        GameWon
+        GameWon,
+        Horde
     }
 }

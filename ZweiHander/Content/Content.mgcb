@@ -194,6 +194,9 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/GameOverFont.spritefont
 
+#begin Maps/HordeDungeon.csv
+/copy:Maps/HordeDungeon.csv
+
 #begin Maps/testDungeon1.csv
 /copy:Maps/testDungeon1.csv
 
