@@ -148,5 +148,13 @@ public class EnemyManager(EnemySprites enemysprites, ItemManager projectileManag
         return currentEnemies.Contains(enemy);
     }
 
+    public bool IsEmpty()
+    {
+        if(currentEnemies.Count == 0)
+        {
+            return true;
+        }
+        return false;
+    }
     public IReadOnlyList<IEnemy> CurrentEnemiesPub => currentEnemies;
 }

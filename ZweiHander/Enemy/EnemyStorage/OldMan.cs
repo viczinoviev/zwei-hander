@@ -22,6 +22,7 @@ public class OldMan : IEnemy
 
     public int Face { get; set; } = default;
     public int Hitpoints { get; set; } = 5;
+    public float HitcoolDown { get; set; } = 0;
 
     public EnemyCollisionHandler CollisionHandler { get; } = default;
 

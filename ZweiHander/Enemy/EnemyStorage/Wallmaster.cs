@@ -35,6 +35,7 @@ public class Wallmaster : IEnemy
 
     public int Face { get; set; } = default;
     public int Hitpoints { get; set; } = EnemyStartHealth;
+    public float HitcoolDown { get; set; } = 0;
 
     public EnemyCollisionHandler CollisionHandler { get; } = default;
 
@@ -55,6 +56,11 @@ public class Wallmaster : IEnemy
     }
     public virtual void Update(GameTime time)
     {
+        //Decrement hit cooldown
+        if(HitcoolDown > 0)
+        {
+            HitcoolDown -= 1;
+        }
         if (Face == 0 || Face == FaceDown)
         {
             Sprite = _sprites[Face / FaceChangeHelper];

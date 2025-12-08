@@ -35,6 +35,7 @@ public class Rope : IEnemy
 
     public int Face { get; set; } = default;
     public int Hitpoints { get; set; } = EnemyStartHealth;
+    public float HitcoolDown { get; set; } = 0;
 
     public EnemyCollisionHandler CollisionHandler { get; } = default;
 
@@ -56,6 +57,11 @@ public class Rope : IEnemy
     }
     public virtual void Update(GameTime time)
     {
+        //Decrement hit cooldown
+        if(HitcoolDown > 0)
+        {
+            HitcoolDown -= 1;
+        }
         if (Face == 1 || Face == FaceLeft)
         {
             Sprite = _sprites[((Face * FaceChangeHelper1) + 1) % FaceChangeHelper2];

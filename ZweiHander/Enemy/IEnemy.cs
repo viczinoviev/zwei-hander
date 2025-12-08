@@ -23,6 +23,10 @@ public interface IEnemy
     /// Current amount of health, when <= 0, this enemy is dead.
     /// </summary>
     public int Hitpoints { get; set; }
+        /// <summary>
+    /// Cooldown to prevent getting hit too much too fast
+    /// </summary>
+    public float HitcoolDown { get; set; }
     /// <summary>
     /// Collision manager for the enemy
     /// </summary>
