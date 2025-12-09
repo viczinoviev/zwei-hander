@@ -64,6 +64,7 @@ public class ItemManager
     /// <param name="properties">Additional Properties attached to this instance.</param>
     /// <param name="useDefaultProperties">Whether to use the default properties for this item.</param>
     /// <param name="phases">Thresholds for switching phases; excludes spawn and death.</param>
+    /// <param name="damage">How to damage different object types.</param>
     /// <param name="extras">Any extra parameters needed for that item; use class summary as reference.</param>
     /// <returns>The desired item.</returns>
     public IItem GetItem (
@@ -75,6 +76,7 @@ public class ItemManager
         ICollection<ItemProperty> properties = null,
         bool useDefaultProperties = true,
         List<double> phases = null,
+        Dictionary<Type, DamageObject> damage = null,
         List<object> extras = null
     )
     {
@@ -96,6 +98,7 @@ public class ItemManager
             ItemSprites = _itemSprites,
             TreasureSprites = _treasureSprites,
             Phases = phases ?? [],
+            Damage = damage ?? [],
             Extras = extras ?? []
         };
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using ZweiHander.CollisionFiles;
 using ZweiHander.Graphics;
@@ -66,6 +67,11 @@ public class ItemConstructor
     /// Thresholds for switching phases; excludes spawn and death
     /// </summary>
     public List<double> Phases { get; set; }
+
+    /// <summary>
+    /// How to damage different object types.
+    /// </summary>
+    public Dictionary<Type, DamageObject> Damage { get; set; }
 
     /// <summary>
     /// Any extra parameters needed for that item; use class summary as reference

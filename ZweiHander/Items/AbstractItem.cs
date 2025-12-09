@@ -97,6 +97,7 @@ public abstract class AbstractItem : IItem
         Position = itemConstructor.Position;
         Velocity = itemConstructor.Velocity;
         Acceleration = itemConstructor.Acceleration;
+        Damage = itemConstructor.Damage;
         if (itemConstructor.UseDefaultProperties) Properties |= itemConstructor.AdditionalProperties;
         else Properties = itemConstructor.AdditionalProperties;
     }
