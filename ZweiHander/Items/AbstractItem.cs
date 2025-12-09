@@ -2,7 +2,10 @@
 using System;
 using System.Collections.Generic;
 using ZweiHander.CollisionFiles;
+using ZweiHander.Damage;
+using ZweiHander.Enemy;
 using ZweiHander.Graphics;
+using ZweiHander.PlayerFiles;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace ZweiHander.Items;
@@ -89,7 +92,7 @@ public abstract class AbstractItem : IItem
     /// <summary>
     /// How to damage different object types.
     /// </summary>
-    protected Dictionary<Type, DamageObject> Damage { get; set; } = [];
+    protected DamageDict Damage { get; set; } = [];
 
     protected AbstractItem(ItemConstructor itemConstructor)
     {
@@ -168,7 +171,9 @@ public abstract class AbstractItem : IItem
 
     public void SetDamage(Type damaged, DamageObject damage) { Damage[damaged] = damage; }
 
-    public DamageObject GetDamage(Type damaged) { return Damage[damaged]; }
+    public DamageObject GetDamage(Type damaged) { return Damage.GetDamage(damaged); }
+
+    public DamageObject GetDamage<T>() { return GetDamage(typeof(T)); }
 
     public bool IsDead()
     {

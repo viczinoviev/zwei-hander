@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ZweiHander.Damage;
 using ZweiHander.Graphics.SpriteStorages;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 
@@ -74,7 +75,7 @@ public class ItemManager
         ICollection<ItemProperty> properties = null,
         bool useDefaultProperties = true,
         List<double> phases = null,
-        Dictionary<Type, DamageObject> damage = null,
+        DamageDict damage = null,
         List<object> extras = null
     )
     {

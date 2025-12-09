@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using ZweiHander.CollisionFiles;
+using ZweiHander.Damage;
 using ZweiHander.Graphics.SpriteStorages;
 using ZweiHander.Items;
 using ZweiHander.Items.ItemStorages;
@@ -133,19 +134,25 @@ namespace ZweiHander.PlayerFiles
         }
 
         /// <summary>
-        /// Attempts to damage the player. Returns true if damage was applied, false if player is already in damaged state.
+        /// Attempts to damage the player. Returns true if damage was applied, false otherwise.
         /// </summary>
-        public bool TakeDamage(int damage = 1)
+        /// <param name="damage">Damage to try to apply.</param>
+        /// <param name="iframes">Whether to account for and give iframes</param>
+        /// <returns>Whether damage was applied.</returns>
+        public bool TakeDamage(DamageObject damage = null, bool iframes = true)
         {
             // Player is invulnerable while already damaged
-            if (_isDamaged)
+            if (iframes && _isDamaged)
             {
                 return false;
             }
 
-            _currentHealth = Math.Max(0, _currentHealth - damage);
-            _isDamaged = true;
-            _damageTimer = DAMAGE_DURATION;
+            damage ??= new DamageObject(1);
+            _currentHealth = Math.Max(0, _currentHealth - damage.Damage);
+            if (iframes) {
+                _isDamaged = true;
+                _damageTimer = DAMAGE_DURATION;
+            }
             return true;
         }
 

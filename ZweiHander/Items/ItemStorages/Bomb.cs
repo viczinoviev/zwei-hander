@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using ZweiHander.CollisionFiles;
+using ZweiHander.PlayerFiles;
 
 namespace ZweiHander.Items.ItemStorages;
 
@@ -44,6 +45,7 @@ public class Bomb : AbstractItem
             Wiggle = WiggleScalar * Life;
             SpriteOffset = new(-2, 0);
         }
+        Damage.Add<Player>(new(2));
     }
 
     public override void Update(GameTime gameTime)

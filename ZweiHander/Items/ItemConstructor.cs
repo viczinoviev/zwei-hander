@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using ZweiHander.Damage;
 using ZweiHander.Graphics.SpriteStorages;
 
 namespace ZweiHander.Items;
@@ -69,7 +70,7 @@ public class ItemConstructor
     /// <summary>
     /// How to damage different object types.
     /// </summary>
-    public Dictionary<Type, DamageObject> Damage { get; set; }
+    public DamageDict Damage { get; set; }
 
     /// <summary>
     /// Any extra parameters needed for that item; use class summary as reference

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using ZweiHander.CollisionFiles;
+using ZweiHander.Damage;
 
 namespace ZweiHander.Items;
 
@@ -85,6 +86,14 @@ public interface IItem
     /// <param name="damaged">What is getting damaged.</param>
     /// <returns>How to damage what is being damaged.</returns>
     public DamageObject GetDamage(Type damaged);
+
+
+    /// <summary>
+    /// Gets the damage associated with a type.
+    /// </summary>
+    /// <typeparam name="T">>What is getting damaged.</typeparam>
+    /// <returns>How to damage what is being damaged.</returns>
+    public DamageObject GetDamage<T>();
 
     /// <summary>
     /// Whether this item needs to be deleted.

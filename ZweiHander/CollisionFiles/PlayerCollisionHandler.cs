@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using System;
 using ZweiHander.Commands;
+using ZweiHander.Damage;
 using ZweiHander.Items;
 using ZweiHander.Items.ItemStorages;
 using ZweiHander.PlayerFiles;
@@ -71,7 +72,7 @@ namespace ZweiHander.CollisionFiles
         {
             if (itemHandler.Item.HasProperty(ItemProperty.CanDamagePlayer))
             {
-                HandlePlayerDamage();
+                HandlePlayerDamage(itemHandler.Item.GetDamage<Player>());
             }
 
             if (itemHandler.Item.HasProperty(ItemProperty.CanBePickedUp))
@@ -80,9 +81,9 @@ namespace ZweiHander.CollisionFiles
             }
         }
 
-        private void HandlePlayerDamage()
+        private void HandlePlayerDamage(DamageObject damage = null)
         {
-            _player.TakeDamage();
+            _player.TakeDamage(damage);
             if (currentSFX.State == SoundState.Stopped)
             {
                 currentSFX.Play();
