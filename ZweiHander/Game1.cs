@@ -65,16 +65,11 @@ namespace ZweiHander
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            
+
             _graphics.PreferredBackBufferWidth = 800;
             _graphics.PreferredBackBufferHeight = 480;
-            
-            Window.ClientSizeChanged += OnClientSizeChanged;
-        }
 
-        protected override void Initialize()
-        {
-            base.Initialize();
+            Window.ClientSizeChanged += OnClientSizeChanged;
         }
 
         private void OnClientSizeChanged(object sender, System.EventArgs e)

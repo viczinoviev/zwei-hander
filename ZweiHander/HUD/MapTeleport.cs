@@ -13,7 +13,7 @@ namespace ZweiHander.HUD
         private readonly MapHUD _mapHUD;
         private readonly Universe _universe;
         private DebugRenderer _debugRenderer;
-        private Camera.Camera _camera;
+        private readonly Camera.Camera _camera;
 
         public MapTeleport(MapHUD mapHUD, Universe universe, Camera.Camera camera)
         {

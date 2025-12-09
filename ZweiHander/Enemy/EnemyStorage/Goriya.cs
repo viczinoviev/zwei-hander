@@ -71,7 +71,7 @@ public class Goriya : IEnemy
         //Decrement hit cooldown
         if(HitcoolDown > 0)
         {
-            HitcoolDown -= 1;
+            HitcoolDown --;
         }
         Sprite = _sprites[Face];
         //Only move if not currrently throwing a projectile

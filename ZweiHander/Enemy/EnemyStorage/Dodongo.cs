@@ -60,7 +60,7 @@ public class Dodongo : IEnemy
         //Decrement hit cooldown
         if(HitcoolDown > 0)
         {
-            HitcoolDown -= 1;
+            HitcoolDown --;
         }
         Sprite = _sprites[Face];
         //Randomize  movement

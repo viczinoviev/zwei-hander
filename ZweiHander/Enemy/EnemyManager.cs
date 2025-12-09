@@ -150,11 +150,7 @@ public class EnemyManager(EnemySprites enemysprites, ItemManager projectileManag
 
     public bool IsEmpty()
     {
-        if(currentEnemies.Count == 0)
-        {
-            return true;
-        }
-        return false;
+        return currentEnemies.Count == 0;
     }
     public IReadOnlyList<IEnemy> CurrentEnemiesPub => currentEnemies;
 }

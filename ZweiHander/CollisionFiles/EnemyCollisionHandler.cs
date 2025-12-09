@@ -51,9 +51,9 @@ namespace ZweiHander.CollisionFiles
                 HandlePlayerCollision(playerCollisionHandler);
             }
             //Enemy collision
-            if (other is EnemyCollisionHandler enemyCollisionHandler)
+            if (other is EnemyCollisionHandler)
             {
-                HandleEnemyCollision(enemyCollisionHandler,collisionInfo);
+                HandleEnemyCollision(collisionInfo);
             }
         }
 
@@ -105,7 +105,7 @@ namespace ZweiHander.CollisionFiles
                 {
                     if(!(_enemy.HitcoolDown > 0)){
                         _enemy.HitcoolDown = hitCoolDown;
-                        
+
                         if (currentSFX.State == SoundState.Stopped)
                         {
                             currentSFX.Play();
@@ -115,7 +115,7 @@ namespace ZweiHander.CollisionFiles
                     }
                 }
         }
-        private void HandleEnemyCollision(EnemyCollisionHandler enemyCollisionHandler,CollisionInfo collisionInfo)
+        private void HandleEnemyCollision(CollisionInfo collisionInfo)
         {
             //If enemy is running into another enemy, prevent enemy from going into the enemy, unless this is a bladetrap(unmoving)
                 if (_enemy is not BladeTrap)

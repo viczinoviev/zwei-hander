@@ -57,7 +57,7 @@ public class Darknut : IEnemy
         //Decrement hit cooldown
         if(HitcoolDown > 0)
         {
-            HitcoolDown -= 1;
+            HitcoolDown--;
         }
         //Change sprite to correct sprite
         Sprite = _sprites[Face];

@@ -60,7 +60,7 @@ public class Rope : IEnemy
         //Decrement hit cooldown
         if(HitcoolDown > 0)
         {
-            HitcoolDown -= 1;
+            HitcoolDown --;
         }
         if (Face == 1 || Face == FaceLeft)
         {

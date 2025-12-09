@@ -59,7 +59,7 @@ public class Aquamentus : IEnemy
         //Decrement hit cooldown
         if(HitcoolDown > 0)
         {
-            HitcoolDown -= 1;
+            HitcoolDown --;
         }
         //Randomize  movement
         int mov = rnd.Next(FaceChangeChance);

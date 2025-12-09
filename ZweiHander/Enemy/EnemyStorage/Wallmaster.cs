@@ -59,7 +59,7 @@ public class Wallmaster : IEnemy
         //Decrement hit cooldown
         if(HitcoolDown > 0)
         {
-            HitcoolDown -= 1;
+            HitcoolDown --;
         }
         if (Face == 0 || Face == FaceDown)
         {
