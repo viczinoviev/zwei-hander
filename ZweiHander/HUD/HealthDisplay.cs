@@ -20,7 +20,7 @@ namespace ZweiHander.HUD
         {
         }
 
-        public void Draw(SpriteBatch spriteBatch, Vector2 offset)
+        public void Draw(Vector2 offset)
         {
             if (_player == null) return;
 

@@ -67,7 +67,7 @@ namespace ZweiHander.HUD
             _mapTeleport?.Update(_position, _lastDrawOffset);
         }
 
-        public void Draw(SpriteBatch spriteBatch, Vector2 offset)
+        public void Draw(Vector2 offset)
         {
             _lastDrawOffset = offset;
             Vector2 basePos = _position + offset;
