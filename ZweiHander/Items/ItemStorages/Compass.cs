@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using ZweiHander.Graphics;
-using ZweiHander.Graphics.SpriteStorages;
-
-namespace ZweiHander.Items.ItemStorages;
+﻿namespace ZweiHander.Items.ItemStorages;
 
 /// <summary>
 /// Collectable, Infinite life
@@ -15,6 +11,6 @@ public class Compass : AbstractItem
         : base(itemConstructor)
     {
         Sprites = [itemConstructor.TreasureSprites.Compass()];
-        Setup(itemConstructor);
+        Setup();
     }
 }

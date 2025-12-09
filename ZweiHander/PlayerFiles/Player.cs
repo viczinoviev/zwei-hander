@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+using ZweiHander.CollisionFiles;
 using ZweiHander.Graphics.SpriteStorages;
 using ZweiHander.Items;
 using ZweiHander.Items.ItemStorages;
@@ -14,8 +14,6 @@ namespace ZweiHander.PlayerFiles
     {
         private readonly PlayerStateMachine _stateMachine;
         private readonly PlayerHandler _handler;
-        private readonly ItemManager _itemManager;
-        private Vector2 _position;
         private bool _isDamaged;
         private float _damageTimer;
         private const float DAMAGE_DURATION = 1.0f; // How long the damage state lasts
@@ -25,16 +23,19 @@ namespace ZweiHander.PlayerFiles
         private int _maxHealth;
         private const int STARTING_HEARTS = 3; // 3 hearts = 6 half-hearts
 
-        public Dictionary<Type, int> Inventory { get; private set; } = [];
+        public Dictionary<Type, int> Inventory { get; } = [];
+        public UsableItem EquippedItem { get; set; } = UsableItem.None;
 
-        public Vector2 Position
+        // Slot-to-item mapping (Used for HUD and inventory to index into these items)
+        private static readonly Dictionary<int, (UsableItem item, Type itemType)> _itemSlots = new()
         {
-            get => _position;
-            set
-            {
-                _position = value;
-            }
-        }
+            { 0, (UsableItem.Boomerang, typeof(Boomerang)) },
+            { 1, (UsableItem.Bow, typeof(Bow)) },
+            { 2, (UsableItem.Bomb, typeof(Bomb)) },
+            { 3, (UsableItem.RedCandle, typeof(RedCandle)) }
+        };
+
+        public Vector2 Position { get; set; }
 
         /// <summary>
         /// Current health in # of half-hearts (1 = half heart, 2 = full heart)
@@ -46,10 +47,12 @@ namespace ZweiHander.PlayerFiles
         /// </summary>
         public int MaxHealth => _maxHealth;
 
-        public HashSet<PlayerInput> InputBuffer { get; private set; } = [];
+        public HashSet<PlayerInput> InputBuffer { get; } = [];
         public PlayerState CurrentState => _stateMachine.CurrentState;
-        public ItemManager ItemManager => _itemManager;
+        public ItemManager ItemManager { get; }
         public bool IsDamaged => _isDamaged;
+
+        public Game1 GameInstance;
 
         public bool allowedToUpdate = true;
 
@@ -58,13 +61,15 @@ namespace ZweiHander.PlayerFiles
             get => _handler.Color;
             set => _handler.Color = value;
         }
-        public Player(PlayerSprites playerSprites, ItemSprites itemSprites, TreasureSprites treasureSprites,ContentManager content)
+        public Player(Game1 game, PlayerSprites playerSprites, ItemSprites itemSprites, TreasureSprites treasureSprites, ContentManager content)
         {
-            _itemManager = new ItemManager(itemSprites, treasureSprites);
-            _stateMachine = new PlayerStateMachine(this);
-            _handler = new PlayerHandler(playerSprites, this, _stateMachine,content);
+            ItemManager = new ItemManager(itemSprites, treasureSprites);
+            var collisionHandler = new PlayerCollisionHandler(this, content);
+            _stateMachine = new PlayerStateMachine(this, collisionHandler, content);
+            _handler = new PlayerHandler(playerSprites, this, _stateMachine, collisionHandler, content);
             _stateMachine.SetPlayerHandler(_handler);
             Position = Vector2.Zero;
+            GameInstance = game;
 
             // Initialize health (3 hearts = 6 half-hearts)
             _maxHealth = STARTING_HEARTS * 2;
@@ -90,7 +95,7 @@ namespace ZweiHander.PlayerFiles
 
             _stateMachine.Update(gameTime);
             _handler.Update(gameTime);
-            _itemManager.Update(gameTime);
+            ItemManager.Update(gameTime);
         }
 
         public void AddInput(PlayerInput input)
@@ -107,7 +112,7 @@ namespace ZweiHander.PlayerFiles
         {
             allowedToUpdate = enabled;
         }
-        
+
 
         public void AddItemToInventory(Type itemType, int count = 1)
         {
@@ -163,13 +168,13 @@ namespace ZweiHander.PlayerFiles
 
         public void SetPositionFromCollision(Vector2 newPosition)
         {
-            _position = newPosition;
+            Position = newPosition;
         }
 
         public void ClearSpawnedItems()
-		{
-			_itemManager.Clear();
-		}
+        {
+            ItemManager.Clear();
+        }
 
         public void MoveUp()
         {
@@ -196,24 +201,26 @@ namespace ZweiHander.PlayerFiles
             AddInput(PlayerInput.Attacking);
         }
 
-        public void UseItem1()
+        public void UseEquippedItem()
         {
-            AddInput(PlayerInput.UsingItem1);
+            AddInput(PlayerInput.UsingEquippedItem);
         }
 
-        public void UseItem2()
+        public void EquipItemSlot(int slotIndex)
         {
-            AddInput(PlayerInput.UsingItem2);
+            if (_itemSlots.TryGetValue(slotIndex, out var slot))
+            {
+                EquippedItem = slot.item;
+            }
         }
 
-        public void UseItem3()
+        public bool HasItemInSlot(int slotIndex)
         {
-            AddInput(PlayerInput.UsingItem3);
-        }
-
-        public void UseItem4()
-        {
-            AddInput(PlayerInput.UsingItem4);
+            if (_itemSlots.TryGetValue(slotIndex, out var slot))
+            {
+                return InventoryCount(slot.itemType) > 0;
+            }
+            return false;
         }
 
         public void Idle()
@@ -224,7 +231,7 @@ namespace ZweiHander.PlayerFiles
         public void Draw(SpriteBatch spriteBatch)
         {
             _handler.Draw();
-            _itemManager.Draw();
+            ItemManager.Draw();
         }
 
         public void ForceUpdateCollisionBox()

@@ -7,7 +7,7 @@ namespace ZweiHander.CollisionFiles
     {
         // Where this thing can be hit
         public Rectangle CollisionBox { get; set; }
-        
+
         // If this Handler is done and needs to be deleted
         public bool Dead { get; set; } = false;
 

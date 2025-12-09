@@ -1,13 +1,11 @@
-using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 namespace ZweiHander.CollisionFiles
 {
     /// <summary>
     /// Basic rules for anything that can be part of collisions
     /// </summary>
     public interface ICollisionHandler
-	{
+    {
         /// <summary>
         /// Where this thing can be hit
         /// </summary>

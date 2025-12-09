@@ -1,9 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using ZweiHander.CollisionFiles;
-using ZweiHander.Graphics;
 
 namespace ZweiHander.Items.ItemStorages;
 /// <summary>
@@ -50,15 +47,15 @@ public class Boomerang : AbstractItem
         Sprites = [itemConstructor.ItemSprites.Boomerang()];
         ThrowerPositon = (Func<Vector2>)itemConstructor.Extras[0];
         Thrower = (ICollisionHandler)itemConstructor.Extras[1];
-        if(itemConstructor.Extras.Count > 2)
+        if (itemConstructor.Extras.Count > 2)
         {
             ReturnAcceleration = (double)itemConstructor.Extras[2];
-        } 
+        }
         else
         {
             ReturnAcceleration = Acceleration.Length();
         }
-        Setup(itemConstructor);
+        Setup();
     }
 
     public override void Update(GameTime time)
@@ -85,7 +82,7 @@ public class Boomerang : AbstractItem
             double dt = time.ElapsedGameTime.TotalSeconds;
             ReturnSpeed += ReturnAcceleration * dt;
             Vector2 difference = ThrowerPositon() - Position;
-            Velocity =  (float) ReturnSpeed * difference / difference.Length();
+            Velocity = (float)ReturnSpeed * difference / difference.Length();
         }
     }
 
@@ -100,9 +97,9 @@ public class Boomerang : AbstractItem
     public override void HandleCollision(ICollisionHandler other, CollisionInfo collisionInfo)
     {
         base.HandleCollision(other, collisionInfo);
-        if(Phase == 1)
+        if (Phase == 1)
         {
-            if(other == Thrower)
+            if (other == Thrower)
             {
                 Kill();
             }

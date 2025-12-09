@@ -6,9 +6,14 @@
     "configurations": [
       {
         "name": "C#: ZweiHander Debug",
-        "type": "dotnet",
+        "type": "coreclr",
         "request": "launch",
-        "projectPath": "${workspaceFolder}/ZweiHander.csproj"
+        "preLaunchTask": "build",
+        "program": "${workspaceFolder}/bin/Debug/net8.0/ZweiHander.exe",
+        "args": [],
+        "cwd": "${workspaceFolder}",
+        "console": "internalConsole",
+        "stopAtEntry": false
       }
     ],
   }

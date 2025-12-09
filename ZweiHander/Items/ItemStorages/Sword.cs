@@ -1,7 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using System.Collections.Generic;
-using ZweiHander.Graphics;
-using ZweiHander.Graphics.SpriteStorages;
 
 namespace ZweiHander.Items.ItemStorages;
 /// <summary>
@@ -18,14 +16,14 @@ public class Sword : AbstractItem
     public Sword(ItemConstructor itemConstructor)
         : base(itemConstructor)
     {
-        Sprites = [itemConstructor.ItemSprites.SwordProjectile(Velocity), 
+        Sprites = [itemConstructor.ItemSprites.SwordProjectile(Velocity),
             itemConstructor.ItemSprites.SwordProjectileEffect(Velocity)];
-        Setup(itemConstructor);
+        Setup();
     }
 
     public override void Update(GameTime gameTime)
     {
-        if(Phase == 0)
+        if (Phase == 0)
         {
             base.Update(gameTime);
         }
@@ -38,7 +36,7 @@ public class Sword : AbstractItem
 
     protected override void OnPhaseChange()
     {
-        if(Phase == 1)
+        if (Phase == 1)
         {
             SpriteIndex = 1;
         }

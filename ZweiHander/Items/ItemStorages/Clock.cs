@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using ZweiHander.Graphics;
-using ZweiHander.Graphics.SpriteStorages;
-
-namespace ZweiHander.Items.ItemStorages;
+﻿namespace ZweiHander.Items.ItemStorages;
 
 /// <summary>
 /// Infinite life, collectable
@@ -15,6 +11,6 @@ public class Clock : AbstractItem
         : base(itemConstructor)
     {
         Sprites = [itemConstructor.TreasureSprites.Clock()];
-        Setup(itemConstructor);
+        Setup();
     }
 }

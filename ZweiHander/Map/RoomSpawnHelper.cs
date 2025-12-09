@@ -9,14 +9,14 @@ namespace ZweiHander.Map
     public static class RoomSpawnHelper
     {
         private static readonly BorderName[] EastEntrances =
-		[
-			BorderName.DoorTileEast,
+        [
+            BorderName.DoorTileEast,
             BorderName.HoleInWallEast,
             BorderName.EntranceTileEast,
             BorderName.LockedDoorTileEast
         ];
 
-        private static readonly BorderName[] WestEntrances = 
+        private static readonly BorderName[] WestEntrances =
         [
             BorderName.DoorTileWest,
             BorderName.HoleInWallWest,
@@ -25,16 +25,16 @@ namespace ZweiHander.Map
         ];
 
         private static readonly BorderName[] NorthEntrances =
-		[
-			BorderName.DoorTileNorth,
+        [
+            BorderName.DoorTileNorth,
             BorderName.HoleInWallNorth,
             BorderName.EntranceTileNorth,
             BorderName.LockedDoorTileNorth
         ];
 
         private static readonly BorderName[] SouthEntrances =
-		[
-			BorderName.DoorTileSouth,
+        [
+            BorderName.DoorTileSouth,
             BorderName.HoleInWallSouth,
             BorderName.EntranceTileSouth,
             BorderName.LockedDoorTileSouth
@@ -45,7 +45,7 @@ namespace ZweiHander.Map
         /// </summary>
         public static Vector2 GetPlayerSpawnPoint(
             Vector2 predefinedSpawnPoint,
-            IEnumerable<(BorderName borderName, Vector2 position)> borderData,
+            IEnumerable<(BorderName borderName, Vector2 position, Border dummyValue)> borderData,
             Rectangle roomBounds,
             int tileSize,
             int roomNumber)
@@ -55,7 +55,7 @@ namespace ZweiHander.Map
                 return predefinedSpawnPoint;
             }
 
-            foreach (var (borderName, position) in borderData)
+            foreach (var (borderName, position, _) in borderData)
             {
                 if (EastEntrances.Contains(borderName))
                 {

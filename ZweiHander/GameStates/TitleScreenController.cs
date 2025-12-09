@@ -20,7 +20,7 @@ namespace ZweiHander.GameStates
             _previousKeyState = Keyboard.GetState();
         }
 
-        public bool ShouldStartGame()
+        public int ShouldStartGame()
         {
             KeyboardState currentKeyState = Keyboard.GetState();
             Keys[] pressedKeys = currentKeyState.GetPressedKeys();
@@ -35,11 +35,19 @@ namespace ZweiHander.GameStates
                 bool isQuitKey = currentKeyState.IsKeyDown(Keys.Q) || currentKeyState.IsKeyDown(Keys.Escape);
 
                 _previousKeyState = currentKeyState;
-                return !isQuitKey;
+                if(!isQuitKey){
+                if (currentKeyState.IsKeyDown(Keys.H)){
+                        return 2;
+                    }
+                    else
+                    {
+                        return 1;
+                    }
+                }
             }
 
             _previousKeyState = currentKeyState;
-            return false;
+            return 0;
         }
     }
 }

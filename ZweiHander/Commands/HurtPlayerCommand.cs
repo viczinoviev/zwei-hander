@@ -1,20 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
-
-namespace ZweiHander.Commands
+﻿namespace ZweiHander.Commands
 {
-    public class HurtPlayerCommand : ICommand
+    public class HurtPlayerCommand(Game1 game) : ICommand
     {
-        private Game1 _game;
-
-        public HurtPlayerCommand(Game1 game)
-        {
-            _game = game;
-        }
+        private readonly Game1 _game = game;
 
         public void Execute()
         {

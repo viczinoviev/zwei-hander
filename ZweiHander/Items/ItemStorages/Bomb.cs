@@ -1,9 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
 using ZweiHander.CollisionFiles;
-using ZweiHander.Graphics;
-using ZweiHander.Graphics.SpriteStorages;
 
 namespace ZweiHander.Items.ItemStorages;
 
@@ -30,15 +27,18 @@ public class Bomb : AbstractItem
     /// <summary>
     /// How to scale Wiggle based upon life
     /// </summary>
-    private double WiggleScalar { get; set; } = 0.05;
+    private double WiggleScalar { get; } = 0.05;
 
     public Bomb(ItemConstructor itemConstructor)
         : base(itemConstructor)
     {
         Sprites = [itemConstructor.ItemSprites.Bomb(), itemConstructor.ItemSprites.Explosion()];
         Sprites[1].Scale = new(10, 10);
-        Setup(itemConstructor);
-        if (Life < 0) AddProperty(ItemProperty.CanBePickedUp);
+        Setup();
+        if (Life < 0)
+        {
+            AddProperty(ItemProperty.CanBePickedUp);
+        }
         else
         {
             Wiggle = WiggleScalar * Life;
@@ -52,15 +52,16 @@ public class Bomb : AbstractItem
         if (Phase == 0)
         {
             base.Update(gameTime);
-            if(Life > 0)
+            if (Life > 0)
             {
                 Sprites[0].Scale += new Vector2(dt, dt) / 2;
                 Wiggle -= dt;
-                if(Wiggle <= 0) {
+                if (Wiggle <= 0)
+                {
                     SpriteOffset *= -1;
                     Wiggle = Life * WiggleScalar;
                 }
-                
+
             }
         }
         else
@@ -93,9 +94,9 @@ public class Bomb : AbstractItem
             case Bomb bomb:
                 if (bomb.HasProperty(ItemProperty.CanDamagePlayer) && Life > 0 && Phase == 0) Life = Phases[Phase];
                 break;
-            //case Fire: //Yes, explode on *any* fire
-            //    if (Life > 0 && Phase == 0) Life = Phases[Phase];
-            //    break;
+                //case Fire: //Yes, explode on *any* fire
+                //    if (Life > 0 && Phase == 0) Life = Phases[Phase];
+                //    break;
         }
     }
 }

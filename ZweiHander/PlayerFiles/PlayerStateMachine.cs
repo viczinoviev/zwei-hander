@@ -1,20 +1,28 @@
-using System;
-using System.Linq;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Content;
+using ZweiHander.CollisionFiles;
 
-namespace ZweiHander.PlayerFiles{
-    public class PlayerStateMachine(Player player) : IStateMachine
+namespace ZweiHander.PlayerFiles
+{
+    public class PlayerStateMachine : IStateMachine
     {
-        private readonly Player _player = player;
+        private readonly Player _player;
         private PlayerHandler _playerHandler;
+        private readonly PlayerHandleItemUse _itemUseHandler;
+        private readonly PlayerCollisionHandler _collisionHandler;
         private PlayerState _currentState = PlayerState.Idle;
         private Vector2 _lastDirection = Vector2.UnitY; // Default facing down
         private Vector2 _currentMovementVector = Vector2.Zero;
         private float _actionTimer = 0f;
         private readonly float _attackDuration = 800f;
-        private readonly float _itemUseDuration = 250f;
         private bool _itemUsedLastFrame = false;
+
+        public PlayerStateMachine(Player player, PlayerCollisionHandler collisionHandler, ContentManager content)
+        {
+            _player = player;
+            _collisionHandler = collisionHandler;
+            _itemUseHandler = new PlayerHandleItemUse(_player, this, _collisionHandler, content);
+        }
 
         public PlayerState CurrentState => _currentState;
         public Vector2 LastDirection => _lastDirection;
@@ -75,7 +83,7 @@ namespace ZweiHander.PlayerFiles{
             {
                 return PlayerState.Attacking;
             }
-            else if (inputBuffer.Contains(PlayerInput.UsingItem1) || inputBuffer.Contains(PlayerInput.UsingItem2) || inputBuffer.Contains(PlayerInput.UsingItem3) || inputBuffer.Contains(PlayerInput.UsingItem4))
+            else if (inputBuffer.Contains(PlayerInput.UsingEquippedItem))
             {
                 return PlayerState.UsingItem;
             }
@@ -97,10 +105,10 @@ namespace ZweiHander.PlayerFiles{
             Vector2 movement = Vector2.Zero;
             var inputBuffer = _player.InputBuffer;
 
-            if (inputBuffer.Contains(PlayerInput.MovingUp)) movement.Y -= 1;
-            if (inputBuffer.Contains(PlayerInput.MovingDown)) movement.Y += 1;
-            if (inputBuffer.Contains(PlayerInput.MovingLeft)) movement.X -= 1;
-            if (inputBuffer.Contains(PlayerInput.MovingRight)) movement.X += 1;
+            if (inputBuffer.Contains(PlayerInput.MovingUp)) movement.Y--;
+            if (inputBuffer.Contains(PlayerInput.MovingDown)) movement.Y++;
+            if (inputBuffer.Contains(PlayerInput.MovingLeft)) movement.X--;
+            if (inputBuffer.Contains(PlayerInput.MovingRight)) movement.X++;
 
             // Normalize diagonal movement
             if (movement != Vector2.Zero)
@@ -122,26 +130,9 @@ namespace ZweiHander.PlayerFiles{
             }
             else if (newState == PlayerState.UsingItem && !_itemUsedLastFrame)
             {
-                _actionTimer = _itemUseDuration;
                 _itemUsedLastFrame = true;
 
-                // Pass the specific input to PlayerHandler
-                if (_player.InputBuffer.Contains(PlayerInput.UsingItem1))
-                {
-                    _playerHandler.HandleItemUse(PlayerInput.UsingItem1);
-                }
-                else if (_player.InputBuffer.Contains(PlayerInput.UsingItem2))
-                {
-                    _playerHandler.HandleItemUse(PlayerInput.UsingItem2);
-                }
-                else if (_player.InputBuffer.Contains(PlayerInput.UsingItem3))
-                {
-                    _playerHandler.HandleItemUse(PlayerInput.UsingItem3);
-                }
-                else if(_player.InputBuffer.Contains(PlayerInput.UsingItem4))
-                {
-                    _playerHandler.HandleItemUse(PlayerInput.UsingItem4);
-                }
+                _actionTimer = _itemUseHandler.HandleItemUse(_player.EquippedItem);
             }
         }
 

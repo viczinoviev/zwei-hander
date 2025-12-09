@@ -1,5 +1,4 @@
-﻿using System;
-using ZweiHander.Items;
+﻿using ZweiHander.Items;
 
 namespace ZweiHander.CollisionFiles;
 

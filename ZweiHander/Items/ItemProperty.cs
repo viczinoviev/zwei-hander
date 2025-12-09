@@ -7,6 +7,7 @@ namespace ZweiHander.Items;
 [Flags]
 public enum ItemProperty : Int16
 {
+    None = 0,
     /// <summary>
     /// Damages the player on collision with it
     /// </summary>
@@ -36,6 +37,18 @@ public enum ItemProperty : Int16
     /// </summary>
     DeleteOnBlock = 0x80,
     /// <summary>
+    /// Projectile that hurts player
+    /// </summary>
+    EnemyProjectile = CanDamagePlayer | DeleteOnBlock | DeleteOnPlayer,
+    /// <summary>
+    /// Projectile that hurts enemies
+    /// </summary>
+    FriendlyProjectile = CanDamageEnemy | DeleteOnBlock | DeleteOnEnemy,
+    /// <summary>
+    /// On collision with anything, this is deleted
+    /// </summary>
+    DeleteOnCollision = DeleteOnBlock | DeleteOnEnemy | DeleteOnPlayer,
+    /// <summary>
     /// On collision with block, its velocity is reversed
     /// </summary>
     BounceOnBlock = 0x100,
@@ -50,17 +63,5 @@ public enum ItemProperty : Int16
     /// <summary>
     /// Item meant to be collected by player
     /// </summary>
-    Collectable = Stationary | CanBePickedUp,
-    /// <summary>
-    /// Projectile that hurts enemies
-    /// </summary>
-    FriendlyProjectile = CanDamageEnemy | DeleteOnBlock | DeleteOnEnemy,
-    /// <summary>
-    /// Projectile that hurts player
-    /// </summary>
-    EnemyProjectile = CanDamagePlayer | DeleteOnBlock | DeleteOnPlayer,
-    /// <summary>
-    /// On collision with anything, this is deleted
-    /// </summary>
-    DeleteOnCollision = DeleteOnBlock | DeleteOnEnemy | DeleteOnPlayer
+    Collectable = Stationary | CanBePickedUp
 }

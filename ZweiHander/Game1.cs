@@ -1,14 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-using System.ComponentModel;
 using System.IO;
 using ZweiHander.CollisionFiles;
 using ZweiHander.Commands;
-using ZweiHander.Environment;
+using ZweiHander.Enemy;
+using ZweiHander.FriendlyNPC;
 using ZweiHander.GameStates;
 using ZweiHander.Graphics.SpriteStorages;
 using ZweiHander.HUD;
@@ -22,7 +21,7 @@ namespace ZweiHander
     {
         //Hey team!
         // Hey hows it going?
-        private IGameState _gameState;
+        private GameState _gameState;
         public bool gamePaused = false;
         public HUDManager HUDManager => _hudManager;
         readonly private GraphicsDeviceManager _graphics;
@@ -36,7 +35,8 @@ namespace ZweiHander
         private GameOverScreen _gameOverScreen;
         private GameWonScreen _gameWonScreen;
 
-
+        private Kirby _kirby;
+        private KirbySprites _kirbySprites;
 
         //Sprites and factories
         private PlayerSprites _linkSprites;
@@ -44,7 +44,10 @@ namespace ZweiHander
         private TreasureSprites _treasureSprites;
         private ItemSprites _itemSprites;
         private TitleSprites _titleSprites;
-        
+        private EnemySprites _enemySprites;
+        private BossSprites _bossSprites;
+        private NPCSprites _npcSprites;
+
         private Universe _universe;
         private CsvAreaConstructor _areaConstructor;
 
@@ -53,18 +56,28 @@ namespace ZweiHander
 
         public Player GamePlayer => _gamePlayer;
 
+        public Kirby GameKirby => _kirby;
+
+        public EnemyManager HordeManager;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+
+            _graphics.PreferredBackBufferWidth = 800;
+            _graphics.PreferredBackBufferHeight = 480;
+
+            Window.ClientSizeChanged += OnClientSizeChanged;
         }
 
-        protected override void Initialize()
+        private void OnClientSizeChanged(object sender, System.EventArgs e)
         {
-            // TODO: Add your initialization logic here
-
-            base.Initialize();
+            if (_camera != null && GraphicsDevice != null)
+            {
+                _camera.UpdateViewport(GraphicsDevice.Viewport);
+            }
         }
 
         protected override void LoadContent()
@@ -72,7 +85,7 @@ namespace ZweiHander
             _gameState = new GameState();
             Services.AddService<IGameState>(_gameState);
 
-            _gameState.PausedChanged += p => _hudManager?.SetPaused(p);
+            _gameState.PausedChanged += p => _hudManager?.SetHUDOpen(p);
             _gameState.ModeChanged += OnGameModeChanged;
 
             _spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -90,6 +103,9 @@ namespace ZweiHander
             _hudSprites = new HUDSprites(Content, _spriteBatch);
             _treasureSprites = new TreasureSprites(Content, _spriteBatch);
             _itemSprites = new ItemSprites(Content, _spriteBatch);
+            _bossSprites = new BossSprites(Content, _spriteBatch);
+            _enemySprites = new EnemySprites(Content, _spriteBatch);
+            _npcSprites = new NPCSprites(Content, _spriteBatch);
 
             _debugRenderer = new DebugRenderer();
             _debugRenderer.Initialize(GraphicsDevice);
@@ -105,7 +121,7 @@ namespace ZweiHander
 
         private void OnGameModeChanged(GameMode newMode)
         {
-            if (newMode == GameMode.Playing)
+            if (newMode == GameMode.Playing || newMode == GameMode.Horde)
             {
                 GameSetUp();
             }
@@ -128,11 +144,13 @@ namespace ZweiHander
         /// </summary>
         public void GameSetUp()
         {
-                //Clears all the Colliders first
+            //Clears all the Colliders first
             CollisionManager.Instance.ClearAllColliders();
 
-            _gamePlayer = new Player(_linkSprites, _itemSprites, _treasureSprites,Content);
-            SetCameraCommand moveCameraToPlayer = new SetCameraCommand(_camera, _gamePlayer);
+            _gamePlayer = new Player(this, _linkSprites, _itemSprites, _treasureSprites, Content);
+            _kirbySprites = new KirbySprites(Content, _spriteBatch);
+
+            SetCameraCommand moveCameraToPlayer = new(_camera, _gamePlayer);
             moveCameraToPlayer.Execute();
 
             // Universe creates its own manager instances
@@ -147,27 +165,53 @@ namespace ZweiHander
                 Content,
                 _camera
             );
+
+            _kirby = new Kirby(
+                _gamePlayer,
+                _universe.EnemyManager,
+                _kirbySprites,
+                _gamePlayer.Position,
+                Content
+            );
             _universe.SetPlayer(_gamePlayer);
+            _universe.SetKirby(_kirby);
             _universe.SetupPortalManager(_camera);
+            _universe.SetupLockedEntranceManager(_camera);
+
             _areaConstructor = new CsvAreaConstructor();
 
-            string mapPath = Path.Combine(Content.RootDirectory, "Maps", "testDungeon1.csv");
-            Area testArea = _areaConstructor.LoadArea(mapPath, _universe, _camera, "TestDungeon");
-
-            _universe.AddArea(testArea);
-            _universe.SetCurrentLocation("TestDungeon", 1);
+            if(_gameState.CurrentMode == GameMode.Horde){
+                string mapPath2 = Path.Combine(Content.RootDirectory, "Maps", "HordeDungeon.csv");
+                Area HordeArea = _areaConstructor.LoadArea(mapPath2, _universe, _camera, "HordeDungeon");
+                _universe.AddArea(HordeArea);
+                _universe.SetCurrentLocation("HordeDungeon", 1);
+                ItemManager projectileManager = new(_itemSprites,_treasureSprites,_bossSprites);
+                HordeManager = new(_enemySprites,projectileManager,_bossSprites,_npcSprites,Content);
+            }
+            else{
+                string mapPath = Path.Combine(Content.RootDirectory, "Maps", "testDungeon1.csv");
+                Area testArea = _areaConstructor.LoadArea(mapPath, _universe, _camera, "TestDungeon");
+                _universe.AddArea(testArea);
+                _universe.SetCurrentLocation("TestDungeon", 1);
+            }
             _gamePlayer.Position = _universe.CurrentRoom.GetPlayerSpawnPoint();
+            _kirby.Position = _gamePlayer.Position;
+
+
+
+
             moveCameraToPlayer.Execute();
 
             _keyboardController = new KeyboardController(_gamePlayer);
             _keyboardController.BindKey(Keys.R, new ResetCommand(this));
             _keyboardController.BindKey(Keys.Q, new QuitCommand(this));
             _keyboardController.BindKey(Keys.E, new HurtPlayerCommand(this));
-            _keyboardController.BindKey(Keys.I, new InventoryCommand(this));  
+            _keyboardController.BindKey(Keys.I, new InventoryCommand(this));
             _keyboardController.BindKey(Keys.P, new PauseCommand(this));
-            _keyboardController.BindKey(Keys.OemComma, new PreviousInventoryItemCommand(this)); 
+            _keyboardController.BindKey(Keys.OemComma, new PreviousInventoryItemCommand(this));
             _keyboardController.BindKey(Keys.OemPeriod, new NextInventoryItemCommand(this));
             _keyboardController.BindKey(Keys.X, new ConfirmInventoryItemCommand(this));
+            _keyboardController.BindKey(Keys.U, new KirbyUltCommand(this));
             // Initialize HUD Manager
             _hudManager = new HUDManager(_gamePlayer, _hudSprites, gamePaused);
             _hudManager.SetUniverse(_universe);
@@ -183,14 +227,19 @@ namespace ZweiHander
 
             if (_gameState.CurrentMode == GameMode.TitleScreen)
             {
-                if (_titleScreenController.ShouldStartGame())
+                int mode = _titleScreenController.ShouldStartGame();
+                if (mode == 1)
                 {
                     _gameState.SetMode(GameMode.Playing);
+                }
+                else if(mode == 2)
+                {
+                    _gameState.SetMode(GameMode.Horde);
                 }
             }
             else if (_gameState.CurrentMode == GameMode.GameOver)
             {
-                _gameOverScreen.Update(gameTime);
+                _gameOverScreen.Update();
 
                 if (_gameOverScreen.ShouldQuit())
                 {
@@ -203,7 +252,7 @@ namespace ZweiHander
             }
             else if (_gameState.CurrentMode == GameMode.GameWon)
             {
-                _gameWonScreen.Update(gameTime);
+                _gameWonScreen.Update();
 
                 if (_gameWonScreen.ShouldQuit())
                 {
@@ -217,6 +266,38 @@ namespace ZweiHander
             else if (_gameState.CurrentMode == GameMode.Playing)
             {
                 // Always update keyboard and HUD
+                _keyboardController.Update();
+                _hudManager.Update(gameTime);
+
+                // Update stuff when game is running
+                if (!gamePaused)
+                {
+                    if (_gamePlayer.CurrentHealth <= 0)
+                    {
+                        SoundEffect gameOverSFX = Content.Load<SoundEffect>("Audio/GameOver");
+                        gameOverSFX.Play();
+                        _gameState.SetMode(GameMode.GameOver);
+                    }
+                    if (_gamePlayer.InventoryCount(typeof(Items.ItemStorages.Triforce)) > 0)
+                    {
+                        SoundEffect gameWonSFX = Content.Load<SoundEffect>("Audio/SuperSuccess");
+                        gameWonSFX.Play();
+                        _gameState.SetMode(GameMode.GameWon);
+                    }
+                    _universe.Update(gameTime);
+
+                    _gamePlayer.Update(gameTime);
+
+                    _kirby.Update(gameTime);
+
+                    CollisionManager.Instance.Update(gameTime);
+
+                    _camera.Update(gameTime, _gamePlayer.Position);
+                }
+            }
+            else if(_gameState.CurrentMode == GameMode.Horde)
+            {
+                 // Always update keyboard and HUD
                 _keyboardController.Update();
                 _hudManager.Update(gameTime);
 
@@ -239,10 +320,16 @@ namespace ZweiHander
 
                     _gamePlayer.Update(gameTime);
 
+                    _kirby.Update(gameTime);
+
                     CollisionManager.Instance.Update(gameTime);
 
                     _camera.Update(gameTime, _gamePlayer.Position);
-                }
+                    if (_universe.EnemyManager.IsEmpty())
+                    {
+                        _universe.EnemyManager.MakeEnemy("Aquamentus",new Vector2(300,300));
+                    }
+            }
             }
 
             base.Update(gameTime);
@@ -254,22 +341,32 @@ namespace ZweiHander
 
             if (_gameState.CurrentMode == GameMode.TitleScreen)
             {
-                _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-                _titleSprites.Title().Draw(new Vector2(
-                    GraphicsDevice.Viewport.Width / 2.0f,
-                    GraphicsDevice.Viewport.Height / 2.0f
-                    ));
+                _spriteBatch.Begin(
+                    samplerState: SamplerState.PointClamp,
+                    transformMatrix: _camera.GetUITransformMatrix()
+                );
+                _titleSprites.Title().Draw(new Vector2(400, 240));
                 _spriteBatch.End();
             }
             else if (_gameState.CurrentMode == GameMode.GameOver)
             {
-                _gameOverScreen.Draw(_spriteBatch);
+                _spriteBatch.Begin(
+                    samplerState: SamplerState.PointClamp,
+                    transformMatrix: _camera.GetUITransformMatrix()
+                );
+                _gameOverScreen.Draw(_spriteBatch, new Vector2(800, 480));
+                _spriteBatch.End();
             }
             else if (_gameState.CurrentMode == GameMode.GameWon)
             {
-                _gameWonScreen.Draw(_spriteBatch);
+                _spriteBatch.Begin(
+                    samplerState: SamplerState.PointClamp,
+                    transformMatrix: _camera.GetUITransformMatrix()
+                );
+                _gameWonScreen.Draw(_spriteBatch, new Vector2(800, 480));
+                _spriteBatch.End();
             }
-            else if (_gameState.CurrentMode == GameMode.Playing)
+            else if (_gameState.CurrentMode == GameMode.Playing || _gameState.CurrentMode == GameMode.Horde)
             {
                 // Draw world with camera transform
                 _spriteBatch.Begin(
@@ -278,19 +375,21 @@ namespace ZweiHander
                 );
 
                 _universe.Draw();
+                _kirby.Draw();
                 _gamePlayer.Draw(_spriteBatch);
+
 
                 _debugRenderer.DrawWorldDebug(_spriteBatch, _universe);
 
                 _spriteBatch.End();
 
                 _spriteBatch.Begin(
-                    samplerState: SamplerState.PointClamp
+                    samplerState: SamplerState.PointClamp,
+                    transformMatrix: _camera.GetUITransformMatrix()
                 );
                 _hudManager.Draw(_spriteBatch);
 
                 _debugRenderer.DrawScreenDebug(_spriteBatch);
-
                 _spriteBatch.End();
             }
 

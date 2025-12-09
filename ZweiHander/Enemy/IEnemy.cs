@@ -19,13 +19,17 @@ public interface IEnemy
     /// </summary>
 
     public int Face { get; set; }
-/// <summary>
-/// Current amount of health, when <= 0, this enemy is dead.
-/// </summary>
+    /// <summary>
+    /// Current amount of health, when <= 0, this enemy is dead.
+    /// </summary>
     public int Hitpoints { get; set; }
-/// <summary>
-/// Collision manager for the enemy
-/// </summary>
+        /// <summary>
+    /// Cooldown to prevent getting hit too much too fast
+    /// </summary>
+    public float HitcoolDown { get; set; }
+    /// <summary>
+    /// Collision manager for the enemy
+    /// </summary>
     public EnemyCollisionHandler CollisionHandler { get; }
 
     /// <summary>
@@ -43,10 +47,11 @@ public interface IEnemy
     /// </summary>
     /// <param name="gameTime">A snapshot of the game timing values provided by the framework.</param>
     public void Update(GameTime gameTime);
-/// <summary>
-/// Gets the collisionBox for the enemy
-/// </summary>
-/// <returns>Rectangle equating to the collision box</returns>
+    /// <summary>
+    /// Gets the collisionBox for the enemy
+    /// </summary>
+    /// <returns>Rectangle equating to the collision box</returns>
     public Rectangle GetCollisionBox();
-    
+
+    void TakeDamage(int dmgAmount);
 }

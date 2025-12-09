@@ -1,15 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
 using ZweiHander.CollisionFiles;
-using ZweiHander.Graphics;
 using ZweiHander.Environment;
+using ZweiHander.Graphics;
 namespace ZweiHander.Map
 {
     public class Border
     {
-        private readonly BorderType _borderType;
         private readonly Vector2 _position; // Upper-left corner position (covers 2x2 grid cells)
         private readonly int _tileSize; // 32 pixels
         private bool collision = true;
@@ -17,13 +14,13 @@ namespace ZweiHander.Map
         private readonly ISprite _sprite;
         private readonly List<BlockCollisionHandler> _collisionHandlers;
 
-        public BorderType BorderType => _borderType;
-        public BorderName Name { get; private set; }
-        
+        public BorderType BorderType { get; }
+        public BorderName Name { get; }
+
         public Border(BorderName name, BorderType borderType, Vector2 position, int tileSize, ISprite sprite)
         {
             Name = name;
-            _borderType = borderType;
+            BorderType = borderType;
             _position = position;
             _tileSize = tileSize;
             _sprite = sprite;
@@ -41,34 +38,34 @@ namespace ZweiHander.Map
             int x = (int)_position.X;
             int y = (int)_position.Y;
 
-            switch (_borderType)
+            switch (BorderType)
             {
                 case BorderType.Solid:
-                    _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x-32, y-32, 64, 64)));
+                    _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x - 32, y - 32, 64, 64)));
                     break;
 
                 case BorderType.EntranceLeft:
-                    _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x-32, y-32, 64, 16)));      // Top-left corner
-                    _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x-32, y + 16, 64, 16))); // Bottom-left corner
-                    _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x, y-16, 32, 32))); // Right side
+                    _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x - 32, y - 32, 64, 16)));      // Top-left corner
+                    _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x - 32, y + 16, 64, 16))); // Bottom-left corner
+                    _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x, y - 16, 32, 32))); // Right side
                     break;
 
                 case BorderType.EntranceRight:
-                    _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x - 32, y - 32, 64, 16))); 
+                    _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x - 32, y - 32, 64, 16)));
                     _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x - 32, y + 16, 64, 16)));
-                    _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x - 32, y - 16, 32, 32))); 
+                    _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x - 32, y - 16, 32, 32)));
                     break;
 
                 case BorderType.EntranceUp:
-                    _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x - 32, y -32, 16, 64)));
-                    _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x+16, y -32, 16, 64)));
-                    _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x -16, y - 32, 32, 32)));
+                    _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x - 32, y - 32, 16, 64)));
+                    _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x + 16, y - 32, 16, 64)));
+                    _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x - 16, y - 32, 32, 32)));
                     break;
 
                 case BorderType.EntranceDown:
-                    _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x - 32, y -32, 16, 64)));
-                    _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x+16, y -32, 16, 64)));
-                    _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x -16, y, 32, 32)));
+                    _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x - 32, y - 32, 16, 64)));
+                    _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x + 16, y - 32, 16, 64)));
+                    _collisionHandlers.Add(new BlockCollisionHandler(new Rectangle(x - 16, y, 32, 32)));
                     break;
             }
         }
@@ -87,6 +84,10 @@ namespace ZweiHander.Map
             return _position;
         }
 
+        public Rectangle GetHitBox()
+        {
+            return new Rectangle((int)_position.X - 32, (int)_position.Y - 32, 64, 64);
+        }
         public void Draw()
         {
             _sprite.Draw(_position);
@@ -101,7 +102,7 @@ namespace ZweiHander.Map
         public bool IsCollidable()
         {
             // Decorative borders do not collide
-            if (_borderType == BorderType.Decorative) { collision = false; }
+            if (BorderType == BorderType.Decorative) { collision = false; }
             return collision;
         }
     }

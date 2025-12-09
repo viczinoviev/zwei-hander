@@ -8,7 +8,7 @@ namespace ZweiHander.Commands
         private readonly IPlayer _player = player;
         private readonly Vector2 _targetPosition = targetPosition;
 
-		public void Execute()
+        public void Execute()
         {
             _player.Position = _targetPosition;
             _player.ForceUpdateCollisionBox();

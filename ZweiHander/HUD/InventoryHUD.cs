@@ -1,13 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ZweiHander.Graphics;
-using ZweiHander.Graphics.SpriteStorages;
-using ZweiHander.PlayerFiles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ZweiHander.Graphics;
+using ZweiHander.Graphics.SpriteStorages;
 using ZweiHander.Items.ItemStorages;
-using System.Diagnostics;
+using ZweiHander.PlayerFiles;
 
 namespace ZweiHander.HUD
 {
@@ -21,7 +20,7 @@ namespace ZweiHander.HUD
         private readonly ISprite _swordSprite;
         private readonly Vector2 _position;
         private readonly Vector2 _relativePosition;
-        private readonly Player _player;
+        private readonly IPlayer _player;
         private readonly Vector2 _selectedPositionB = new(264, 464);
         private readonly Vector2 _selectedPositionA = new(312, 464);
 
@@ -55,9 +54,9 @@ namespace ZweiHander.HUD
             while (!_acquiredItems[_selectedIndex]);
         }
 
-        public OrderedUsable? GetSelectedItem()
+        public int GetSelectedItemSlot()
         {
-            return (OrderedUsable)_selectedIndex;
+            return _selectedIndex;
         }
 
         /// <summary>
@@ -93,10 +92,6 @@ namespace ZweiHander.HUD
         /// </summary>
         private readonly List<ISprite> _itemSprites;
         /// <summary>
-        /// Number of permanents that CAN be displayed
-        /// </summary>
-        private readonly int _orderedPermanentCount = Enum.GetNames(typeof(OrderedPermanent)).Length;
-        /// <summary>
         /// Number of usables that CAN be displayed
         /// </summary>
         private readonly int _orderedUsableCount = Enum.GetNames(typeof(OrderedUsable)).Length;
@@ -105,13 +100,13 @@ namespace ZweiHander.HUD
         /// </summary>
         private readonly int _orderedItemCount = Enum.GetNames(typeof(OrderedPermanent)).Length + Enum.GetNames(typeof(OrderedUsable)).Length;
 
-        public InventoryHUD(HUDSprites hudSprites, Vector2 position, Player player)
+        public InventoryHUD(HUDSprites hudSprites, Vector2 position, IPlayer player)
         {
             hudSprites = hudSprites ?? throw new ArgumentNullException(nameof(hudSprites));
             _inventoryDisplayHUD = hudSprites.InventoryDisplay();
             _redFrameHUD = hudSprites.RedFrame();
             _position = position; // Position is determined by HUDManager
-            _relativePosition = position - new Vector2(_inventoryDisplayHUD.Width, _inventoryDisplayHUD.Height) / 2;
+            _relativePosition = position - (new Vector2(_inventoryDisplayHUD.Width, _inventoryDisplayHUD.Height) / 2);
             _player = player;
 
             _acquiredItems = [.. Enumerable.Repeat(false, _orderedItemCount)];
@@ -126,11 +121,14 @@ namespace ZweiHander.HUD
 
         public void Update(GameTime gameTime)
         {
-            _acquiredItems[(int)OrderedUsable.Bow] = _player.InventoryCount(typeof(Bow)) > 0;
+            // Iterate through usable items (slots 0-3)
+            for (int i = 0; i < _orderedUsableCount; i++)
+            {
+                _acquiredItems[i] = _player.HasItemInSlot(i);
+            }
+
+            // Update permanent items (4 for map)
             _acquiredItems[(int)OrderedPermanent.Map] = _player.InventoryCount(typeof(MapItem)) > 0;
-            _acquiredItems[(int)OrderedUsable.Fire] = _player.InventoryCount(typeof(Fire)) > 0;
-            _acquiredItems[(int)OrderedUsable.Boomerang] = _player.InventoryCount(typeof(Boomerang)) > 0;
-            _acquiredItems[(int)OrderedUsable.Bomb] = _player.InventoryCount(typeof(Bomb)) > 0;
         }
 
         public void Draw(SpriteBatch spriteBatch, Vector2 offset)

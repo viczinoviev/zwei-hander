@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using ZweiHander.Graphics;
-
-namespace ZweiHander.Items.ItemStorages;
+﻿namespace ZweiHander.Items.ItemStorages;
 
 /// <summary>
 /// Collectable, infinite life
@@ -14,6 +11,6 @@ public class Key : AbstractItem
         : base(itemConstructor)
     {
         Sprites = [itemConstructor.TreasureSprites.Key()];
-        Setup(itemConstructor);
+        Setup();
     }
 }

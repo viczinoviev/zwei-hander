@@ -25,11 +25,11 @@ namespace ZweiHander.CollisionFiles
             {
                 CollisionBox = new Rectangle(colbox.X, colbox.Y - CollisionBoxOffset, colbox.Width, CollisionBoxOffset);
             }
-            else if(_axis == "yd")
+            else if (_axis == "yd")
             {
                 CollisionBox = new Rectangle(colbox.X, colbox.Y + colbox.Height + 1, colbox.Width, CollisionBoxOffset);
             }
-            else if(_axis == "xl")
+            else if (_axis == "xl")
             {
                 CollisionBox = new Rectangle(colbox.X - CollisionBoxOffset, colbox.Y, CollisionBoxOffset, colbox.Height);
             }
@@ -56,7 +56,7 @@ namespace ZweiHander.CollisionFiles
                         _ => Left,
                     };
                 }
-        }
+            }
         }
 
         public override void UpdateCollisionBox()

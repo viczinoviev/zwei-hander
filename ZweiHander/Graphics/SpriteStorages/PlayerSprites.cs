@@ -1,10 +1,9 @@
 ﻿using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
 using System.Numerics;
-using ZweiHander.Graphics;
 
 namespace ZweiHander.Graphics.SpriteStorages;
+
 public class PlayerSprites : SpriteFactory
 {
     private const string _definitionFile = "SpriteSheets/LinkDefinition.xml";
@@ -35,7 +34,7 @@ public class PlayerSprites : SpriteFactory
         AnimatedSprite s = new AnimatedSprite(_spriteBatch, _animations["link-attack-sword-animation-up"]);
         s.AnchorBottomRight(_defaultOrigin);
         return s;
-    } 
+    }
     public ISprite PlayerAttackSwordRight() => new AnimatedSprite(_spriteBatch, _animations["link-attack-sword-animation-right"]);
     public ISprite PlayerAttackSwordLeft()
     {

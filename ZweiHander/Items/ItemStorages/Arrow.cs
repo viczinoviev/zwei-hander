@@ -1,7 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using System.Collections.Generic;
-using ZweiHander.Graphics;
-using ZweiHander.Graphics.SpriteStorages;
 
 namespace ZweiHander.Items.ItemStorages;
 /// <summary>
@@ -19,7 +17,7 @@ public class Arrow : AbstractItem
         : base(itemConstructor)
     {
         Sprites = [itemConstructor.ItemSprites.Arrow(Velocity), itemConstructor.ItemSprites.ProjectileOnHit()];
-        Setup(itemConstructor);
+        Setup();
     }
 
     public override void Update(GameTime gameTime)
@@ -27,7 +25,7 @@ public class Arrow : AbstractItem
         if (Phase == 0)
         {
             base.Update(gameTime);
-        } 
+        }
         else
         {
             ProgressLife((float)gameTime.ElapsedGameTime.TotalSeconds);

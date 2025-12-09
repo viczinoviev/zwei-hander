@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System;
 using ZweiHander.CollisionFiles;
 using ZweiHander.Graphics;
@@ -10,46 +9,44 @@ namespace ZweiHander.Environment
     {
         private BlockType _blockType;   // Type of the block
         private readonly Point _gridPosition;    // Position in the grid (row, column)
-        private readonly int _gridSize;          // Size of the block in pixels
         private bool collision = true;  // Whether the block collides with other objects
 
         public ISprite _sprite;        // Sprite for the block
-        private readonly BlockCollisionHandler _collisionHandler;
 
         public BlockType BlockType => _blockType;
-        public int GridSize => _gridSize;
-        public BlockName Name { get; private set; }
-        public BlockCollisionHandler CollisionHandler => _collisionHandler;
+        public int GridSize { get; }
+        public BlockName Name { get; }
+        public BlockCollisionHandler CollisionHandler { get; }
 
 
         // Constructor: creates a new block with given type, position, size, and sprite
         public Block(BlockName name, BlockType blockType, Point gridPosition, int gridSize, ISprite sprite)
         {
-			Name = name;
+            Name = name;
             _blockType = blockType;
             _gridPosition = gridPosition;
-            _gridSize = gridSize;
+            GridSize = gridSize;
             _sprite = sprite ?? throw new ArgumentNullException(nameof(sprite));
 
             // Only create collision handler for collidable blocks
             if (IsCollidable())
             {
-                _collisionHandler = new BlockCollisionHandler(this);
+                CollisionHandler = new BlockCollisionHandler(this);
             }
         }
 
         public void UnsubscribeFromCollisions()
         {
-            if (_collisionHandler != null)
+            if (CollisionHandler != null)
             {
-                CollisionManager.Instance.RemoveCollider(_collisionHandler);
+                CollisionManager.Instance.RemoveCollider(CollisionHandler);
             }
         }
 
         // Converts grid position into world position in pixels
         public Vector2 GetVectorPosition()
         {
-            return new Vector2(_gridPosition.X * _gridSize, _gridPosition.Y * _gridSize);
+            return new Vector2(_gridPosition.X * GridSize, _gridPosition.Y * GridSize);
         }
 
         // Changes the type and sprite of the block at runtime
@@ -58,8 +55,8 @@ namespace ZweiHander.Environment
         public void ChangeBlock(BlockType newType, ISprite newSprite)
         {
             _blockType = newType;
-            _sprite = newSprite ?? throw new ArgumentNullException(nameof(newSprite)); ;
-            
+            _sprite = newSprite ?? throw new ArgumentNullException(nameof(newSprite));
+
         }
 
         public void Draw()
@@ -75,10 +72,10 @@ namespace ZweiHander.Environment
         public Rectangle GetBlockHitbox()
         {
             return new Rectangle(
-                _gridPosition.X * _gridSize - _gridSize / 2, 
-                _gridPosition.Y * _gridSize - _gridSize / 2, 
-                _gridSize, 
-                _gridSize
+                (_gridPosition.X * GridSize) - (GridSize / 2),
+                (_gridPosition.Y * GridSize) - (GridSize / 2),
+                GridSize,
+                GridSize
             );
         }
 

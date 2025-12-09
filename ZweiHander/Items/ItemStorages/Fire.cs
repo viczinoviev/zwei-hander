@@ -1,9 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
-using System.Collections.Generic;
 using ZweiHander.CollisionFiles;
-using ZweiHander.Graphics;
-using ZweiHander.Graphics.SpriteStorages;
 
 namespace ZweiHander.Items.ItemStorages;
 
@@ -55,7 +52,10 @@ public class Fire : AbstractItem
         : base(itemConstructor)
     {
         Sprites = [itemConstructor.ItemSprites.FireProjectile()];
-        if (Life < 0) AddProperty(ItemProperty.Collectable);
+        if (Life < 0)
+        {
+            AddProperty(ItemProperty.Collectable);
+        }
         else
         {
             if (itemConstructor.Extras.Count > 0)
@@ -68,7 +68,7 @@ public class Fire : AbstractItem
             }
             AddProperty(ItemProperty.CanDamageEnemy);
         }
-        Setup(itemConstructor);
+        Setup();
     }
 
     public override void Update(GameTime gameTime)
@@ -118,7 +118,7 @@ public class Fire : AbstractItem
             RemoveProperty(ItemProperty.DeleteOnBlock);
             Acceleration = Vector2.Zero;
             Velocity = Vector2.Zero;
-        } 
+        }
         else if (Phase == 2)
         {
             Hitbox = Vector2.Zero;

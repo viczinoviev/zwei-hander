@@ -10,23 +10,14 @@ namespace ZweiHander.Graphics;
 /// <remarks>
 /// Creates a new animated sprite with the specified animation.
 /// </remarks>
-public class FlippingSprites : IdleSprite
+public class FlippingSprites(TextureRegion region, SpriteBatch spriteBatch, bool centered = true) : IdleSprite(region, spriteBatch, centered)
 {
     /// <summary>
     /// Time elapsed since last frame update
     /// </summary>
     private TimeSpan _elapsed;
 
-    private TimeSpan _delay = TimeSpan.FromMilliseconds(200);
-
-    private Boolean _anchor = false;
-    private Vector2 _offset = Vector2.Zero;
-
-    private IdleSprite _sprite;
-
-    public FlippingSprites(TextureRegion region, SpriteBatch spriteBatch, bool centered = true) : base(region, spriteBatch, centered)
-    {
-    }
+    private readonly TimeSpan _delay = TimeSpan.FromMilliseconds(200);
 
     public override void Update(GameTime gameTime)
     {
@@ -39,7 +30,8 @@ public class FlippingSprites : IdleSprite
             if (this.Effects == SpriteEffects.None)
             {
                 this.Effects = SpriteEffects.FlipHorizontally;
-            } else
+            }
+            else
             {
                 this.Effects = SpriteEffects.None;
             }

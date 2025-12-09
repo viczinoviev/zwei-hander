@@ -1,8 +1,8 @@
 ﻿using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using ZweiHander.Graphics;
 
 namespace ZweiHander.Graphics.SpriteStorages;
+
 public class TreasureSprites : SpriteFactory
 {
     private const string _definitionFile = "SpriteSheets/TreasureDefinition.xml";

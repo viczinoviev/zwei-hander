@@ -1,17 +1,13 @@
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
-using ZweiHander.PlayerFiles;
-using ZweiHander.Enemy;
-using ZweiHander.Items;
-using ZweiHander.Environment;
-using ZweiHander.CollisionFiles;
-using ZweiHander.Graphics.SpriteStorages;
-using Microsoft.Xna.Framework.Audio;
-using System.Net.Mime;
 using Microsoft.Xna.Framework.Content;
-using System;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
+using ZweiHander.CollisionFiles;
+using ZweiHander.Enemy;
+using ZweiHander.Environment;
+using ZweiHander.FriendlyNPC;
+using ZweiHander.Graphics.SpriteStorages;
+using ZweiHander.Items;
+using ZweiHander.PlayerFiles;
 
 
 namespace ZweiHander.Map
@@ -23,17 +19,20 @@ namespace ZweiHander.Map
         public Area CurrentArea { get; private set; }
         public Room CurrentRoom { get; private set; }
         public IPlayer Player { get; private set; }
-        public EnemyManager EnemyManager { get; private set; }
-        public ItemManager ItemManager { get; private set; }
-        public BlockFactory BlockFactory { get; private set; }
-        public BorderFactory BorderFactory { get; private set; }
+        public IKirby Kirby { get; private set; }
+        public EnemyManager EnemyManager { get; }
+        public ItemManager ItemManager { get; }
+        public BlockManager BlockFactory { get; }
+        public BorderManager BorderFactory { get; }
         public PortalManager PortalManager { get; private set; }
 
-        public Camera.Camera Camera { get; private set; }
+        public LockedEntranceManager LockedEntranceManager { get; private set; }
 
-        public RoomTransition RoomTransition { get; private set; }
+        public Camera.Camera Camera { get; }
 
-        public int TileSize { get; private set; }
+        public RoomTransition RoomTransition { get; }
+
+        public int TileSize { get; }
 
         public Universe(
             EnemySprites enemySprites,
@@ -49,13 +48,13 @@ namespace ZweiHander.Map
         {
             TileSize = tileSize;
             _areas = [];
-            
+
             // Create separate instances for Universe's use
             ItemManager projectileManager = new(itemSprites, treasureSprites, bossSprites);
             ItemManager = new ItemManager(itemSprites, treasureSprites, bossSprites);
             EnemyManager = new EnemyManager(enemySprites, projectileManager, bossSprites, npcSprites, Content);
-            BlockFactory = new BlockFactory(tileSize, blockSprites, playerSprites);
-            BorderFactory = new BorderFactory(tileSize, blockSprites);
+            BlockFactory = new BlockManager(tileSize, blockSprites, playerSprites);
+            BorderFactory = new BorderManager(tileSize, blockSprites);
             RoomTransition = new RoomTransition(this, tileSize);
 
             this.Camera = camera;
@@ -67,9 +66,16 @@ namespace ZweiHander.Map
 
         public void SetPlayer(IPlayer player) => Player = player;
 
+        public void SetKirby(IKirby kirby) => Kirby = kirby;
+
         public void SetupPortalManager(Camera.Camera camera)
         {
             PortalManager = new PortalManager(this, Player, camera);
+        }
+
+        public void SetupLockedEntranceManager(Camera.Camera camera)
+        {
+            LockedEntranceManager = new LockedEntranceManager(this, Player, camera);
         }
 
         public void SetCurrentLocation(string areaName, int roomNumber)
@@ -84,8 +90,21 @@ namespace ZweiHander.Map
             CurrentRoom = room;
             CurrentRoom.Load();
         }
+
+        public void ForceChangeRoom(int roomNumber)
+        {
+            if (CurrentArea == null) return;
+
+            Room targetRoom = CurrentArea.GetRoom(roomNumber);
+            if (targetRoom == null) return;
+
+            UnloadContents();
+            CurrentRoom = targetRoom;
+            CurrentRoom.Load();
+        }
+
         public void LoadRoom(int roomNumber, Vector2 spawnPosition, Camera.Camera camera, Vector2 oldPortalPos, Vector2 newPortalPos, Direction portalDirection)
-        {   
+        {
             if (RoomTransition.IsTransitioning) return;
             if (CurrentArea == null) return;
 
@@ -93,13 +112,13 @@ namespace ZweiHander.Map
             if (targetRoom == null) return;
 
             // Remove items and enemies that were picked up/killed in the previous room
-            CurrentRoom.PersistentRemoveItemAndEnemy(ItemManager, EnemyManager);
+            CurrentRoom.PersistentRemoveItemAndEnemy(ItemManager, EnemyManager, BorderFactory);
 
             RoomTransition.StartTransition(CurrentRoom, targetRoom, spawnPosition, camera, oldPortalPos, newPortalPos, portalDirection, Player);
 
             CurrentRoom = targetRoom;
         }
-        
+
         internal void UnloadContents()
         {
             if (CurrentRoom == null) return;
@@ -110,28 +129,28 @@ namespace ZweiHander.Map
             EnemyManager.Clear();
             ItemManager.Clear();
             PortalManager.Clear();
-            
+            LockedEntranceManager.Clear();
+
             // Remove dead/null colliders immediately before loading next room
             CollisionManager.Instance.RemoveDeadColliders();
-            
+
             CurrentRoom.IsLoaded = false;
         }
 
         public void Update(GameTime gameTime)
         {
-            RoomTransition.Update(gameTime, CurrentRoom, Camera, Player);
+            RoomTransition.Update(gameTime, CurrentRoom, Camera, Player, Kirby);
 
-            if (CurrentRoom == null || !CurrentRoom.IsLoaded || RoomTransition.IsTransitioning) return;
+            if (CurrentRoom?.IsLoaded != true || RoomTransition.IsTransitioning) return;
 
             EnemyManager.Update(gameTime);
             ItemManager.Update(gameTime);
-            PortalManager.Update(gameTime);
         }
-        
+
 
         public void Draw()
         {
-            if (CurrentRoom == null || !CurrentRoom.IsLoaded) return;
+            if (CurrentRoom?.IsLoaded != true) return;
 
             BlockFactory.Draw();
             BorderFactory.Draw();

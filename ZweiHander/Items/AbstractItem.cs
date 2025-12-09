@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using ZweiHander.CollisionFiles;
 using ZweiHander.Graphics;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
@@ -68,11 +67,14 @@ public abstract class AbstractItem : IItem
     /// <summary>
     /// Current phase, starting from 0.
     /// </summary>
-    protected int Phase { get => _phase; set
+    protected int Phase
+    {
+        get => _phase; set
         {
             _phase = value;
             OnPhaseChange();
-        } }
+        }
+    }
 
     /// <summary>
     /// Handles the collisions for this item.
@@ -89,7 +91,7 @@ public abstract class AbstractItem : IItem
     /// </summary>
     protected Dictionary<Type, DamageObject> Damage { get; set; } = [];
 
-    public AbstractItem(ItemConstructor itemConstructor)
+    protected AbstractItem(ItemConstructor itemConstructor)
     {
         _manager = itemConstructor.Manager;
         if (itemConstructor.Life != 0) Life = itemConstructor.Life;
@@ -105,8 +107,7 @@ public abstract class AbstractItem : IItem
     /// <summary>
     /// Final step in each item's constructor.
     /// </summary>
-    /// <param name="itemConstructor"></param>
-    protected void Setup(ItemConstructor itemConstructor)
+    protected void Setup()
     {
         CollisionHandler = new ItemCollisionHandler(this);
     }
@@ -154,7 +155,7 @@ public abstract class AbstractItem : IItem
     protected void Move(float dt)
     {
         Velocity += dt * Acceleration;
-        Position += dt * Velocity + (dt * dt / 2) * Acceleration;
+        Position += (dt * Velocity) + ((dt * dt / 2) * Acceleration);
     }
 
     protected virtual void OnPhaseChange() { }
@@ -182,12 +183,12 @@ public abstract class AbstractItem : IItem
 
     public Rectangle GetHitBox()
     {
-        int width = Hitbox.X == 0f ? Sprite.Width : (int) Hitbox.X;
-        int height = Hitbox.Y == 0f ? Sprite.Height : (int) Hitbox.Y;
+        int width = Hitbox.X == 0f ? Sprite.Width : (int)Hitbox.X;
+        int height = Hitbox.Y == 0f ? Sprite.Height : (int)Hitbox.Y;
         // Sprites are centered
         return new Rectangle(
-                (int)Position.X - width / 2,
-                (int)Position.Y - height / 2,
+                (int)Position.X - (width / 2),
+                (int)Position.Y - (height / 2),
                 width,
                 height
             );
@@ -223,7 +224,7 @@ public abstract class AbstractItem : IItem
     /// </summary>
     /// <param name="other">What is being collided with.</param>
     /// <param name="collisionInfo">Info related to the collision.</param>
-    protected virtual void ItemInteract(ItemCollisionHandler other, CollisionInfo collisionInfo){ }
+    protected virtual void ItemInteract(ItemCollisionHandler other, CollisionInfo collisionInfo) { }
 
     /// <summary>
     /// How to interact with enemies on collision.

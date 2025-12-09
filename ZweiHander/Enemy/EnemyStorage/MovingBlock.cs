@@ -1,8 +1,7 @@
 using Microsoft.Xna.Framework;
+using ZweiHander.CollisionFiles;
 using ZweiHander.Graphics;
 using ZweiHander.Graphics.SpriteStorages;
-
-using ZweiHander.CollisionFiles;
 
 namespace ZweiHander.Enemy.EnemyStorage
 {
@@ -21,6 +20,7 @@ namespace ZweiHander.Enemy.EnemyStorage
         public Vector2 Position { get; set; }
         public int Face { get; set; }
         public int Hitpoints { get; set; } = 5;
+        public float HitcoolDown { get; set; } = 0;
         public int Thrower { get; set; }
         public EnemyCollisionHandler CollisionHandler { get; } = default;
         public MovingBlock(EnemySprites enemySprites)
@@ -36,7 +36,7 @@ namespace ZweiHander.Enemy.EnemyStorage
 
             Sprite = _enemySprites.Gel();
         }
-//unsued enemy!
+        //unsued enemy!
         public MovingBlock(EnemySprites enemySprites, Vector2 startPos, Vector2 endPos, float moveTime)
         {
             _enemySprites = enemySprites;
@@ -91,7 +91,18 @@ namespace ZweiHander.Enemy.EnemyStorage
 
             Sprite.Update(gameTime);
         }
+        public void TakeDamage(int dmg)
+        {
+            Hitpoints -= dmg;
 
+            if (Hitpoints <= 0)
+            {
+                if (CollisionHandler != null)
+                {
+                    CollisionHandler.Dead = true;
+                }
+            }
+        }
         public void Draw()
         {
             if (!_isConfigured)
@@ -104,8 +115,8 @@ namespace ZweiHander.Enemy.EnemyStorage
         {
             // Sprites are centered
             return new Rectangle(
-                    (int)Position.X - Sprite.Width / 2,
-                    (int)Position.Y - Sprite.Height / 2,
+                    (int)Position.X - (Sprite.Width / 2),
+                    (int)Position.Y - (Sprite.Height / 2),
                     Sprite.Width,
                     Sprite.Height
             );

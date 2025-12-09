@@ -1,9 +1,9 @@
 using Microsoft.Xna.Framework;
-using Vector2 = Microsoft.Xna.Framework.Vector2;
+using Microsoft.Xna.Framework.Content;
+using ZweiHander.CollisionFiles;
 using ZweiHander.Graphics;
 using ZweiHander.Graphics.SpriteStorages;
-using ZweiHander.CollisionFiles;
-using Microsoft.Xna.Framework.Content;
+using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace ZweiHander.Enemy.EnemyStorage;
 
@@ -29,6 +29,7 @@ public class BladeTrap : IEnemy
 
     public int Face { get; set; } = default;
     public int Hitpoints { get; set; } = EnemyStartHealth;
+    public float HitcoolDown { get; set; } = 0;
 
     public int Thrower;
 
@@ -40,7 +41,7 @@ public class BladeTrap : IEnemy
     public readonly BladeTrapHomeCollisionHandler homeDownCollisionHandler;
     public EnemyCollisionHandler CollisionHandler { get; } = default;
 
-    public BladeTrap(EnemySprites enemySprites,ContentManager sfxPlayer,Vector2 pos)
+    public BladeTrap(EnemySprites enemySprites, ContentManager sfxPlayer, Vector2 pos)
     {
         Position = pos;
         _enemySprites = enemySprites;
@@ -65,9 +66,20 @@ public class BladeTrap : IEnemy
         }
         CollisionHandler.UpdateCollisionBox();
         Sprite.Update(time);
+    }
+
+    public void TakeDamage(int dmg)
+    {
+        Hitpoints -= dmg;
+
+        if (Hitpoints <= 0)
+        {
+            if (CollisionHandler != null)
+            {
+                CollisionHandler.Dead = true;
+            }
         }
-
-
+    }
 
 
     public void Draw()
@@ -78,8 +90,8 @@ public class BladeTrap : IEnemy
     {
         // Sprites are centered
         return new Rectangle(
-                (int)Position.X - Sprite.Width / CollisionBoxOffset,
-                (int)Position.Y - Sprite.Height / CollisionBoxOffset,
+                (int)Position.X - (Sprite.Width / CollisionBoxOffset),
+                (int)Position.Y - (Sprite.Height / CollisionBoxOffset),
                 Sprite.Width,
                 Sprite.Height
         );

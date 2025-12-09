@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using ZweiHander.Graphics;
 
 namespace ZweiHander.Graphics.SpriteStorages;
 
@@ -16,7 +15,7 @@ public class EnemySprites : SpriteFactory
     public ISprite DarknutMoveDown() => new AnimatedSprite(_spriteBatch, _animations["darknut-move-animation-down"]);
     public ISprite DarknutMoveUp() => new FlippingSprites(_regions["darknut-move-up-1"], _spriteBatch);
     public ISprite DarknutMoveRight() => new AnimatedSprite(_spriteBatch, _animations["darknut-move-animation-right"]);
-    
+
     public ISprite DarknutMoveLeft()
     {
         return new AnimatedSprite(_spriteBatch, _animations["darknut-move-animation-right"])

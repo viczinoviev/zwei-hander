@@ -1,8 +1,8 @@
 using Microsoft.Xna.Framework;
-using Vector2 = Microsoft.Xna.Framework.Vector2;
+using ZweiHander.CollisionFiles;
 using ZweiHander.Graphics;
 using ZweiHander.Graphics.SpriteStorages;
-using ZweiHander.CollisionFiles;
+using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace ZweiHander.Enemy.EnemyStorage;
 
@@ -22,6 +22,7 @@ public class OldMan : IEnemy
 
     public int Face { get; set; } = default;
     public int Hitpoints { get; set; } = 5;
+    public float HitcoolDown { get; set; } = 0;
 
     public EnemyCollisionHandler CollisionHandler { get; } = default;
 
@@ -35,10 +36,21 @@ public class OldMan : IEnemy
     {
         CollisionHandler.UpdateCollisionBox();
         Sprite.Update(time);
+    }
+
+
+    public void TakeDamage(int dmg)
+    {
+        Hitpoints -= dmg;
+
+        if (Hitpoints <= 0)
+        {
+            if (CollisionHandler != null)
+            {
+                CollisionHandler.Dead = true;
+            }
         }
-
-
-
+    }
 
     public void Draw()
     {
@@ -48,8 +60,8 @@ public class OldMan : IEnemy
     {
         // Sprites are centered
         return new Rectangle(
-                (int)Position.X - Sprite.Width / 2,
-                (int)Position.Y - Sprite.Height / 2,
+                (int)Position.X - (Sprite.Width / 2),
+                (int)Position.Y - (Sprite.Height / 2),
                 Sprite.Width,
                 Sprite.Height
         );

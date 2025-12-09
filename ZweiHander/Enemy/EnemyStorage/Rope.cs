@@ -1,11 +1,11 @@
 using Microsoft.Xna.Framework;
-using Vector2 = Microsoft.Xna.Framework.Vector2;
-using ZweiHander.Graphics;
-using System;
-using ZweiHander.Graphics.SpriteStorages;
-using ZweiHander.CollisionFiles;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework.Content;
+using System;
+using System.Collections.Generic;
+using ZweiHander.CollisionFiles;
+using ZweiHander.Graphics;
+using ZweiHander.Graphics.SpriteStorages;
+using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace ZweiHander.Enemy.EnemyStorage;
 
@@ -25,7 +25,7 @@ public class Rope : IEnemy
     /// <summary>
     /// Holds all sprites for this enemy
     /// </summary>
-        /// <summary>
+    /// <summary>
     /// List of Sprites for this enemy
     /// <summary>
     public List<ISprite> _sprites = [];
@@ -35,6 +35,7 @@ public class Rope : IEnemy
 
     public int Face { get; set; } = default;
     public int Hitpoints { get; set; } = EnemyStartHealth;
+    public float HitcoolDown { get; set; } = 0;
 
     public EnemyCollisionHandler CollisionHandler { get; } = default;
 
@@ -44,7 +45,7 @@ public class Rope : IEnemy
     readonly Random rnd = new();
 
 
-    public Rope(EnemySprites enemySprites,ContentManager sfxPlayer,Vector2 position)
+    public Rope(EnemySprites enemySprites, ContentManager sfxPlayer, Vector2 position)
     {
         Position = position;
         _enemySprites = enemySprites;
@@ -52,20 +53,25 @@ public class Rope : IEnemy
         _sprites.Add(_enemySprites.RopeLeft());
         Sprite = _sprites[0];
         Face = 1;
-        CollisionHandler = new EnemyCollisionHandler(this,sfxPlayer);
+        CollisionHandler = new EnemyCollisionHandler(this, sfxPlayer);
     }
     public virtual void Update(GameTime time)
     {
+        //Decrement hit cooldown
+        if(HitcoolDown > 0)
+        {
+            HitcoolDown --;
+        }
         if (Face == 1 || Face == FaceLeft)
         {
-            Sprite = _sprites[(Face * FaceChangeHelper1 + 1) % FaceChangeHelper2];
+            Sprite = _sprites[((Face * FaceChangeHelper1) + 1) % FaceChangeHelper2];
         }
         //Randomize  movement
         int mov = rnd.Next(FaceChangeChance);
         //Move according to current direction faced
         if (mov > FaceChangeCase)
         {
-            Position = EnemyHelper.BehaveFromFace(this, 1,0);
+            Position = EnemyHelper.BehaveFromFace(this, 1, 0);
         }
         //Change face and sprite to new value according to the randomized value
         else
@@ -74,10 +80,21 @@ public class Rope : IEnemy
         }
         CollisionHandler.UpdateCollisionBox();
         Sprite.Update(time);
+    }
+
+
+    public void TakeDamage(int dmg)
+    {
+        Hitpoints -= dmg;
+
+        if (Hitpoints <= 0)
+        {
+            if (CollisionHandler != null)
+            {
+                CollisionHandler.Dead = true;
+            }
         }
-
-
-
+    }
 
     public void Draw()
     {
@@ -87,8 +104,8 @@ public class Rope : IEnemy
     {
         // Sprites are centered
         return new Rectangle(
-                (int)Position.X - Sprite.Width / CollisionBoxOffset,
-                (int)Position.Y - Sprite.Height / CollisionBoxOffset,
+                (int)Position.X - (Sprite.Width / CollisionBoxOffset),
+                (int)Position.Y - (Sprite.Height / CollisionBoxOffset),
                 Sprite.Width,
                 Sprite.Height
         );

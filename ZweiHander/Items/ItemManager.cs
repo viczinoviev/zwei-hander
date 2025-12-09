@@ -3,10 +3,8 @@
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using ZweiHander.Graphics.SpriteStorages;
-using ZweiHander.Items.ItemStorages;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace ZweiHander.Items;
@@ -67,7 +65,7 @@ public class ItemManager
     /// <param name="damage">How to damage different object types.</param>
     /// <param name="extras">Any extra parameters needed for that item; use class summary as reference.</param>
     /// <returns>The desired item.</returns>
-    public IItem GetItem (
+    public IItem GetItem(
         string itemType,
         double life = 0f,
         Vector2 position = default,
@@ -103,8 +101,8 @@ public class ItemManager
         };
 
         Type type = Type.GetType("ZweiHander.Items.ItemStorages." + itemType);
-        IItem item = (IItem) Activator.CreateInstance(type, itemConstructor); //Create item of desired type
-        
+        IItem item = (IItem)Activator.CreateInstance(type, itemConstructor); //Create item of desired type
+
         _items.Add(item);
         // If this item already in ItemTypeCount, increase value by one, else add it
         if (ItemTypeCount.TryGetValue(type, out int value)) ItemTypeCount[type] = ++value;

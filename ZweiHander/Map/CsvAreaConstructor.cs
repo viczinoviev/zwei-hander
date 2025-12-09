@@ -1,14 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using ZweiHander.Items;
-using ZweiHander.Enemy;
-using ZweiHander.Map;
-using ZweiHander.PlayerFiles;
 using System.Diagnostics;
+using System.IO;
 using ZweiHander.Environment;
-using System.Linq;
 namespace ZweiHander.Map
 {
     public class CsvAreaConstructor
@@ -29,35 +24,34 @@ namespace ZweiHander.Map
             Area area = new(areaName);
             _currentArea = area;
 
-            int lineIndex = 0;
-            while (lineIndex < lines.Length)
+            for (int lineIndex = 0; lineIndex < lines.Length; lineIndex++)
             {
                 string line = lines[lineIndex].Trim();
 
                 if (line.StartsWith("\"room.") || line.StartsWith("room."))
                 {
                     string[] csvFields = ParseCsvLine(line);
-                    
+
                     if (csvFields.Length > 0 && csvFields[0].Contains("room."))
                     {
                         string roomField = csvFields[0];
-                        
+
                         List<string> roomParts = [];
                         int parenDepth = 0;
                         int lastSplit = 0;
-                        
+
                         for (int i = 0; i < roomField.Length; i++)
                         {
                             if (roomField[i] == '(') parenDepth++;
                             if (roomField[i] == ')') parenDepth--;
                             if (roomField[i] == ',' && parenDepth == 0)
                             {
-                                roomParts.Add(roomField.Substring(lastSplit, i - lastSplit).Trim());
+                                roomParts.Add(roomField[lastSplit..i].Trim());
                                 lastSplit = i + 1;
                             }
                         }
-                        roomParts.Add(roomField.Substring(lastSplit).Trim());
-                        
+                        roomParts.Add(roomField[lastSplit..].Trim());
+
                         if (roomParts.Count > 0 && roomParts[0].StartsWith("room."))
                         {
                             string[] roomIdParts = roomParts[0].Split('.');
@@ -65,35 +59,34 @@ namespace ZweiHander.Map
                             {
                                 Point minimapPos = new(-1, -1);
                                 string minimapConnections = "";
-                                
+
                                 if (roomParts.Count >= 2)
                                 {
                                     string posStr = roomParts[1].Trim();
-                                    if (posStr.StartsWith("(") && posStr.EndsWith(")"))
+                                    if (posStr.StartsWith('(') && posStr.EndsWith(')'))
                                     {
                                         string coords = posStr.Trim('(', ')');
                                         string[] coordParts = coords.Split(',');
-                                        if (coordParts.Length == 2 && 
-                                            int.TryParse(coordParts[0].Trim(), out int x) && 
+                                        if (coordParts.Length == 2 &&
+                                            int.TryParse(coordParts[0].Trim(), out int x) &&
                                             int.TryParse(coordParts[1].Trim(), out int y))
                                         {
                                             minimapPos = new Point(x, y);
                                         }
                                     }
                                 }
-                                
+
                                 if (roomParts.Count >= 3)
                                 {
                                     minimapConnections = roomParts[2].Trim();
                                 }
-                                
+
                                 Room room = ParseRoom(lines, ref lineIndex, roomNumber, minimapPos, minimapConnections);
                                 area.AddRoom(roomNumber, room);
                             }
                         }
                     }
                 }
-                lineIndex++;
             }
 
             _currentArea = null;
@@ -136,11 +129,11 @@ namespace ZweiHander.Map
             }
 
             int roomWidth = maxCellX + 1;
-            Vector2 roomSize = new(roomWidth * CELL_SIZE, (roomHeight-1) * CELL_SIZE);
+            Vector2 roomSize = new(roomWidth * CELL_SIZE, (roomHeight - 1) * CELL_SIZE);
             Room room = new(roomNumber, Vector2.Zero, roomSize, _universe)
             {
-                MinimapPosition = minimapPos,
-                MinimapConnections = minimapConnections
+                MapPosition = minimapPos,
+                MapConnections = minimapConnections
             };
             _currentRoom = room;
 
@@ -153,12 +146,12 @@ namespace ZweiHander.Map
                     string cell = cells[x].Trim();
                     if (string.IsNullOrEmpty(cell)) continue;
 
-                    int cellX = x-1;
+                    int cellX = x - 1;
                     int cellY = y - roomStartLine;
                     Vector2 position = new(cellX * CELL_SIZE, cellY * CELL_SIZE);
 
                     string[] objects = cell.Split([','], StringSplitOptions.RemoveEmptyEntries);
-                    
+
                     foreach (string obj in objects)
                     {
                         string objTrimmed = obj.Trim();
@@ -228,6 +221,10 @@ namespace ZweiHander.Map
                     CreatePortal(name, position);
                     break;
 
+                case "l":
+                    CreateLockedEntrance(name, position);
+                    break;
+
                 case "spawn":
                     _currentRoom.PlayerSpawnPoint = position;
                     break;
@@ -241,7 +238,7 @@ namespace ZweiHander.Map
             _currentRoom.AddBlock(blockName, gridPosition);
         }
 
-        private void CreateBorder(string borderTag, Vector2 position)
+        public void CreateBorder(string borderTag, Vector2 position)
         {
             BorderName borderName = AreaDictionaries.tagToBorderName[borderTag];
             _currentRoom.AddBorder(borderName, position);
@@ -262,10 +259,10 @@ namespace ZweiHander.Map
             if (AreaDictionaries.itemNameToItemType.TryGetValue(cleanName, out string itemType))
             {
                 _currentRoom.AddItem(itemType, position);
-            } 
+            }
             else
             {
-                Debug.WriteLine("WARNING: No item with name " +  cleanName);
+                Debug.WriteLine("WARNING: No item with name " + cleanName);
             }
         }
 
@@ -275,6 +272,14 @@ namespace ZweiHander.Map
             Vector2 centeredPosition = new(position.X, position.Y);
             _currentRoom.AddPortal(id, centeredPosition);
             _currentArea.RegisterPortalData(id, _currentRoom.RoomNumber, centeredPosition);
+        }
+
+        private void CreateLockedEntrance(string portalId, Vector2 position)
+        {
+            int id = int.Parse(portalId);
+            Vector2 centeredPosition = new(position.X, position.Y);
+            _currentRoom.AddLockedEntrance(id, centeredPosition);
+
         }
     }
 }

@@ -50,7 +50,7 @@ public class AnimatedSprite : AbstractSprite
         }
     }
 
-    
+
     public override void Update(GameTime gameTime)
     {
         _elapsed += gameTime.ElapsedGameTime;
