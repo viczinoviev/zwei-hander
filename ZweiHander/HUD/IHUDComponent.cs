@@ -7,6 +7,6 @@ namespace ZweiHander.HUD
     {
         void Update(GameTime gameTime);
 
-        void Draw(SpriteBatch spriteBatch, Vector2 offset);
+        void Draw(Vector2 offset);
     }
 }

@@ -154,7 +154,7 @@ namespace ZweiHander.HUD
             Vector2 hudOffset = new(0, _animator.CurrentYOffset);
             foreach (var component in _components)
             {
-                component.Draw(spriteBatch, hudOffset);
+                component.Draw(hudOffset);
             }
         }
 

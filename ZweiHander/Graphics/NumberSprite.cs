@@ -13,9 +13,8 @@ public class NumberSprite : AbstractSprite
     public int CumWidth;
     public int CumHeight { get => _sprites['0'].Height; }
     private readonly int Digits;
-    public NumberSprite(int number, SpriteBatch spriteBatch, HUDSprites hudSprites, int digits = -1, bool centered = true)
+    public NumberSprite(int number, HUDSprites hudSprites, int digits = -1, bool centered = true)
     {
-        _spriteBatch = spriteBatch;
         _sprites = [];
         Digits = digits;
         for (int i = 0; i < 10; i++)

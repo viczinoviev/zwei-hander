@@ -131,7 +131,7 @@ namespace ZweiHander.HUD
             _acquiredItems[(int)OrderedPermanent.Map] = _player.InventoryCount(typeof(MapItem)) > 0;
         }
 
-        public void Draw(SpriteBatch spriteBatch, Vector2 offset)
+        public void Draw(Vector2 offset)
         {
             _inventoryDisplayHUD.Draw(_position + offset);
             _swordSprite.Draw(_selectedPositionA + _relativePosition + offset);
