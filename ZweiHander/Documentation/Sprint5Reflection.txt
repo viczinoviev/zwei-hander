@@ -1,0 +1,3 @@
+Luke:
+This sprint went pretty smoothly, I just spent a good chunk of time making the horde mode. I enjoyed making it but outside that, I didnt
+have much to do, although I did make some changes to enemies like adding a hit cooldown so you couldnt shred enemies in seconds.
