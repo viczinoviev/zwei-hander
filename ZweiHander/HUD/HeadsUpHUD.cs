@@ -16,6 +16,7 @@ namespace ZweiHander.HUD
         private readonly ISprite _headsUpDisplayHUD;
         private readonly ItemWithCount _bombs;
         private readonly ItemWithCount _keys;
+        private readonly ItemWithCount _blueKey;
         private readonly ItemWithCount _rupies;
         private readonly Vector2 _position;
         private readonly IPlayer _player;
@@ -28,6 +29,8 @@ namespace ZweiHander.HUD
             _player = player;
             _bombs = new ItemWithCount(hudSprites, hudSprites.Bomb(), position, _player, typeof(Bomb));
             _keys = new ItemWithCount(hudSprites, hudSprites.Key(), position, _player, typeof(Key));
+            // Update typeof part
+            _blueKey = new ItemWithCount(hudSprites, hudSprites.BlueKey(), position, _player, typeof(BlueKey));
             _rupies = new ItemWithCount(hudSprites, hudSprites.Rupy(), position, _player, typeof(Rupy));
         }
 
@@ -35,6 +38,7 @@ namespace ZweiHander.HUD
         {
             _bombs.Update(gameTime);
             _keys.Update(gameTime);
+            _blueKey.Update(gameTime);
             _rupies.Update(gameTime);
         }
 
@@ -42,7 +46,8 @@ namespace ZweiHander.HUD
         {
             _headsUpDisplayHUD.Draw(_position + offset);
             _bombs.Draw(_position + new Vector2(-472, -22) + offset);
-            _keys.Draw(_position + new Vector2(-472, -42) + offset);
+            _keys.Draw(_position + new Vector2(-750, -72) + offset);
+            _blueKey.Draw(_position + new Vector2(-750, -42) + offset);
             _rupies.Draw(_position + new Vector2(-472, -72) + offset);
         }
     }

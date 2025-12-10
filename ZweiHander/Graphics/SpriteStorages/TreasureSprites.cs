@@ -58,7 +58,7 @@ public class TreasureSprites : SpriteFactory
 
     // Dungeon Items
     public ISprite Key() => new IdleSprite(_regions["key"], _spriteBatch);
-    public ISprite KeyMagical() => new IdleSprite(_regions["key-magical"], _spriteBatch);
+    public ISprite BlueKey() => new IdleSprite(_regions["key-blue"], _spriteBatch);
     public ISprite Map() => new IdleSprite(_regions["map"], _spriteBatch);
     public ISprite Compass() => new IdleSprite(_regions["compass"], _spriteBatch);
 }
