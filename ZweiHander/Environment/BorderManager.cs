@@ -50,10 +50,10 @@ namespace ZweiHander.Environment
             { BorderName.LockedDoorTileSouth, BorderType.Solid },
 
             // Doors - decorative (passable)
-            { BorderName.DoorTileNorth, BorderType.EntranceUp },
-            { BorderName.DoorTileWest, BorderType.EntranceRight },
-            { BorderName.DoorTileEast, BorderType.EntranceLeft },
-            { BorderName.DoorTileSouth, BorderType.EntranceDown },
+            { BorderName.DoorTileNorth, BorderType.Solid },
+            { BorderName.DoorTileWest, BorderType.Solid },
+            { BorderName.DoorTileEast, BorderType.Solid },
+            { BorderName.DoorTileSouth, BorderType.Solid },
 
             // Holes in walls - decorative
             { BorderName.HoleInWallNorth, BorderType.Decorative },

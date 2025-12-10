@@ -55,7 +55,11 @@ namespace ZweiHander.Map
 			{ BorderName.LockedDoorTileNorth, BorderName.EntranceTileNorth },
             { BorderName.LockedDoorTileWest, BorderName.EntranceTileWest },
             { BorderName.LockedDoorTileEast, BorderName.EntranceTileEast },
-            { BorderName.LockedDoorTileSouth, BorderName.EntranceTileSouth}
+            { BorderName.LockedDoorTileSouth, BorderName.EntranceTileSouth},
+            { BorderName.DoorTileNorth, BorderName.EntranceTileNorth },
+            { BorderName.DoorTileWest, BorderName.EntranceTileWest },
+            { BorderName.DoorTileEast, BorderName.EntranceTileEast },
+            { BorderName.DoorTileSouth, BorderName.EntranceTileSouth}
         };
         public bool ReplaceWithUnlockedEntrance(int id, Direction direction = Direction.None)
         {
@@ -72,7 +76,11 @@ namespace ZweiHander.Map
                 if (border.Name is BorderName.LockedDoorTileNorth
                     or BorderName.LockedDoorTileSouth
                     or BorderName.LockedDoorTileEast
-                    or BorderName.LockedDoorTileWest)
+                    or BorderName.LockedDoorTileWest
+                    or BorderName.DoorTileNorth
+                    or BorderName.DoorTileWest
+                    or BorderName.DoorTileEast
+                    or BorderName.DoorTileSouth)
                 {
                     //if the locked entrance hitbox is intersecting with border hitbox
                     if (TriggerArea.Intersects(border.GetHitBox())&&PortalId==id)
