@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using ZweiHander.CollisionFiles;
 using ZweiHander.Damage;
-using ZweiHander.Graphics;
 
 namespace ZweiHander.Enemy;
 
@@ -25,7 +24,7 @@ public interface IEnemy
     /// Current amount of health, when <= 0, this enemy is dead.
     /// </summary>
     public int Hitpoints { get; set; }
-        /// <summary>
+    /// <summary>
     /// Cooldown to prevent getting hit too much too fast
     /// </summary>
     public float HitcoolDown { get; set; }
@@ -34,7 +33,7 @@ public interface IEnemy
     /// </summary>
     public EnemyCollisionHandler CollisionHandler { get; }
 
-    public EffectManager Effects {  get; set; }
+    public EffectManager Effects { get; set; }
 
     public List<DamageDisplay> DamageNumbers { get; set; }
 

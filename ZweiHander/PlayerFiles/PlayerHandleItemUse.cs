@@ -3,10 +3,10 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using System.Collections.Generic;
 using ZweiHander.CollisionFiles;
-using ZweiHander.Items;
-using ZweiHander.Items.ItemStorages;
 using ZweiHander.Damage;
 using ZweiHander.Enemy;
+using ZweiHander.Items;
+using ZweiHander.Items.ItemStorages;
 
 namespace ZweiHander.PlayerFiles
 {

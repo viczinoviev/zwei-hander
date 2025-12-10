@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ZweiHander.Damage;
 
@@ -13,7 +10,8 @@ public class DamageDict : Dictionary<Type, DamageObject>
     /// </summary>
     /// <typeparam name="T">Type this damage applies to.</typeparam>
     /// <param name="damage">Specified damage.</param>
-    public DamageDict Add<T>(DamageObject damage) {
+    public DamageDict Add<T>(DamageObject damage)
+    {
         this[typeof(T)] = damage;
         return this;
     }

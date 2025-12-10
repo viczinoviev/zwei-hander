@@ -169,7 +169,7 @@ public class EnemyManager(EnemySprites enemysprites, ItemManager projectileManag
 
     public void MCreateWave(int waveNum)
     {
-        WaveConstuctor.CreateWave(this,waveNum);
+        WaveConstuctor.CreateWave(this, waveNum);
     }
     public IReadOnlyList<IEnemy> CurrentEnemiesPub => currentEnemies;
 }

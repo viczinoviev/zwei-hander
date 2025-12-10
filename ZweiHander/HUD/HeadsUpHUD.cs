@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Linq;
-using ZweiHander.Damage;
 using ZweiHander.Graphics;
 using ZweiHander.Graphics.SpriteStorages;
 using ZweiHander.Items.ItemStorages;
@@ -63,7 +62,7 @@ namespace ZweiHander.HUD
             // Get all active effects
             var activeEffects = _player.Effects.CurrentEffects.ToList();
 
-           
+
             Vector2 effectPosition = _position + new Vector2(240, -22) + offset;
             const float effectSpacing = 15f; // Vertical spacing between effects
             const float scale = 0.5f; // Scale for the text

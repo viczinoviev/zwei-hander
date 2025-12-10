@@ -153,7 +153,8 @@ namespace ZweiHander.PlayerFiles
 
             damage ??= new DamageObject(1);
             _currentHealth = Math.Max(0, _currentHealth - damage.Damage);
-            if (iframes) {
+            if (iframes)
+            {
                 _isDamaged = true;
                 _damageTimer = DAMAGE_DURATION;
             }

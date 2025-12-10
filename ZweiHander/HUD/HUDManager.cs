@@ -138,7 +138,7 @@ namespace ZweiHander.HUD
         {
 
             Vector2 hudOffset = new(0, _animator.CurrentYOffset);
-            
+
             // Lazy initialization of pixel texture (only created once)
             if (_pixelTexture == null)
             {
@@ -149,14 +149,14 @@ namespace ZweiHander.HUD
             // Draws a black ground, since some HUD components don't span the whole screen horizontally
             spriteBatch.Draw(
                 _pixelTexture,
-                new Rectangle(Math.Min(0, -(_game.Window.ClientBounds.Width-800)/2), -_game.Window.ClientBounds.Height, Math.Max(800, _game.Window.ClientBounds.Width), (int)_animator.CurrentBackgroundHeight + _game.Window.ClientBounds.Height),
+                new Rectangle(Math.Min(0, -(_game.Window.ClientBounds.Width - 800) / 2), -_game.Window.ClientBounds.Height, Math.Max(800, _game.Window.ClientBounds.Width), (int)_animator.CurrentBackgroundHeight + _game.Window.ClientBounds.Height),
                 Color.Black
             );
 
             // Draw 2px white separator line at the bottom of the HUD
             spriteBatch.Draw(
                 _pixelTexture,
-                new Rectangle(Math.Min(0, -(_game.Window.ClientBounds.Width-800)/2), (int)_animator.CurrentBackgroundHeight, Math.Max(800, _game.Window.ClientBounds.Width), 2),
+                new Rectangle(Math.Min(0, -(_game.Window.ClientBounds.Width - 800) / 2), (int)_animator.CurrentBackgroundHeight, Math.Max(800, _game.Window.ClientBounds.Width), 2),
                 Color.White
             );
 

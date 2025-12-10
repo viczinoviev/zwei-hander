@@ -1,8 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
-using System;
 using System.Collections.Generic;
-using ZweiHander.CollisionFiles;
 using ZweiHander.Graphics;
 using ZweiHander.Graphics.SpriteStorages;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
@@ -20,7 +18,7 @@ public class Darknut : AbstractEnemy
 
 
     public Darknut(EnemySprites enemySprites, ContentManager sfxPlayer, Vector2 position)
-        :base(null, sfxPlayer, position)
+        : base(null, sfxPlayer, position)
     {
         //create list of all sprites associated with the enemy to swap with
         _sprites.Add(enemySprites.DarknutMoveUp());

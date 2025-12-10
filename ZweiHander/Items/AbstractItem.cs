@@ -3,9 +3,7 @@ using System;
 using System.Collections.Generic;
 using ZweiHander.CollisionFiles;
 using ZweiHander.Damage;
-using ZweiHander.Enemy;
 using ZweiHander.Graphics;
-using ZweiHander.PlayerFiles;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace ZweiHander.Items;

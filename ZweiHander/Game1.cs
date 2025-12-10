@@ -183,15 +183,17 @@ namespace ZweiHander
 
             _areaConstructor = new CsvAreaConstructor();
 
-            if(_gameState.CurrentMode == GameMode.Horde){
+            if (_gameState.CurrentMode == GameMode.Horde)
+            {
                 string mapPath2 = Path.Combine(Content.RootDirectory, "Maps", "HordeDungeon.csv");
                 Area HordeArea = _areaConstructor.LoadArea(mapPath2, _universe, _camera, "HordeDungeon");
                 _universe.AddArea(HordeArea);
                 _universe.SetCurrentLocation("HordeDungeon", 1);
-                ItemManager projectileManager = new(_itemSprites,_treasureSprites,_bossSprites,_npcSprites);
-                HordeManager = new(_enemySprites,projectileManager,_bossSprites,_npcSprites,Content);
+                ItemManager projectileManager = new(_itemSprites, _treasureSprites, _bossSprites, _npcSprites);
+                HordeManager = new(_enemySprites, projectileManager, _bossSprites, _npcSprites, Content);
             }
-            else{
+            else
+            {
                 string mapPath = Path.Combine(Content.RootDirectory, "Maps", "testDungeon1.csv");
                 Area testArea = _areaConstructor.LoadArea(mapPath, _universe, _camera, "TestDungeon");
                 _universe.AddArea(testArea);
@@ -234,7 +236,7 @@ namespace ZweiHander
                 {
                     _gameState.SetMode(GameMode.Playing);
                 }
-                else if(mode == 2)
+                else if (mode == 2)
                 {
                     _gameState.SetMode(GameMode.Horde);
                 }
@@ -303,16 +305,16 @@ namespace ZweiHander
                     _camera.Update(gameTime, _gamePlayer.Position);
                 }
             }
-            else if(_gameState.CurrentMode == GameMode.Horde)
+            else if (_gameState.CurrentMode == GameMode.Horde)
             {
-                 // Always update keyboard and HUD
+                // Always update keyboard and HUD
                 _keyboardController.Update();
                 _hudManager.Update(gameTime);
 
                 // Update stuff when game is running
                 if (!gamePaused)
                 {
-                    if(_gamePlayer.CurrentHealth <= 0)
+                    if (_gamePlayer.CurrentHealth <= 0)
                     {
                         SoundEffect gameOverSFX = Content.Load<SoundEffect>("Audio/GameOver");
                         gameOverSFX.Play();
@@ -336,7 +338,7 @@ namespace ZweiHander
                         waveNum++;
                         _universe.EnemyManager.MCreateWave(waveNum);
                     }
-            }
+                }
             }
 
             base.Update(gameTime);

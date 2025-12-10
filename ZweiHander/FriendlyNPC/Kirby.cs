@@ -1,8 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using System;
-using System.Reflection.Metadata;
 using ZweiHander.Enemy;
 using ZweiHander.Graphics;
 using ZweiHander.Graphics.SpriteStorages;
@@ -86,7 +84,7 @@ namespace ZweiHander.FriendlyNPC
         public void UpdateKirbyUlt(GameTime gameTime)
         {
             FindClosestEnemy();
-            if (hitCount >= maxHits||_closestEnemy==null)
+            if (hitCount >= maxHits || _closestEnemy == null)
             {
                 isUlting = false;
                 return;
@@ -95,7 +93,7 @@ namespace ZweiHander.FriendlyNPC
             float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
             ultTimer += dt;
 
-            if(ultTimer > (hitCount+1)*0.5f)
+            if (ultTimer > (hitCount + 1) * 0.5f)
             {
                 hitCount++;
                 //enemyHurt.Play();
