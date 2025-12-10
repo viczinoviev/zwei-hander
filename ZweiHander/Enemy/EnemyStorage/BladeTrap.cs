@@ -52,6 +52,7 @@ public class BladeTrap : AbstractEnemy
         }
         CollisionHandler.UpdateCollisionBox();
         Sprite.Update(time);
+        Effects.Clear();
     }
 }
 
