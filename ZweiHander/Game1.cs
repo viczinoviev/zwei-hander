@@ -331,8 +331,6 @@ namespace ZweiHander
 
                     _gamePlayer.Update(gameTime);
 
-                    _kirby.Update(gameTime);
-
                     CollisionManager.Instance.Update(gameTime);
 
                     _camera.Update(gameTime, _gamePlayer.Position);
