@@ -32,7 +32,7 @@ public class AbstractEnemy : IEnemy
 
     protected readonly int Faces = 4;
 
-    protected List<DamageDisplay> DamageNumbers = [];
+    public List<DamageDisplay> DamageNumbers { get; set; } = [];
 
     protected const double DamageDisplayDuration = 1;
 
@@ -58,7 +58,6 @@ public class AbstractEnemy : IEnemy
         Sprite.Color = color;
         Sprite.Draw(Position);
         _projectileManager?.Draw();
-        foreach (DamageDisplay damageDisplay in DamageNumbers) damageDisplay.Draw();
     }
 
     public virtual void Update(GameTime time)
@@ -71,16 +70,6 @@ public class AbstractEnemy : IEnemy
         CollisionHandler.UpdateCollisionBox();
         HandleEffects(time);
         Sprite.Update(time);
-        HandleDamageDisplay(time);
-    }
-
-    protected virtual void HandleDamageDisplay(GameTime time)
-    {
-        foreach (DamageDisplay damageDisplay in DamageNumbers)
-        {
-            damageDisplay.Update(time);
-        }
-        DamageNumbers.RemoveAll(display => display.Finished);
     }
 
     protected virtual void ChangeFace()

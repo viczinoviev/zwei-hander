@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using System;
 using System.Collections.Generic;
+using ZweiHander.Damage;
 using ZweiHander.Enemy.EnemyStorage;
 using ZweiHander.Graphics.SpriteStorages;
 using ZweiHander.Items;
@@ -35,6 +36,8 @@ public class EnemyManager(EnemySprites enemysprites, ItemManager projectileManag
     /// List of currently existing enemies
     /// </summary>
     readonly List<IEnemy> currentEnemies = [];
+
+    protected List<DamageDisplay> DamageNumbers = [];
 
 
 
@@ -98,6 +101,7 @@ public class EnemyManager(EnemySprites enemysprites, ItemManager projectileManag
         }
         enemy.Position = position;
         enemy.Face = face;
+        enemy.DamageNumbers = DamageNumbers;
         currentEnemies.Add(enemy);
         return enemy;
     }
@@ -113,6 +117,11 @@ public class EnemyManager(EnemySprites enemysprites, ItemManager projectileManag
             _enemy.Update(time);
         }
         currentEnemies.RemoveAll(enemy => enemy.Hitpoints <= 0);
+        foreach (DamageDisplay damageDisplay in DamageNumbers)
+        {
+            damageDisplay.Update(time);
+        }
+        DamageNumbers.RemoveAll(display => display.Finished);
     }
     /// <summary>
     /// Draws all enemies in the manager
@@ -122,6 +131,11 @@ public class EnemyManager(EnemySprites enemysprites, ItemManager projectileManag
         foreach (IEnemy _enemy in currentEnemies)
         {
             _enemy.Draw();
+        }
+
+        foreach (DamageDisplay damageDisplay in DamageNumbers)
+        {
+            damageDisplay.Draw();
         }
     }
     /// <summary>

@@ -8,6 +8,8 @@ public class HUDSprites : SpriteFactory
     private const string _definitionFile = "SpriteSheets/HUDDefinition.xml";
     readonly SpriteBatch _spriteBatch;
 
+    public SpriteBatch SpriteBatch => _spriteBatch;
+
     public HUDSprites(ContentManager content, SpriteBatch spriteBatch)
     {
         FromFile(content, _definitionFile);
