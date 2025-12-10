@@ -86,7 +86,7 @@ namespace ZweiHander.PlayerFiles
                     velocity: itemVelocity * 0.11f,
                     acceleration: -itemVelocity * 0.1f,
                     damage: new DamageDict()
-                        .Add<IEnemy>(new(player.Effected(Effect.Strength) ? 2 : 1, effects: (Effect.OnFire, 3)))
+                        .Add<IEnemy>(new(player.Effected(Effect.Strength) ? 3 : 2, effects: (Effect.OnFire, 3)))
                 );
             }
 

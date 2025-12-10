@@ -71,6 +71,11 @@ public class AbstractEnemy : IEnemy
         CollisionHandler.UpdateCollisionBox();
         HandleEffects(time);
         Sprite.Update(time);
+        HandleDamageDisplay(time);
+    }
+
+    protected virtual void HandleDamageDisplay(GameTime time)
+    {
         foreach (DamageDisplay damageDisplay in DamageNumbers)
         {
             damageDisplay.Update(time);
