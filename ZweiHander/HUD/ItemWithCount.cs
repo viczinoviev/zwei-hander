@@ -6,31 +6,26 @@ using ZweiHander.PlayerFiles;
 
 namespace ZweiHander.HUD
 {
-    public class ItemWithCount : IHUDComponent
+    public class ItemWithCount(
+        HUDSprites _hudSprites,
+        ISprite itemSprite,
+        Vector2 position,
+        IPlayer player,
+        Type itemType
+    ) : IHUDComponent
     {
-        private readonly ISprite _itemSprite;
-        private readonly Vector2 _position;
-        private readonly IPlayer _player;
-        private readonly Type _itemType;
-        private readonly NumberSprite _numberSprite;
-        private readonly ISprite _x;
-
-        public ItemWithCount(HUDSprites _hudSprites, ISprite itemSprite, Vector2 position, IPlayer player, Type itemType)
-        {
-            _itemSprite = itemSprite;
-            _position = position;
-            _player = player;
-            _itemType = itemType;
-            _numberSprite = new NumberSprite(0, _hudSprites, 2);
-            _x = _hudSprites.XSymbol();
-        }
+        private readonly ISprite _itemSprite = itemSprite;
+        private readonly Vector2 _position = position;
+        private readonly IPlayer _player = player;
+        private readonly Type _itemType = itemType;
+        private readonly NumberSprite _numberSprite = new(0, _hudSprites, 2);
+        private readonly ISprite _x = _hudSprites.XSymbol();
 
         public void Draw(Vector2 offset)
         {
             _itemSprite.Draw(_position + offset);
             _x.Draw(_position + new Vector2(_itemSprite.Width, 0) + offset);
             _numberSprite.Draw(_position + new Vector2(_itemSprite.Width + _x.Width + 8, 0) + offset);
-
         }
 
         public void Update(GameTime gameTime)

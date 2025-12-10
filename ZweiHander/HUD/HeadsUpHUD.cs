@@ -87,7 +87,7 @@ namespace ZweiHander.HUD
             }
         }
 
-        private string GetEffectAbbreviation(Damage.Effect effect)
+        private static string GetEffectAbbreviation(Damage.Effect effect)
         {
             return effect switch
             {

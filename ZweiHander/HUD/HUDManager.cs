@@ -26,7 +26,7 @@ namespace ZweiHander.HUD
         private readonly IPlayer _player;
         private bool _isHUDOpen;
 
-        private Game1 _game;
+        private readonly Game1 _game;
         private Texture2D _pixelTexture; // Cached 1x1 white pixel for drawing rectangles
         private readonly HUDLayoutManager _layoutManager; // Calculates all HUD component positions
         private readonly HUDAnimator _animator; // Handles open/close animation
