@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using ZweiHander.Graphics.SpriteStorages;
 using ZweiHander.PlayerFiles;
@@ -23,6 +24,8 @@ namespace ZweiHander.HUD
         private readonly HUDSprites _hudSprites;
         private readonly IPlayer _player;
         private bool _isHUDOpen;
+
+        private Game1 _game;
         private Texture2D _pixelTexture; // Cached 1x1 white pixel for drawing rectangles
         private readonly HUDLayoutManager _layoutManager; // Calculates all HUD component positions
         private readonly HUDAnimator _animator; // Handles open/close animation
@@ -32,8 +35,9 @@ namespace ZweiHander.HUD
         private const float CLOSED_HUD_BACKGROUND_HEIGHT = 112f;
         private const float OPEN_HUD_BACKGROUND_HEIGHT = 480f;
 
-        public HUDManager(IPlayer player, HUDSprites hudSprites, bool hudOpen)
+        public HUDManager(IPlayer player, HUDSprites hudSprites, bool hudOpen, Game1 game)
         {
+            _game = game;
             _player = player;
             _hudSprites = hudSprites;
             _isHUDOpen = hudOpen;
@@ -129,6 +133,9 @@ namespace ZweiHander.HUD
 
         public void Draw(SpriteBatch spriteBatch)
         {
+
+            Vector2 hudOffset = new(0, _animator.CurrentYOffset);
+            
             // Lazy initialization of pixel texture (only created once)
             if (_pixelTexture == null)
             {
@@ -139,19 +146,18 @@ namespace ZweiHander.HUD
             // Draws a black ground, since some HUD components don't span the whole screen horizontally
             spriteBatch.Draw(
                 _pixelTexture,
-                new Rectangle(0, spriteBatch.GraphicsDevice.Viewport.Y, 800, (int)_animator.CurrentBackgroundHeight),
+                new Rectangle(Math.Min(0, -(_game.Window.ClientBounds.Width-800)/2), -_game.Window.ClientBounds.Height, Math.Max(800, _game.Window.ClientBounds.Width), (int)_animator.CurrentBackgroundHeight + _game.Window.ClientBounds.Height),
                 Color.Black
             );
 
             // Draw 2px white separator line at the bottom of the HUD
             spriteBatch.Draw(
                 _pixelTexture,
-                new Rectangle(0, (int)_animator.CurrentBackgroundHeight, 800, 2),
+                new Rectangle(Math.Min(0, -(_game.Window.ClientBounds.Width-800)/2), (int)_animator.CurrentBackgroundHeight, Math.Max(800, _game.Window.ClientBounds.Width), 2),
                 Color.White
             );
 
             // Draw all HUD components with current animation offset
-            Vector2 hudOffset = new(0, _animator.CurrentYOffset);
             foreach (var component in _components)
             {
                 component.Draw(hudOffset);
