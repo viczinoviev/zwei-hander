@@ -14,10 +14,7 @@ namespace ZweiHander.Enemy.EnemyStorage;
 /// </summary>
 public class Darknut : AbstractEnemy
 {
-    private const int EnemyStartHealth = 5;
-    private const int FaceChangeChance = 200;
-    private const int FaceChangeCase = 3;
-    private const int CollisionBoxOffset = 2;
+    protected override int EnemyStartHealth => 15;
     public ISprite Sprite { get; set; } = default;
 
     private readonly List<ISprite> _sprites = [];
