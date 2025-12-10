@@ -15,10 +15,19 @@ namespace ZweiHander.CollisionFiles
 
         public override void OnCollision(ICollisionHandler other, CollisionInfo collisionInfo)
         {
-            if (other is PlayerCollisionHandler playerHandler && playerHandler._player.InventoryCount(typeof(Key)) > 0)
+            if (other is not PlayerCollisionHandler playerHandler)
+                return;
+
+            var player = playerHandler._player;
+            if (playerHandler._player.InventoryCount(typeof(Key)) > 0)
             {
-                _LockedEntrance.ReplaceWithUnlockedEntrance(collisionInfo.Normal);
-                playerHandler._player.RemoveItemFromInventory(typeof(Key));
+                if(_LockedEntrance.ReplaceWithUnlockedEntrance(1, collisionInfo.Normal))
+                    playerHandler._player.RemoveItemFromInventory(typeof(Key));
+            }
+            if (playerHandler._player.InventoryCount(typeof(BlueKey)) > 0)
+            {
+                if(_LockedEntrance.ReplaceWithUnlockedEntrance(2, collisionInfo.Normal))
+                    playerHandler._player.RemoveItemFromInventory(typeof(BlueKey));
             }
         }
 

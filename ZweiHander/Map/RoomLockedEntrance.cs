@@ -57,19 +57,10 @@ namespace ZweiHander.Map
             { BorderName.LockedDoorTileEast, BorderName.EntranceTileEast },
             { BorderName.LockedDoorTileSouth, BorderName.EntranceTileSouth}
         };
-        public void ReplaceWithUnlockedEntrance(Direction direction = Direction.None)
+        public bool ReplaceWithUnlockedEntrance(int id, Direction direction = Direction.None)
         {
-            string doorTag = direction switch
-            {
-                Direction.Up => "dn", // north door tile
-                Direction.Down => "ds", // south
-                Direction.Left => "dw", // west
-                Direction.Right => "de", // east
-                _ => null
-            };
-
-            if (doorTag == null)
-                return;
+            bool rightDoor = false;
+            
 
             var borders = _universe.BorderFactory.BorderMap;
 
@@ -84,12 +75,12 @@ namespace ZweiHander.Map
                     or BorderName.LockedDoorTileWest)
                 {
                     //if the locked entrance hitbox is intersecting with border hitbox
-                    if (TriggerArea.Intersects(border.GetHitBox()))
+                    if (TriggerArea.Intersects(border.GetHitBox())&&PortalId==id)
                     {
                         border.UnsubscribeFromCollisions();
                         BorderName _borderName = border.Name;
                         borders.RemoveAt(i);
-
+                        rightDoor = true;
                         //spawn unlocked door on the position
                         if (LockedBorderToDoorBorder.TryGetValue(_borderName, out var openDoor))
                         {
@@ -103,7 +94,7 @@ namespace ZweiHander.Map
             }
 
             _collisionHandler.Dead = true;
-
+            return rightDoor;
 
         }
     }
