@@ -39,17 +39,19 @@ public class Goriya : AbstractEnemy
     }
     public override void Update(GameTime time)
     {
-        if (Thrower != Attacking)
-        {
-            ChangeFace();
-        }
+        base.Update(time);
         Sprite = _sprites[Face];
         //projectile handling
         EnemyHelper.GoriyaAttack(this, _projectileManager);
-        //updates
-        CollisionHandler.UpdateCollisionBox();
-        Sprite.Update(time);
         _projectileManager.Update(time);
+    }
+
+    protected override void ChangeFace()
+    {
+        if (Thrower != Attacking)
+        {
+            base.ChangeFace();
+        }
     }
 }
 

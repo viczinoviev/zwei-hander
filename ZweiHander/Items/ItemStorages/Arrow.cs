@@ -16,7 +16,7 @@ public class Arrow : AbstractItem
     public Arrow(ItemConstructor itemConstructor)
         : base(itemConstructor)
     {
-        Sprites = [itemConstructor.ItemSprites.Arrow(Velocity), itemConstructor.ItemSprites.ProjectileOnHit()];
+        Sprites = [itemConstructor.ItemSprites.BlueArrow(Velocity), itemConstructor.ItemSprites.ProjectileOnHit()];
         Setup();
     }
 

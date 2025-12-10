@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using ZweiHander.CollisionFiles;
+using ZweiHander.Damage;
 using ZweiHander.Graphics;
 
 namespace ZweiHander.Enemy;
@@ -32,6 +33,8 @@ public interface IEnemy
     /// </summary>
     public EnemyCollisionHandler CollisionHandler { get; }
 
+    public EffectManager Effects {  get; set; }
+
     /// <summary>
     /// Draws this Enemy on screen.
     /// </summary>
@@ -49,4 +52,6 @@ public interface IEnemy
     public Rectangle GetCollisionBox();
 
     public void TakeDamage(int dmg);
+
+    public void TakeDamage(DamageObject dmg);
 }

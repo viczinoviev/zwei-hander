@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZweiHander.CollisionFiles;
+using ZweiHander.Damage;
 using ZweiHander.Graphics;
 using ZweiHander.Graphics.SpriteStorages;
 using ZweiHander.Items;
@@ -22,6 +23,7 @@ public class AbstractEnemy : IEnemy
     protected ISprite Sprite { get; set; }
 
     public Random rnd = new();
+    public EffectManager Effects { get; set; }
 
     /// <summary>
     /// Chance is 4 divided by this
@@ -41,6 +43,7 @@ public class AbstractEnemy : IEnemy
         _projectileManager = projectileManager;
         Hitpoints = EnemyStartHealth;
         CollisionHandler = new EnemyCollisionHandler(this, sfxPlayer);
+        Effects = [];
     }
 
     public virtual void Draw()
@@ -57,6 +60,7 @@ public class AbstractEnemy : IEnemy
         }
         ChangeFace();
         CollisionHandler.UpdateCollisionBox();
+        HandleEffects(time);
         Sprite.Update(time);
     }
 
@@ -72,13 +76,27 @@ public class AbstractEnemy : IEnemy
         //Move according to current direction faced
         else
         {
-            Position = EnemyHelper.BehaveFromFace(this, 1, 0);
+            Position = EnemyHelper.BehaveFromFace(this, Effects.Contains(Effect.Slowed) ? 0.3f : 1f, 0);
+        }
+    }
+
+    protected virtual void HandleEffects(GameTime time)
+    {
+        Effects.Update(time);
+        foreach (Effect effect in Effects.Ticked)
+        {
+            switch (effect)
+            {
+                case Effect.OnFire:
+                    TakeDamage(1);
+                    break;
+            }
         }
     }
 
     public virtual Rectangle GetCollisionBox()
     {
-        Type type = GetType();
+        //Type type = GetType();
         // Sprites are centered
         return new Rectangle(
                 (int)Position.X - (Sprite.Width / 2),
@@ -98,6 +116,15 @@ public class AbstractEnemy : IEnemy
             {
                 CollisionHandler.Dead = true;
             }
+        }
+    }
+
+    public virtual void TakeDamage(DamageObject dmg)
+    {
+        TakeDamage(dmg.Damage);
+        foreach (var (effect, duration) in dmg.Effects)
+        {
+            Effects[effect] = duration;
         }
     }
 }

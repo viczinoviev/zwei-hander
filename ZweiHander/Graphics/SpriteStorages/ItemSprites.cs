@@ -23,6 +23,16 @@ public class ItemSprites : SpriteFactory
         };
         return sprite;
     }
+
+    public ISprite BlueArrow(Vector2 direction)
+    {
+        IdleSprite sprite = new IdleSprite(_regions["blue-arrow-right"], _spriteBatch)
+        {
+            Rotation = (float)Math.Atan2(direction.Y, direction.X)
+        };
+        return sprite;
+    }
+
     public ISprite FireProjectile()
     {
         ISprite sprite = new AnimatedSprite(_spriteBatch, _animations["fire-animation"]);

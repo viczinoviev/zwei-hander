@@ -93,7 +93,7 @@ namespace ZweiHander.CollisionFiles
                     if(!(_enemy.HitcoolDown > 0)){
                         _enemy.HitcoolDown = hitCoolDown;
                         enemyHurt.Play();
-                    _enemy.TakeDamage(Damage);
+                    _enemy.TakeDamage(itemCollisionHandler.Item.GetDamage(_enemy.GetType()));
                 }
                 }
         }

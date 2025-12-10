@@ -5,6 +5,7 @@ using ZweiHander.CollisionFiles;
 using ZweiHander.Graphics;
 using ZweiHander.Graphics.SpriteStorages;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
+using ZweiHander.Damage;
 
 namespace ZweiHander.Enemy.EnemyStorage;
 
@@ -36,7 +37,7 @@ public class Keese : AbstractEnemy
         {
             if (Face < BasicDirections)
             {
-                Position = EnemyHelper.BehaveFromFace(this, 1, 0);
+                Position = EnemyHelper.BehaveFromFace(this, Effects.Contains(Effect.Slowed) ? 0.5f : 1f, 0);
             }
             else
             {

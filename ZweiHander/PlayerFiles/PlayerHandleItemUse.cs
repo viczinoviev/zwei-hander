@@ -35,7 +35,7 @@ namespace ZweiHander.PlayerFiles
                     ItemProperty.DeleteOnBlock,
                     ItemProperty.CanDamageEnemy],
                     damage: new DamageDict()
-                        .Add<IEnemy>(new(player.Effected(Effect.Strength) ? 3 : 2))
+                        .Add<IEnemy>(new(player.Effected(Effect.Strength) ? 3 : 2, effects: (Effect.Slowed, 1)))
                 );
             }
             else if (itemInput == UsableItem.Boomerang)
