@@ -13,7 +13,10 @@ public class DamageDict : Dictionary<Type, DamageObject>
     /// </summary>
     /// <typeparam name="T">Type this damage applies to.</typeparam>
     /// <param name="damage">Specified damage.</param>
-    public void Add<T>(DamageObject damage) { this[typeof(T)] = damage; }
+    public DamageDict Add<T>(DamageObject damage) { 
+        this[typeof(T)] = damage;
+        return this;
+    }
 
     /// <summary>
     /// Removes the damage from this dictionary for specified type.

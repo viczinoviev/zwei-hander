@@ -4,6 +4,8 @@ using Microsoft.Xna.Framework.Content;
 using System;
 using System.Collections.Generic;
 using ZweiHander.CollisionFiles;
+using ZweiHander.Damage;
+using ZweiHander.Enemy;
 using ZweiHander.Graphics;
 using ZweiHander.Graphics.SpriteStorages;
 
@@ -189,7 +191,9 @@ namespace ZweiHander.PlayerFiles
                 "Sword",
                 life: 1.1,
                 position: swordPosition,
-                velocity: swordVelocity
+                velocity: swordVelocity,
+                damage: new DamageDict()
+                    .Add<IEnemy>(new(_player.Effected(Effect.Strength) ? 6 : 4))
             );
         }
 
