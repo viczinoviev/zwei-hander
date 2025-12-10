@@ -17,7 +17,7 @@
 		<Region name="kirbyFight-5" x="289" y="218" width="23" height="31" />
 	</Regions>
 	<Animations>
-		<!-- Kirby Animation -->
+		<!-- Kirby Running Animation -->
 		<Animation name="kirby-animation" delay="150">
 			<Frame region="kirby-1" />
 			<Frame region="kirby-2" />
