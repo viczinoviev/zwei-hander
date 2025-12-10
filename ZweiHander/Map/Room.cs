@@ -125,6 +125,9 @@ namespace ZweiHander.Map
                     case "Fairy":
                         itemPointer.Velocity = new(0, 10);
                         break;
+                    case "CagedKirby":
+                        _universe.SetKirbySpawnPosition(adjustedPosition);
+                        break;
                 }
                 _itemData[i] = (itemType, position, itemPointer);
             }

@@ -37,6 +37,7 @@ namespace ZweiHander
 
         private Kirby _kirby;
         private KirbySprites _kirbySprites;
+        public bool kirbySpawned = false;
 
         //Sprites and factories
         private PlayerSprites _linkSprites;
@@ -59,6 +60,7 @@ namespace ZweiHander
         public Kirby GameKirby => _kirby;
 
         public EnemyManager HordeManager;
+        public int waveNum;
 
         public Game1()
         {
@@ -121,8 +123,13 @@ namespace ZweiHander
 
         private void OnGameModeChanged(GameMode newMode)
         {
-            if (newMode == GameMode.Playing || newMode == GameMode.Horde)
+            if (newMode == GameMode.Playing)
             {
+                GameSetUp();
+            }
+            else if (newMode == GameMode.Horde)
+            {
+                waveNum = 0;
                 GameSetUp();
             }
             else if (newMode == GameMode.GameOver)
@@ -161,20 +168,15 @@ namespace ZweiHander
                 _itemSprites,
                 _treasureSprites,
                 new BlockSprites(Content, _spriteBatch),
+                new KirbySprites(Content, _spriteBatch),
                 _linkSprites,
                 Content,
                 _camera
             );
 
-            _kirby = new Kirby(
-                _gamePlayer,
-                _universe.EnemyManager,
-                _kirbySprites,
-                _gamePlayer.Position,
-                Content
-            );
+
             _universe.SetPlayer(_gamePlayer);
-            _universe.SetKirby(_kirby);
+
             _universe.SetupPortalManager(_camera);
             _universe.SetupLockedEntranceManager(_camera);
 
@@ -185,7 +187,7 @@ namespace ZweiHander
                 Area HordeArea = _areaConstructor.LoadArea(mapPath2, _universe, _camera, "HordeDungeon");
                 _universe.AddArea(HordeArea);
                 _universe.SetCurrentLocation("HordeDungeon", 1);
-                ItemManager projectileManager = new(_itemSprites,_treasureSprites,_bossSprites);
+                ItemManager projectileManager = new(_itemSprites,_treasureSprites,_bossSprites,_npcSprites);
                 HordeManager = new(_enemySprites,projectileManager,_bossSprites,_npcSprites,Content);
             }
             else{
@@ -195,7 +197,6 @@ namespace ZweiHander
                 _universe.SetCurrentLocation("TestDungeon", 1);
             }
             _gamePlayer.Position = _universe.CurrentRoom.GetPlayerSpawnPoint();
-            _kirby.Position = _gamePlayer.Position;
 
 
 
@@ -284,11 +285,17 @@ namespace ZweiHander
                         gameWonSFX.Play();
                         _gameState.SetMode(GameMode.GameWon);
                     }
+                    if (_gamePlayer.InventoryCount(typeof(Items.ItemStorages.CagedKirby)) > 0 && !kirbySpawned)
+                    {
+                        _universe.SpawnKirby();
+                        _kirby = (Kirby)_universe.Kirby;
+                        kirbySpawned = true;
+                    }
                     _universe.Update(gameTime);
 
                     _gamePlayer.Update(gameTime);
 
-                    _kirby.Update(gameTime);
+                    _kirby?.Update(gameTime);
 
                     CollisionManager.Instance.Update(gameTime);
 
@@ -320,14 +327,13 @@ namespace ZweiHander
 
                     _gamePlayer.Update(gameTime);
 
-                    _kirby.Update(gameTime);
-
                     CollisionManager.Instance.Update(gameTime);
 
                     _camera.Update(gameTime, _gamePlayer.Position);
                     if (_universe.EnemyManager.IsEmpty())
                     {
-                        _universe.EnemyManager.MakeEnemy("Aquamentus",new Vector2(300,300));
+                        waveNum++;
+                        _universe.EnemyManager.MCreateWave(waveNum);
                     }
             }
             }
@@ -375,7 +381,7 @@ namespace ZweiHander
                 );
 
                 _universe.Draw();
-                _kirby.Draw();
+                _kirby?.Draw();
                 _gamePlayer.Draw(_spriteBatch);
 
 

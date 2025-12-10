@@ -26,12 +26,12 @@ public class EffectManager : Dictionary<Effect, double>
     /// <summary>
     /// Tickers for effects that have overtime effects
     /// </summary>
-    private Dictionary<Effect, Ticker> Tickers = [];
+    private readonly Dictionary<Effect, Ticker> Tickers = [];
 
     /// <summary>
     /// Effects which ticked on most recent update
     /// </summary>
-    public ICollection<Effect> Ticked { get; private set; } = [];
+    public ICollection<Effect> Ticked { get; } = [];
 
     /// <summary>
     /// Updates active effects; including duration and overtime effects

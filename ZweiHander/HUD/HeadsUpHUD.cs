@@ -19,7 +19,6 @@ namespace ZweiHander.HUD
         private readonly ItemWithCount _rupies;
         private readonly Vector2 _position;
         private readonly IPlayer _player;
-        private readonly ItemWithCount _test;
 
         public HeadsUpHUD(HUDSprites hudSprites, Vector2 position, IPlayer player)
         {

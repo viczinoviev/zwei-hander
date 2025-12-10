@@ -50,10 +50,10 @@ namespace ZweiHander.PlayerFiles
                     acceleration: -itemVelocity * 0.9f,
                     properties: [ItemProperty.DeleteOnBlock,
                          ItemProperty.CanDamageEnemy],
-                    extras: [() => player.Position, collisionHandler],
                     damage: new DamageDict()
                         .Add<IEnemy>(new(player.Effected(Effect.Strength) ? 4 : 3))
-                );
+,
+                    extras: [() => player.Position, collisionHandler]);
             }
             else if (itemInput == UsableItem.Bomb)
             {
