@@ -30,6 +30,9 @@ public class HUDSprites : SpriteFactory
     public ISprite Number(int number, int digits = -1) => new NumberSprite(number, this, digits);
     public ISprite Map() => new IdleSprite(_regions["map"], _spriteBatch);
     public ISprite OrangeCandle() => new IdleSprite(_regions["orange-candle"], _spriteBatch);
+    public ISprite BlueCandle() => new IdleSprite(_regions["blue-candle"], _spriteBatch);
+    public ISprite RedPotion() => new IdleSprite(_regions["red-potion"], _spriteBatch);
+    public ISprite BluePotion() => new IdleSprite(_regions["blue-potion"], _spriteBatch);
     public ISprite BlueFrame() => new IdleSprite(_regions["blue-frame"], _spriteBatch);
     public ISprite RedFrame() => new IdleSprite(_regions["red-frame"], _spriteBatch);
     public ISprite NormalBoomerang() => new IdleSprite(_regions["normal-boomerang"], _spriteBatch);

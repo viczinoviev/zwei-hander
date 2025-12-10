@@ -64,7 +64,7 @@ namespace ZweiHander.HUD
         /// </summary>
         public enum OrderedUsable
         {
-            Boomerang, Bow, Bomb, Fire
+            Boomerang, Bow, Bomb, Fire, RedPot, BluePot
         }
 
         /// <summary>
@@ -72,7 +72,6 @@ namespace ZweiHander.HUD
         /// </summary>
         private enum OrderedPermanent
         {
-            Map = 4
         }
 
         /// <summary>
@@ -80,8 +79,7 @@ namespace ZweiHander.HUD
         /// </summary>
         private readonly List<Vector2> _itemPositions = [
             new(272, 106), new(320, 106), new(368, 106), new(416, 106),
-            //new(272, 146), new(320, 146), new(368, 146), new(416, 146),
-            new(271, 63)
+            new(272, 146), new(320, 146), new(368, 146), new(416, 146)
         ];
         /// <summary>
         /// Which of the items in the enum does the player have
@@ -112,23 +110,21 @@ namespace ZweiHander.HUD
             _acquiredItems = [.. Enumerable.Repeat(false, _orderedItemCount)];
             _itemSprites = [.. Enumerable.Repeat<ISprite>(null, _orderedItemCount)];
             _itemSprites[(int)OrderedUsable.Bow] = hudSprites.Bow();
-            _itemSprites[(int)OrderedPermanent.Map] = hudSprites.Map();
             _itemSprites[(int)OrderedUsable.Fire] = hudSprites.OrangeCandle();
             _itemSprites[(int)OrderedUsable.Boomerang] = hudSprites.NormalBoomerang();
             _itemSprites[(int)OrderedUsable.Bomb] = hudSprites.Bomb();
+            _itemSprites[(int)OrderedUsable.RedPot] = hudSprites.RedPotion();
+            _itemSprites[(int)OrderedUsable.BluePot] = hudSprites.BluePotion();
             _swordSprite = hudSprites.NormalSword();
         }
 
         public void Update(GameTime gameTime)
         {
-            // Iterate through usable items (slots 0-3)
+            // Iterate through usable items
             for (int i = 0; i < _orderedUsableCount; i++)
             {
                 _acquiredItems[i] = _player.HasItemInSlot(i);
             }
-
-            // Update permanent items (4 for map)
-            _acquiredItems[(int)OrderedPermanent.Map] = _player.InventoryCount(typeof(MapItem)) > 0;
         }
 
         public void Draw(Vector2 offset)

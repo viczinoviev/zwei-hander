@@ -89,7 +89,19 @@ namespace ZweiHander.PlayerFiles
                         .Add<IEnemy>(new(player.Effected(Effect.Strength) ? 3 : 2, effects: (Effect.OnFire, 3)))
                 );
             }
-
+            else if(itemInput == UsableItem.BluePot && player.InventoryCount(typeof(BluePotion)) > 0)
+            {
+                actionDuration = 50f;
+                player.AddEffect(Effect.Speed, 15f);
+                player.AddEffect(Effect.Strength, 15f);
+                player.Inventory[typeof(BluePotion)]--;
+            }
+            else if (itemInput == UsableItem.RedPot && player.InventoryCount(typeof(RedPotion)) > 0)
+            {
+                actionDuration = 50f;
+                player.Heal(9999);
+                player.Inventory[typeof(RedPotion)]--;
+            }
             return actionDuration;
 
         }
