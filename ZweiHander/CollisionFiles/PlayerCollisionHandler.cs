@@ -108,7 +108,7 @@ namespace ZweiHander.CollisionFiles
                     _player.Heal(2);
                     break;
                 case Fairy:
-                    _player.Heal(9999);
+                    _player.AddEffect(Fairy.GetBuff(), Fairy.BuffDuration);
                     break;
                 case Bomb:
                     _player.AddItemToInventory(item.ItemType, 10);

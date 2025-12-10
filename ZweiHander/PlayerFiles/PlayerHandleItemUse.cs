@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using ZweiHander.CollisionFiles;
 using ZweiHander.Items;
 using ZweiHander.Items.ItemStorages;
+using ZweiHander.Damage;
+using ZweiHander.Enemy;
 
 namespace ZweiHander.PlayerFiles
 {
@@ -31,7 +33,9 @@ namespace ZweiHander.PlayerFiles
                     velocity: itemVelocity,
                     properties: [ItemProperty.DeleteOnEnemy,
                     ItemProperty.DeleteOnBlock,
-                    ItemProperty.CanDamageEnemy]
+                    ItemProperty.CanDamageEnemy],
+                    damage: new DamageDict()
+                        .Add<IEnemy>(new(player.Effected(Effect.Strength) ? 3 : 2))
                 );
             }
             else if (itemInput == UsableItem.Boomerang)
@@ -46,7 +50,9 @@ namespace ZweiHander.PlayerFiles
                     acceleration: -itemVelocity * 0.9f,
                     properties: [ItemProperty.DeleteOnBlock,
                          ItemProperty.CanDamageEnemy],
-                    extras: [() => player.Position, collisionHandler]
+                    extras: [() => player.Position, collisionHandler],
+                    damage: new DamageDict()
+                        .Add<IEnemy>(new(player.Effected(Effect.Strength) ? 4 : 3))
                 );
             }
             else if (itemInput == UsableItem.Bomb)
@@ -60,7 +66,10 @@ namespace ZweiHander.PlayerFiles
                         life: 3.3f,
                         position: itemPosition + (stateMachine.LastDirection * 30f),
                         velocity: Vector2.Zero,
-                        acceleration: Vector2.Zero
+                        acceleration: Vector2.Zero,
+                        damage: new DamageDict()
+                            .Add<IEnemy>(new(player.Effected(Effect.Strength) ? 30 : 15))
+                            .Add<Player>(new(player.Effected(Effect.Strength) ? 3 : 2))
                     );
                     player.Inventory[typeof(Bomb)]--;
                 }
@@ -75,7 +84,9 @@ namespace ZweiHander.PlayerFiles
                     life: 6f,
                     position: itemPosition,
                     velocity: itemVelocity * 0.11f,
-                    acceleration: -itemVelocity * 0.1f
+                    acceleration: -itemVelocity * 0.1f,
+                    damage: new DamageDict()
+                        .Add<IEnemy>(new(player.Effected(Effect.Strength) ? 2 : 1, effects: (Effect.OnFire, 3)))
                 );
             }
 

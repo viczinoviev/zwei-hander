@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ZweiHander.Damage;
 
 /// <summary>
 /// What to do when taking damage
 /// </summary>
-public class DamageObject(int damage = 0, double knockback = 0)
+/// <param name="damage">damage to apply</param>
+/// <param name="knockback">knockback to apply</param>
+/// <param name="effects">effects to apply</param>
+public class DamageObject(int damage = 0, double knockback = 0, params (Effect effect, double duration)[] effects)
 {
     /// <summary>
     /// The actual damage to be dealt.
@@ -17,6 +21,11 @@ public class DamageObject(int damage = 0, double knockback = 0)
     /// How much knockback to take.
     /// </summary>
     public double Knockback = knockback;
+
+    /// <summary>
+    /// Effects associated with this damage
+    /// </summary>
+    public Dictionary<Effect, double> Effects = effects.ToDictionary(x => x.effect, x => x.duration);
 
     /// <summary>
     /// Gets the damage associated with a type using a dictionary. 

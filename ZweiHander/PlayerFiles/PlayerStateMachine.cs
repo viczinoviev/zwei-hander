@@ -104,7 +104,7 @@ namespace ZweiHander.PlayerFiles
         {
             Vector2 movement = Vector2.Zero;
             var inputBuffer = _player.InputBuffer;
-
+            
             if (inputBuffer.Contains(PlayerInput.MovingUp)) movement.Y--;
             if (inputBuffer.Contains(PlayerInput.MovingDown)) movement.Y++;
             if (inputBuffer.Contains(PlayerInput.MovingLeft)) movement.X--;
@@ -112,7 +112,11 @@ namespace ZweiHander.PlayerFiles
 
             // Normalize diagonal movement
             if (movement != Vector2.Zero)
+            {
                 movement.Normalize();
+                if (_player.Effected(Damage.Effect.Speed)) movement *= 1.5f;
+                if (_player.Effected(Damage.Effect.Slowed)) movement /= 1.5f;
+            }
 
             return movement;
         }

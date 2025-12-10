@@ -8,6 +8,7 @@ using ZweiHander.Damage;
 using ZweiHander.Graphics.SpriteStorages;
 using ZweiHander.Items;
 using ZweiHander.Items.ItemStorages;
+using Effect = ZweiHander.Damage.Effect;
 
 namespace ZweiHander.PlayerFiles
 {
@@ -57,6 +58,8 @@ namespace ZweiHander.PlayerFiles
 
         public bool allowedToUpdate = true;
 
+        private EffectManager Effects = new();
+
         public Color Color
         {
             get => _handler.Color;
@@ -97,6 +100,7 @@ namespace ZweiHander.PlayerFiles
             _stateMachine.Update(gameTime);
             _handler.Update(gameTime);
             ItemManager.Update(gameTime);
+            ApplyEffects(gameTime);
         }
 
         public void AddInput(PlayerInput input)
@@ -244,6 +248,33 @@ namespace ZweiHander.PlayerFiles
         public void ForceUpdateCollisionBox()
         {
             _handler?.UpdateCollisionBox();
+        }
+
+        public void AddEffect(Effect effect, double duration)
+        {
+            Effects.Add(effect, duration);
+        }
+
+        public bool Effected(Effect effect)
+        {
+            return Effects.Contains(effect);
+        }
+
+        private void ApplyEffects(GameTime gameTime)
+        {
+            Effects.Update(gameTime);
+            foreach (Effect effect in Effects.Ticked)
+            {
+                switch (effect)
+                {
+                    case Effect.Regen:
+                        Heal(1);
+                        break;
+                    case Effect.OnFire:
+                        TakeDamage(new(1), false);
+                        break;
+                }
+            }
         }
 
     }
