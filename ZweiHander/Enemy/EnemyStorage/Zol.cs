@@ -13,7 +13,7 @@ namespace ZweiHander.Enemy.EnemyStorage;
 /// </summary>
 public class Zol : IEnemy
 {
-    private const int EnemyStartHealth = 5;
+    private const int EnemyStartHealth = 15;
     private const int FaceChangeChance = 200;
     private const int FaceChangeCase = 3;
     private const int CollisionBoxOffset = 2;

@@ -152,5 +152,10 @@ public class EnemyManager(EnemySprites enemysprites, ItemManager projectileManag
     {
         return currentEnemies.Count == 0;
     }
+
+    public void MCreateWave(int waveNum)
+    {
+        WaveConstuctor.CreateWave(this,waveNum);
+    }
     public IReadOnlyList<IEnemy> CurrentEnemiesPub => currentEnemies;
 }

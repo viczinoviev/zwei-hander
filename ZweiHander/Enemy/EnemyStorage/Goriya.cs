@@ -15,7 +15,7 @@ namespace ZweiHander.Enemy.EnemyStorage;
 /// </summary>
 public class Goriya : IEnemy
 {
-    private const int EnemyStartHealth = 5;
+    private const int EnemyStartHealth = 10;
     private const int FaceChangeChance = 200;
     private const int FaceChangeCase = 3;
     private const int CollisionBoxOffset = 2;

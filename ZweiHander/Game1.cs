@@ -60,6 +60,7 @@ namespace ZweiHander
         public Kirby GameKirby => _kirby;
 
         public EnemyManager HordeManager;
+        public int waveNum;
 
         public Game1()
         {
@@ -122,8 +123,13 @@ namespace ZweiHander
 
         private void OnGameModeChanged(GameMode newMode)
         {
-            if (newMode == GameMode.Playing || newMode == GameMode.Horde)
+            if (newMode == GameMode.Playing)
             {
+                GameSetUp();
+            }
+            else if (newMode == GameMode.Horde)
+            {
+                waveNum = 0;
                 GameSetUp();
             }
             else if (newMode == GameMode.GameOver)
@@ -332,7 +338,8 @@ namespace ZweiHander
                     _camera.Update(gameTime, _gamePlayer.Position);
                     if (_universe.EnemyManager.IsEmpty())
                     {
-                        _universe.EnemyManager.MakeEnemy("Aquamentus",new Vector2(300,300));
+                        waveNum++;
+                        _universe.EnemyManager.MCreateWave(waveNum);
                     }
             }
             }
