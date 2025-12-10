@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ZweiHander.Damage;
 /// <summary>
-/// Stores and updates effects
+/// Stores and updates effects. Acts as a mapping between activate effects and remaining duration in seconds
 /// </summary>
 public class EffectManager : Dictionary<Effect, double>
 {

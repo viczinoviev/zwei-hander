@@ -58,7 +58,7 @@ namespace ZweiHander.PlayerFiles
 
         public bool allowedToUpdate = true;
 
-        private readonly EffectManager Effects = [];
+        public EffectManager Effects { get; } = [];
 
         public Color Color
         {
@@ -252,7 +252,7 @@ namespace ZweiHander.PlayerFiles
 
         public void AddEffect(Effect effect, double duration)
         {
-            Effects.Add(effect, duration);
+            Effects[effect] = duration;
         }
 
         public bool Effected(Effect effect)

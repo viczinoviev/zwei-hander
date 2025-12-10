@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 using ZweiHander.CollisionFiles;
 using ZweiHander.Damage;
 using ZweiHander.Graphics;
@@ -34,6 +35,8 @@ public interface IEnemy
     public EnemyCollisionHandler CollisionHandler { get; }
 
     public EffectManager Effects {  get; set; }
+
+    public List<DamageDisplay> DamageNumbers { get; set; }
 
     /// <summary>
     /// Draws this Enemy on screen.

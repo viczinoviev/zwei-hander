@@ -32,6 +32,10 @@ public class AbstractEnemy : IEnemy
 
     protected readonly int Faces = 4;
 
+    public List<DamageDisplay> DamageNumbers { get; set; } = [];
+
+    protected const double DamageDisplayDuration = 1;
+
     /// <summary>
     /// Manager for the projectile this enemy throws
     /// </summary>
@@ -48,6 +52,10 @@ public class AbstractEnemy : IEnemy
 
     public virtual void Draw()
     {
+        Color color = Sprite.Color;
+        color.R = (byte) (Effects.Contains(Effect.Slowed) ? 0x8f : 0xff);
+        color.B = (byte)(Effects.Contains(Effect.OnFire) ? 0x8f : 0xff);
+        Sprite.Color = color;
         Sprite.Draw(Position);
         _projectileManager?.Draw();
     }
@@ -117,6 +125,14 @@ public class AbstractEnemy : IEnemy
                 CollisionHandler.Dead = true;
             }
         }
+        double angle = 2 * Math.PI * rnd.NextDouble();
+        DamageNumbers.Add(new(dmg,
+            Position + (
+                (float)Double.Hypot(Sprite.Width, Sprite.Height) * 0.6f *
+                new Vector2((float) Math.Cos(angle), (float) Math.Sin(angle))
+            ),
+            DamageDisplayDuration
+        ));
     }
 
     public virtual void TakeDamage(DamageObject dmg)

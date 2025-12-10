@@ -8,18 +8,21 @@ namespace ZweiHander.Graphics;
 public class NumberSprite : AbstractSprite
 {
     private string _number;
-    private readonly Dictionary<char, ISprite> _sprites;
+    private static Dictionary<char, ISprite> _sprites = null;
     private List<Vector2> _relativePositions;
     public int CumWidth;
     public int CumHeight { get => _sprites['0'].Height; }
     private readonly int Digits;
-    public NumberSprite(int number, HUDSprites hudSprites, int digits = -1, bool centered = true)
+    public NumberSprite(int number, HUDSprites hudSprites = null, int digits = -1, bool centered = true)
     {
-        _sprites = [];
         Digits = digits;
-        for (int i = 0; i < 10; i++)
+        if (_sprites == null && hudSprites != null)
         {
-            _sprites[i.ToString()[0]] = hudSprites.Digit(i);
+            _sprites = [];
+            for (int i = 0; i < 10; i++)
+            {
+                _sprites[i.ToString()[0]] = hudSprites.Digit(i);
+            }
         }
         SetNumber(number, centered);
     }
@@ -49,6 +52,9 @@ public class NumberSprite : AbstractSprite
     {
         for (int i = 0; i < _number.Length; i++)
         {
+            _sprites[_number[i]].Color = Color;
+            _sprites[_number[i]].Rotation = Rotation;
+            _sprites[_number[i]].Scale = Scale;
             _sprites[_number[i]].Draw(position + _relativePositions[i]);
         }
     }
