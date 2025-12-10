@@ -3,14 +3,14 @@ namespace ZweiHander.Items.ItemStorages;
 /// <summary>
 /// Collectable, infinite life
 /// </summary>
-public class MagicKey : AbstractItem
+public class BlueKey : AbstractItem
 {
     protected override ItemProperty Properties { get; set; } = ItemProperty.Collectable;
 
-    public MagicKey(ItemConstructor itemConstructor)
+    public BlueKey(ItemConstructor itemConstructor)
         : base(itemConstructor)
     {
-        Sprites = [itemConstructor.TreasureSprites.KeyMagical()];
+        Sprites = [itemConstructor.TreasureSprites.BlueKey()];
         Setup();
     }
 }
