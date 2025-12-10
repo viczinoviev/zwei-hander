@@ -1,0 +1,28 @@
+Author of the code review: Victor Zinoviev
+Date of the code review: 2025-12-10
+Sprint number: 5
+Name of the .cs file being reviewed: CsvAreaConstructor.cs
+Author of the .cs file being reviewed: Stash
+Number of minutes taken to complete the review: 25
+Specific comments on what is readable and what is not:
+	The CsvAreaConstructor class's LoadArea method is a very long method, spanning around 100 lines of code. However, this is acceptable since
+	the method deals with parsing a csv file to create the map dynamically. The is heavy nesting of if statements, which I believe can be divided
+	into smaller helper methods or at least have comments explaining what each section is working on. Aside from the LoadArea method, the other methods
+	are fairly easily readable. It is very helpful that there are designated methods for creating blocks, borders, enemies, and more, making it easier 
+	to understand what content in the csv file corresponds to which method. However, I would recommend change the names in the CreateObject method to 
+	actual words rather than the starting letters, so that it is easier to understand the what is on the map just from reading the csv file. 
+
+Author of the code review: Victor Zinoviev
+Date of the code review: 2025-12-10
+Sprint number: 5
+Name of the .cs file being reviewed: InventoryHUD.cs
+Author of the .cs file being reviewed: Jacob
+Number of minutes taken to complete the review: 20
+Specific comments on code quality:
+	The inventoryHUD class has high cohesion, having a single responsibility of parsing acting as a HUD component representing the player's inventory.
+	I would say that the layout of the inventory could be separated into its own class for a higher cohesion, where the InventoryHUD only cares about
+	the content of the inventory rather than its visual representation. This will also allow for different inventory orientations to be used easily.
+	As for coupling, the class depends on the IPlayer, and the HUDSprites, which I believe has a low coupling requiring only the essential references.
+	The implementations of the methods are very straightforward and easy to follow, since there are not many conditional statements. I would say that the
+	use of casting is a bit concerning, since it had led to other bugs in the past. Overall, I think that this class is well written.
+
