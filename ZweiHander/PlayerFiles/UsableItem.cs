@@ -7,6 +7,8 @@ namespace ZweiHander.PlayerFiles
         Bow,
         Boomerang,
         Bomb,
-        RedCandle
+        RedCandle,
+        RedPot,
+        BluePot
     }
 }
