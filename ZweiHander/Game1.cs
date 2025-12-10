@@ -173,7 +173,8 @@ namespace ZweiHander
                 Content,
                 _camera
             );
-
+            kirbySpawned = false;
+            _kirby = null;
 
             _universe.SetPlayer(_gamePlayer);
 
