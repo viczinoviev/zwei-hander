@@ -12,6 +12,8 @@ X to use the current item selected under the letter 'A'
 < and > to swap between items selected
 
 N or Z to make Link attack with sword.
+
+Press H on the main menu to enter Horde mode.
 ## Known issues
 The game lags really hard if reset is used multiple times.
 

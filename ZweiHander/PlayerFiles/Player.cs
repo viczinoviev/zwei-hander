@@ -60,7 +60,7 @@ namespace ZweiHander.PlayerFiles
 
         public bool allowedToUpdate = true;
 
-        private readonly EffectManager Effects = [];
+        public EffectManager Effects { get; } = [];
 
         public Color Color
         {

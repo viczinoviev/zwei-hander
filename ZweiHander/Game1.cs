@@ -215,7 +215,7 @@ namespace ZweiHander
             _keyboardController.BindKey(Keys.X, new ConfirmInventoryItemCommand(this));
             _keyboardController.BindKey(Keys.U, new KirbyUltCommand(this));
             // Initialize HUD Manager
-            _hudManager = new HUDManager(_gamePlayer, _hudSprites, gamePaused, this);
+            _hudManager = new HUDManager(_gamePlayer, _hudSprites, gamePaused, this, Content);
             _hudManager.SetUniverse(_universe);
         }
 

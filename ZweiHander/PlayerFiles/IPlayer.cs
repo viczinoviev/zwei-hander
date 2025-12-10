@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using ZweiHander.Damage;
+
 namespace ZweiHander.PlayerFiles
 {
     public interface IPlayer
@@ -16,6 +18,11 @@ namespace ZweiHander.PlayerFiles
         /// Maximum health in half-hearts
         /// </summary>
         int MaxHealth { get; }
+
+        /// <summary>
+        /// Active effects and their remaining durations
+        /// </summary>
+        EffectManager Effects { get; }
 
         void Update(GameTime gameTime);
         void MoveUp();
