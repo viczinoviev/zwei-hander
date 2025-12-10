@@ -23,9 +23,6 @@ namespace ZweiHander.FriendlyNPC
         private IEnemy _closestEnemy = null;
         private readonly KirbySprites _sprites;
 
-        private readonly SoundEffect enemyHurt;
-        private readonly SoundEffectInstance currentSFX;
-
         private static readonly Random rnd = new();
         private float rndAngleX;
         private float rndAngleY;
@@ -166,7 +163,7 @@ namespace ZweiHander.FriendlyNPC
                 {
                     differenceVectorEnemy.Normalize();
                     moveVector = -differenceVectorEnemy * travelDistance;
-                    
+
                 }
             }
             if (moveVector.X < 1)

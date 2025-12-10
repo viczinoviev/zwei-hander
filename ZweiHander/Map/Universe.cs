@@ -146,7 +146,7 @@ namespace ZweiHander.Map
         }
         public void SpawnKirby()
         {
-            
+
             Kirby = new Kirby(Player, EnemyManager, _kirbySprites, Player.Position, content);
             SetKirby(Kirby);
         }

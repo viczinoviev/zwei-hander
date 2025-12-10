@@ -173,10 +173,10 @@ namespace ZweiHander
                 Content,
                 _camera
             );
-            
+
 
             _universe.SetPlayer(_gamePlayer);
-            
+
             _universe.SetupPortalManager(_camera);
             _universe.SetupLockedEntranceManager(_camera);
 
@@ -197,8 +197,7 @@ namespace ZweiHander
                 _universe.SetCurrentLocation("TestDungeon", 1);
             }
             _gamePlayer.Position = _universe.CurrentRoom.GetPlayerSpawnPoint();
-            
-            
+
 
 
 
@@ -286,7 +285,7 @@ namespace ZweiHander
                         gameWonSFX.Play();
                         _gameState.SetMode(GameMode.GameWon);
                     }
-                    if (_gamePlayer.InventoryCount(typeof(Items.ItemStorages.CagedKirby)) > 0 && kirbySpawned == false)
+                    if (_gamePlayer.InventoryCount(typeof(Items.ItemStorages.CagedKirby)) > 0 && !kirbySpawned)
                     {
                         _universe.SpawnKirby();
                         _kirby = (Kirby)_universe.Kirby;
@@ -296,10 +295,7 @@ namespace ZweiHander
 
                     _gamePlayer.Update(gameTime);
 
-                    if (_kirby!=null)
-                    {
-                        _kirby.Update(gameTime);
-                    }
+                    _kirby?.Update(gameTime);
 
                     CollisionManager.Instance.Update(gameTime);
 
@@ -385,10 +381,7 @@ namespace ZweiHander
                 );
 
                 _universe.Draw();
-                if (_kirby != null)
-                {
-                    _kirby.Draw();
-                }
+                _kirby?.Draw();
                 _gamePlayer.Draw(_spriteBatch);
 
 

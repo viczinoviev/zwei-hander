@@ -22,7 +22,7 @@ public class Ticker(double frequency = 0, bool start_with_tick = false)
     /// <summary>
     /// Frequency of ticks in seconds
     /// </summary>
-    private double Frequency = frequency;
+    private readonly double Frequency = frequency;
 
     /// <summary>
     /// Reset this ticker

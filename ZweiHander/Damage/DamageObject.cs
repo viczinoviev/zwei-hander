@@ -28,7 +28,7 @@ public class DamageObject(int damage = 0, double knockback = 0, params (Effect e
     public Dictionary<Effect, double> Effects = effects.ToDictionary(x => x.effect, x => x.duration);
 
     /// <summary>
-    /// Gets the damage associated with a type using a dictionary. 
+    /// Gets the damage associated with a type using a dictionary.
     /// Starts at most derived type, and works up, checking interfaces at each level.
     /// </summary>
     /// <param name="mapping">dictionary containing how different types get damaged.</param>

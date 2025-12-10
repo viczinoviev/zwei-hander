@@ -13,10 +13,7 @@ namespace ZweiHander.Commands
 
         public void Execute()
         {
-            if (_game.GameKirby != null) 
-            { 
-                _game.GameKirby.StartUlt();
-            }
+            _game.GameKirby?.StartUlt();
         }
     }
 }
