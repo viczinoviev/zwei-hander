@@ -15,5 +15,6 @@ public class NPCSprites : SpriteFactory
     public ISprite OldMan() => new IdleSprite(_regions["old-man-1"], _spriteBatch);
     public ISprite Merchant() => new IdleSprite(_regions["merchant-1"], _spriteBatch);
     public ISprite Zelda() => new IdleSprite(_regions["zelda-green-1"], _spriteBatch);
+    public ISprite CagedKirby() => new IdleSprite(_regions["caged-kirby"], _spriteBatch);
 }
 

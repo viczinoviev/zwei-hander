@@ -37,6 +37,7 @@ namespace ZweiHander
 
         private Kirby _kirby;
         private KirbySprites _kirbySprites;
+        public bool kirbySpawned = false;
 
         //Sprites and factories
         private PlayerSprites _linkSprites;
@@ -161,20 +162,15 @@ namespace ZweiHander
                 _itemSprites,
                 _treasureSprites,
                 new BlockSprites(Content, _spriteBatch),
+                new KirbySprites(Content, _spriteBatch),
                 _linkSprites,
                 Content,
                 _camera
             );
+            
 
-            _kirby = new Kirby(
-                _gamePlayer,
-                _universe.EnemyManager,
-                _kirbySprites,
-                _gamePlayer.Position,
-                Content
-            );
             _universe.SetPlayer(_gamePlayer);
-            _universe.SetKirby(_kirby);
+            
             _universe.SetupPortalManager(_camera);
             _universe.SetupLockedEntranceManager(_camera);
 
@@ -185,7 +181,7 @@ namespace ZweiHander
                 Area HordeArea = _areaConstructor.LoadArea(mapPath2, _universe, _camera, "HordeDungeon");
                 _universe.AddArea(HordeArea);
                 _universe.SetCurrentLocation("HordeDungeon", 1);
-                ItemManager projectileManager = new(_itemSprites,_treasureSprites,_bossSprites);
+                ItemManager projectileManager = new(_itemSprites,_treasureSprites,_bossSprites,_npcSprites);
                 HordeManager = new(_enemySprites,projectileManager,_bossSprites,_npcSprites,Content);
             }
             else{
@@ -195,8 +191,8 @@ namespace ZweiHander
                 _universe.SetCurrentLocation("TestDungeon", 1);
             }
             _gamePlayer.Position = _universe.CurrentRoom.GetPlayerSpawnPoint();
-            _kirby.Position = _gamePlayer.Position;
-
+            
+            
 
 
 
@@ -284,11 +280,20 @@ namespace ZweiHander
                         gameWonSFX.Play();
                         _gameState.SetMode(GameMode.GameWon);
                     }
+                    if (_gamePlayer.InventoryCount(typeof(Items.ItemStorages.CagedKirby)) > 0 && kirbySpawned == false)
+                    {
+                        _universe.SpawnKirby();
+                        _kirby = (Kirby)_universe.Kirby;
+                        kirbySpawned = true;
+                    }
                     _universe.Update(gameTime);
 
                     _gamePlayer.Update(gameTime);
 
-                    _kirby.Update(gameTime);
+                    if (_kirby!=null)
+                    {
+                        _kirby.Update(gameTime);
+                    }
 
                     CollisionManager.Instance.Update(gameTime);
 
@@ -375,7 +380,10 @@ namespace ZweiHander
                 );
 
                 _universe.Draw();
-                _kirby.Draw();
+                if (_kirby != null)
+                {
+                    _kirby.Draw();
+                }
                 _gamePlayer.Draw(_spriteBatch);
 
 

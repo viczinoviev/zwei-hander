@@ -10,7 +10,10 @@ namespace ZweiHander.Commands
 
         public void Execute()
         {
-            _kirby.Position = _targetPosition;
+            if (_kirby != null)
+            {
+                _kirby.Position = _targetPosition;
+            }
         }
     }
 }

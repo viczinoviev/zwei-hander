@@ -18,6 +18,8 @@
 		<Region name="zelda-white-2" x="52" y="42" width="16" height="16" />
 		<Region name="zelda-red-1" x="69" y="42" width="16" height="16" />
 		<Region name="zelda-red-2" x="86" y="42" width="16" height="16" />
+		<!-- Caged Kirby-->
+		<Region name="caged-kirby" x="111" y="30" width="31" height="31" />
 	</Regions>
 	<Animations>
 	</Animations>

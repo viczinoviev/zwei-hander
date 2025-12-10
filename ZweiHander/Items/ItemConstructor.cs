@@ -53,6 +53,11 @@ public class ItemConstructor
     public BossSprites BossSprites { get; set; }
 
     /// <summary>
+    /// Holds all the sprites for NPCs.
+    /// </summary>
+    public NPCSprites NPCSprites { get; set; }
+
+    /// <summary>
     /// Whether to use the default properties or not
     /// </summary>
     public bool UseDefaultProperties { get; set; }

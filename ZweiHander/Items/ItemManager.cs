@@ -36,6 +36,11 @@ public class ItemManager
     private readonly BossSprites _bossSprites;
 
     /// <summary>
+    /// Holds all the sprites related to NPCs.
+    /// </summary>
+    private readonly NPCSprites _npcSprites;
+
+    /// <summary>
     /// Count of each item type in this
     /// </summary>
     private Dictionary<Type, int> ItemTypeCount { get; } = [];
@@ -45,11 +50,12 @@ public class ItemManager
     /// </summary>
     public int ItemCount { get => _items.Count; }
 
-    public ItemManager(ItemSprites itemSprites, TreasureSprites treasureSprites, BossSprites bossSprites = null)
+    public ItemManager(ItemSprites itemSprites, TreasureSprites treasureSprites, BossSprites bossSprites = null, NPCSprites npcSprites = null)
     {
         _itemSprites = itemSprites;
         _treasureSprites = treasureSprites;
         _bossSprites = bossSprites;
+        _npcSprites = npcSprites;
     }
 
     /// <summary>
@@ -96,6 +102,7 @@ public class ItemManager
             BossSprites = _bossSprites,
             ItemSprites = _itemSprites,
             TreasureSprites = _treasureSprites,
+            NPCSprites = _npcSprites,
             Phases = phases ?? [],
             Damage = damage ?? [],
             Extras = extras ?? []

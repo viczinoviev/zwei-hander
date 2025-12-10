@@ -14,7 +14,8 @@ namespace ZweiHander.FriendlyNPC
     public class Kirby : IKirby
     {
         private readonly IPlayer _player;
-        private readonly ISprite _runningSprite;
+        private readonly ISprite _runningLeftSprite;
+        private readonly ISprite _runningRightSprite;
         private readonly ISprite _attackLeftSprite;
         private readonly ISprite _attackRightSprite;
         private ISprite _kirbySprite;
@@ -45,17 +46,19 @@ namespace ZweiHander.FriendlyNPC
             _player = player;
             _enemyManager = enemyManager;
             _sprites = kirbySprites;
-            enemyHurt = sfxPlayer.Load<SoundEffect>("Audio/EnemyHurt");
-            currentSFX = enemyHurt.CreateInstance();
+            //enemyHurt = sfxPlayer.Load<SoundEffect>("Audio/EnemyHurt");
+            //currentSFX = enemyHurt.CreateInstance();
 
-            _runningSprite = _sprites.Kirby();
+            _runningLeftSprite = _sprites.KirbyRunningLeft();
+            _runningRightSprite = _sprites.KirbyRunningRight();
             _attackLeftSprite = _sprites.KirbyAttackLeft();
             _attackRightSprite = _sprites.KirbyAttackRight();
-            _runningSprite.Scale = new Vector2(1f, 1f);
+            _runningLeftSprite.Scale = new Vector2(1f, 1f);
+            _runningRightSprite.Scale = new Vector2(1f, 1f);
             _attackLeftSprite.Scale = new Vector2(1f, 1f);
             _attackRightSprite.Scale = new Vector2(1f, 1f);
 
-            _kirbySprite = _runningSprite;
+            _kirbySprite = _runningLeftSprite;
 
 
             Position = startPosition;
@@ -74,7 +77,6 @@ namespace ZweiHander.FriendlyNPC
         {
             if (!isUlting)
             {
-                _kirbySprite = _runningSprite;
                 UpdateDefault(gameTime);
             }
             else
@@ -99,7 +101,7 @@ namespace ZweiHander.FriendlyNPC
             if(ultTimer > (hitCount+1)*0.5f)
             {
                 hitCount++;
-                enemyHurt.Play();
+                //enemyHurt.Play();
                 _closestEnemy.TakeDamage(2);
                 Vector2 centerOfUlt = _closestEnemy.Position;
                 rndAngleX = (float)((rnd.NextDouble() * 2.0) - 1.0);
@@ -164,7 +166,16 @@ namespace ZweiHander.FriendlyNPC
                 {
                     differenceVectorEnemy.Normalize();
                     moveVector = -differenceVectorEnemy * travelDistance;
+                    
                 }
+            }
+            if (moveVector.X < 1)
+            {
+                _kirbySprite = _runningLeftSprite;
+            }
+            else
+            {
+                _kirbySprite = _runningRightSprite;
             }
             Position += moveVector;
         }

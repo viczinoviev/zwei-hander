@@ -20,12 +20,14 @@ namespace ZweiHander.Map
         public Room CurrentRoom { get; private set; }
         public IPlayer Player { get; private set; }
         public IKirby Kirby { get; private set; }
+        public KirbySprites _kirbySprites;
+        public Vector2? KirbySpawnPosition { get; private set; }
         public EnemyManager EnemyManager { get; }
         public ItemManager ItemManager { get; }
         public BlockManager BlockFactory { get; }
         public BorderManager BorderFactory { get; }
         public PortalManager PortalManager { get; private set; }
-
+        public ContentManager content;
         public LockedEntranceManager LockedEntranceManager { get; private set; }
 
         public Camera.Camera Camera { get; }
@@ -41,6 +43,7 @@ namespace ZweiHander.Map
             ItemSprites itemSprites,
             TreasureSprites treasureSprites,
             BlockSprites blockSprites,
+            KirbySprites kirbySprites,
             PlayerSprites playerSprites,
             ContentManager Content,
             Camera.Camera camera,
@@ -51,9 +54,10 @@ namespace ZweiHander.Map
 
             // Create separate instances for Universe's use
             ItemManager projectileManager = new(itemSprites, treasureSprites, bossSprites);
-            ItemManager = new ItemManager(itemSprites, treasureSprites, bossSprites);
+            ItemManager = new ItemManager(itemSprites, treasureSprites, bossSprites,npcSprites);
             EnemyManager = new EnemyManager(enemySprites, projectileManager, bossSprites, npcSprites, Content);
             BlockFactory = new BlockManager(tileSize, blockSprites, playerSprites);
+            _kirbySprites = kirbySprites;
             BorderFactory = new BorderManager(tileSize, blockSprites);
             RoomTransition = new RoomTransition(this, tileSize);
 
@@ -136,7 +140,16 @@ namespace ZweiHander.Map
 
             CurrentRoom.IsLoaded = false;
         }
-
+        public void SetKirbySpawnPosition(Vector2 position)
+        {
+            KirbySpawnPosition = position;
+        }
+        public void SpawnKirby()
+        {
+            
+            Kirby = new Kirby(Player, EnemyManager, _kirbySprites, Player.Position, content);
+            SetKirby(Kirby);
+        }
         public void Update(GameTime gameTime)
         {
             RoomTransition.Update(gameTime, CurrentRoom, Camera, Player, Kirby);
