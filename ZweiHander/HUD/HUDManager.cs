@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -29,18 +30,20 @@ namespace ZweiHander.HUD
         private Texture2D _pixelTexture; // Cached 1x1 white pixel for drawing rectangles
         private readonly HUDLayoutManager _layoutManager; // Calculates all HUD component positions
         private readonly HUDAnimator _animator; // Handles open/close animation
+        private readonly SpriteFont _font; // Font for rendering text in HUD
 
         // Animation constants
         private const float SLIDE_SPEED = 1200f;
         private const float CLOSED_HUD_BACKGROUND_HEIGHT = 112f;
         private const float OPEN_HUD_BACKGROUND_HEIGHT = 480f;
 
-        public HUDManager(IPlayer player, HUDSprites hudSprites, bool hudOpen, Game1 game)
+        public HUDManager(IPlayer player, HUDSprites hudSprites, bool hudOpen, Game1 game, ContentManager content)
         {
             _game = game;
             _player = player;
             _hudSprites = hudSprites;
             _isHUDOpen = hudOpen;
+            _font = content.Load<SpriteFont>("Fonts/GameOverFont");
             _layoutManager = new HUDLayoutManager(
                 GraphicsDeviceManager.DefaultBackBufferWidth,
                 GraphicsDeviceManager.DefaultBackBufferHeight
@@ -70,7 +73,7 @@ namespace ZweiHander.HUD
             // Use layout manager for all position calculations
             _inventoryHUD = new InventoryHUD(_hudSprites, _layoutManager.GetInventoryHUDPosition(), _player);
             _mapHUD = new MapHUD(_hudSprites, _layoutManager.GetMapHUDPosition());
-            _headsUpHud = new HeadsUpHUD(_hudSprites, _layoutManager.GetHeadsUpHUDPosition(), _player);
+            _headsUpHud = new HeadsUpHUD(_hudSprites, _layoutManager.GetHeadsUpHUDPosition(), _player, _font);
             _healthDisplay = new HealthDisplay(_player, _hudSprites, _layoutManager.GetHealthDisplayPosition());
 
             // Add all components to the list
