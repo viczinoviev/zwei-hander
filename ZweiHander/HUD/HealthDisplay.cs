@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System;
 using ZweiHander.Graphics;
 using ZweiHander.Graphics.SpriteStorages;

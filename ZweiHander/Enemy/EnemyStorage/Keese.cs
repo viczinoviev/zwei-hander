@@ -1,11 +1,7 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
-using System;
-using ZweiHander.CollisionFiles;
-using ZweiHander.Graphics;
+using ZweiHander.Damage;
 using ZweiHander.Graphics.SpriteStorages;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
-using ZweiHander.Damage;
 
 namespace ZweiHander.Enemy.EnemyStorage;
 

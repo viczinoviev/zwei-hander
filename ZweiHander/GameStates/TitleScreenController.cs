@@ -35,8 +35,10 @@ namespace ZweiHander.GameStates
                 bool isQuitKey = currentKeyState.IsKeyDown(Keys.Q) || currentKeyState.IsKeyDown(Keys.Escape);
 
                 _previousKeyState = currentKeyState;
-                if(!isQuitKey){
-                if (currentKeyState.IsKeyDown(Keys.H)){
+                if (!isQuitKey)
+                {
+                    if (currentKeyState.IsKeyDown(Keys.H))
+                    {
                         return 2;
                     }
                     else

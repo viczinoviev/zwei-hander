@@ -10,8 +10,8 @@
 		<Region name="clock" x="59" y="704" width="15" height="16" />
 		<Region name="rupy" x="77" y="704" width="8" height="16" />
 		<Region name="rupy-five" x="86" y="704" width="8" height="16" />
-		<Region name="potion-life" x="97" y="704" width="8" height="16" />
-		<Region name="potion-blue" x="106" y="704" width="8" height="16" />
+		<Region name="potion-life" x="106" y="704" width="8" height="16" />
+		<Region name="potion-blue" x="97" y="704" width="8" height="16" />
 		<Region name="letter" x="117" y="704" width="8" height="16" />
 		<Region name="food" x="128" y="704" width="8" height="16" />
 		<Region name="sword" x="139" y="704" width="8" height="16" />

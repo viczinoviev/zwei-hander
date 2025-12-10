@@ -54,7 +54,7 @@ namespace ZweiHander.Map
 
             // Create separate instances for Universe's use
             ItemManager projectileManager = new(itemSprites, treasureSprites, bossSprites);
-            ItemManager = new ItemManager(itemSprites, treasureSprites, bossSprites,npcSprites);
+            ItemManager = new ItemManager(itemSprites, treasureSprites, bossSprites, npcSprites);
             EnemyManager = new EnemyManager(enemySprites, projectileManager, bossSprites, npcSprites, Content);
             BlockFactory = new BlockManager(tileSize, blockSprites, playerSprites);
             _kirbySprites = kirbySprites;

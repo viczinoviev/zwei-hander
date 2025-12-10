@@ -1,3 +1,10 @@
 Luke:
 This sprint went pretty smoothly, I just spent a good chunk of time making the horde mode. I enjoyed making it but outside that, I didnt
 have much to do, although I did make some changes to enemies like adding a hit cooldown so you couldnt shred enemies in seconds.
+
+Victor:
+There were no major issues in this sprint. I first focused on refactoring the HUD so that the overall structure is cleaner and easier to work with.
+Then, I worked on implementing new elements in the game such as the player's buffes that were given through the fairies and addition of new keys. 
+I had also helped adding visual components of the new elements our team members had added, which led me to learn more about the other classes and
+refactor some of the interface methods for better usability. Overall, I think that our group did very well in communicating and each contributing
+something new to the game to make it original.

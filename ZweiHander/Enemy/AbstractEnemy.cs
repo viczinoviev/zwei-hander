@@ -2,13 +2,9 @@
 using Microsoft.Xna.Framework.Content;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ZweiHander.CollisionFiles;
 using ZweiHander.Damage;
 using ZweiHander.Graphics;
-using ZweiHander.Graphics.SpriteStorages;
 using ZweiHander.Items;
 
 namespace ZweiHander.Enemy;
@@ -53,7 +49,7 @@ public class AbstractEnemy : IEnemy
     public virtual void Draw()
     {
         Color color = Sprite.Color;
-        color.R = (byte) (Effects.Contains(Effect.Slowed) ? 0x8f : 0xff);
+        color.R = (byte)(Effects.Contains(Effect.Slowed) ? 0x8f : 0xff);
         color.B = (byte)(Effects.Contains(Effect.OnFire) ? 0x8f : 0xff);
         Sprite.Color = color;
         Sprite.Draw(Position);
@@ -129,7 +125,7 @@ public class AbstractEnemy : IEnemy
         DamageNumbers.Add(new(dmg,
             Position + (
                 (float)Double.Hypot(Sprite.Width, Sprite.Height) * 0.6f *
-                new Vector2((float) Math.Cos(angle), (float) Math.Sin(angle))
+                new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle))
             ),
             DamageDisplayDuration
         ));

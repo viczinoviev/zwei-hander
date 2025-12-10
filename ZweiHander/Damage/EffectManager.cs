@@ -1,9 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ZweiHander.Damage;
 /// <summary>
@@ -21,7 +17,7 @@ public class EffectManager : Dictionary<Effect, double>
     /// </summary>
     /// <param name="effect">effect to check</param>
     /// <returns>whether effect is active</returns>
-    public bool Contains(Effect effect) {  return ContainsKey(effect); }
+    public bool Contains(Effect effect) { return ContainsKey(effect); }
 
     /// <summary>
     /// Tickers for effects that have overtime effects

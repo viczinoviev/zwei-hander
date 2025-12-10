@@ -1,9 +1,5 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
-using System;
-using System.Collections.Generic;
-using ZweiHander.CollisionFiles;
-using ZweiHander.Graphics;
 using ZweiHander.Graphics.SpriteStorages;
 using ZweiHander.Items;
 using Vector2 = Microsoft.Xna.Framework.Vector2;

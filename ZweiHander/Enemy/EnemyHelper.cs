@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using System;
-using System.Linq;
 using ZweiHander.Enemy.EnemyStorage;
 using ZweiHander.Items;
 using ZweiHander.Items.ItemStorages;

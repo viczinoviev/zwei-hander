@@ -1,6 +1,4 @@
 using Microsoft.Xna.Framework;
-using ZweiHander.CollisionFiles;
-using ZweiHander.Graphics;
 using ZweiHander.Graphics.SpriteStorages;
 
 namespace ZweiHander.Enemy.EnemyStorage

@@ -1,0 +1,17 @@
+The code analysis tool recommended me to make the Game field readonly inside the HUDManager class.
+This is reasonable, since the HUDManager should not modify the Game object. The Game object is only needed
+for getting the window size when creating the HUD elements.
+
+The code analysis tool also recommended me to make the GetEffectAbbreviation method static. 
+This is also reasonable, since the method does not depend on any instance fields or properties of the HUDManager class.
+
+Finally, the code analysis tool recommended me to use the primary constructor for the ItemWithCount class.
+This is something that I had missed in my initial implementation, where I simply rewrote the same constructor for the class.
+This fix enforces the DRY principle, and is a better practice of maintaining the code.
+
+Through using the code metrics tool, I found that the maintainablity index of the class in the HUD directory are overall high,
+each class ranging around 80-90 in the index. One concern is that the HUDManager class has a cyclomatic complexity of 21, and 
+a total of 26 class coupling. This is the only class in the HUD directory that has a high value for both metrics.
+Although it is understandable that the HUDManager class has high complexity due to it managing all other HUD components, there
+can be room for improvements by separating some of the logic into smaller classes or methods. This was already done through the
+HUDAnimator and the HUDLayout classes, that act as the helper classes for the HUDManager. 

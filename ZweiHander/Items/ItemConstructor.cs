@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
 using ZweiHander.Damage;
 using ZweiHander.Graphics.SpriteStorages;

@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using ZweiHander.CollisionFiles;
-using ZweiHander.PlayerFiles;
 
 namespace ZweiHander.Items.ItemStorages;
 

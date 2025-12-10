@@ -1,9 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ZweiHander.Damage;
 
@@ -27,7 +22,7 @@ public class Ticker(double frequency = 0, bool start_with_tick = false)
     /// <summary>
     /// Reset this ticker
     /// </summary>
-    public void Reset() {  Countdown = Frequency; }
+    public void Reset() { Countdown = Frequency; }
 
     /// <summary>
     /// Updates this ticker.
