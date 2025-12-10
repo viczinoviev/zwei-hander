@@ -1,0 +1,23 @@
+Author of the code review: Luke Howard
+Date of the code review: 2025-12-10
+Sprint number: 5
+Name of the .cs file being reviewed: Kirby.cs
+Author of the .cs file being reviewed: Stash
+Number of minutes taken to complete the review: 10 minutes.
+Specific comments on readability: 
+
+    At the time of this review, there is not really any comments on this file. However, I did not find it too challenging to read as
+    methods are straightforward and variables are named well, so I could still follow what the code was doing. Could do with comments at some
+    point, but overall readable.
+
+Author of the code review: Luke Howard
+Date of the code review: 2025-12-10
+Sprint number: 5
+Name of the .cs file being reviewed: AbstractEnemy.cs
+Author of the .cs file being reviewed: Jacob Scherzer (refactored my code)
+Number of minutes taken to complete the review: 10 minutes.
+Specific comments on maintainability/code quality: 
+
+    This file is a nice refactoring of my enemy classes, as I had initially had issues with the AbstractEnemy class at the beggining of the course
+    and ended up choosing to avoid it. However, this class would certainly make it easier to alter my enemies in the future. It is well done
+    and very easy to maintain.
