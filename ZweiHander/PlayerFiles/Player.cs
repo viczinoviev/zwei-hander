@@ -252,7 +252,7 @@ namespace ZweiHander.PlayerFiles
 
         public void AddEffect(Effect effect, double duration)
         {
-            Effects.Add(effect, duration);
+            Effects[effect] = duration;
         }
 
         public bool Effected(Effect effect)
