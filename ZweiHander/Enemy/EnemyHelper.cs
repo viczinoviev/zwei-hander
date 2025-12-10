@@ -100,26 +100,15 @@ static class EnemyHelper
             _currentProjectile2.Velocity = new Vector2(fireballXSpeed, fireballYSpeed);
             IItem _currentProjectile3 = projectileManager.GetItem("Fireball", fireballLifetime, position: new Vector2(enemy.Position.X - fireballSpawnOffset, enemy.Position.Y - fireballSpawnOffset));
             _currentProjectile3.Velocity = new Vector2(fireballXSpeed, -fireballYSpeed);
-            enemy._projectiles.Add(_currentProjectile1);
-            enemy._projectiles.Add(_currentProjectile2);
-            enemy._projectiles.Add(_currentProjectile3);
             enemy.Thrower = attacking;
             //Set up the projectiles behavior
         }
         else
         {
             //If currently throwing and projectiles are dead, set back to not throwing
-            if (enemy.Thrower == attacking)
+            if (enemy.Thrower == attacking && projectileManager.ItemCount == 0)
             {
-                if (enemy._projectiles[0].IsDead())
-                {
-                    enemy._projectiles.Remove(enemy._projectiles[0]);
-                    if (enemy._projectiles.Count == 0)
-                    {
-                        enemy.Thrower = 1;
-                        enemy._projectiles = [];
-                    }
-                }
+                enemy.Thrower = 1;
             }
         }
     }

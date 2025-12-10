@@ -90,7 +90,7 @@ public class EnemyManager(EnemySprites enemysprites, ItemManager projectileManag
                 enemy = new OldMan(_npcSprites);
                 break;
             case "MovingBlock":
-                enemy = new MovingBlock(_enemySprites);
+                enemy = new MovingBlock(_enemySprites, position, Vector2.Zero, 5f);
                 break;
             default:
                 // Should never actually reach here- will error out if so

@@ -11,55 +11,28 @@ namespace ZweiHander.Enemy.EnemyStorage;
 /// <summary>
 /// Keese enemy
 /// </summary>
-public class Keese : IEnemy
+public class Keese : AbstractEnemy
 {
-    private const int EnemyStartHealth = 5;
-    private const int FaceChangeChance = 200;
-    private const int FaceChangeCase = 8;
+    protected override int EnemyStartHealth => 5;
     private const int BasicDirections = 4;
     private const int SouthEast = 4;
     private const int NorthEast = 5;
     private const int SouthWest = 6;
     private const int NorthWest = 7;
-    private const int CollisionBoxOffset = 2;
-    public ISprite Sprite { get; set; } = default;
-    /// <summary>
-    /// Holds all sprites for this enemy
-    /// </summary>
-    private readonly EnemySprites _enemySprites;
-
-    public Vector2 Position { get; set; } = default;
-
-    public int Face { get; set; } = default;
-    public int Hitpoints { get; set; } = EnemyStartHealth;
-    public float HitcoolDown { get; set; } = 0;
-
-    public EnemyCollisionHandler CollisionHandler { get; } = default;
-
-    /// <summary>
-    /// Random number generator to randomize enemy behavior
-    /// </summary>
-    readonly Random rnd = new();
 
 
     public Keese(EnemySprites enemySprites, ContentManager sfxPlayer, Vector2 position)
+        : base(null, sfxPlayer, position)
     {
-        Position = position;
-        _enemySprites = enemySprites;
-        Sprite = _enemySprites.Keese();
-        CollisionHandler = new EnemyCollisionHandler(this, sfxPlayer);
+        Sprite = enemySprites.Keese();
     }
-    public virtual void Update(GameTime time)
+
+    protected override void ChangeFace()
     {
-        //Decrement hit cooldown
-        if(HitcoolDown > 0)
-        {
-            HitcoolDown --;
-        }
         //Randomize  movement
         int mov = rnd.Next(FaceChangeChance);
         //Move according to current direction faced
-        if (mov > FaceChangeCase)
+        if (mov > Faces)
         {
             if (Face < BasicDirections)
             {
@@ -91,37 +64,6 @@ public class Keese : IEnemy
         {
             Face = mov;
         }
-        CollisionHandler.UpdateCollisionBox();
-        Sprite.Update(time);
-    }
-
-
-    public void TakeDamage(int dmg)
-    {
-        Hitpoints -= dmg;
-
-        if (Hitpoints <= 0)
-        {
-            if (CollisionHandler != null)
-            {
-                CollisionHandler.Dead = true;
-            }
-        }
-    }
-
-    public void Draw()
-    {
-        Sprite.Draw(Position);
-    }
-    public Rectangle GetCollisionBox()
-    {
-        // Sprites are centered
-        return new Rectangle(
-                (int)Position.X - (Sprite.Width / CollisionBoxOffset),
-                (int)Position.Y - (Sprite.Height / CollisionBoxOffset),
-                Sprite.Width,
-                Sprite.Height
-        );
     }
 }
 

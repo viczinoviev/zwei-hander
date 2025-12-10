@@ -12,98 +12,29 @@ namespace ZweiHander.Enemy.EnemyStorage;
 /// <summary>
 /// Darknut enemy
 /// </summary>
-public class Darknut : IEnemy
+public class Darknut : AbstractEnemy
 {
-    private const int EnemyStartHealth = 5;
-    private const int FaceChangeChance = 200;
-    private const int FaceChangeCase = 3;
-    private const int CollisionBoxOffset = 2;
-    public ISprite Sprite { get; set; } = default;
+    protected override int EnemyStartHealth => 5;
 
     private readonly List<ISprite> _sprites = [];
-    /// <summary>
-    /// Holds all sprites for this enemy
-    /// </summary>
-    private readonly EnemySprites _enemySprites;
-
-    public Vector2 Position { get; set; } = default;
-
-    public int Face { get; set; } = default;
-    public int Hitpoints { get; set; } = EnemyStartHealth;
-    public float HitcoolDown { get; set; } = 0;
-
-    public EnemyCollisionHandler CollisionHandler { get; } = default;
-
-    /// <summary>
-    /// Random number generator to randomize enemy behavior
-    /// </summary>
-    readonly Random rnd = new();
 
 
     public Darknut(EnemySprites enemySprites, ContentManager sfxPlayer, Vector2 position)
+        :base(null, sfxPlayer, position)
     {
         Position = position;
-        _enemySprites = enemySprites;
         //create list of all sprites associated with the enemy to swap with
-        _sprites.Add(_enemySprites.DarknutMoveUp());
-        _sprites.Add(_enemySprites.DarknutMoveRight());
-        _sprites.Add(_enemySprites.DarknutMoveDown());
-        _sprites.Add(_enemySprites.DarknutMoveLeft());
+        _sprites.Add(enemySprites.DarknutMoveUp());
+        _sprites.Add(enemySprites.DarknutMoveRight());
+        _sprites.Add(enemySprites.DarknutMoveDown());
+        _sprites.Add(enemySprites.DarknutMoveLeft());
         Sprite = _sprites[0];
-        CollisionHandler = new EnemyCollisionHandler(this, sfxPlayer);
     }
-    public virtual void Update(GameTime time)
+    public override void Update(GameTime time)
     {
-        //Decrement hit cooldown
-        if(HitcoolDown > 0)
-        {
-            HitcoolDown--;
-        }
+        base.Update(time);
         //Change sprite to correct sprite
         Sprite = _sprites[Face];
-        //Randomize  movement
-        int mov = rnd.Next(FaceChangeChance);
-        //Move according to current direction faced
-        if (mov > FaceChangeCase)
-        {
-            Position = EnemyHelper.BehaveFromFace(this, 1, 0);
-        }
-        //Change face and sprite to new value according to the randomized value
-        else
-        {
-            Face = mov;
-        }
-        CollisionHandler.UpdateCollisionBox();
-        Sprite.Update(time);
-    }
-
-    public void TakeDamage(int dmg)
-    {
-        Hitpoints -= dmg;
-
-        if (Hitpoints <= 0)
-        {
-            if (CollisionHandler != null)
-            {
-                CollisionHandler.Dead = true;
-            }
-        }
-    }
-
-
-    public void Draw()
-    {
-        Sprite.Draw(Position);
-    }
-    public Rectangle GetCollisionBox()
-    {
-        // Sprites are centered
-        return new Rectangle(
-                (int)Position.X - (Sprite.Width / CollisionBoxOffset),
-                (int)Position.Y - (Sprite.Height / CollisionBoxOffset),
-                Sprite.Width,
-                Sprite.Height
-        );
     }
 }
 

@@ -5,10 +5,9 @@ using ZweiHander.Graphics.SpriteStorages;
 
 namespace ZweiHander.Enemy.EnemyStorage
 {
-    public class MovingBlock : IEnemy
+    public class MovingBlock : AbstractEnemy
     {
-        public ISprite Sprite { get; set; }
-        private readonly EnemySprites _enemySprites;
+        protected override int EnemyStartHealth => 1;
 
         private Vector2 _startPosition;
         private Vector2 _endPosition;
@@ -16,30 +15,11 @@ namespace ZweiHander.Enemy.EnemyStorage
         private float _currentTime;
         private bool _movingToEnd;
         private bool _isConfigured;
-
-        public Vector2 Position { get; set; }
-        public int Face { get; set; }
-        public int Hitpoints { get; set; } = 5;
-        public float HitcoolDown { get; set; } = 0;
         public int Thrower { get; set; }
-        public EnemyCollisionHandler CollisionHandler { get; } = default;
-        public MovingBlock(EnemySprites enemySprites)
-        {
-            _enemySprites = enemySprites;
-            _currentTime = 0;
-            _movingToEnd = true;
-            _isConfigured = false;
-
-            Position = Vector2.Zero;
-            Face = 0;
-            Thrower = 0;
-
-            Sprite = _enemySprites.Gel();
-        }
         //unsued enemy!
         public MovingBlock(EnemySprites enemySprites, Vector2 startPos, Vector2 endPos, float moveTime)
+            : base(null, null, startPos)
         {
-            _enemySprites = enemySprites;
             _startPosition = startPos;
             _endPosition = endPos;
             _moveTime = moveTime;
@@ -51,7 +31,7 @@ namespace ZweiHander.Enemy.EnemyStorage
             Face = 0;
             Thrower = 0;
 
-            Sprite = _enemySprites.Gel();
+            Sprite = enemySprites.Gel();
         }
 
         public void SetMovement(Vector2 startPos, Vector2 endPos, float timeToMove)
@@ -63,7 +43,7 @@ namespace ZweiHander.Enemy.EnemyStorage
             Position = _startPosition;
         }
 
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             if (!_isConfigured)
                 return;
@@ -91,35 +71,12 @@ namespace ZweiHander.Enemy.EnemyStorage
 
             Sprite.Update(gameTime);
         }
-        public void TakeDamage(int dmg)
-        {
-            Hitpoints -= dmg;
-
-            if (Hitpoints <= 0)
-            {
-                if (CollisionHandler != null)
-                {
-                    CollisionHandler.Dead = true;
-                }
-            }
-        }
-        public void Draw()
+        public override void Draw()
         {
             if (!_isConfigured)
                 return;
 
             Sprite.Draw(Position);
-        }
-
-        public Rectangle GetCollisionBox()
-        {
-            // Sprites are centered
-            return new Rectangle(
-                    (int)Position.X - (Sprite.Width / 2),
-                    (int)Position.Y - (Sprite.Height / 2),
-                    Sprite.Width,
-                    Sprite.Height
-            );
         }
     }
 }

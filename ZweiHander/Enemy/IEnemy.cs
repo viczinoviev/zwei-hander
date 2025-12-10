@@ -33,11 +33,6 @@ public interface IEnemy
     public EnemyCollisionHandler CollisionHandler { get; }
 
     /// <summary>
-    /// The current sprite associated with this Enemy.
-    /// </summary>
-    protected ISprite Sprite { get; set; }
-
-    /// <summary>
     /// Draws this Enemy on screen.
     /// </summary>
     public void Draw();
@@ -53,5 +48,5 @@ public interface IEnemy
     /// <returns>Rectangle equating to the collision box</returns>
     public Rectangle GetCollisionBox();
 
-    void TakeDamage(int dmgAmount);
+    public void TakeDamage(int dmg);
 }
