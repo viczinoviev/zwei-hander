@@ -19,7 +19,7 @@
 		<Region name="normal-boomerang" x="65" y="288" width="8" height="16"/>
 		<Region name="blue-frame" x="17" y="288" width="16" height="16"/>
 		<Region name="red-frame" x="0" y="288" width="16" height="16"/>
-		<Region name="bomb" x="90" y="272" width="8" height="8"/>
+		<Region name="bomb" x="85" y="288" width="8" height="16"/>
 		<Region name="x-symbol" x="99" y="272" width="8" height="8"/>
 		<Region name="key" x="109" y="272" width="8" height="8"/>
         <Region name="blue_key" x="127" y="272" width="8" height="8"/>
