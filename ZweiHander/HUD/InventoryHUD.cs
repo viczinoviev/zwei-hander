@@ -20,8 +20,9 @@ namespace ZweiHander.HUD
         private readonly Vector2 _position;
         private readonly Vector2 _relativePosition;
         private readonly IPlayer _player;
+        private readonly Vector2 swordHUDPosition = new(312, 464);
         private readonly Vector2 _selectedPositionB = new(264, 464);
-        private readonly Vector2 _selectedPositionA = new(312, 464);
+        private readonly Vector2 _selectedPositionA = new(145, 113);
 
         private int _selectedIndex = 0;
 
@@ -129,8 +130,9 @@ namespace ZweiHander.HUD
         public void Draw(Vector2 offset)
         {
             _inventoryDisplayHUD.Draw(_position + offset);
-            _swordSprite.Draw(_selectedPositionA + _relativePosition + offset);
+            _swordSprite.Draw(swordHUDPosition + _relativePosition + offset);
             _redFrameHUD.Draw(_itemPositions[_selectedIndex] + _relativePosition + offset);
+            _itemSprites[_selectedIndex].Draw(_selectedPositionA + _relativePosition + offset);
             _itemSprites[_selectedIndex].Draw(_selectedPositionB + _relativePosition + offset);
             for (int i = 0; i < _orderedItemCount; i++)
             {
