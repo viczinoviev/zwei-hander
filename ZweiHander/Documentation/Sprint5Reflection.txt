@@ -22,3 +22,10 @@ I did that by providing graphical improvements, quality of life changes, cleanin
 Despite all this effort it seemed like we started falling apart at the end due to multiple different features coming in at once, but
 I believe we managed to do damage control and we finished with a good product. Overall I wish I was not as obsessively perfectionist
 about this project as I ended up, but I did get really attached.
+
+Darren:
+This sprint was a new experience, since we all started working on our own modification of the game. Naturally, there was going to be 
+a lot more merge conflicts. So I avoided adding changes to the same parts of the game that my teammates was working on. Coding Kirby
+companion has allowed me to learn and do different aspect of the game where previously I hadn't done before. This makes for a well-rounded
+project where I tried out and was involved in all aspects of the game from keyboard commands and blocks/maps to npc movement logic and 
+item implementation. This sprint was a great chance to go out of what the original game had and implement my own creative idea for it.
