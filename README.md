@@ -19,7 +19,6 @@ P to pause the game.
 
 Press H on the main menu to enter Horde mode.
 ## Known issues
-The game lags really hard if reset is used multiple times.
 
 Some sprite transitions may not align perfectly with movement direction.
 
