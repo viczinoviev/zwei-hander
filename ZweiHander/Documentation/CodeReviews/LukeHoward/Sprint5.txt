@@ -2,7 +2,7 @@ Author of the code review: Luke Howard
 Date of the code review: 2025-12-10
 Sprint number: 5
 Name of the .cs file being reviewed: Kirby.cs
-Author of the .cs file being reviewed: Stash
+Author of the .cs file being reviewed: Darren
 Number of minutes taken to complete the review: 10 minutes.
 Specific comments on readability: 
 

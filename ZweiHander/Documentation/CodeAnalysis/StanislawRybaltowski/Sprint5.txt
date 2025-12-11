@@ -1,0 +1,5 @@
+I have spent a few hours fixing all the tiny issues that were found by my version of the code quality checker,
+which I believe is based on Roslyn but more extensive and strict. I ended up fixing 300+ issues, ranging
+from trailing white spaces and missing parenthesis in calculations, up to unused fields and unnecessary imports.
+Overall theres no way I can provide any specifics, due to sheer magnititude of changes, but I did do something to almost
+all the files. I believe the code we have is extremely polished and well-formatted now.

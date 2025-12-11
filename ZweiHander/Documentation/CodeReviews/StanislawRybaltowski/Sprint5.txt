@@ -1,0 +1,41 @@
+Author of the code review: Stanislaw Rybaltowski
+Date of the code review: 2025-12-10
+Sprint number: 5
+Name of the .cs file being reviewed: EffectManager.cs
+Author of the .cs file being reviewed: Jacob
+Number of minutes taken to complete the review: 18 minutes.
+Specific comments on code quality/design:
+
+    The EffectManager class uses Dictionary inheritance effectively to provide effect 
+    duration tracking. The Update method implements a good system for tracking both effect 
+    durations and overtime effects through the Ticker mechanism. However, the Update method 
+    modifies the collection while iterating over it by calling Remove(effect), which could 
+    cause issues. The Tickers dictionary initialization uses a hardcoded value (0.5) without 
+    explanation of what this timing represents. The Ticked collection provides a nice way 
+    to communicate which effects activated this frame.
+    
+    I would suggest:
+    - Create a list of effects to remove and remove them after the foreach loop completes
+    - Extract the ticker interval (0.5) as a named constant with a descriptive name
+    - Add a brief comment explaining what the ticker interval represents
+    - Consider initializing Tickers when effects are first added rather than during update
+
+Author of the code review: Stanislaw Rybaltowski
+Date of the code review: 2025-12-10
+Sprint number: 5
+Name of the .cs file being reviewed: HealthDisplay.cs
+Author of the .cs file being reviewed: Victor Zinoviev
+Number of minutes taken to complete the review: 10 minutes.
+Specific comments on readability/maintainability:
+
+    The HealthDisplay class has a clean, focused implementation with good use of primary 
+    constructor syntax and proper null checking. The heart rendering logic correctly handles 
+    half-hearts using Math.Ceiling and the HEART_SPACING constant is well-named and clearly 
+    documents its purpose. The if-else chain for sprite selection is straightforward and easy 
+    to follow. The class properly implements the IHUDComponent interface even though the 
+    Update method is currently empty, which maintains consistency with other HUD components.
+    
+    My suggestions are:
+    - Consider extracting sprite selection into a helper method for potential reuse
+    - Add a brief comment in the Update method if it's intentionally empty for the interface
+    - The current implementation is solid and doesn't require major changes

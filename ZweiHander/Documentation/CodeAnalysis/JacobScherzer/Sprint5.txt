@@ -1,0 +1,6 @@
+﻿I had gotten very used to just using the recommended changes as I was coding.
+I noticed that this time I got a lot of issues with white space I had not gotten
+in the past. I wonder what changed in my coding to cause this, or maybe it is just
+an update in the tool itself. There was a lot of times I forgot to use the new()
+simplification, or [] for collections. There was a few times of using null operators
+I didn't know or forgot that it reminded me of, like ?? and ?., which simplified code.

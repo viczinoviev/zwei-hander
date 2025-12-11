@@ -8,3 +8,17 @@ Then, I worked on implementing new elements in the game such as the player's buf
 I had also helped adding visual components of the new elements our team members had added, which led me to learn more about the other classes and
 refactor some of the interface methods for better usability. Overall, I think that our group did very well in communicating and each contributing
 something new to the game to make it original.
+
+Jacob:
+I felt very mixed on this sprint. I enjoyed making some of the systems and seeing their results, but trying to coordinate this with
+what others were doing felt odd. I never knew when to let others handle their side of things or when it was better for me to just do it
+myself. Specifically, with integrating the damage system into everything, how much I should dig into other people's code to add it.
+I did what was essentially a full refactoring of enemy to make it work, which I felt very bad about, as that apparently led to some
+issues. Overall I feel like everything worked out, and even way better than I had thought/hoped, but I felt very stressed during it.
+
+Stanislaw:
+During Sprint 4 I got ahead of myself and started implementing elements for Sprint 5, so I've spent Sprint 5 polishing the project.
+I did that by providing graphical improvements, quality of life changes, cleaning code, and adding features such as resizible window.
+Despite all this effort it seemed like we started falling apart at the end due to multiple different features coming in at once, but
+I believe we managed to do damage control and we finished with a good product. Overall I wish I was not as obsessively perfectionist
+about this project as I ended up, but I did get really attached.

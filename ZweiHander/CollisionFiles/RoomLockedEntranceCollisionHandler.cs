@@ -17,16 +17,14 @@ namespace ZweiHander.CollisionFiles
         {
             if (other is not PlayerCollisionHandler playerHandler)
                 return;
-
-            var player = playerHandler._player;
             if (playerHandler._player.InventoryCount(typeof(Key)) > 0)
             {
-                if(_LockedEntrance.ReplaceWithUnlockedEntrance(1, collisionInfo.Normal))
+                if(_LockedEntrance.ReplaceWithUnlockedEntrance(1))
                     playerHandler._player.RemoveItemFromInventory(typeof(Key));
             }
             if (playerHandler._player.InventoryCount(typeof(BlueKey)) > 0)
             {
-                if(_LockedEntrance.ReplaceWithUnlockedEntrance(2, collisionInfo.Normal))
+                if(_LockedEntrance.ReplaceWithUnlockedEntrance(2))
                     playerHandler._player.RemoveItemFromInventory(typeof(BlueKey));
             }
         }

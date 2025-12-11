@@ -1,0 +1,34 @@
+﻿Author of the code review: Jacob Scherzer
+Date of the code review: 2025-12-10
+Sprint number: 5
+Name of the .cs file being reviewed: Kirby.cs
+Author of the .cs file being reviewed: Darren Zhou
+Number of minutes taken to complete the review: 11 minutes.
+Specific comments on readability:
+	All the variables are named very well, with each having
+	their meaning as clear as possible by the name without
+	being excessively long. There's also some nice seperation
+	of coding chunks. However, the only comments are commented 
+	out code, with not even the methods getting a summary. There
+	are multiple places which it feels like a quick comment would
+	be very helpful to clarify what that chunk is doing, even if
+	one can be pretty sure to cast away any doubts. There is a
+	single comment outside the method FindClosestEnemy, which
+	does exactly this very well. 
+	
+
+Author of the code review: Jacob Scherzer
+Date of the code review: 2025-12-10
+Sprint number: 5
+Name of the .cs file being reviewed: HeadsUpHUD.cs
+Author of the .cs file being reviewed: Victor Zinoviev
+Number of minutes taken to complete the review: 9 minutes.
+Specific comments on maintainability/code quality:
+	Each stablable item is its own member of the class, which
+	is not the best for adding more stackable types as there is
+	a lot of repeating, or what is essentially copying and pasting.
+	For the lower number of stackles currently in the project, it is
+	acceptable though. Effects are handled very well in my opinion,
+	with any new type of effect only needing one short line of code at
+	the bottom. There is an issue of space if there is too many effects,
+	but that could be fixed later on if needed.
