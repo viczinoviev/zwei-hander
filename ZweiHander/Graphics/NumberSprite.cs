@@ -10,7 +10,7 @@ public class NumberSprite : AbstractSprite
     private static Dictionary<char, ISprite> _sprites = null;
     private List<Vector2> _relativePositions;
     public int CumWidth;
-    public int CumHeight { get => _sprites['0'].Height; }
+    public static int CumHeight { get => _sprites['0'].Height; }
     private readonly int Digits;
     public NumberSprite(int number, HUDSprites hudSprites = null, int digits = -1, bool centered = true)
     {
