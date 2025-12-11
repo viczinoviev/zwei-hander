@@ -13,6 +13,8 @@ X to use the current item selected next to thr sword.
 
 N or Z to make Link attack with sword.
 
+P to pause the game.
+
 Press H on the main menu to enter Horde mode.
 ## Known issues
 The game lags really hard if reset is used multiple times.
