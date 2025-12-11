@@ -1,23 +1,21 @@
 # Zwei-Hander
 A 2D sprite-based game built using MonoGame, featuring a controllable player (Link), enemies, items, and environment blocks. The project demonstrates object-oriented game architecture with factories, sprite management, and a command-based input system. It's a very cool project! Please.
 ## Controls
-R to reset to original state, Q to quit the program.
+R to reset to original state, Q/esc to quit the program.
 
 E to hurt player.
 
 WASD or arrow keys to move; diagonal movememnt allowed.
 
-X to use the current item selected under the letter 'A'
+X to use the current item selected next to thr sword.
 
-< and > to swap between items selected
+< and > to swap between items selected.
 
 N or Z to make Link attack with sword.
 
 Press H on the main menu to enter Horde mode.
 ## Known issues
 The game lags really hard if reset is used multiple times.
-
-Player health system is partially implemented.
 
 Some sprite transitions may not align perfectly with movement direction.
 
@@ -47,6 +45,8 @@ GameStates/ - Handles what section (state) the game itself is in (titlescreen, p
 HUD/ - Contains all parts of the HUD like inventory and map.
 
 Map/ - How the game is laid out and handled.
+
+Damage/ - Implements damage handling and status effects.
 ## Tools/Frameworks
 Used .NET messages to help put code into better format.
 
@@ -60,7 +60,6 @@ Factory Pattern for object creation (blocks, items, enemies).
 
 XML-based SpriteSheets for efficient sprite management.
 
-
 ## Functionality notes
 Bombs can explode other bombs
 
@@ -68,8 +67,12 @@ Fire item (denoted by candle in inventory after pickup) shoots fire that chooses
 
 Picking up bomb gives 10 bombs
 
-Fairy causes health change of random amount between -2 and 2 (inclusive, 2 life=1 heart)
+Fairy gives a random 30 second buff (strength, speed, or regen)
 
-Bow has unlimited arrows
+Bow has unlimited cold (slowing) arrows
 
-Map and Clock currently have no functionality
+Red Potion heals fully
+
+Blue Potion gives 15 seconds of strength and speed
+
+There might be certain items that can be picked up that will have no effect/functionality
