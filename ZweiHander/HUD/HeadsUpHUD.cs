@@ -19,6 +19,8 @@ namespace ZweiHander.HUD
         private readonly ItemWithCount _keys;
         private readonly ItemWithCount _blueKey;
         private readonly ItemWithCount _rupies;
+        private readonly ItemWithCount _bluePotion;
+        private readonly ItemWithCount _redPotion;
         private readonly Vector2 _position;
         private readonly IPlayer _player;
         private readonly SpriteFont _font;
@@ -34,9 +36,10 @@ namespace ZweiHander.HUD
             _spriteBatch = hudSprites.SpriteBatch;
             _bombs = new ItemWithCount(hudSprites, hudSprites.Bomb(), position, _player, typeof(Bomb));
             _keys = new ItemWithCount(hudSprites, hudSprites.Key(), position, _player, typeof(Key));
-            // Update typeof part
             _blueKey = new ItemWithCount(hudSprites, hudSprites.BlueKey(), position, _player, typeof(BlueKey));
             _rupies = new ItemWithCount(hudSprites, hudSprites.Rupy(), position, _player, typeof(Rupy));
+            _bluePotion = new ItemWithCount(hudSprites, hudSprites.BluePotion(), position, _player, typeof(BluePotion));
+            _redPotion = new ItemWithCount(hudSprites, hudSprites.RedPotion(), position, _player, typeof(RedPotion));
         }
 
         public void Update(GameTime gameTime)
@@ -45,14 +48,18 @@ namespace ZweiHander.HUD
             _keys.Update(gameTime);
             _blueKey.Update(gameTime);
             _rupies.Update(gameTime);
+            _bluePotion.Update(gameTime);
+            _redPotion.Update(gameTime);
         }
 
         public void Draw(Vector2 offset)
         {
             _headsUpDisplayHUD.Draw(_position + offset);
             _bombs.Draw(_position + new Vector2(-472, -22) + offset);
-            _keys.Draw(_position + new Vector2(-750, -72) + offset);
-            _blueKey.Draw(_position + new Vector2(-750, -42) + offset);
+            _keys.Draw(_position + new Vector2(-750, -92) + offset);
+            _blueKey.Draw(_position + new Vector2(-750, -76) + offset);
+            _bluePotion.Draw(_position + new Vector2(-750, -55) + offset);
+            _redPotion.Draw(_position + new Vector2(-750, -22) + offset);
             _rupies.Draw(_position + new Vector2(-472, -72) + offset);
             DrawEffectTimers(offset);
         }
