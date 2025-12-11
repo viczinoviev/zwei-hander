@@ -101,6 +101,7 @@ namespace ZweiHander.Map
             { "Rupy", "Rupy" },
             { "BlueCandle", "BlueCandle" },
             { "BluePotion", "BluePotion" },
+            { "RedPotion", "RedPotion" },
             { "RedCandle", "RedCandle" },
             { "CagedKirby", "CagedKirby" },
             {"BlueKey", "BlueKey"}
