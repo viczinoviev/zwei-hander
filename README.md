@@ -7,6 +7,8 @@ E to hurt player.
 
 WASD or arrow keys to move; diagonal movememnt allowed.
 
+Z to use the sword item.
+
 X to use the current item selected next to thr sword.
 
 < and > to swap between items selected.
