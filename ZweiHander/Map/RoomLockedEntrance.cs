@@ -61,10 +61,10 @@ namespace ZweiHander.Map
             { BorderName.DoorTileEast, BorderName.EntranceTileEast },
             { BorderName.DoorTileSouth, BorderName.EntranceTileSouth}
         };
-        public bool ReplaceWithUnlockedEntrance(int id, Direction direction = Direction.None)
+        public bool ReplaceWithUnlockedEntrance(int id)
         {
             bool rightDoor = false;
-            
+
 
             var borders = _universe.BorderFactory.BorderMap;
 
