@@ -1,0 +1,7 @@
+I have gotten a lot better at following code standards, so there wasn't much refactorying needed for this 
+sprint and the variables are all set to private as long as it didn't broke anything. There might be better 
+ways of implementing some of the codes I wrote, but I have optimized them to the best of my knowledge. I 
+believe my implementation of Kirby this sprint used ralatively minimal code for the functions it has.
+Also my teammate Stanislaw was already polishing the game code when everyone else was still working on 
+sprint 5, since he did a lot of sprint 5 during sprint 4, so there was not much left for me to do in terms of 
+code quality.

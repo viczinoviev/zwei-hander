@@ -1,0 +1,29 @@
+Author of the code review: Darren Zhou
+Date of the code review: 2025-12-10
+Sprint number: 5
+Name of the .cs file being reviewed: ItemWithCount.cs
+Author of the .cs file being reviewed: Viktor Zinoviev
+Number of minutes taken to complete the review: 10 minutes.
+Specific comments on code quality/design:
+    A very nice and simple class. The class uses multiple sprites to display 
+    the item and its count. I like how Draw() avoided drawing everything again,
+    and only redraws the number part of the display. The readability and maintainability
+    are both really good. The only suggestion I have is it would be nice to have some 
+    comments for what the class does exactly, but this isn't too big of a deal given how 
+    simple and easy to understand the class already is with descriptive variable names.
+    
+
+Author of the code review: Darren Zhou
+Date of the code review: 2025-12-10
+Sprint number: 5
+Name of the .cs file being reviewed: WaveConstuctor.cs
+Author of the .cs file being reviewed: Luke Howard
+Number of minutes taken to complete the review: 8 minutes
+Specific comments on readability/maintainability:
+    A simple but medium sized class. The code is very self explanatory. The readability 
+    and maintainability are both extremly good. The only comment being for the entire class 
+    is fine, since nothing else really need explaining, although it would be nice to still have
+    some. The variable are all set to private like they should be. There really isnt any compliant 
+    for the class. 
+    
+    
