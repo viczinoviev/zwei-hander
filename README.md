@@ -18,6 +18,8 @@ N or Z to make Link attack with sword.
 P to pause the game.
 
 Press H on the main menu to enter Horde mode.
+
+U to have Kirby use an ability.
 ## Known issues
 
 Some sprite transitions may not align perfectly with movement direction.
