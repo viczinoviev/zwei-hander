@@ -102,6 +102,8 @@ public class EnemyManager(EnemySprites enemysprites, ItemManager projectileManag
         enemy.Position = position;
         enemy.Face = face;
         enemy.DamageNumbers = DamageNumbers;
+        // Update collision box immediately after enemy creation to prevent incorrect initial collisions
+        enemy.CollisionHandler.UpdateCollisionBox();
         currentEnemies.Add(enemy);
         return enemy;
     }
